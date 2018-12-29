@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="TeamUISkin" width="640" height="400" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Group id="con" left="0" right="0" top="0" bottom="0" scrollEnabled="true">
+		<e:Image id="bg" horizontalCenter="0" bottom="100" x="320" y="300"/>
+	</e:Group>
+	<e:Image source="line2_png" fillMode="repeat" left="0" right="0" y="0"/>
+	<e:Image source="bg14_png" scale9Grid="32,32,3,6" anchorOffsetY="0" left="-5" right="-5" bottom="0" height="125"/>
+	<e:Group bottom="10" horizontalCenter="0">
+		<e:Button id="addBtn1" label="+1" x="0" y="0" skinName="Btn1Skin" width="120" height="50"/>
+		<e:Button id="addBtn10" label="+10" x="10" y="10" skinName="Btn1Skin" width="120" height="50"/>
+		<e:Button id="addBtn100" label="+100" x="20" y="20" skinName="Btn1Skin" width="120" height="50"/>
+		<e:Button id="addBtn1000" label="+1000" x="30" y="30" skinName="Btn1Skin" width="120" height="50"/>
+		<e:layout>
+			<e:HorizontalLayout gap="30"/>
+		</e:layout>
+	</e:Group>
+	<e:Group bottom="70" minWidth="250" right="40" width="260">
+		<e:Image source="bg1_png" scale9Grid="8,8,14,14" left="0" right="0" top="0" bottom="0"/>
+		<e:Group right="10" left="5" top="5" bottom="5">
+		<e:Image source="icon_coin_png" x="0" y="0" scaleX="0.7" scaleY="0.7"/>
+		<e:Label id="myText" text="我的投资：10000" x="84" y="11" size="22"/>
+		<e:layout>
+			<e:HorizontalLayout verticalAlign="middle"/>
+		</e:layout>
+		</e:Group>
+	</e:Group>
+	<e:Group x="40" bottom="70" minWidth="250" width="260">
+		<e:Image source="bg1_png" scale9Grid="8,8,14,14" left="0" right="0" top="0" bottom="0"/>
+		<e:Group right="10" left="5" top="5" bottom="5">
+		<e:Image source="icon_coin_png" x="0" y="0" scaleX="0.7" scaleY="0.7"/>
+		<e:Label id="totalText" text="总投资：10000" x="84" y="11" size="22"/>
+		<e:layout>
+			<e:HorizontalLayout verticalAlign="middle"/>
+		</e:layout>
+		</e:Group>
+	</e:Group>
+	<e:Group y="0" horizontalCenter="0">
+		<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0" scale9Grid="37,7,17,42"/>
+		<e:Group verticalCenter="0" left="20" right="20">
+			<e:Image source="icon_force2_png" x="0" y="0"/>
+			<e:Label id="forceText" text="战力:12345" x="-135" y="11" size="25"/>
+			<e:layout>
+			<e:HorizontalLayout verticalAlign="middle" gap="0" paddingLeft="0"/>
+			</e:layout>
+		</e:Group>
+	</e:Group>
+</e:Skin>

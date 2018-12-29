@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="MainPKUISkin" width="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" height="800">
+	<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" top="0" bottom="0"/>
+	<e:Group id="con" top="0" left="0" right="0" height="512">
+
+	</e:Group>
+	<e:Image source="line2_png" y="0" fillMode="repeat" right="0" left="0"/>
+	<e:Image source="line2_png" y="512" fillMode="repeat" right="0" left="0"/>
+	<e:Scroller id="scroller" width="640" x="0" top="512" bottom="0" locked="true">
+		<e:Group>
+			<e:List id="list" width="200" height="200" x="155" y="118"/>
+		</e:Group>
+	</e:Scroller>
+	<e:Group id="winGroup" y="100" horizontalCenter="0" visible="false">
+		<e:Group x="0" y="0">
+		<e:Image x="0" y="0" source="pk_win_png"/>
+		<e:Image x="0" y="0" scaleX="-1" source="pk_win_png"/>
+		<e:layout>
+			<e:HorizontalLayout gap="0"/>
+		</e:layout>
+		</e:Group>
+		<e:Label id="winText" text="挑战成功" y="118" x="190" textColor="0xFCE492" strokeColor="0xFFFFFF"/>
+		<e:Label id="winText2" text="Label" y="290" horizontalCenter="0" textColor="0xffe89e"/>
+	</e:Group>
+	<e:Group id="failGroup" y="100" horizontalCenter="0" visible="false">
+		<e:Group x="0" y="0">
+		<e:Image source="pk_fail_png" x="0" y="0"/>
+		<e:Image source="pk_fail_png" x="0" y="0" scaleX="-1"/>
+		<e:layout>
+			<e:HorizontalLayout gap="0"/>
+		</e:layout>
+		</e:Group>
+		<e:Label id="failText" text="挑战失败" y="119" stroke="3" x="190"/>
+		<e:Label id="failText2" text="Label" y="290" horizontalCenter="0" textColor="0xFFE89E"/>
+	</e:Group>
+
+</e:Skin>
