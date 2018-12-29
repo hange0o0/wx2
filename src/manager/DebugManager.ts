@@ -29,6 +29,8 @@ class DebugManager {
     public winMonster = {}
     public winUseCard = []
 
+    public outPut = []
+
     public randomList(cost){
         var arr = []
         for(var s in MonsterVO.data)
@@ -61,6 +63,7 @@ class DebugManager {
         this.stop = 0;
         this.winMonster = {};
         this.winUseCard = [];
+        this.outPut = [];
         setTimeout(()=>{
             this.testRound();
         },1);
@@ -89,7 +92,7 @@ class DebugManager {
         var arr = []
         var n = 1024;
 
-        var cost = 15 + Math.floor(Math.random()*16)
+        var cost = 30 + Math.floor(Math.random()*31)
         for(var i=0;i<n;i++)
         {
             arr.push(this.randomList(cost))
@@ -116,6 +119,7 @@ class DebugManager {
                 return
             }
         }
+        this.outPut.push({list1:arr[0],list2:arr[1]});
         arr = this.testOne(arr.shift(),arr.shift())
         for(var i=0;i<arr.length;i++)
         {
@@ -138,10 +142,25 @@ class DebugManager {
         if(this.stop)
         {
             this.printResult(type);
+
+            if(this.stop == 2)
+            {
+                for(var i=0;i<this.outPut.length;i++)
+                {
+                    this.outPut[i] = this.format(this.outPut[i])
+                }
+                egret.localStorage.setItem('mapData', this.outPut.join('\n'));
+            }
             return;
         }
 
         egret.callLater(this.testRound,this)
+    }
+
+    private format(data){
+        var rd = Math.floor(Math.random() * 100000000000);
+        data.seed = rd;
+        return JSON.stringify(data);
     }
 
     private testOne(list1,list2,hp=10){
@@ -149,8 +168,8 @@ class DebugManager {
         var data = {
             seed:TM.now() + Math.floor(100000000*Math.random()),
             players:[
-                {id:1,gameid:'test1',team:1,autolist:list1,force:1000,type:0,hp:1},
-                {id:2,gameid:'test2',team:2,autolist:list2,force:1000,type:0,hp:1}
+                {id:1,gameid:'test1',team:1,autolist:list1,force:10000,type:0,hp:1},
+                {id:2,gameid:'test2',team:2,autolist:list2,force:10000,type:0,hp:1}
             ]
         };
         PKManager.getInstance().pkType = PKManager.TYPE_TEST

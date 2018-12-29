@@ -75,6 +75,8 @@ class MonsterMV extends eui.Group {
 
     public stand(){
         this.state = MonsterMV.STAT_STAND
+        if([61,62,63,70,76].indexOf(this.vo.id) != -1)
+            this.state = MonsterMV.STAT_RUN
         this.reset();
     }
 

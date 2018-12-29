@@ -24,6 +24,7 @@
 					<e:Image source="main_rank_png" horizontalCenter="0" verticalCenter="0"/>
 					<e:Label text="排行" size="22" horizontalCenter="0" stroke="2" bottom="5"/>
 					</e:Group>
+			<e:Label id="cdText" text="Label" x="250" y="35" size="40"/>
 					<e:Group id="mailBtn" x="10" y="0" width="80" height="80">
 						<e:Image source="main_mail_png" verticalCenter="0" horizontalCenter="0"/>
 						<e:Label text="消息" size="22" horizontalCenter="0" stroke="2" bottom="5"/>
@@ -34,7 +35,7 @@
 					<e:Label text="设置" size="22" horizontalCenter="0" stroke="2" bottom="5"/>
 					</e:Group>
 					<e:layout>
-					<e:HorizontalLayout horizontalAlign="right" paddingLeft="0" paddingRight="0" gap="60"/>
+					<e:HorizontalLayout horizontalAlign="right" paddingLeft="0" paddingRight="0" gap="30" verticalAlign="middle"/>
 					</e:layout>
 				</e:Group>
 	<ns1:MainPKUI id="mainPKUI" x="0" skinName="MainPKUISkin" top="70" bottom="105"/>

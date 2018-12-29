@@ -39,6 +39,13 @@ class PKManager {
     public showTopNum = 0; //显示敌人的历史阵容的数量
 
     public recordLen = 20;
+
+
+
+
+    public cost1 = 0
+    public cost2 = 0;
+
     constructor(){
         this.recordList = SharedObjectManager.getInstance().getMyValue('pk_replay1') || []
         this.recordTime = SharedObjectManager.getInstance().getMyValue('pk_record_time') || 0
@@ -74,7 +81,8 @@ class PKManager {
         '$%&*&$@','@#$%&','( T___T ) ','( 3__3 ) ','zzz ZZZ','╭∩╮','...']
 
 
-    public defaultCardList = '6,6,6,41,3,31,64,65,64';
+    public roundData;
+
 
     public getPKBG(){
         return this.getBG(1)//this.getBG(HangManager.getInstance().getHangBGID())
@@ -82,6 +90,49 @@ class PKManager {
 
     public getBG(id){
         return 'map'+(id || 1)+'_jpg';
+    }
+
+    private sendTimer
+    public callSendCost(b?){
+         clearTimeout(this.sendTimer);
+        if(b && this.sendTimer)
+        {
+
+        }
+        else
+        {
+            this.sendTimer = setTimeout(()=>{
+                this.sendTimer = 0;
+            },5000)
+        }
+
+    }
+
+    public initData(str){
+          var arr = str.split('\n')
+        this.roundData = arr;
+    }
+
+    public getCurrentIndex(){
+        var t0 = DateUtil.getNextDateTimeByHours(0)  - 24*3600
+        var t1 = TM.now()
+        var dec = (t1 - t0) - 3600*6;
+        if(dec < 0)
+            return -1;
+        return Math.floor(dec/10/60)
+    }
+
+    public getCurrentData(){
+        var index =  this.getCurrentIndex();
+        if(this.roundData[index])
+            return JSON.parse(this.roundData[index])
+        return 0;
+    }
+
+    public getEndTime(){
+        var t0 = DateUtil.getNextDateTimeByHours(0)  - 24*3600
+        var index =  this.getCurrentIndex();
+        return t0 + 3600*6 + (index + 1)*10*60;
     }
 
     public testFail(failID){
@@ -142,6 +193,73 @@ class PKManager {
     //        return data.hero;
     //    return '';
     //}
+
+    private randomSeed;
+    private random(){
+        var seed = this.randomSeed;
+        seed = ( seed * 9301 + 49297 ) % 233280;
+        var rd = seed / ( 233280.0 );
+        this.randomSeed = rd * 100000000;
+        return rd;
+    }
+    //取某一时间的花费情况
+    public getCost(seed,passTime){
+        this.randomSeed = seed*2;
+        var len = Math.min(passTime,7*60);
+        var oo = {
+            cost1:0,
+            cost2:0
+        }
+        for(var i=0;i<len;i++)
+        {
+            oo.cost1 += (this.random()*20)
+            oo.cost2 += (this.random()*20)
+        }
+
+        var index =  this.getCurrentIndex();
+        var rate = this.getIndexRate(index);
+        oo.cost1 *= rate;
+        oo.cost2 *= rate;
+        return oo;
+    }
+
+    //模拟这一刻的玩家数量
+    public getIndexRate(index){
+        var rate = 1;
+        var start = 6
+        var step = 6;
+        var num = Math.abs((8-start)*step - index)
+        if(num < 10)
+        {
+            rate += (10-num)/10
+        }
+
+        num = Math.abs((12.5-start)*step - index)
+        if(num < 8)
+        {
+            rate += (8-num)/8*2
+        }
+
+        num = Math.abs((20.5-start)*step - index)
+        if(num < 20)
+        {
+            rate += (20-num)/15*3
+        }
+
+        rate += index/150
+
+        return rate;
+    }
+
+    public getForceAdd(cost){
+        return Math.floor(Math.pow(cost,0.8));
+    }
+
+    public getMoneyRate(my,other){
+       var rate = other/my
+        return Math.floor(100 + rate*50);
+    }
+
 
     public sendResult(fun){
         if(PKData.getInstance().isReplay)
