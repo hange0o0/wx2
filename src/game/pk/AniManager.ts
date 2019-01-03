@@ -193,6 +193,7 @@ class AniManager {
     }
 
     public preLoadMV(id){
+        //return;
         var name = this.getMVKey(id);
         if(this.mcFactorys[name])
             return true;

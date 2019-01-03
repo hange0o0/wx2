@@ -173,13 +173,13 @@ class Main extends eui.UILayer {
         if(_get['hide'])
             return;
         //GameUI.getInstance().show();
-        var wx = window['wx'];
-        if(!wx)
-        {
-            GameUI.getInstance().show();
-            return;
-        }
-        console.log('_12')
+        //var wx = window['wx'];
+        //if(!wx)
+        //{
+        //    GameUI.getInstance().show();
+        //    return;
+        //}
+        //console.log('_12')
         UserManager.getInstance().getUserInfo(()=>{
             GameUI.getInstance().show();
         });

@@ -1,7 +1,7 @@
 
 class GameEvent {
     public static client = {
-        SKIN_CHANGE:'SKIN_CHANGE',
+        COIN_CHANGE:'COIN_CHANGE',
         INFO_CHANGE:'INFO_CHANGE',
 
         red_change:'red_change',

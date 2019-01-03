@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="GameUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="pk_bg1_jpg" left="0" right="0" top="0"/>
-	<e:Group x="0" top="70" bottom="105">
+	<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" top="-30" bottom="0"/>
+	<e:Group x="0" top="90" bottom="105">
 		<ns1:TeamUI id="team1" x="0" y="0" skinName="TeamUISkin"/>
 		<ns1:TeamUI id="team2" x="10" y="10" skinName="TeamUISkin"/>
 		<e:layout>
 			<e:VerticalLayout gap="0" verticalAlign="justify"/>
 		</e:layout>
 	</e:Group>
-    <e:Group id="coinGroup" x="10" y="10">
+    <e:Group id="coinGroup" x="10" y="20">
 			<e:Image source="border1_png" scale9Grid="28,20,26,2" x="0" y="0" width="250"/>
 			<e:Label id="coinText" text="1234567890" x="50" size="24" y="9" verticalCenter="-3"/>
 			<e:Image x="2.02" source="icon_coin_png" y="-1.33"/>
@@ -38,5 +38,10 @@
 					<e:HorizontalLayout horizontalAlign="right" paddingLeft="0" paddingRight="0" gap="30" verticalAlign="middle"/>
 					</e:layout>
 				</e:Group>
-	<ns1:MainPKUI id="mainPKUI" x="0" skinName="MainPKUISkin" top="70" bottom="105"/>
+	<ns1:MainPKUI id="mainPKUI" x="0" skinName="MainPKUISkin" top="90" bottom="105"/>
+	<e:Group id="loadingGroup" left="0" right="0" top="90" bottom="105">
+		<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" top="0" bottom="0"/>
+		<e:Image id="loadMC" source="ui_loading_png" verticalCenter="-50" horizontalCenter="0"/>
+		<e:Label id="loadText" text="Label" horizontalCenter="0" verticalCenter="50" size="24"/>
+	</e:Group>
 </e:Skin>

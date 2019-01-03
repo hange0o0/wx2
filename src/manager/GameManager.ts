@@ -174,6 +174,10 @@ function sendClientError(txt){
 
 if(window["wx"])
 {
+    window["TeamUI"] = TeamUI;
+    window["MainPKUI"] = MainPKUI;
+
+
     var wx =  window["wx"];
     wx.onHide(function(res){
         if(!GameManager.stage)

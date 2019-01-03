@@ -46,11 +46,20 @@ class TeamUI extends game.BaseItem {
     }
 
     private addCost(v){
-
+        if(UM.coin  < v)
+            return;
         if(this.teamID == 1)
-            PKManager.getInstance().cost1 += v;
+        {
+            UM.lastGuess.cost1 += v
+            UM.lastGuess.teamCost1 += v
+        }
         else
-            PKManager.getInstance().cost2 += v;
+        {
+            UM.lastGuess.cost2 += v
+            UM.lastGuess.teamCost2 += v
+        }
+        PKManager.getInstance().costChange = true
+        UM.addCoin(-v);
         PKManager.getInstance().callSendCost();
         GameUI.getInstance().onTimer();
     }
@@ -77,17 +86,18 @@ class TeamUI extends game.BaseItem {
             item.stand();
             item.scaleX = item.scaleY = 1.2;
             item.bottom = 80+vo.height*1.2// + Math.random()*80
+            item['w'] = vo.width
             item.x = begin + i*des
             this.monsterArr.push(item);
         }
 
-        ArrayUtil.sortByField(this.monsterArr,['bottom'],[1]);
+        ArrayUtil.sortByField(this.monsterArr,['bottom','w'],[1,1]);
         for(var i=0;i<this.monsterArr.length;i++)
         {
             this.con.addChild(this.monsterArr[i]);
         }
 
-        this.bg.source = 'map'+Math.ceil(Math.random()*10)+'_jpg'
+        this.bg.source = PKManager.getInstance().getPKBG()
     }
 
     public renewCost(data) {
@@ -95,16 +105,21 @@ class TeamUI extends game.BaseItem {
 
         if(this.teamID == 1)
         {
-            var myCost = data.cost1 +  PKM.cost1
-            var otherCost = data.cost2 +  PKM.cost2
-            var userCost =  PKM.cost1
+            var myCost = data.cost1 +  UM.lastGuess.teamCost1;
+            var otherCost = data.cost2 +  UM.lastGuess.teamCost2;
+            var userCost =  UM.lastGuess.cost1;
         }
         else
         {
-            var myCost = data.cost2 +  PKM.cost2
-            var otherCost = data.cost1 +  PKM.cost1
-            var userCost =  PKM.cost2;
+            var myCost = data.cost2 +  UM.lastGuess.teamCost2;
+            var otherCost = data.cost1 +  UM.lastGuess.teamCost1;
+            var userCost =  UM.lastGuess.cost2;
         }
+
+        this.addBtn1.skinName = UM.coin >= 1 ?'Btn1Skin':'Btn2Skin'
+        this.addBtn10.skinName = UM.coin >= 10 ?'Btn1Skin':'Btn2Skin'
+        this.addBtn100.skinName = UM.coin >= 100 ?'Btn1Skin':'Btn2Skin'
+        this.addBtn1000.skinName = UM.coin >= 1000 ?'Btn1Skin':'Btn2Skin'
 
         this.totalText.text = '总投资：' +NumberUtil.addNumSeparator(parseInt(myCost))
         this.myText.text = '我的：' +NumberUtil.addNumSeparator(userCost);

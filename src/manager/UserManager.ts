@@ -17,13 +17,18 @@ class UserManager {
     public nick: string;
     public head: string;
     public dbid: string;
+    public writeKey: string;
     public gender: number;
+    public coin: number = 999;
+    public lastGuess: any = {};
     public isScope: boolean = false;
 
 
     public fill(data:any):void{
         this.dbid = data._id;
-        //CarManager.getInstance().initData(data);
+        this.coin = data.coin || 999;
+        this.lastGuess = data.lastGuess;
+        this.writeKey = data.writeKey;
     }
 
     public renewInfo(userInfo){
@@ -33,51 +38,52 @@ class UserManager {
         this.gender = userInfo.gender || 1 //性别 0：未知、1：男、2：女
     }
 
+    public addCoin(v){
+        if(!v)
+            return;
+        this.coin += v;
+        if(this.coin < 0)
+            this.coin = 0;
+        EM.dispatch(GameEvent.client.COIN_CHANGE)
+    }
+
+
     public getUserInfo(fun){
         var wx = window['wx'];
-        const db = wx.cloud.database();
-
-
+        if(!wx)
+        {
+            this.fill(this.orginUserData());
+            fun && fun();
+            return;
+        }
 
         wx.cloud.callFunction({      //取玩家openID,
             name: 'getInfo',
             complete: (res) => {
                 console.log(res)
                 this.gameid = res.result.openid
-                db.collection('user').where({     //取玩家数据
-                    _openid: this.gameid,
-                }).get({
-                    success: (res)=>{
-                        if(res.data.length == 0)//新用户
-                        {
-                            this.onNewUser(fun)
-                            return;
-                        }
-                        //this.testAddInvite()//debug
-                        this.fill(res.data[0]);
-                        fun && fun();
-                    }
-                })
+                this.loginUser(fun)
             }
         })
-
-
     }
-    //public updateUserInfo(data,fun){
-    //    var wx = window['wx'];
-    //    const db = wx.cloud.database();
-    //
-    //    db.collection('user').doc(this.dbid).update({
-    //        data: {
-    //            isScope:true,
-    //        },
-    //        success: ()=>{
-    //            this.isScope = true;
-    //            fun && fun();
-    //        },
-    //    })
-    //
-    //}
+
+    public loginUser(fun?){
+        var wx = window['wx'];
+        const db = wx.cloud.database();
+        db.collection('user').where({     //取玩家数据
+            _openid: this.gameid,
+        }).get({
+            success: (res)=>{
+                if(res.data.length == 0)//新用户
+                {
+                    this.onNewUser(fun)
+                    return;
+                }
+                this.fill(res.data[0]);
+                fun && fun();
+            }
+        })
+    }
 
     private testAddInvite(){
         var wx = window['wx'];
@@ -101,12 +107,7 @@ class UserManager {
     private onNewUser(fun?){
         var wx = window['wx'];
         const db = wx.cloud.database();
-        var initData:any = {
-            skinNum:1,   //已有皮肤
-            skinid:1,  //当前使用皮肤
-            skinsData:{}, //皮肤相关的额外数据
-            levelData:{}, //关卡数据
-        };
+        var initData:any = this.orginUserData();
         db.collection('user').add({
             data:initData,
             success: (res)=>{
@@ -117,6 +118,21 @@ class UserManager {
         })
 
         this.testAddInvite();
+    }
+
+    private orginUserData(){
+         return {
+             coin:200,   //$
+             writeKey:(Math.random()+'').substr(-8),
+             lastGuess:{
+                 isDeal:2,   //0:未处理，1：处理中，2：处理完
+                 key:0,
+                 cost1:0,
+                 cost2:0,
+                 teamCost1:0,
+                 teamCost2:0,
+             }
+         };
     }
 
 

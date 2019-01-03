@@ -65,7 +65,7 @@ class AwardUI extends game.BaseWindow {
 
     public renew(){
         this.titleText.text = this.title || '恭喜获得'
-        var arr = MyTool.getAwardArr(this.dataIn);
+        var arr =[]// MyTool.getAwardArr(this.dataIn);
         this.list.dataProvider = new eui.ArrayCollection(arr);
         if(this.des)
         {

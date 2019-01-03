@@ -15,15 +15,6 @@ class DebugManager {
     public constructor() {
     }
 
-    //public testHangView = false //在挂机中测试所有单位动画
-    //public MML = 998;  //测试出战怪的等级
-    //public addSkill = false
-    //public addHeroLevel = 0
-    //public maxHeroLevel = 20 //已开放的最大英雄等级
-    //public cardLen = 20
-    //public needTestTwo = false
-    //public createHangFlag = false;
-
 
     public printDetail = false;  //打印胜出怪物
     public winMonster = {}
@@ -56,6 +47,66 @@ class DebugManager {
         return newList.join(',')
     }
 
+    //private createNum = 0;
+    //public createMap(){
+    //    this.outPut = [];
+    //    this.createNum = 0;
+    //    this.testNum = 0;
+    //    setTimeout(()=>{
+    //        this._createMap();
+    //    },1);
+    //}
+    //public _createMap(){
+    //
+    //    var cost = 30 + Math.floor(Math.random()*31)
+    //    var team1 =  this.randomList(cost)
+    //    var team2 =  this.randomList(cost)
+    //    var win1 = 0
+    //    var win2 = 0
+    //    var PD = PKData.getInstance()
+    //    this.testNum ++;
+    //
+    //    for(var i=0;i<10;i++)
+    //    {
+    //        this.testOne(team1,team2)
+    //        var result = PD.getPKResult();
+    //        if(result == 1)
+    //            win1 ++
+    //        else if(result == 2)
+    //            win2 ++
+    //        if(win1 >= 1 && win2 >= 1)
+    //        {
+    //            this.outPut.push({list1:team1,list2:team2});
+    //            this.createNum ++;
+    //            this.testNum = 0;
+    //            console.log('find ' + this.createNum + ' try:' + this.createNum);
+    //            break;
+    //        }
+    //    }
+    //
+    //    if(this.stop == 1)
+    //    {
+    //        for(var i=0;i<this.outPut.length;i++)
+    //        {
+    //            this.outPut[i] = this.format(this.outPut[i])
+    //        }
+    //        egret.localStorage.setItem('mapData', this.outPut.join('\n'));
+    //    }
+    //    else
+    //    {
+    //        if(this.testNum%100 == 0)
+    //        {
+    //            console.log('runing');
+    //            egret.callLater(this._createMap,this);
+    //        }
+    //        else
+    //        {
+    //            this._createMap();
+    //        }
+    //
+    //    }
+    //}
+
 
     private testNum = 0;
     public test(){
@@ -81,7 +132,17 @@ class DebugManager {
         for(var i=0;i<arr.length;i++)
         {
             var id = arr[i].id;
-            console.log((i + 1) + '\tid:' +id +  '\t\tnum:' +  arr[i].num + '\t\tcost:' +  CM.getCardVO(id).cost + '\t\tname:' +  CM.getCardVO(id).name + '\t\tlevel:' +  CM.getCardVO(id).level + '\t\ttype:' +  CM.getCardVO(id).type)
+            arr[i].rate =arr[i].num*Math.pow(CM.getCardVO(id).cost,0.8)
+            console.log((i + 1) + '\tid:' +id +  '\t\tnum:' +  arr[i].num + '\t\tcost:' +  CM.getCardVO(id).cost + '\t\tname:' +  CM.getCardVO(id).name  + '\t\ttype:' +  CM.getCardVO(id).type)
+        }
+
+        console.log("\n\n======================================================================\n\n")
+        ArrayUtil.sortByField(arr,['rate'],[1]);
+        for(var i=0;i<arr.length;i++)
+        {
+            var id = arr[i].id;
+            arr[i].rate =arr[i].num*CM.getCardVO(id).cost
+            console.log((i + 1) + '\tid:' +id +  '\t\trate:' + arr[i].rate + '\t\tcost:' +  CM.getCardVO(id).cost + '\t\tname:' +  CM.getCardVO(id).name + '\t\ttype:' +  CM.getCardVO(id).type + '\t\tnum:' +  arr[i].num)
         }
 
     }
@@ -92,7 +153,7 @@ class DebugManager {
         var arr = []
         var n = 1024;
 
-        var cost = 30 + Math.floor(Math.random()*31)
+        var cost = 30 + Math.floor(Math.random()*20)
         for(var i=0;i<n;i++)
         {
             arr.push(this.randomList(cost))
@@ -119,8 +180,12 @@ class DebugManager {
                 return
             }
         }
-        this.outPut.push({list1:arr[0],list2:arr[1]});
+
+        var xxx = {list1:arr[0],list2:arr[1]};
         arr = this.testOne(arr.shift(),arr.shift())
+
+        if(!PKData.getInstance().isDraw())
+            this.outPut.push(xxx);
         for(var i=0;i<arr.length;i++)
         {
             var temp = arr[i].split(',');
@@ -172,7 +237,6 @@ class DebugManager {
                 {id:2,gameid:'test2',team:2,autolist:list2,force:10000,type:0,hp:1}
             ]
         };
-        PKManager.getInstance().pkType = PKManager.TYPE_TEST
         PD.init(data);
         PD.quick = true;
         PD.start();
@@ -180,24 +244,26 @@ class DebugManager {
 
         if(PD.isWin())
         {
-            //list1.useCard = PD.getPlayer(1).useCardList;
-            //this.winUseCard = this.winUseCard.concat( list1.useCard)
             return [list1];
         }
         else if(PD.isDraw())
         {
-            //list1.useCard = PD.getPlayer(1).useCardList;
-            //list2.useCard = PD.getPlayer(2).useCardList;
-            //this.winUseCard = this.winUseCard.concat( list1.useCard)
-            //this.winUseCard = this.winUseCard.concat( list2.useCard)
             return [list1,list2];
         }
         else
         {
-            //list2.useCard = PD.getPlayer(2).useCardList;
-            //this.winUseCard = this.winUseCard.concat( list2.useCard)
             return [list2];
         }
+    }
+
+    public getCost(list){
+        var arr = list.split(',')
+        var cost = 0;
+        for(var i=0;i<arr.length;i++)
+        {
+            cost += MonsterVO.getObject(arr[i]).cost;
+        }
+        console.log(cost);
     }
 }
 

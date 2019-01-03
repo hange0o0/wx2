@@ -33,7 +33,7 @@ class PKCode {
             PD.disableKey = {};
             cd -= PKConfig.stepCD;
 
-            if(PD.actionTime%1000 == 0)
+            if(PD.actionTime%2000 == 0)
                 this.autoAction();
             //this.actionPosCard();
             //this.addMonster();
@@ -59,10 +59,13 @@ class PKCode {
                 cd = 0;
                 PD.startTime = TM.nowMS() - PD.actionTime + PD.speedAddTime;
                 PD.startTime -= TM.nowMS() - runStart;//扣去运行时间
+
+                PKVideoCon.getInstance().resetView();
             }
         }
         return false;
     }
+
     ///////////////*********************************************************
 
     ////英雄出动
@@ -205,7 +208,7 @@ class PKCode {
                     })
                     continue;
                 }
-                PD.getPlayer(mvo.owner).teamData.enemy.hp -= mvo.getVO().atk2;
+                PD.getPlayer(mvo.owner).teamData.enemy.hp -= 1;
                 if(PD.getPlayer(mvo.owner).teamData.enemy.hp <= 0)
                 {
                     //console.log(PD.getPlayer(mvo.owner).teamData.enemy)

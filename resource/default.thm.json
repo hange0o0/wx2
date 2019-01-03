@@ -49,11 +49,7 @@
 		"resource/skin/game/pk/ui/scene/PKTalkItemSkin.exml",
 		"resource/skin/game/pk/ui/scene/PKTotemSkin.exml",
 		"resource/skin/game/pk/ui/scene/PKVideoConSkin.exml",
-		"resource/skin/game/pkRelate/PKCardInfoItemSkin.exml",
-		"resource/skin/game/pkRelate/result/PKAwardItemSkin.exml",
-		"resource/skin/game/pkRelate/result/PKFailItemSkin.exml",
-		"resource/skin/game/pkRelate/result/PKFailUISkin.exml",
-		"resource/skin/game/pkRelate/result/PKWinUISkin.exml"
+		"resource/skin/game/pkRelate/PKCardInfoItemSkin.exml"
 	],
 	"path": "resource/default.thm.json"
 }

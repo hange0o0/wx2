@@ -15,6 +15,8 @@ class MainPKUI extends game.BaseItem {
     private failText2: eui.Label;
 
 
+    public showData;
+    public finish = false
 
     public childrenCreated() {
         super.childrenCreated();
@@ -25,15 +27,28 @@ class MainPKUI extends game.BaseItem {
         pkvideo.x = -(PKConfig.floorWidth + PKConfig.appearPos*2 - 640)/2;
     }
 
-    public show(){
+    public show(data){
+        if(this.visible)
+            return;
+        //console.log('show' , egret.getTimer())
+        this.showData = data,
         this.visible = true;
+        this.finish = false
+
+        this.winGroup.visible = false;
+        this.failGroup.visible = false;
+
+
         this.reset();
         this.addEventListener(egret.Event.ENTER_FRAME,this.onStep,this)
     }
 
     public hide(){
+        //console.log('hide' , egret.getTimer())
         this.visible = false;
         this.removeEventListener(egret.Event.ENTER_FRAME,this.onStep,this)
+        PKVideoCon.getInstance().remove();
+        PKManager.getInstance().testSendResult();
     }
 
     //public renew(){
@@ -45,38 +60,68 @@ class MainPKUI extends game.BaseItem {
 
     public reset(){
         var data = {
-            seed:TM.now(),
+            seed:this.showData.seed,
             players:[
-                {id:1,gameid:UM.gameid,team:1,force:100,hp:1,autolist:'1,2,3,4,5,6,7,8'},
-                {id:2,gameid:'npc',team:2,force:100,hp:1,autolist:'1,2,3,4,5,6,7,8'}
+                {id:1,gameid:'team1',team:1,force:this.showData.force1,hp:1,autolist:this.showData.list1},
+                {id:2,gameid:'team2',team:2,force:this.showData.force2,hp:1,autolist:this.showData.list2}
             ]
         };
-        PKManager.getInstance().pkType = PKManager.TYPE_MAIN_HANG
         PKBulletManager.getInstance().freeAll();
         var PD = PKData.getInstance();
         PD.init(data);
-        PD.isReplay = true
+        if(this.showData.passTime && this.showData.passTime > 0)
+        {
+            PD.quick = true;
+            PD.quickTime = this.showData.passTime*1000;
+        }
+
         PKVideoCon.getInstance().init();
+
 
         PD.start();
         this.onStep()
     }
 
     public onStep(){
+        if(this.finish)
+            return;
         var PD = PKData.getInstance();
         var PC = PKCode.getInstance();
-        var cd = PD.getPassTime() - PD.actionTime
-        if(cd > 1000*5)
-        {
-            this.reset();
-            return;
-        }
+
         PC.onStep();
         PKVideoCon.getInstance().action();
         if(PD.isGameOver ||  (PD.actionTime > 3000 && PD.monsterList.length == 0))
         {
-            if(PD.isGameOver)
-                return;
+            this.finish = true;
+            var result = PD.getPKResult();
+            if(this.showData.key)
+                PKManager.getInstance().pkResult[this.showData.key] = PD.getPKResult();
+            if(result ==3)
+            {
+                this.failGroup.visible = false;
+                this.failText.text = '平手，庄家通吃'
+            }
+            else if(this.showData.myChoose)
+            {
+                if(result == this.showData.myChoose)
+                {
+                    this.winGroup.visible = true;
+                    this.winText.text = '胜利'
+                }
+                else
+                {
+                    this.failGroup.visible = true;
+                    this.failText.text = '失败'
+                }
+            }
+            else
+            {
+                this.winGroup.visible = true;
+                this.winText.text = result +  '队获胜'
+            }
+
+            PKManager.getInstance().testSendResult();
+
         }
     }
 }
