@@ -41,7 +41,7 @@ class TeamUI extends game.BaseItem {
         for(var i=this.monsterArr.length-1;i>=0;i--)
         {
             var mc = this.monsterArr[i];
-            if(mc.hitTestPoint(x,y,true))
+            if(mc.currentMV.hitTestPoint(x,y,true))
             {
                 console.log(mc.id);
                 break;
@@ -83,6 +83,20 @@ class TeamUI extends game.BaseItem {
         GameUI.getInstance().onTimer();
     }
 
+    private lastTalk = 0
+    public randomTalk(){
+        if(Math.random() > 0.5)
+            return;
+        var item = this.monsterArr[Math.floor(this.monsterArr.length*Math.random())];
+        if(item && !item.talkItm)
+        {
+            if(egret.getTimer() < this.lastTalk)
+                return;
+            item.talk();
+            this.lastTalk = egret.getTimer() + 3000 + Math.floor(Math.random()*2000);
+        }
+    }
+
     public showList(arr) {
         //var arr = [1,2,3,4,5,6,7,8,9,10,11,12]
         //ArrayUtil.random(arr,3);
@@ -93,7 +107,7 @@ class TeamUI extends game.BaseItem {
         }
 
 
-        var des = Math.min(520/(arr.length-1),80)
+        var des = Math.min(500/(arr.length-1),80)
         var begin = (640-des*(arr.length-1))/2
         for(var i=0;i<arr.length;i++)
         {
@@ -135,18 +149,20 @@ class TeamUI extends game.BaseItem {
             var userCost =  UM.lastGuess.cost2;
         }
 
-        this.addBtn1.skinName = UM.coin >= 1 ?'Btn1Skin':'Btn2Skin'
-        this.addBtn10.skinName = UM.coin >= 10 ?'Btn1Skin':'Btn2Skin'
-        this.addBtn100.skinName = UM.coin >= 100 ?'Btn1Skin':'Btn2Skin'
-        this.addBtn1000.skinName = UM.coin >= 1000 ?'Btn1Skin':'Btn2Skin'
+        this.addBtn1.skinName = UM.coin >= 1 ?'Btn1Skin':'Btn3Skin'
+        this.addBtn10.skinName = UM.coin >= 10 ?'Btn1Skin':'Btn3Skin'
+        this.addBtn100.skinName = UM.coin >= 100 ?'Btn1Skin':'Btn3Skin'
+        this.addBtn1000.skinName = UM.coin >= 1000 ?'Btn1Skin':'Btn3Skin'
 
-        this.totalText.text = '总投资：' +NumberUtil.addNumSeparator(parseInt(myCost))
-        this.myText.text = '我的：' +NumberUtil.addNumSeparator(userCost);
-        this.myText.textColor = userCost > 0?0x00ff00:0xffffff
+        this.setHtml(this.totalText,this.createHtml('总投资：',0xFFCC8C) +NumberUtil.addNumSeparator(parseInt(myCost)));
+        this.setHtml(this.myText,this.createHtml('我的：',0xFFCC8C) +this.createHtml(NumberUtil.addNumSeparator(userCost),userCost > 0?0x00ff00:0xffffff));
+        //this.myText.text = '我的：' +NumberUtil.addNumSeparator(userCost);
+        //this.myText.textColor = userCost > 0?0x00ff00:0xffffff
 
         var rate = PKM.getMoneyRate(myCost,otherCost);
-        this.rateText.text = '赔率：' +rate + '%'
-        this.rateText.textColor = rate > 150?0x00ff00:0xffffff
+        this.setHtml(this.rateText,this.createHtml('赔率：',0xFFCC8C) +this.createHtml(rate+'%',rate > 150?0x00ff00:0xffffff));
+        //this.rateText.text = '赔率：' +rate + '%'
+        //this.rateText.textColor = rate > 150?0x00ff00:0xffffff
 
         var addForce =  PKM.getForceAdd(myCost);
         if(addForce)

@@ -27,7 +27,7 @@ class PKMonsterItem extends game.BaseItem {
 
 
 
-   public talkItm:PKTalkItem;
+
 
     public addStateList = [];
     public monsterMV:PKMonsterMV = new PKMonsterMV();
@@ -302,11 +302,6 @@ class PKMonsterItem extends game.BaseItem {
         egret.Tween.removeTweens(this.barGroup);
         MyTool.removeMC(this);
         this.monsterMV.stop();
-        if(this.talkItm)
-        {
-            PKTalkItem.freeItem(this.talkItm)
-            this.talkItm = null;
-        }
 
         while(this.addStateList.length > 0)
         {
@@ -321,13 +316,4 @@ class PKMonsterItem extends game.BaseItem {
 
     }
 
-    public talk(){
-        if(this.data.mid == 99)
-            return;
-        if(this.data.hp < 10)
-            return;
-        this.talkItm = PKTalkItem.createItem();
-        this.talkItm.setData(this);
-        this.addChildAt(this.talkItm,0);
-    }
 }

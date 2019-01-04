@@ -76,6 +76,8 @@ class GameUI extends game.BaseUI {
 
     public onShow(){
         var self = this;
+        this.onCoinChange();
+        this.cdText.text = '加载中'
         this.loadingGroup.visible = true;
         egret.Tween.get(this.loadMC,{loop:true}).to({rotation:360},3000)
         self.loadText.text = '0%'
@@ -170,6 +172,8 @@ class GameUI extends game.BaseUI {
         var costData = PKM.getCost(this.showData.seed,60*7 - cd)
         this.team1.renewCost(costData);
         this.team2.renewCost(costData);
+        this.team1.randomTalk();
+        this.team2.randomTalk();
     }
 
     public playGame(){

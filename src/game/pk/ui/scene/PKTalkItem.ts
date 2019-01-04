@@ -26,7 +26,7 @@ class PKTalkItem extends game.BaseContainer {
     public active = false
     private h = 110;
     private w = 161;
-    private relateItem:PKMonsterItem;
+    private relateItem:PKMonsterMV;
     public childrenCreated() {
         super.childrenCreated();
 
@@ -43,8 +43,8 @@ class PKTalkItem extends game.BaseContainer {
         this.relateItem = data;
 
 
-        this.x = 50;
-        if(this.relateItem.data.atkRota == PKConfig.ROTA_RIGHT)
+        this.x = 0;
+        if(this.relateItem.scaleX > 0)
         {
             this.bg.scaleX = -1
             this.anchorOffsetX = 0.4*this.w;
@@ -54,7 +54,7 @@ class PKTalkItem extends game.BaseContainer {
             this.bg.scaleX = 1
             this.anchorOffsetX = 0.6*this.w;
         }
-        this.y = data.barGroup.y+10;
+        this.y = -data.showHeight()*0.9;
 
 
         egret.Tween.removeTweens(this);

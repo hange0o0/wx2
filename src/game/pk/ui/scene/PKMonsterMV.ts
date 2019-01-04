@@ -20,6 +20,7 @@ class PKMonsterMV extends eui.Group {
     public monsterMV:MonsterMV
     //public heroMV:HeroMVItem
     public currentMV;
+    public talkItm:PKTalkItem;
 
     public id;
     public set speed(v){
@@ -37,6 +38,16 @@ class PKMonsterMV extends eui.Group {
     public remove(){
         this.stop()
         MyTool.removeMC(this);
+
+        if(this.talkItm)
+        {
+            PKTalkItem.freeItem(this.talkItm)
+            this.talkItm = null;
+        }
+    }
+
+    public showHeight(){
+        return MonsterVO.getObject(this.id).height
     }
 
      public load(id){
@@ -89,4 +100,10 @@ class PKMonsterMV extends eui.Group {
      public die(){
          this.currentMV.die();
      }
+
+    public talk(){
+        this.talkItm = PKTalkItem.createItem();
+        this.talkItm.setData(this);
+        this.addChildAt(this.talkItm,0);
+    }
 }

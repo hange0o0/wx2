@@ -66,6 +66,11 @@ class MainPKUI extends game.BaseItem {
     //    this.addEventListener(egret.Event.ENTER_FRAME,this.onStep,this)
     //}
 
+    public reView(){
+        this.showData.passTime = 0;
+        this.reset();
+    }
+
     public reset(){
         var data = {
             seed:this.showData.seed,
