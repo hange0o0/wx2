@@ -33,6 +33,7 @@
 		"resource/skin/debug/DebugSkillListSkin.exml",
 		"resource/skin/debug/DebugUISkin.exml",
 		"resource/skin/debug/ScrollTestSkin.exml",
+		"resource/skin/game/AddCoinItemSkin.exml",
 		"resource/skin/game/pkRelate/PKCardInfoSkin.exml",
 		"resource/skin/game/card/CardInfoUISkin.exml",
 		"resource/skin/game/common/AwardItemSkin.exml",

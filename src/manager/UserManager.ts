@@ -17,7 +17,7 @@ class UserManager {
     public nick: string;
     public head: string;
     public dbid: string;
-    public writeKey: string;
+    //public writeKey: string;
     public gender: number;
     public coin: number = 999;
     public lastGuess: any = {};
@@ -28,7 +28,7 @@ class UserManager {
         this.dbid = data._id;
         this.coin = data.coin || 999;
         this.lastGuess = data.lastGuess;
-        this.writeKey = data.writeKey;
+        //this.writeKey = data.writeKey;
     }
 
     public renewInfo(userInfo){
@@ -56,15 +56,18 @@ class UserManager {
             fun && fun();
             return;
         }
-
-        wx.cloud.callFunction({      //取玩家openID,
-            name: 'getInfo',
-            complete: (res) => {
-                console.log(res)
-                this.gameid = res.result.openid
-                this.loginUser(fun)
-            }
-        })
+        //wx.login({
+        //    success:()=>{
+                wx.cloud.callFunction({      //取玩家openID,
+                    name: 'getInfo',
+                    complete: (res) => {
+                        console.log(res)
+                        this.gameid = res.result.openid
+                        this.loginUser(fun)
+                    }
+                })
+        //    }
+        //})
     }
 
     public loginUser(fun?){
@@ -123,16 +126,19 @@ class UserManager {
     private orginUserData(){
          return {
              coin:200,   //$
-             writeKey:(Math.random()+'').substr(-8),
-             lastGuess:{
-                 isDeal:2,   //0:未处理，1：处理中，2：处理完
-                 key:0,
-                 cost1:0,
-                 cost2:0,
-                 teamCost1:0,
-                 teamCost2:0,
-             }
+             lastGuess:this.getGuessInitData(0)
          };
+    }
+
+    public getGuessInitData(key){
+        return {
+            isDeal:0,   //0:未处理，1：处理中，2：处理完
+            key:key,
+            cost1:0,
+            cost2:0,
+            teamCost1:0,
+            teamCost2:0,
+        }
     }
 
 

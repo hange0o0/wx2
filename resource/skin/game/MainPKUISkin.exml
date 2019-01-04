@@ -11,7 +11,7 @@
 			<e:List id="list" width="200" height="200" x="155" y="118"/>
 		</e:Group>
 	</e:Scroller>
-	<e:Group id="winGroup" y="100" horizontalCenter="0" visible="false">
+	<e:Group id="winGroup" y="230" horizontalCenter="0" height="265" anchorOffsetY="130">
 		<e:Group x="0" y="0">
 		<e:Image x="0" y="0" source="pk_win_png"/>
 		<e:Image x="0" y="0" scaleX="-1" source="pk_win_png"/>
@@ -20,9 +20,16 @@
 		</e:layout>
 		</e:Group>
 		<e:Label id="winText" text="挑战成功" y="118" x="190" textColor="0xFCE492" strokeColor="0xFFFFFF"/>
-		<e:Label id="winText2" text="Label" y="290" horizontalCenter="0" textColor="0xffe89e"/>
+		<e:Group id="desGroup" y="288" horizontalCenter="0">
+			<e:Label id="des1" text="Label" y="12" textColor="0xFFE89E" x="51"/>
+			<e:Image source="icon_coin_png" x="0" y="0"/>
+			<e:Label id="des2" text="Label" y="2" textColor="0xffe89e" x="41"/>
+			<e:layout>
+				<e:HorizontalLayout verticalAlign="middle"/>
+			</e:layout>
+		</e:Group>
 	</e:Group>
-	<e:Group id="failGroup" y="100" horizontalCenter="0" visible="false">
+	<e:Group id="failGroup" horizontalCenter="0" y="230" height="265" anchorOffsetY="130">
 		<e:Group x="0" y="0">
 		<e:Image source="pk_fail_png" x="0" y="0"/>
 		<e:Image source="pk_fail_png" x="0" y="0" scaleX="-1"/>
@@ -31,7 +38,6 @@
 		</e:layout>
 		</e:Group>
 		<e:Label id="failText" text="挑战失败" y="119" stroke="3" x="190"/>
-		<e:Label id="failText2" text="Label" y="290" horizontalCenter="0" textColor="0xFFE89E"/>
 	</e:Group>
 
 </e:Skin>

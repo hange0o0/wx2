@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="TeamUISkin" width="640" height="400" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Group id="con" left="0" right="0" top="0" bottom="0" scrollEnabled="true">
+	<e:Group id="con" left="0" right="0" top="0" bottom="0" scrollEnabled="true" touchChildren="false">
 		<e:Image id="bg" horizontalCenter="0" bottom="100" x="320" y="300"/>
 	</e:Group>
 	<e:Image source="line2_png" fillMode="repeat" left="0" right="0" y="0"/>

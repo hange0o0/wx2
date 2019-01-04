@@ -5,6 +5,7 @@ class PKMonsterMV extends eui.Group {
         if(!item)
         {
             item = new PKMonsterMV();
+            item.touchChildren = item.touchEnabled =false;
         }
         return item;
     }
@@ -20,6 +21,7 @@ class PKMonsterMV extends eui.Group {
     //public heroMV:HeroMVItem
     public currentMV;
 
+    public id;
     public set speed(v){
         this.currentMV.speed = v;
     }
@@ -38,34 +40,21 @@ class PKMonsterMV extends eui.Group {
     }
 
      public load(id){
+         this.id = id;
          //if(id == 1)
          //    id = 101
          var vo = MonsterVO.getObject(id)
          if(this.currentMV)
              this.currentMV.stop();
          MyTool.removeMC(this.currentMV)
-         //if(vo.isHero())
-         //{
-         //     if(!this.heroMV)
-         //     {
-         //         this.heroMV = new HeroMVItem()
-         //         this.heroMV.addEventListener('mv_die',this.fireDie,this)
-         //     }
-         //    this.currentMV = this.heroMV;
-         //    this.addChild(this.heroMV)
-         //    this.heroMV.load(id)
-         //}
-         //else
-         //{
-             if(!this.monsterMV)
-             {
-                 this.monsterMV = new MonsterMV()
-                 this.monsterMV.addEventListener('mv_die',this.fireDie,this)
-             }
-             this.currentMV = this.monsterMV;
-             this.addChild(this.monsterMV)
-             this.monsterMV.load(id)
-         //}
+         if(!this.monsterMV)
+         {
+             this.monsterMV = new MonsterMV()
+             this.monsterMV.addEventListener('mv_die',this.fireDie,this)
+         }
+         this.currentMV = this.monsterMV;
+         this.addChild(this.monsterMV)
+         this.monsterMV.load(id)
      }
 
     private fireDie(){

@@ -177,6 +177,8 @@ class PKCode {
     //一轮操作结束,移队死，过线的，结算,清除BUFF
     public actionFinish(){
         var PD = PKData.getInstance();
+        var teamNum1 = 0
+        var teamNum2 = 0
         for(var i=0;i<PD.monsterList.length;i++)
         {
             var mvo:PKMonsterData = PD.monsterList[i];
@@ -236,9 +238,28 @@ class PKCode {
                     })
                 }
             }
+            if(mvo.getOwner().teamData.id == 1)
+                teamNum1 ++;
+            else if(mvo.getOwner().teamData.id == 2)
+                teamNum2 ++;
         }
         PD.team1.onStateTimer();
         PD.team2.onStateTimer();
+
+        if(!PD.isGameOver)
+        {
+            if(teamNum1 == 0 && PD.getPlayer(1).autoList.length == 0)
+            {
+                PD.getPlayer(1).teamData.hp = 0;
+                PD.isGameOver = true;
+            }
+            if(teamNum2 == 0 && PD.getPlayer(2).autoList.length == 0)
+            {
+                PD.getPlayer(2).teamData.hp = 0;
+                PD.isGameOver = true;
+            }
+        }
+
 
 
         //if(!PD.isReplay)

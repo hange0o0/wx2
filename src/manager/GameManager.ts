@@ -182,6 +182,7 @@ if(window["wx"])
     wx.onHide(function(res){
         if(!GameManager.stage)
             return;
+        PKManager.getInstance().callSendCost();
         SoundManager.getInstance().stopBgSound();
         GameManager.stage.dispatchEventWith(egret.Event.DEACTIVATE);
         console.log('hide')

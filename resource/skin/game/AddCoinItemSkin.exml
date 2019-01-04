@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="AddCoinItemSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="icon_coin_png" x="0" y="0"/>
+	<e:Label id="addText" text="+1000" x="60" verticalCenter="0" textColor="0xffe29e"/>
+</e:Skin>

@@ -57,10 +57,18 @@ class PKManager {
 
     public roundData;
 
-    public getPKBG(index = -999){
-        if(index == -999)
-            index = this.getCurrentIndex();
-        index = (index)%7 || 7
+    public getPKBG(showData?){
+        showData = showData || this.getCurrentData()
+        var mapNum = 7
+        var index;
+        if(!showData)
+        {
+            index = this.getTodayIndex()%mapNum || mapNum
+        }
+        else
+        {
+            index = Math.ceil(this.random(showData.seed)*mapNum)
+        }
         return 'map'+index+'_jpg'
     }
 
@@ -87,7 +95,7 @@ class PKManager {
             this.sendTimer = setTimeout(()=>{
                 this.sendTimer = 0;
                 this.sendCost();
-            },5000)
+            },500)
         }
     }
 
@@ -123,11 +131,12 @@ class PKManager {
     }
 
     private randomSeed;
-    private random(){
-        var seed = this.randomSeed;
+    private random(seedIn?){
+        var seed = seedIn || this.randomSeed;
         seed = ( seed * 9301 + 49297 ) % 233280;
         var rd = seed / ( 233280.0 );
-        this.randomSeed = rd * 100000000;
+        if(!seedIn)
+            this.randomSeed = rd * 100000000;
         return rd;
     }
     //取某一时间的花费情况
@@ -208,7 +217,6 @@ class PKManager {
             fun && fun(loader.data);
         },this);
 
-        //var index = PKManager.getInstance().getTodayIndex();
         var url = 'resource/level/level_'+index+'.txt'
         loader.load(new egret.URLRequest(url));
 
@@ -218,35 +226,37 @@ class PKManager {
 
     //结算投注信息
     public testSendResult(){
-        if(UM.lastGuess.isDeal == 0 && (UM.lastGuess.cost1 || UM.lastGuess.cost2) && this.getCurrentKey() != UM.lastGuess.key)//需要结算
+        if(this.getCurrentKey() != UM.lastGuess.key)
         {
-            var showData = UM.lastGuess
-            showData.isDeal = 1;
-            this.getPKResult(showData,(result)=>{
-                showData.isDeal = 2;
-                var addCoin = 0;
-                var costData = this.getCost(showData.seed,999999)
-                var teamCost1 = costData.cost1 + showData.teamCost1;
-                var teamCost2 = costData.cost2 + showData.teamCost2;
-                if(result == 1)
-                {
-                    var rate = this.getMoneyRate(teamCost1,teamCost2)
-                    addCoin += Math.round(showData.cost1*rate/100)
-                }
-                else if(result == 2)
-                {
-                    var rate = this.getMoneyRate(teamCost2,teamCost1)
-                    addCoin += Math.round(showData.cost2*rate/100)
-                }
+            if(UM.lastGuess.key && UM.lastGuess.isDeal == 0 && (UM.lastGuess.cost1 || UM.lastGuess.cost2))//需要结算
+            {
+                var showData = UM.lastGuess
+                showData.isDeal = 1;
+                this.getPKResult(showData,(result)=>{
+                    showData.isDeal = 2;
+                    var addCoin = this.getAddCoin(showData,result)
+                    if(addCoin)
+                    {
+                        MyWindow.ShowTips('你在上一轮竞猜中，获得了'+NumberUtil.addNumSeparator(addCoin)+'金币')
+                    }
+                    UM.addCoin(addCoin)
 
-                UM.addCoin(addCoin)
-                UM.lastGuess = showData;
-                WXDB.updata('user',{
-                    coin:UM.coin,
-                    lastGuess:UM.lastGuess,
+                    WXDB.updata('user',{
+                        coin:UM.coin,
+                        lastGuess:showData,
+                    })
+                    UM.lastGuess = UM.getGuessInitData(this.getCurrentKey());
                 })
-            })
-            return false;
+                return false;
+            }
+            else if(UM.lastGuess.isDeal == 1)
+            {
+                return false;
+            }
+            else
+            {
+                UM.lastGuess = UM.getGuessInitData(this.getCurrentKey());
+            }
         }
         return true;
 
@@ -260,10 +270,34 @@ class PKManager {
         //},b=>{console.log(b)})
     }
 
+    public getAddCoin(showData,result){
+        var addCoin = 0;
+        var roundData = this.getRoundDataByKey(showData.key);
+        var costData = this.getCost(roundData.seed,999999)
+        var teamCost1 = costData.cost1 + showData.teamCost1;
+        var teamCost2 = costData.cost2 + showData.teamCost2;
+        if(result == 1)
+        {
+            var rate = this.getMoneyRate(teamCost1,teamCost2)
+            addCoin += Math.round(showData.cost1*rate/100)
+        }
+        else if(result == 2)
+        {
+            var rate = this.getMoneyRate(teamCost2,teamCost1)
+            addCoin += Math.round(showData.cost2*rate/100)
+        }
+
+        return addCoin;
+    }
+
     //取PK结果
     public getPKResult(data,fun){
         if(this.pkResult[data.key])
-            return this.pkResult[data.key];
+        {
+            fun(this.pkResult[data.key]);
+            return ;
+        }
+
         var day = Math.floor(data.key/1000)
         var index = Math.floor(data.key%1000)
         this.loadLevelData(day,(levelData)=>{
@@ -289,6 +323,14 @@ class PKManager {
             fun(PD.getPKResult());
             PKData.instanceIndex = 1;
         })
+    }
+
+    //保证已加载了
+    public getRoundDataByKey(key){
+        var day = Math.floor(key/1000)
+        var index = Math.floor(key%1000)
+        var arr = this.levelData[day].split('\n')
+        return JSON.parse(arr[index])
     }
 
     //发送投注信息

@@ -36,9 +36,12 @@ class GameUI extends game.BaseUI {
         super.childrenCreated();
         this.addBtnEvent(this.settingBtn,this.onClick)
         this.addBtnEvent(this.mailBtn,this.onMail)
+        this.addBtnEvent(this.shopBtn,this.onShop)
 
         this.team1.teamID = 1
         this.team2.teamID = 2
+
+        this.mainPKUI.addEventListener('visible_change',this.onMainVisibleChange,this)
     }
 
     public onClick(){
@@ -46,6 +49,14 @@ class GameUI extends game.BaseUI {
     }
     public onMail(){
         this.mainPKUI.hide();
+        this.team1.visible = this.team2.visible = !this.mainPKUI.visible
+    }
+
+    public onShop(){
+        UM.addCoin(1000);
+        WXDB.updata('user',{
+            coin:UM.coin,
+        })
     }
 
     public show(){
@@ -118,9 +129,10 @@ class GameUI extends game.BaseUI {
         {
             if(this.showIndex != -1)
             {
-                 if(this.mainPKUI.visible && this.mainPKUI.showData.isMain)
+                 if(this.mainPKUI.visible && this.mainPKUI.finish && this.mainPKUI.showData.isMain)
                  {
                      this.mainPKUI.hide();
+                     this.team1.visible = this.team2.visible = !this.mainPKUI.visible
                  }
             }
             this.showIndex = index;
@@ -135,6 +147,7 @@ class GameUI extends game.BaseUI {
                 this.team1.showList([])
                 this.team2.showList([])
             }
+            PKManager.getInstance().testSendResult();
         }
         if(!this.showData)
         {
@@ -175,6 +188,12 @@ class GameUI extends game.BaseUI {
             force1:PKM.getForceAdd(costData.cost1 + UM.lastGuess.teamCost1) + PKM.baseForce,
             force2:PKM.getForceAdd(costData.cost2 + UM.lastGuess.teamCost2) + PKM.baseForce
         });
+
+
+    }
+
+    public onMainVisibleChange(){
+        this.team1.visible = this.team2.visible = !this.mainPKUI.visible
     }
 
 

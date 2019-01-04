@@ -12,8 +12,6 @@ class PKVideoCon extends game.BaseContainer {
     }
     private con: eui.Group;
     private bg: eui.Image;
-    private door1: eui.Image;
-    private door2: eui.Image;
 
 
 
@@ -25,8 +23,6 @@ class PKVideoCon extends game.BaseContainer {
 
 
     private monsterY = 400;
-    private tw1
-    private tw2
     private isHang
 
     public childrenCreated() {
@@ -36,37 +32,18 @@ class PKVideoCon extends game.BaseContainer {
 
         PKData.getInstance().addEventListener('video',this.onVideoEvent,this);
 
-        var tw = this.tw1 =  egret.Tween.get(this.door1,{loop:true});
-        this.door1.rotation = 0;
-        tw.to({rotation:360},3000)
-        this.tw1.setPaused(true);
-
-        var tw = this.tw2 =  egret.Tween.get(this.door2,{loop:true});
-        this.door2.rotation = 0;
-        tw.to({rotation:360},3000)
-        this.tw1.setPaused(true);
 
 
     }
 
-    public init(isHang?){
-        this.isHang = isHang;
+    public init(showData?){
         this.bg.visible = !this.isHang;
 
         if(this.bg.visible)
-            this.bg.source = PKManager.getInstance().getPKBG();
+            this.bg.source = PKManager.getInstance().getPKBG(showData);
 
         this.remove();
-        if(PKData.getInstance().myPlayer.teamData.atkRota == PKConfig.ROTA_LEFT)
-        {
-            this.door1.source = 'door_png'
-            this.door2.source = 'door2_png'
-        }
-        else
-        {
-            this.door1.source = 'door2_png'
-            this.door2.source = 'door_png'
-        }
+
     }
 
     public remove(){
@@ -86,8 +63,6 @@ class PKVideoCon extends game.BaseContainer {
             var item = this.totemArr.pop();
             PKTotem.freeItem(item);
         }
-        this.tw1.setPaused(false);
-        this.tw2.setPaused(false);
     }
 
     public resetView(){

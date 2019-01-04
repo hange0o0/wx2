@@ -30,6 +30,24 @@ class TeamUI extends game.BaseItem {
         this.addBtnEvent(this.addBtn10,this.onClick10)
         this.addBtnEvent(this.addBtn100,this.onClick100)
         this.addBtnEvent(this.addBtn1000,this.onClick1000)
+
+        this.addBtnEvent(this.con,this.onMClick)
+    }
+
+    private onMClick(e){
+        var x = e.stageX;
+        var y = e.stageY;
+
+        for(var i=this.monsterArr.length-1;i>=0;i--)
+        {
+            var mc = this.monsterArr[i];
+            if(mc.hitTestPoint(x,y,true))
+            {
+                console.log(mc.id);
+                break;
+            }
+        }
+
     }
 
     private onClick1() {
@@ -58,6 +76,7 @@ class TeamUI extends game.BaseItem {
             UM.lastGuess.cost2 += v
             UM.lastGuess.teamCost2 += v
         }
+        AddCoinItem.showMV(v,this);
         PKManager.getInstance().costChange = true
         UM.addCoin(-v);
         PKManager.getInstance().callSendCost();
@@ -123,7 +142,11 @@ class TeamUI extends game.BaseItem {
 
         this.totalText.text = '总投资：' +NumberUtil.addNumSeparator(parseInt(myCost))
         this.myText.text = '我的：' +NumberUtil.addNumSeparator(userCost);
-        this.rateText.text = '赔率：' +PKM.getMoneyRate(myCost,otherCost) + '%'
+        this.myText.textColor = userCost > 0?0x00ff00:0xffffff
+
+        var rate = PKM.getMoneyRate(myCost,otherCost);
+        this.rateText.text = '赔率：' +rate + '%'
+        this.rateText.textColor = rate > 150?0x00ff00:0xffffff
 
         var addForce =  PKM.getForceAdd(myCost);
         if(addForce)

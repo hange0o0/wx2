@@ -2,7 +2,7 @@ class PKData extends egret.EventDispatcher{
     private static instance:PKData;
     private static instance2:PKData;
     public static instanceIndex = 1
-    public static getInstance() {
+    public static getInstance():PKData {
         if(this.instanceIndex == 1)
         {
             if (!this.instance) this.instance = new PKData();
