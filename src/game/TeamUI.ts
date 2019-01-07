@@ -44,6 +44,7 @@ class TeamUI extends game.BaseItem {
             if(mc.currentMV.hitTestPoint(x,y,true))
             {
                 console.log(mc.id);
+                CardInfoUI.getInstance().show(mc.id)
                 break;
             }
         }
@@ -118,6 +119,9 @@ class TeamUI extends game.BaseItem {
             item.load(id)
             item.stand();
             item.scaleX = item.scaleY = 1.2;
+            item.currentMV.scaleX = Math.abs(item.currentMV.scaleX);
+            if(this.teamID == 1)
+                item.currentMV.scaleX *= -1
             item.bottom = 80+vo.height*1.2// + Math.random()*80
             item['w'] = vo.width
             item.x = begin + i*des

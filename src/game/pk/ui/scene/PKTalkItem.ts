@@ -44,7 +44,7 @@ class PKTalkItem extends game.BaseContainer {
 
 
         this.x = 0;
-        if(this.relateItem.scaleX > 0)
+        if(this.relateItem.currentMV.scaleX > 0)
         {
             this.bg.scaleX = -1
             this.anchorOffsetX = 0.4*this.w;
@@ -54,7 +54,7 @@ class PKTalkItem extends game.BaseContainer {
             this.bg.scaleX = 1
             this.anchorOffsetX = 0.6*this.w;
         }
-        this.y = -data.showHeight()*0.9;
+        this.y = -data.showHeight();
 
 
         egret.Tween.removeTweens(this);
@@ -62,7 +62,7 @@ class PKTalkItem extends game.BaseContainer {
         this.scaleY = 0;
         this.alpha = 1;
         var tw = egret.Tween.get(this);
-        tw.to({scaleX:1,scaleY:1},200).to({scaleX:0.9,scaleY:0.9},200).wait(2500).to({scaleX:0,scaleY:0},100).call(function(){
+        tw.to({scaleX:0.8,scaleY:0.8},200).to({scaleX:0.6,scaleY:0.6},200).wait(2500).to({scaleX:0,scaleY:0},100).call(function(){
              this.remove();
         },this);
     }

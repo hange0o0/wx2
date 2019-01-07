@@ -11,17 +11,15 @@ class PKCardInfoUI extends game.BaseContainer {
     private nameText: eui.Label;
     private cardGroup: eui.Group;
     private bg: eui.Image;
-    private img: CardImg;
     private desText: eui.Label;
-    private group: eui.Group;
-    private list1: eui.List;
-    private line: eui.Image;
-    private list2: eui.List;
+    private list: eui.List;
     private teamIcon: eui.Image;
 
 
 
+
     public dataIn
+    public heroItem
 
     private stageX
     private stageY
@@ -33,9 +31,13 @@ class PKCardInfoUI extends game.BaseContainer {
     public childrenCreated() {
         super.childrenCreated();
 
-        this.img.hideType = true;
-        this.list1.itemRenderer = PKCardInfoItem
-        this.list2.itemRenderer = PKCardInfoItem
+        this.list.itemRenderer = PKCardInfoItem
+
+        this.heroItem = new PKMonsterMV()
+        this.heroItem.x = 150/2
+        this.heroItem.y = 160
+        this.heroItem.scaleX = -1
+        this.cardGroup.addChild(this.heroItem);
     }
 
 
@@ -93,8 +95,11 @@ class PKCardInfoUI extends game.BaseContainer {
         //var CRM = CardManager.getInstance();
         this.dataIn = v;
         var vo:any = CM.getCardVO(this.dataIn.mid)
-        this.img.data = vo.id;
-        this.bg.source = vo.getBG();
+
+        this.bg.source = PKManager.getInstance().getPKBG()
+        this.heroItem.load(this.dataIn.mid)
+        this.heroItem.stand();
+
         this.nameText.text = vo.name;
         this.type.source = vo.getTypeIcon()
 
@@ -109,60 +114,19 @@ class PKCardInfoUI extends game.BaseContainer {
         }
 
 
-        var baseForceAdd = CM.getCardVO(this.dataIn.mid).getAdd(this.dataIn.force)
+        //var baseForceAdd = CM.getCardVO(this.dataIn.mid).getAdd(this.dataIn.force)
         var forceAdd = CM.getCardVO(this.dataIn.mid).getAdd(this.dataIn.force,this.dataIn.type)
         this.setHtml(this.desText,vo.getDes(forceAdd,true));
-        console.log(forceAdd)
-        var str = vo.isMonster? '传送':'施法'
-
-        var arr1:any = [
-            {index:1,icon:'icon_cost_png',iconScale:1,title:str + '费用',value:vo.cost,valueAdd:0},
-            //{index:1,icon:'',iconScale:1,title:'',value:0,valueAdd:0},
-        ]
-
-        if(vo.isMonster)
-        {
-            arr1.push({index:2,icon:'icon_times_png',iconScale:1,title:'传送次数',value:vo.num || 1,valueAdd:0})
-            arr1.push({index:3,icon:'icon_clock_png',iconScale:1,title:str + '间隔',value:MyTool.toFixed(vo.cd/1000,1)+'秒',valueAdd:0})
-        }
-        else
-        {
-            if(vo.num == 0)
-                arr1.push({index:2,icon:'icon_clock2_png',iconScale:1,title:'持续时间',value:MyTool.toFixed(vo.cd/1000,1)+'秒',valueAdd:0})
-            else if(vo.num == 1)
-                arr1.push({index:2,icon:'icon_clock_png',iconScale:1,title:'技能次数',value:'单次',valueAdd:0})
-            else if(vo.num > 1)
-            {
-                arr1.push({index:2,icon:'icon_clock_png',iconScale:1,title:'持续时间',value:MyTool.toFixed((vo.num-1) * vo.cd/1000,1)+'秒',valueAdd:0})
-                arr1.push({index:3,icon:'icon_clock_png',iconScale:1,title:str + '间隔',value:MyTool.toFixed(vo.cd/1000,1)+'秒',valueAdd:0})
-            }
-        }
-
-        MyTool.removeMC(this.line)
-        MyTool.removeMC(this.list2)
+        //console.log(forceAdd)
+        //var str = vo.isMonster? '传送':'施法'
 
 
-        if(vo.isMonster)
-        {
-            //arr1.push({index:4,icon:'',iconScale:1,title:'间隔',value:vo.cost,valueAdd:0})
 
-            this.type.scaleX = this.type.scaleY = 0.6
-            this.addMonsterList(vo)
-        }
-        else
-        {
-            this.type.scaleX = this.type.scaleY = 1
 
-            if(vo.mid)
-            {
-                this.addMonsterList(CM.getCardVO(vo.mid))
-            }
-        }
+        this.type.scaleX = this.type.scaleY = 0.6
+        this.addMonsterList(vo)
 
-        if(arr1.length%2 == 1)
-            arr1.push({index:4,icon:'',iconScale:1,title:'',value:'',valueAdd:0});
 
-        this.list1.dataProvider = new eui.ArrayCollection(arr1)
 
 
 
@@ -173,8 +137,6 @@ class PKCardInfoUI extends game.BaseContainer {
         var baseForceAdd = CM.getCardVO(this.dataIn.mid).getAdd(this.dataIn.force)
         var forceAdd = CM.getCardVO(this.dataIn.mid).getAdd(this.dataIn.force,this.dataIn.type)
 
-        this.group.addChild(this.line)
-        this.group.addChild(this.list2)
         var atk = Math.floor(vo.atk * baseForceAdd);
         var hp = Math.floor(vo.hp * baseForceAdd);
         var def = vo.def;
@@ -200,8 +162,6 @@ class PKCardInfoUI extends game.BaseContainer {
 
         arr2.push({index:3,icon:'icon_def1_png',iconScale:0.4,title:'防御',value:def,valueAdd:def2 - def})
         arr2.push({index:4,icon:'icon_speed_png',iconScale:1,title:'移动速度',value:vo.speed,valueAdd:0})
-        arr2.push({index:4,icon:'icon_atkhp_png',iconScale:1,title:'队伍伤害',value:vo.atk2,valueAdd:0})
-        arr2.push({index:7,icon:'icon_pos_png',iconScale:1,title:'需要人口',value:vo.space,valueAdd:0})
 
         if(vo.skillcd > 0)
             arr2.push({index:0,icon:'icon_clock_png',iconScale:1,title:'技能间隔',value:MyTool.toFixed(vo.skillcd/1000,1)+'秒',valueAdd:0});
@@ -215,6 +175,6 @@ class PKCardInfoUI extends game.BaseContainer {
 
         //else
         //    arr2.push({index:0,icon:'',iconScale:1,title:'',value:'',valueAdd:0});
-        this.list2.dataProvider = new eui.ArrayCollection(arr2)
+        this.list.dataProvider = new eui.ArrayCollection(arr2)
     }
 }

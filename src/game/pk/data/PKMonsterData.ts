@@ -18,6 +18,7 @@ class PKMonsterData {
     public doubleValue  = 0
     public doubleAction  = false;
     public missRate  = 0
+    public isReborn  = false
     public momian  = false
     public skillTemp  = {}//用于存放技能的临时变量
     public nohitTimes  = 0//不受伤害的次数

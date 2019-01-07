@@ -10,6 +10,7 @@ class PKPlayerData {
     public teamData:PKTeamData   //对应队伍
 
     public autoList
+    public maxPlayer
 
     //public lv//卡牌的等级
 
@@ -59,6 +60,7 @@ class PKPlayerData {
         }
 
         this.autoList = obj['autolist'].split(',');
+        this.maxPlayer = this.autoList.length;
         MonsterVO.getObject(this.autoList[0]).preLoad();
         //console.log(this.autoList)
     }

@@ -63,18 +63,18 @@ class M32StateListener extends PKStateListener {
             var des = Math.abs(user.x - targetEnemy.x);
             if(des<=atkrage)
             {
-                if(!targetEnemy.skillTemp[32])
-                    targetEnemy.skillTemp[32] = [];
-                if(targetEnemy.skillTemp[32].length >= 3)
-                {
-                    while(targetEnemy.skillTemp[32][0] &&  PKData.getInstance().actionTime - targetEnemy.skillTemp[32][0] > 1000)
-                        targetEnemy.skillTemp[32].shift();
-                }
-                if(targetEnemy.skillTemp[32].length >= 3)
-                {
-                    continue;
-                }
-                targetEnemy.skillTemp[32].push(this.actionTime);
+                //if(!targetEnemy.skillTemp[32])
+                //    targetEnemy.skillTemp[32] = [];
+                //if(targetEnemy.skillTemp[32].length >= 3)
+                //{
+                //    while(targetEnemy.skillTemp[32][0] &&  PKData.getInstance().actionTime - targetEnemy.skillTemp[32][0] > 1000)
+                //        targetEnemy.skillTemp[32].shift();
+                //}
+                //if(targetEnemy.skillTemp[32].length >= 3)
+                //{
+                //    continue;
+                //}
+                //targetEnemy.skillTemp[32].push(this.actionTime);
                 targetEnemy.addHp(hp)
             }
         }

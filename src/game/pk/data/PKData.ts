@@ -266,6 +266,7 @@ class PKData extends egret.EventDispatcher{
 
     //要保证只是通知改变显示，不能有逻辑
     public addVideo(data){
+        this.dispatchEventWith('video_word',false,data)
         if(this.quick)
             return;
         this.dispatchEventWith('video',false,data)

@@ -141,7 +141,6 @@ class DebugManager {
         for(var i=0;i<arr.length;i++)
         {
             var id = arr[i].id;
-            arr[i].rate =arr[i].num*CM.getCardVO(id).cost
             console.log((i + 1) + '\tid:' +id +  '\t\trate:' + arr[i].rate + '\t\tcost:' +  CM.getCardVO(id).cost + '\t\tname:' +  CM.getCardVO(id).name + '\t\ttype:' +  CM.getCardVO(id).type + '\t\tnum:' +  arr[i].num)
         }
 

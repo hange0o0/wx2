@@ -104,6 +104,6 @@ class PKMonsterMV extends eui.Group {
     public talk(){
         this.talkItm = PKTalkItem.createItem();
         this.talkItm.setData(this);
-        this.addChildAt(this.talkItm,0);
+        this.addChild(this.talkItm);
     }
 }

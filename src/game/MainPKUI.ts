@@ -6,7 +6,7 @@ class MainPKUI extends game.BaseItem {
 
     private con: eui.Group;
     private scroller: eui.Scroller;
-    private list: eui.List;
+    private scrollText: eui.Label;
     private winGroup: eui.Group;
     private winText: eui.Label;
     private desGroup: eui.Group;
@@ -14,6 +14,11 @@ class MainPKUI extends game.BaseItem {
     private des2: eui.Label;
     private failGroup: eui.Group;
     private failText: eui.Label;
+    private btnGroup: eui.Group;
+    private backBtn: eui.Button;
+    private replayBtn: eui.Button;
+
+
 
 
 
@@ -21,14 +26,100 @@ class MainPKUI extends game.BaseItem {
     public showData;
     public finish = false
     public lastRota = 0
+    public scrollTimer
+    public stopScrollTimer
+
+
 
     public childrenCreated() {
         super.childrenCreated();
+
+        this.addBtnEvent(this.replayBtn,this.onReplay)
+        this.addBtnEvent(this.backBtn,this.onBack)
+        this.scrollText.addEventListener(egret.TextEvent.LINK,this.onLink,this)
+        this.scrollText.touchEnabled = true;
 
         var pkvideo = PKVideoCon.getInstance();
         this.con.addChild(pkvideo)
         pkvideo.y = 0;
         pkvideo.x = -(PKConfig.floorWidth + PKConfig.appearPos*2 - 640)/2;
+
+        PKData.getInstance().addEventListener('video_word',this.onVideoEvent,this);
+
+        this.scroller.addEventListener(egret.Event.CHANGE,this.onScroll,this)
+    }
+
+    private onScroll(){
+        this.stopScrollTimer = TM.now();
+    }
+
+    private onBack(){
+        this.hide();
+    }
+
+    private onLink(evt){
+        console.log( evt.text );
+        CardInfoUI.getInstance().show(evt.text)
+    }
+
+    public onVideoEvent(e){
+        var videoData = e.data;
+        if(videoData.type != PKConfig.VIDEO_MONSTER_ADD && videoData.type != PKConfig.VIDEO_MONSTER_DIE)
+            return;
+        var data:PKMonsterData = videoData.user;
+
+        var teamID = data.getOwner().teamData.id;
+        var name = data.getVO().name;
+        if(this.scrollText.text)
+            this.scrollText.appendText('\n');
+        this.scrollText.appendText('['+DateUtil.getStringBySecond(Math.floor(PKData.getInstance().actionTime/1000)).substr(-5)+'] ');
+        this.scrollText.appendElement({ text:name + ' ', style:{"textColor":teamID==1?0x0152ae:0xA50002,"href" : "event:" + data.mid} })
+        switch(videoData.type)//动画类型
+        {
+            case PKConfig.VIDEO_MONSTER_ADD:
+
+                if(data.dieTime)
+                {
+                    this.scrollText.appendElement({ text:'被召唤出来了', style:{"textColor":0x89FC7E}})
+                }
+                else if(data.isReborn)
+                {
+                    this.scrollText.appendElement({ text:'复活了', style:{"textColor":0x89FC7E}})
+                }
+                else
+                {
+                    this.scrollText.appendElement({ text:'加入了战斗', style:{"textColor":0x89FC7E}})
+
+                    var owner = data.getOwner();
+                    this.scrollText.appendElement({ text:'  (出战：'+(owner.maxPlayer - owner.autoList.length)+'/' + owner.maxPlayer + ')'})
+                }
+
+
+                break;
+
+            case PKConfig.VIDEO_MONSTER_DIE:
+                if(data.die)
+                {
+                    this.scrollText.appendElement({ text:'阵亡了', style:{"textColor":0xCFA5FF}})
+                }
+                else
+                {
+                    this.scrollText.appendElement({ text:'召唤时间已到', style:{"textColor":0xCFA5FF}})
+                }
+                var teamData = PKData.getInstance().getTeamByID(teamID)
+                this.scrollText.appendElement({ text:'  (场上剩余：'+PKData.getInstance().getMonsterByTeam(teamData).length + ')'})
+                break;
+        }
+
+        clearTimeout(this.scrollTimer);
+        if(TM.now() - this.stopScrollTimer > 5)
+        {
+            this.scrollTimer = setTimeout(()=>{
+                this.scroller.viewport.scrollV = Number.MAX_VALUE;
+                MyTool.resetScrollV(this.scroller)
+            },100)
+        }
+
     }
 
     public show(data){
@@ -37,12 +128,18 @@ class MainPKUI extends game.BaseItem {
         //console.log('show' , egret.getTimer())
         this.showData = data,
         this.visible = true;
-        this.finish = false
 
-        this.winGroup.visible = false;
-        this.failGroup.visible = false;
 
-        PKVideoCon.getInstance().x = -(PKConfig.floorWidth + PKConfig.appearPos*2 - 640)/2;
+        if(this.showData.isMain)
+        {
+            MyTool.removeMC(this.backBtn)
+        }
+        else
+        {
+            this.btnGroup.addChildAt(this.backBtn,0)
+        }
+
+
         this.reset();
         this.addEventListener(egret.Event.ENTER_FRAME,this.onStep,this)
 
@@ -66,12 +163,22 @@ class MainPKUI extends game.BaseItem {
     //    this.addEventListener(egret.Event.ENTER_FRAME,this.onStep,this)
     //}
 
-    public reView(){
+    public onReplay(){
+
         this.showData.passTime = 0;
+
         this.reset();
     }
 
     public reset(){
+        PKVideoCon.getInstance().x = -(PKConfig.floorWidth + PKConfig.appearPos*2 - 640)/2;
+        this.stopScrollTimer = 0;
+        this.scrollText.text = '';
+        this.winGroup.visible = false;
+        this.failGroup.visible = false;
+        this.btnGroup.visible = false;
+        this.finish = false;
+
         var data = {
             seed:this.showData.seed,
             players:[
@@ -144,6 +251,7 @@ class MainPKUI extends game.BaseItem {
         if(PD.isGameOver)
         {
             this.finish = true;
+
             PKBulletManager.getInstance().freeAll();
             var result = PD.getPKResult();
             if(this.showData.key)
@@ -180,6 +288,11 @@ class MainPKUI extends game.BaseItem {
                 this.winText.text = result +  '队获胜'
                 this.desGroup.visible = false;
             }
+            this.scrollText.appendText('\n['+DateUtil.getStringBySecond(Math.floor(PKData.getInstance().actionTime/1000)).substr(-5)+'] 战斗已结束，');
+            if(result == 3)
+                this.scrollText.appendElement({ text:'双方打成了平手！'})
+            else
+                this.scrollText.appendElement({ text:''+result +  '队获得了胜利！'})
 
             PKManager.getInstance().testSendResult();  //可能看录像
         }
@@ -227,6 +340,12 @@ class MainPKUI extends game.BaseItem {
             {
                 tw.wait(2000).call(()=>{
                     this.hide();
+                })
+            }
+            else
+            {
+                tw.call(()=>{
+                    this.btnGroup.visible = true
                 })
             }
         },1000)

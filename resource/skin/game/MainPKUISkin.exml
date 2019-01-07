@@ -6,12 +6,15 @@
 	</e:Group>
 	<e:Image source="line2_png" y="0" fillMode="repeat" right="0" left="0"/>
 	<e:Image source="line2_png" y="512" fillMode="repeat" right="0" left="0"/>
-	<e:Scroller id="scroller" width="640" x="0" top="512" bottom="0" locked="true">
+	<e:Scroller id="scroller" width="640" x="0" top="530" bottom="20" bounces="false">
 		<e:Group>
-			<e:List id="list" width="200" height="200" x="155" y="118"/>
+			<e:Label id="scrollText" text="Label" left="20" right="20" y="20" size="24" lineSpacing="10" textColor="0xffffff"/>
+			<e:layout>
+				<e:VerticalLayout paddingTop="10" paddingBottom="10" paddingLeft="20"/>
+			</e:layout>
 		</e:Group>
 	</e:Scroller>
-	<e:Group id="winGroup" y="180" horizontalCenter="0" height="265" anchorOffsetY="130">
+	<e:Group id="winGroup" y="180" horizontalCenter="0" height="265" anchorOffsetY="130" visible="false">
 		<e:Group x="0" y="0">
 		<e:Image x="0" y="0" source="pk_win_png"/>
 		<e:Image x="0" y="0" scaleX="-1" source="pk_win_png"/>
@@ -29,7 +32,7 @@
 			</e:layout>
 		</e:Group>
 	</e:Group>
-	<e:Group id="failGroup" horizontalCenter="0" y="180" height="265" anchorOffsetY="130">
+	<e:Group id="failGroup" horizontalCenter="0" y="180" height="265" anchorOffsetY="130" visible="false">
 		<e:Group x="0" y="0">
 		<e:Image source="pk_fail_png" x="0" y="0"/>
 		<e:Image source="pk_fail_png" x="0" y="0" scaleX="-1"/>
@@ -38,6 +41,13 @@
 		</e:layout>
 		</e:Group>
 		<e:Label id="failText" text="挑战失败" y="119" stroke="3" x="190"/>
+	</e:Group>
+	<e:Group id="btnGroup" y="410" horizontalCenter="0">
+		<e:Button id="backBtn" label="关闭" y="0" width="150" x="0" skinName="Btn2Skin"/>
+		<e:Button id="replayBtn" label="回放" y="0" skinName="Btn1Skin" width="150" x="0"/>
+		<e:layout>
+			<e:HorizontalLayout gap="30"/>
+		</e:layout>
 	</e:Group>
 
 </e:Skin>
