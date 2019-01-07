@@ -266,7 +266,7 @@ class MainPKUI extends game.BaseItem {
             {
                 if(this.showData['cost' + result])
                 {
-                    var addCoin = PKManager.getInstance().getAddCoin(this.showData,result)
+                    var addCoin = PKManager.getInstance().getAddCoin(this.showData,result).addCoin
                     this.winText.text = '胜利'
                     this.delayShowResult(this.winGroup);
                     if(this.showData.isMain)

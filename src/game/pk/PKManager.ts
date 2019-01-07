@@ -234,15 +234,20 @@ class PKManager {
                 showData.isDeal = 1;
                 this.getPKResult(showData,(result)=>{
                     showData.isDeal = 2;
-                    var addCoin = this.getAddCoin(showData,result)
+                    var resultObj = this.getAddCoin(showData,result);
+                    var addCoin = resultObj.addCoin
+                    var lossCoin = resultObj.lossCoin
                     if(addCoin)
                     {
                         MyWindow.ShowTips('你在上一轮竞猜中，获得了'+NumberUtil.addNumSeparator(addCoin)+'金币')
                     }
                     UM.addCoin(addCoin)
+                    UM.coinwin += addCoin - lossCoin;
+                    this.upWXData();
 
                     WXDB.updata('user',{
                         coin:UM.coin,
+                        coinwin:UM.coinwin,
                         lastGuess:showData,
                     })
                     UM.lastGuess = UM.getGuessInitData(this.getCurrentKey());
@@ -272,6 +277,7 @@ class PKManager {
 
     public getAddCoin(showData,result){
         var addCoin = 0;
+        var lossCoin = 0;
         var roundData = this.getRoundDataByKey(showData.key);
         var costData = this.getCost(roundData.seed,999999)
         var teamCost1 = costData.cost1 + showData.teamCost1;
@@ -280,14 +286,23 @@ class PKManager {
         {
             var rate = this.getMoneyRate(teamCost1,teamCost2)
             addCoin += Math.round(showData.cost1*rate/100)
+            lossCoin += showData.cost2;
         }
         else if(result == 2)
         {
             var rate = this.getMoneyRate(teamCost2,teamCost1)
             addCoin += Math.round(showData.cost2*rate/100)
+            lossCoin += showData.cost1;
+        }
+        else
+        {
+            lossCoin += showData.cost1 + showData.cost2;
         }
 
-        return addCoin;
+        return {
+            addCoin:addCoin,
+            lossCoin:lossCoin
+        };
     }
 
     //取PK结果
@@ -347,5 +362,20 @@ class PKManager {
             }
             this.costChange = false;
         }
+    }
+
+    public upWXData(){
+        var wx = window['wx'];
+        if(!wx)
+            return;
+        wx.setUserCloudStorage({
+            KVDataList: [{ key: 'coin', value: UM.coin + ',' + TM.now()},{ key: 'coinwin', value: UM.coinwin + ',' + TM.now()}],
+            success: res => {
+                console.log(res);
+            },
+            fail: res => {
+                console.log(res);
+            }
+        });
     }
 }

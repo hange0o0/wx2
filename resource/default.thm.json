@@ -50,7 +50,8 @@
 		"resource/skin/game/pk/ui/scene/PKTalkItemSkin.exml",
 		"resource/skin/game/pk/ui/scene/PKTotemSkin.exml",
 		"resource/skin/game/pk/ui/scene/PKVideoConSkin.exml",
-		"resource/skin/game/pkRelate/PKCardInfoItemSkin.exml"
+		"resource/skin/game/pkRelate/PKCardInfoItemSkin.exml",
+		"resource/skin/game/RankUISkin.exml"
 	],
 	"path": "resource/default.thm.json"
 }

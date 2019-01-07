@@ -37,11 +37,16 @@ class GameUI extends game.BaseUI {
         this.addBtnEvent(this.settingBtn,this.onClick)
         this.addBtnEvent(this.mailBtn,this.onMail)
         this.addBtnEvent(this.shopBtn,this.onShop)
+        this.addBtnEvent(this.rankBtn,this.onRank)
 
         this.team1.teamID = 1
         this.team2.teamID = 2
 
         this.mainPKUI.addEventListener('visible_change',this.onMainVisibleChange,this)
+    }
+
+    private onRank(){
+        RankUI.getInstance().show();
     }
 
     public onClick(){
