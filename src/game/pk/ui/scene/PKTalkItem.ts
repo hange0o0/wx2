@@ -35,11 +35,14 @@ class PKTalkItem extends game.BaseContainer {
     }
 
 
-    public setData(data) {
+    public setData(data,gift?) {
         this.active = true;
 
 
-        this.text.text = PKManager.getInstance().pkWord[Math.floor(Math.random()*PKManager.getInstance().pkWord.length)];
+        if(gift)
+            this.text.text = PKManager.getInstance().costWord[Math.floor(Math.random()*PKManager.getInstance().costWord.length)];
+        else
+            this.text.text = PKManager.getInstance().pkWord[Math.floor(Math.random()*PKManager.getInstance().pkWord.length)];
         this.relateItem = data;
 
 

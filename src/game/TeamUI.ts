@@ -23,6 +23,7 @@ class TeamUI extends game.BaseItem {
 
     private monsterArr = []
     public teamID
+    private maxCost = 10000;
 
     public childrenCreated() {
         super.childrenCreated();
@@ -69,11 +70,21 @@ class TeamUI extends game.BaseItem {
             return;
         if(this.teamID == 1)
         {
+            if(UM.lastGuess.cost1 + v > this.maxCost)
+            {
+                MyWindow.ShowTips('本轮投注上限为' + this.maxCost)
+                return;
+            }
             UM.lastGuess.cost1 += v
             UM.lastGuess.teamCost1 += v
         }
         else
         {
+            if(UM.lastGuess.cost2 + v > this.maxCost)
+            {
+                MyWindow.ShowTips('本轮投注上限为' + this.maxCost)
+                return;
+            }
             UM.lastGuess.cost2 += v
             UM.lastGuess.teamCost2 += v
         }
@@ -82,6 +93,7 @@ class TeamUI extends game.BaseItem {
         UM.addCoin(-v);
         PKManager.getInstance().callSendCost();
         GameUI.getInstance().onTimer();
+        this.giftTalk(v);
     }
 
     private lastTalk = 0
@@ -96,6 +108,26 @@ class TeamUI extends game.BaseItem {
             item.talk();
             this.lastTalk = egret.getTimer() + 3000 + Math.floor(Math.random()*2000);
         }
+    }
+
+    public giftTalk(cost){
+        if(Math.random() > cost/20)
+            return;
+        var item = this.monsterArr[Math.floor(this.monsterArr.length*Math.random())];
+        if(item && !item.talkItm)
+        {
+            item.talk(true);
+            setTimeout(()=>{
+                this.giftTalk(cost*0.6)
+            },100)
+        }
+        else if(cost > 100)
+        {
+            setTimeout(()=>{
+                this.giftTalk(cost*0.95)
+            },100)
+        }
+
     }
 
     public showList(arr) {

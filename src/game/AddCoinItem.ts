@@ -21,10 +21,10 @@ class AddCoinItem extends game.BaseItem{
         var mc = this.createItem();
         mc.data = '+' + v;
         mc.horizontalCenter = 0
-        mc.verticalCenter = 0
+        mc.verticalCenter = -50
         mc.alpha = 1
         con.addChild(mc);
-        egret.Tween.get(mc).wait(200).to({verticalCenter:-200,alpha:0},500).call(()=>{
+        egret.Tween.get(mc).wait(200).to({verticalCenter:-200,alpha:0},800).call(()=>{
             this.freeItem(mc);
         })
     }

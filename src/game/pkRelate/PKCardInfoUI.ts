@@ -36,7 +36,7 @@ class PKCardInfoUI extends game.BaseContainer {
         this.heroItem = new PKMonsterMV()
         this.heroItem.x = 150/2
         this.heroItem.y = 160
-        this.heroItem.scaleX = -1
+        this.heroItem.scaleX = this.heroItem.scaleY = 1.2
         this.cardGroup.addChild(this.heroItem);
     }
 

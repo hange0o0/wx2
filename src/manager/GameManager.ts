@@ -176,6 +176,7 @@ if(window["wx"])
 {
     window["TeamUI"] = TeamUI;
     window["MainPKUI"] = MainPKUI;
+    window["PKCardInfoUI"] = PKCardInfoUI;
 
 
     var wx =  window["wx"];

@@ -7,6 +7,10 @@ class RankUI extends game.BaseWindow{
     }
 
     private closeBtn: eui.Group;
+    private tab: eui.TabBar;
+    private scroller: eui.Scroller;
+    private scrollGroup: eui.Group;
+
 
     private bitmap: egret.Bitmap;
     private isdisplay = false;
