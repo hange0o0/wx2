@@ -27,8 +27,14 @@ class RankUI extends game.BaseWindow{
     public childrenCreated() {
         super.childrenCreated();
         this.addBtnEvent(this.closeBtn,this.hide)
+        this.tab.addEventListener(eui.ItemTapEvent.ITEM_TAP,this.onTab,this);
+        this.tab.selectedIndex = 0;
         this.touchEnabled = false;
 
+    }
+
+    private onTab(){
+        this.showBitmapList();
     }
     public onShow(){
         if(!window['wx'])
@@ -37,13 +43,15 @@ class RankUI extends game.BaseWindow{
     }
 
     private poseData(){
+        var key = this.tab.selectedIndex == 0?'coin':'coinwin'
+        var value = this.tab.selectedIndex == 0?UM.coin:UM.coinwin
         let param:any = {
             me: UM.gameid,
             command: 'open',
-            key: 'coin',
+            key:key,
             x:this.bitmap.x + (GameManager.uiWidth - this.width)/2,
             y:this.bitmap.y + (GameManager.uiHeight - this.height)/2,
-            me_value: UM.coin + ',0', //第2位时间传0，永远排在最上面
+            me_value: value + ',0', //第2位时间传0，永远排在最上面
             root: "openDataContext/",
         }
         //传递 静态配置数据到 开放域
@@ -67,7 +75,7 @@ class RankUI extends game.BaseWindow{
 
             this.bitmap = platform.openDataContext.createDisplayObject(null, this.stage.stageWidth, this.stage.stageHeight);
             this.bitmap.x = 20;
-            this.bitmap.y = 110;
+            this.bitmap.y = 130;
             this.addChild(this.bitmap);
             this.bitmap.touchEnabled = false
 

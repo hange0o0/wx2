@@ -140,6 +140,9 @@ class TeamUI extends game.BaseItem {
         }
 
 
+        arr = arr.concat();
+        if(this.teamID == 1)
+            arr.reverse();
         var des = Math.min(500/(arr.length-1),80)
         var begin = (640-des*(arr.length-1))/2
         for(var i=0;i<arr.length;i++)

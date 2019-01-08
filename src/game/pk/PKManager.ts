@@ -56,7 +56,7 @@ class PKManager {
     public costWord = ['老铁666','感谢老铁的支持','非常感谢','老铁真土豪','谢谢！','我们不会让你失望的','明智的选择','圈粉了','谢谢同志们','欢呼','高兴','万分感谢','太高兴了','无法用言语表达的感谢',
         '果然是真爱','感谢大哥','要理性消费哦','关注走一波啊','关注可抽奖','输了会发红包的','实锤土壕','感谢感谢','鞠躬感谢','谢谢老铁','谢谢大哥','这波不亏','疯狂打call','你们都是老板','老板大气',
         '谢谢老板','666','礼物走一走','谢谢你的礼物','老板长命百岁','老板万寿无疆','老板千秋万代','祝老板发财','出门遇贵人了','老板我爱你','老板我要和你生小孩','老板公司还缺人吗','￥￥￥￥￥','$$$$$',
-    '老板一统江湖','老板好眼光','比心']
+    '老板一统江湖','老板好眼光','比心','老板真土豪','老板真豪气','双击关注666']
 
     public roundData;
 
@@ -199,7 +199,7 @@ class PKManager {
 
     public getMoneyRate(my,other){
         var rate = other/my
-        return Math.floor(100 + rate*50);
+        return Math.max(105,Math.floor(100 + rate*50));
     }
 
     //加载关卡数据
@@ -246,13 +246,31 @@ class PKManager {
                     }
                     UM.addCoin(addCoin)
                     UM.coinwin += addCoin - lossCoin;
+
+                    showData.result = result;
+                    UM.history.push(showData)
                     this.upWXData();
 
-                    WXDB.updata('user',{
+
+
+
+                    var updateData:any = {
                         coin:UM.coin,
                         coinwin:UM.coinwin,
                         lastGuess:showData,
-                    })
+                    };
+
+                    var wx = window['wx'];
+                    if(wx)
+                    {
+                        const db = wx.cloud.database();
+                        const _ = db.command
+                        updateData.history = _.push([showData])
+                        if(UM.history.length > 30) //记录上限
+                            updateData.history = updateData.history.shift();
+                    }
+
+                    WXDB.updata('user',updateData)
                     UM.lastGuess = UM.getGuessInitData(this.getCurrentKey());
                 })
                 return false;
