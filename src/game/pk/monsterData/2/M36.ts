@@ -49,6 +49,7 @@ class M36 extends MBase {
             atkRota:atkRota,
             x:user.x,
             y:user.y,
+            index:user.index,
             isReborn:true,
             lastSkill:Number.MAX_VALUE,
             actionTime:PD.actionTime

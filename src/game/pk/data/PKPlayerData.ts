@@ -269,6 +269,7 @@ class PKPlayerData {
             owner:this.id,
             atkRota:atkRota,
             fromPos:true,
+            index:this.maxPlayer - this.autoList.length,
             x:x,
             y:-25 + Math.random()*50,
             actionTime:PKData.getInstance().actionTime

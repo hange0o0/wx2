@@ -1,4 +1,4 @@
-class RankUI extends game.BaseWindow{
+class RankUI extends game.BaseUI{
 
     private static _instance:RankUI;
     public static getInstance() {
@@ -6,10 +6,10 @@ class RankUI extends game.BaseWindow{
         return this._instance;
     }
 
-    private closeBtn: eui.Group;
+    private topUI: TopUI;
+    private bottomUI: BottomUI;
     private tab: eui.TabBar;
-    private scroller: eui.Scroller;
-    private scrollGroup: eui.Group;
+
 
 
     private bitmap: egret.Bitmap;
@@ -26,7 +26,9 @@ class RankUI extends game.BaseWindow{
 
     public childrenCreated() {
         super.childrenCreated();
-        this.addBtnEvent(this.closeBtn,this.hide)
+        this.topUI.setTitle('好友排行')
+        this.bottomUI.setHide(this.hide,this)
+        //this.addBtnEvent(this.closeBtn,this.hide)
         this.tab.addEventListener(eui.ItemTapEvent.ITEM_TAP,this.onTab,this);
         this.tab.selectedIndex = 0;
         this.touchEnabled = false;

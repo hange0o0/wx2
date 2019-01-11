@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LogItemSkin" width="600" height="410" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" >
+	<e:Image source="bg2_png" scale9Grid="9,9,11,10" x="0" y="0" width="100%" height="100%" locked="true"/>
+	<e:Group y="0" left="0" right="0" height="50">
+		<e:Image source="bg9_png" scale9Grid="12,12,6,5" left="5" right="5" top="5" bottom="0"/>
+		<e:Group y="8" horizontalCenter="0">
+			<e:Image source="icon_clock_png" x="0" y="6"/>
+			<e:Label id="timeText" text="2011-12-1 11:11" size="24" verticalAlign="middle" strokeColor="0x231507" textColor="0xdbd3c7" height="40" x="9" y="0"/>
+			<e:layout>
+				<e:HorizontalLayout verticalAlign="middle" gap="10"/>
+			</e:layout>
+		</e:Group>
+	</e:Group>
+	<e:Group left="10" right="10" top="60" height="270">
+		<e:Image source="bg13_png" scale9Grid="19,19,9,10" anchorOffsetX="0" left="0" right="0" top="0" bottom="0"/>
+		<e:Group x="10" y="60">
+			<e:Rect height="3" y="0" fillColor="0xbf8a42" width="560" x="0"/>
+			<e:Rect height="3" y="0" fillColor="0xBF8A42" width="560" x="0"/>
+			<e:Rect height="3" y="10" fillColor="0xBF8A42" width="560" x="10"/>
+			<e:Rect height="3" y="20" fillColor="0xBF8A42" width="560" x="20"/>
+			<e:layout>
+				<e:VerticalLayout gap="47"/>
+			</e:layout>
+		</e:Group>
+	</e:Group>
+	<e:Group y="70" horizontalCenter="0">
+		<e:Group y="0" width="160" height="200" x="0">
+			<e:Group x="0" y="-3.03" height="55">
+			</e:Group>
+			<e:Label text="最终投注" x="40" size="24" verticalCenter="0" y="54" height="50" verticalAlign="middle"/>
+			<e:Label text="最终战力" x="40" size="24" verticalCenter="0" y="54" height="50" verticalAlign="middle"/>
+			<e:Label text="我的投注" x="50" size="24" verticalCenter="0" y="64" height="50" verticalAlign="middle"/>
+			<e:Label text="战斗结果" x="60" size="24" verticalCenter="0" y="74" height="50" verticalAlign="middle"/>
+			<e:layout>
+			<e:VerticalLayout horizontalAlign="center" gap="0"/>
+			</e:layout>
+		</e:Group>
+		<e:Group y="0" width="200" height="200" x="0">
+			<e:Group x="0" y="-3.03" height="55" width="150">
+			<e:Image source="card_battle2_png" x="0" verticalCenter="0"/>
+			<e:Label text="队伍1" x="40" size="24" verticalCenter="0"/>
+			</e:Group>
+			<e:Label id="cost1" text="1,000,000,000" x="40" size="24" verticalCenter="0" y="54" height="50" verticalAlign="middle"/>
+			<e:Label id="force1" text="队伍1" x="40" size="24" verticalCenter="0" y="54" height="50" verticalAlign="middle"/>
+			<e:Label id="myCost1" text="队伍1" x="50" size="24" verticalCenter="0" y="64" height="50" verticalAlign="middle"/>
+			<e:Group x="75" y="200" width="50" height="50">
+				<e:Image id="result1" source="win_icon_png" x="0"/>
+			</e:Group>
+			<e:layout>
+			<e:VerticalLayout horizontalAlign="center" gap="0"/>
+			</e:layout>
+		</e:Group>
+		<e:Group y="0" width="200" height="200" x="0">
+			<e:Group x="0" y="-3.03" height="55" width="150">
+			<e:Image x="0" verticalCenter="0" source="card_battle_png"/>
+			<e:Label text="队伍2" x="40" size="24" verticalCenter="0"/>
+			</e:Group>
+			<e:Label id="cost2" text="队伍1" x="40" size="24" verticalCenter="0" y="54" height="50" verticalAlign="middle"/>
+			<e:Label id="force2" text="队伍1" x="40" size="24" verticalCenter="0" y="54" height="50" verticalAlign="middle"/>
+			<e:Label id="myCost2" text="队伍1" x="50" size="24" verticalCenter="0" y="64" height="50" verticalAlign="middle"/>
+			<e:Group x="75" y="200" width="50" height="50">
+				<e:Image id="result2" x="0" source="lose_icon_png"/>
+			</e:Group>
+			<e:layout>
+			<e:VerticalLayout horizontalAlign="center" gap="0"/>
+			</e:layout>
+		</e:Group>
+		<e:layout>
+			<e:HorizontalLayout gap="0"/>
+		</e:layout>
+	</e:Group>
+	<e:Group height="40" bottom="25" x="20">
+		<e:Label id="desText" text="1队获胜，最终收益" textAlign="left" y="15" size="24" lineSpacing="5" anchorOffsetY="0" verticalAlign="middle" anchorOffsetX="0" height="24" x="10" bold="true" textColor="0x512200"/>
+		<e:Image source="icon_coin_png" x="304" y="0" scaleX="0.8" scaleY="0.8"/>
+		<e:Label id="coinText" text="-10000" textAlign="left" y="5" size="26" lineSpacing="5" anchorOffsetY="0" verticalAlign="middle" anchorOffsetX="0" height="24" x="0" textColor="0xcc0000"/>
+		<e:layout>
+			<e:HorizontalLayout verticalAlign="middle" gap="10"/>
+		</e:layout>
+	</e:Group>
+	<e:Button id="videoBtn" label="录像回放" skinName="Btn1Skin" width="180" bottom="10" right="20"/>
+</e:Skin>

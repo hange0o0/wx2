@@ -53,8 +53,9 @@ class GameUI extends game.BaseUI {
        this.playGame();
     }
     public onMail(){
-        this.mainPKUI.hide();
-        this.team1.visible = this.team2.visible = !this.mainPKUI.visible
+        LogUI.getInstance().show();
+        //this.mainPKUI.hide();
+        //this.team1.visible = this.team2.visible = !this.mainPKUI.visible
     }
 
     public onShop(){
@@ -187,6 +188,9 @@ class GameUI extends game.BaseUI {
         var PKM = PKManager.getInstance();
         PKM.callSendCost(true);
         var costData = PKM.getCost(this.showData.seed,60*10)
+        this.addChild(MainPKUI.instance);
+        MainPKUI.instance.top = 90
+        MainPKUI.instance.bottom = 105
         this.mainPKUI.show({
             isMain:true,
             key:PKM.getCurrentKey(),
@@ -197,9 +201,9 @@ class GameUI extends game.BaseUI {
             force1:PKM.getForceAdd(costData.cost1 + UM.lastGuess.teamCost1) + PKM.baseForce,
             force2:PKM.getForceAdd(costData.cost2 + UM.lastGuess.teamCost2) + PKM.baseForce
         });
-
-
     }
+
+
 
     public onMainVisibleChange(){
         this.team1.visible = this.team2.visible = !this.mainPKUI.visible

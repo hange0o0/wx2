@@ -30,9 +30,12 @@ class UserManager {
         this.dbid = data._id;
         this.coin = data.coin || 999;
         this.coinwin = data.coinwin || 0;
-        this.history = data.history || [];
         this.lastGuess = data.lastGuess;
         //this.writeKey = data.writeKey;
+
+        this.history = SharedObjectManager.getInstance().getMyValue('history') || [];
+        if(this.history.length > 20)
+            this.history.length = 20;
     }
 
     public renewInfo(userInfo){
@@ -40,6 +43,10 @@ class UserManager {
         this.nick = userInfo.nickName
         this.head = userInfo.avatarUrl
         this.gender = userInfo.gender || 1 //性别 0：未知、1：男、2：女
+    }
+
+    public saveHistory(){
+        SharedObjectManager.getInstance().setMyValue('history',this.history)
     }
 
     public addCoin(v){
@@ -131,7 +138,6 @@ class UserManager {
          return {
              coin:200,   //$
              coinwin:200,   //$
-             history:[],   //
              lastGuess:this.getGuessInitData(0)
          };
     }

@@ -3,6 +3,8 @@ class PKMonsterData {
     public die = false;
     public passEnd = false;//冲过了终点
 
+    public index//生成的序号
+
     public hp = 0
     public atk  = 0
     public speed  = 0

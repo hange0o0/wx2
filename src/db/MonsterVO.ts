@@ -136,8 +136,8 @@ class MonsterVO {
 
     public getImage(gay?){
         if(gay)
-            return Config.localResRoot + 'card_gay/card_'+this.id+'.jpg';
-        return Config.localResRoot + 'card/card_'+this.id+'.jpg';
+            return Config.localResRoot2 + 'head_gay/m_head'+this.id+'.jpg';
+        return Config.localResRoot2 + 'head/m_head'+this.id+'.jpg';
     }
 
     public getHeroBG(star){

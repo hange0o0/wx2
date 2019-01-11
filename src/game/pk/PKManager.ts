@@ -32,6 +32,9 @@ class PKManager {
 
     public pkResult = {}//所有PK结果的集合
     public levelData = {}//关卡数据的集合
+    public roundTotalData = {}//关卡数据的集合
+
+    private beginTime = 1546012800;//2018-12-29
 
     constructor(){
 
@@ -78,7 +81,7 @@ class PKManager {
 
 
     public getTodayIndex(){
-        var t = 1546012800;//2018-12-29
+        var t = this.beginTime;
         var index = Math.ceil((TM.now() - t)/24/3600)
 
         index = 5;
@@ -237,18 +240,19 @@ class PKManager {
                 showData.isDeal = 1;
                 this.getPKResult(showData,(result)=>{
                     showData.isDeal = 2;
-                    var resultObj = this.getAddCoin(showData,result);
-                    var addCoin = resultObj.addCoin
-                    var lossCoin = resultObj.lossCoin
+                    var addCoin = this.getAddCoin(showData,result);
                     if(addCoin)
                     {
                         MyWindow.ShowTips('你在上一轮竞猜中，获得了'+NumberUtil.addNumSeparator(addCoin)+'金币')
                     }
                     UM.addCoin(addCoin)
-                    UM.coinwin += addCoin - lossCoin;
+                    UM.coinwin += addCoin - showData.cost1 - showData.cost2;
 
+                    var roundData = this.getRoundDataByKey(showData.key);
                     showData.result = result;
-                    UM.history.push(showData)
+                    showData.roundData = roundData;
+                    UM.history.unshift(showData)
+                    UM.saveHistory();
                     this.upWXData();
 
 
@@ -260,15 +264,15 @@ class PKManager {
                         lastGuess:showData,
                     };
 
-                    var wx = window['wx'];
-                    if(wx)
-                    {
-                        const db = wx.cloud.database();
-                        const _ = db.command
-                        updateData.history = _.push([showData])
-                        if(UM.history.length > 30) //记录上限
-                            updateData.history = updateData.history.shift();
-                    }
+                    //var wx = window['wx'];
+                    //if(wx)
+                    //{
+                    //    const db = wx.cloud.database();
+                    //    const _ = db.command
+                    //    updateData.history = _.push([showData])
+                    //    if(UM.history.length > 15) //记录上限
+                    //        updateData.history = updateData.history.shift();
+                    //}
 
                     WXDB.updata('user',updateData)
                     UM.lastGuess = UM.getGuessInitData(this.getCurrentKey());
@@ -296,10 +300,20 @@ class PKManager {
         //},b=>{console.log(b)})
     }
 
-    public getAddCoin(showData,result){
+    public getDayStrByKey(key){
+        var day = Math.floor(key/1000)
+        var index = key%1000;
+
+        var time = this.beginTime + (day-1)*3600*24 + 3600*6 + (index + 1)*60*10
+
+         return DateUtil.formatDate('yyyy-MM-dd hh:mm',DateUtil.timeToChineseDate(time))
+    }
+
+    public getAddCoin(showData,result,roundData?){
         var addCoin = 0;
-        var lossCoin = 0;
-        var roundData = this.getRoundDataByKey(showData.key);
+        //var lossCoin = 0;
+        if(!roundData)
+            roundData = this.getRoundDataByKey(showData.key);
         var costData = this.getCost(roundData.seed,999999)
         var teamCost1 = costData.cost1 + showData.teamCost1;
         var teamCost2 = costData.cost2 + showData.teamCost2;
@@ -307,23 +321,20 @@ class PKManager {
         {
             var rate = this.getMoneyRate(teamCost1,teamCost2)
             addCoin += Math.round(showData.cost1*rate/100)
-            lossCoin += showData.cost2;
+            //lossCoin += showData.cost2;
         }
         else if(result == 2)
         {
             var rate = this.getMoneyRate(teamCost2,teamCost1)
             addCoin += Math.round(showData.cost2*rate/100)
-            lossCoin += showData.cost1;
+            //lossCoin += showData.cost1;
         }
-        else
-        {
-            lossCoin += showData.cost1 + showData.cost2;
-        }
+        //else
+        //{
+        //    lossCoin += showData.cost1 + showData.cost2;
+        //}
 
-        return {
-            addCoin:addCoin,
-            lossCoin:lossCoin
-        };
+        return addCoin
     }
 
     //取PK结果
@@ -363,6 +374,8 @@ class PKManager {
 
     //保证已加载了
     public getRoundDataByKey(key){
+        if(this.roundTotalData[key])
+              return this.roundTotalData[key]
         var day = Math.floor(key/1000)
         var index = Math.floor(key%1000)
         var arr = this.levelData[day].split('\n')

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LogUISkin" width="640" height="960" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="bg3_png" scale9Grid="16,15,7,7" x="0" y="0" width="100%" height="100%"/>
+	<ns1:TopUI id="topUI" width="100%" x="0" y="0" skinName="TopUISkin"/>
+	<ns1:BottomUI id="bottomUI" x="0" skinName="BottomUISkin" bottom="0"/>
+	<e:Scroller id="scroller" left="0" right="0" top="60" bottom="100" bounces="false">
+		<e:Group>
+			<e:List id="list" width="200" height="200" x="96" y="96">
+				<e:layout>
+					<e:VerticalLayout paddingLeft="20" gap="20" paddingBottom="10"/>
+				</e:layout>
+			</e:List>
+		</e:Group>
+	</e:Scroller>
+
+    <e:Group bottom="28" right="20">
+		<e:Image source="bg3_png" scale9Grid="16,15,7,7" left="0" right="0" top="0" bottom="0"/>
+		<e:Label id="desText" text="日志只保留最近20条" stroke="2" strokeColor="0x301200" size="24" left="15" right="15" top="10" bottom="10"/>
+	</e:Group>
+</e:Skin>

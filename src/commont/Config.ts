@@ -20,6 +20,7 @@ class Config {
     public static pk_version: number = 1;
     public static cdn: string = "";
     public static localResRoot:string = "resource/game_assets/";
+    public static localResRoot2:string = "resource/game_assets2/";
 
 
 
