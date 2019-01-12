@@ -14,7 +14,7 @@
 				</e:layout>
 			
 			</e:List>
-			<e:Rect width="2" height="100%" x="242" y="146" fillColor="0x4c2904"/>
+			<e:Rect id="lineMC" width="2" x="242" y="146" fillColor="0x4c2904" height="100"/>
 			<e:List id="list2" width="297" x="67" y="43" >
 				<e:layout>
 				<e:TileLayout requestedColumnCount="3"/>
@@ -22,10 +22,64 @@
 		
 			</e:List>
 			<e:layout>
-				<e:HorizontalLayout horizontalAlign="center" gap="10" paddingTop="10" paddingBottom="10" verticalAlign="contentJustify"/>
+				<e:HorizontalLayout horizontalAlign="center" gap="10" paddingTop="10" paddingBottom="10"/>
 			</e:layout>
 		</e:Group>
 	</e:Scroller>
+	<e:Image source="black_bg2_png" x="0" y="0" height="110" width="310"/>
+	<e:Image source="black_bg2_png" y="0" height="110" width="310" right="0" scaleX="-1"/>
+	<e:Group x="10" y="10">
+		<e:Image source="icon_coin_png" x="0" y="1.5"/>
+		<e:Label id="teamCost1Text" text="Label" x="49" y="0" textColor="0xffe2a5"/>
+		<e:layout>
+			<e:HorizontalLayout verticalAlign="middle"/>
+		</e:layout>
+	</e:Group>
+	<e:Group id="cost1Group" x="0" y="472">
+		<e:Image source="black_bg2_png" x="0" y="0" height="40" width="320"/>
+		<e:Group x="5" verticalCenter="0">
+			<e:Image source="icon_coin_png" x="0" y="1.5" scaleX="0.8" scaleY="0.8"/>
+			<e:Label id="cost1Text" text="Label" x="49" y="0" size="24" textColor="0xffe2a5" stroke="3"/>
+			<e:layout>
+			<e:HorizontalLayout verticalAlign="middle"/>
+			</e:layout>
+		</e:Group>
+	</e:Group>
+	<e:Group id="cost2Group" y="472" right="0">
+		<e:Image source="black_bg2_png" y="0" height="40" width="320" scaleX="-1" right="0"/>
+		<e:Group right="5" verticalCenter="0">
+			<e:Label id="costText2" text="Label" x="49" y="0" size="24" textColor="0xFFE2A5" stroke="3"/>
+		<e:Image source="icon_coin_png" x="0" y="1.5" scaleX="0.8" scaleY="0.8"/>
+		<e:layout>
+			<e:HorizontalLayout verticalAlign="middle"/>
+		</e:layout>
+		</e:Group>
+	</e:Group>
+	<e:Group x="10" y="60">
+		<e:Image source="icon_force2_png" x="0" y="1.5"/>
+		<e:Label id="forceText1" text="Label" x="49" y="0" size="24" textColor="0xffe2a5"/>
+		<e:layout>
+		<e:HorizontalLayout verticalAlign="middle"/>
+		</e:layout>
+	</e:Group>
+	<e:Group y="10" right="10">
+		<e:Label id="teamCost2Text" text="Label" x="49" y="0" textColor="0xffe2a5"/>
+		<e:Image source="icon_coin_png" x="0" y="1.5"/>
+		<e:layout>
+		<e:HorizontalLayout verticalAlign="middle"/>
+		</e:layout>
+	</e:Group>
+	<e:Group y="60" right="10">
+		<e:Label id="forceText2" text="123" x="49" y="0" textColor="0xffe2a5" size="24"/>
+		<e:Image source="icon_force2_png" x="0" y="1.5"/>
+		<e:layout>
+		<e:HorizontalLayout verticalAlign="middle"/>
+		</e:layout>
+	</e:Group>
+	<e:Group y="5" horizontalCenter="0">
+		<e:Image source="main_button_png" y="0" x="0" scaleX="0.9" scaleY="0.9"/>
+		<e:Label id="timeText" text="123" size="40" horizontalCenter="0" verticalCenter="-2" bold="true" textColor="0xfccd7e"/>
+	</e:Group>
 	<e:Group id="winGroup" y="180" horizontalCenter="0" height="265" anchorOffsetY="130" visible="false">
 		<e:Group x="0" y="0">
 		<e:Image x="0" y="0" source="pk_win_png"/>
@@ -34,14 +88,17 @@
 			<e:HorizontalLayout gap="0"/>
 		</e:layout>
 		</e:Group>
-		<e:Label id="winText" text="挑战成功" y="118" x="190" textColor="0xFCE492" strokeColor="0xFFFFFF"/>
+		<e:Label id="winText" text="挑战成功" y="118" textColor="0xFCE492" strokeColor="0xFFFFFF" horizontalCenter="0"/>
 		<e:Group id="desGroup" y="288" horizontalCenter="0">
-			<e:Label id="des1" text="Label" y="12" textColor="0xFFE89E" x="51"/>
-			<e:Image source="icon_coin_png" x="0" y="0"/>
-			<e:Label id="des2" text="Label" y="2" textColor="0xffe89e" x="41"/>
-			<e:layout>
+			<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0" scale9Grid="43,7,8,42"/>
+			<e:Group left="30" right="30" verticalCenter="0">
+				<e:Label id="des1" text="Label" y="12" textColor="0xFFE89E" x="51"/>
+				<e:Image source="icon_coin_png" x="0" y="0"/>
+				<e:Label id="des2" text="Label" y="2" textColor="0xffe89e" x="41"/>
+				<e:layout>
 				<e:HorizontalLayout verticalAlign="middle"/>
-			</e:layout>
+				</e:layout>
+			</e:Group>
 		</e:Group>
 	</e:Group>
 	<e:Group id="failGroup" horizontalCenter="0" y="180" height="265" anchorOffsetY="130" visible="false">
@@ -52,13 +109,13 @@
 			<e:HorizontalLayout gap="0"/>
 		</e:layout>
 		</e:Group>
-		<e:Label id="failText" text="挑战失败" y="119" stroke="3" x="190"/>
+		<e:Label id="failText" text="挑战失败" y="119" stroke="3" horizontalCenter="0"/>
 	</e:Group>
 	<e:Group id="btnGroup" y="410" horizontalCenter="0">
 		<e:Button id="backBtn" label="关闭" y="0" width="150" x="0" skinName="Btn2Skin"/>
 		<e:Button id="replayBtn" label="回放" y="0" skinName="Btn1Skin" width="150" x="0"/>
 		<e:layout>
-			<e:HorizontalLayout gap="30"/>
+		<e:HorizontalLayout gap="30"/>
 		</e:layout>
 	</e:Group>
 

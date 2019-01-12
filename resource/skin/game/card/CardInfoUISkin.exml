@@ -1,7 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="CardInfoUISkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" >
+<e:Skin class="CardInfoUISkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*"  height="640">
 	<e:Group x="0" top="0" bottom="0">
-		<ns1:PKCardInfoUI id="item" x="0" skinName="PKCardInfoSkin" currentState="window" minHeight="560" y="0"/>
+		<ns1:PKCardInfoUI id="item" skinName="PKCardInfoSkin" currentState="window" minHeight="560" left="0" right="0" top="0" bottom="0"/>
+		<e:Group bottom="40" horizontalCenter="0">
+			<e:Group x="0" y="0">
+				<e:Image source="icon_type1_png" x="0" y="1" scaleX="0.8" scaleY="0.8"/>
+				<e:Image source="arrow2_png" x="78" y="10" scaleX="-1"/>
+				<e:Label text="克制" x="107" y="1" textColor="0xfcde83" bold="true"/>
+				<e:Image source="arrow2_png" x="68" y="0"/>
+				<e:Image x="10" y="11" scaleX="0.8" scaleY="0.8" source="icon_type2_png"/>
+				<e:layout>
+				<e:HorizontalLayout verticalAlign="middle" gap="10"/>
+				</e:layout>
+			</e:Group>
+			<e:Group x="10" y="10">
+				<e:Image x="0" y="1" scaleX="0.8" scaleY="0.8" source="icon_type2_png"/>
+				<e:Image source="arrow2_png" x="78" y="10" scaleX="-1"/>
+				<e:Label text="克制" x="107" y="1" textColor="0xfcde83" bold="true"/>
+				<e:Image source="arrow2_png" x="68" y="0"/>
+				<e:Image x="10" y="11" scaleX="0.8" scaleY="0.8" source="icon_type3_png"/>
+				<e:layout>
+				<e:HorizontalLayout verticalAlign="middle" gap="10"/>
+				</e:layout>
+			</e:Group>
+			<e:Group x="20" y="20">
+				<e:Image x="0" y="1" scaleX="0.8" scaleY="0.8" source="icon_type3_png"/>
+				<e:Image source="arrow2_png" x="78" y="10" scaleX="-1"/>
+				<e:Label text="克制" x="107" y="1" textColor="0xfcde83" bold="true"/>
+				<e:Image source="arrow2_png" x="68" y="0"/>
+				<e:Image source="icon_type1_png" x="10" y="11" scaleX="0.8" scaleY="0.8"/>
+				<e:layout>
+				<e:HorizontalLayout verticalAlign="middle" gap="10"/>
+				</e:layout>
+			</e:Group>
+			<e:layout>
+				<e:VerticalLayout gap="6"/>
+			</e:layout>
+		</e:Group>
 	</e:Group>
 	<e:Image id="closeBtn" source="close_btn2_png" bottom="-45" horizontalCenter="0"/>
 </e:Skin>

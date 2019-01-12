@@ -55,16 +55,30 @@ class LogItem extends game.BaseItem {
         this.force1.text = NumberUtil.addNumSeparator(force1)
         this.force2.text = NumberUtil.addNumSeparator(force2)
 
+        var green = 0x66ff66
+        var green2 = 0x006600
+        var white = 0xFFEDC9
+        var red = 0xcc0000
+
+        this.cost1.textColor = cost1>cost2?green:white
+        this.cost2.textColor = cost1<cost2?green:white
+
+        this.myCost1.textColor = showData.cost1 > 0?green:white
+        this.myCost2.textColor = showData.cost2 > 0?green:white
+        this.force1.textColor = force1>force2?green:white
+        this.force2.textColor = force1<force2?green:white
+
         this.result1.source = showData.result ==1?'win_icon_png':'lose_icon_png'
         this.result2.source = showData.result ==2?'win_icon_png':'lose_icon_png'
 
         this.coinText.text = finalCoin>=0?('+' + finalCoin):('' + finalCoin);
+        this.coinText.textColor = finalCoin>=0?green2:red;
         this.timeText.text = PKM.getDayStrByKey(showData.key)
 
         if(showData.result == 3)
-            this.desText.text = '双方平手，最终收益'
+            this.desText.text = '双方平手，最终收益>'
         else
-            this.desText.text = showData.result +  '队获胜，最终收益'
+            this.desText.text = showData.result +  '队获胜，最终收益>'
     }
 
 }

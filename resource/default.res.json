@@ -13,7 +13,7 @@
 			"name":"pk"
 		},
 		{
-			"keys":"",
+			"keys":"info_bg_jpg",
 			"name":"preload_jpg"
 		},
 		{
@@ -1459,6 +1459,11 @@
 			"name":"win_icon_png",
 			"type":"image",
 			"url":"game_assets/win_icon.png"
+		},
+		{
+			"name":"info_bg_jpg",
+			"type":"image",
+			"url":"game_assets/info_bg.jpg"
 		}
 	]
 }

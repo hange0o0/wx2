@@ -167,15 +167,16 @@ class GameUI extends game.BaseUI {
             return;
         }
 
-        var cd = PKM.getEndTime() - 3*60 - TM.now();
+        var playCD = 10*60 - PKConfig.addCoinTime;
+        var cd = PKM.getEndTime() - playCD - TM.now();
         if(cd <= 0)
         {
             this.playGame();
-            this.cdText.text = '战斗中\n'+DateUtil.getStringBySecond(cd + 60*3).substr(-5);
+            this.cdText.text = '战斗中\n'+DateUtil.getStringBySecond(cd + playCD).substr(-5);
             return;
         }
         this.cdText.text = '投注中\n'+DateUtil.getStringBySecond(cd).substr(-5);
-        var costData = PKM.getCost(this.showData.seed,60*7 - cd)
+        var costData = PKM.getCost(this.showData.seed,PKConfig.addCoinTime - cd)
         this.team1.renewCost(costData);
         this.team2.renewCost(costData);
         this.team1.randomTalk();
@@ -191,13 +192,15 @@ class GameUI extends game.BaseUI {
         this.addChild(MainPKUI.instance);
         MainPKUI.instance.top = 90
         MainPKUI.instance.bottom = 105
+        var playCD = 10*60 - PKConfig.addCoinTime;
         this.mainPKUI.show({
             isMain:true,
             key:PKM.getCurrentKey(),
             list1:this.showData.list1,
             list2:this.showData.list2,
             seed:this.showData.seed,
-            passTime:TM.now() - (PKM.getEndTime()-3*60),
+            showData:UM.lastGuess,
+            passTime:TM.now() - (PKM.getEndTime()-playCD),
             force1:PKM.getForceAdd(costData.cost1 + UM.lastGuess.teamCost1) + PKM.baseForce,
             force2:PKM.getForceAdd(costData.cost2 + UM.lastGuess.teamCost2) + PKM.baseForce
         });

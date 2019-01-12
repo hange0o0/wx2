@@ -73,6 +73,7 @@ class LogUI extends game.BaseUI {
             list1:roundData.list1,
             list2:roundData.list2,
             seed:roundData.seed,
+            showData:userData,
             force1:PKM.getForceAdd(costData.cost1 + userData.teamCost1) + PKM.baseForce,
             force2:PKM.getForceAdd(costData.cost2 + userData.teamCost2) + PKM.baseForce
         });

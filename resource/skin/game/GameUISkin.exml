@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="GameUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" top="-30" bottom="0"/>
+	<e:Image source="title_bg4_png" x="0" width="640" fillMode="repeat" scaleY="-1" y="92"/>
 	<e:Group x="0" top="90" bottom="105">
 		<ns1:TeamUI id="team1" x="0" y="0" skinName="TeamUISkin"/>
 		<ns1:TeamUI id="team2" x="10" y="10" skinName="TeamUISkin"/>
@@ -9,8 +9,8 @@
 		</e:layout>
 	</e:Group>
     <e:Group id="coinGroup" x="10" y="20">
-			<e:Image source="border1_png" scale9Grid="28,20,26,2" x="0" y="0" width="250"/>
-			<e:Label id="coinText" text="1234567890" x="50" size="24" y="9" verticalCenter="-3"/>
+			<e:Image source="border1_png" scale9Grid="28,20,26,2" x="0" y="0" width="300" scaleX="1.1" scaleY="1.1"/>
+			<e:Label id="coinText" text="1234567890" x="50" size="24" verticalCenter="-5" textColor="0xffe3b7"/>
 			<e:Image x="2.02" source="icon_coin_png" y="-1.33"/>
 		</e:Group>
 	<e:Image source="title_bg4_png" x="0" width="640" fillMode="repeat" bottom="-20"/>

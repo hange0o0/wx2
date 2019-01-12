@@ -21,6 +21,8 @@ class UserManager {
     public gender: number;
     public coin: number = 999;
     public coinwin: number = 0;
+    public total: number = 0;
+    public win: number = 0;
     public history = [];
     public lastGuess: any = {};
     public isScope: boolean = false;
@@ -30,6 +32,8 @@ class UserManager {
         this.dbid = data._id;
         this.coin = data.coin || 999;
         this.coinwin = data.coinwin || 0;
+        this.total = data.total || 0;
+        this.win = data.win || 0;
         this.lastGuess = data.lastGuess;
         //this.writeKey = data.writeKey;
 

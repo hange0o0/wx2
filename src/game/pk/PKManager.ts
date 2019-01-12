@@ -148,7 +148,7 @@ class PKManager {
     //取某一时间的花费情况
     public getCost(seed,passTime){
         this.randomSeed = seed*2;
-        var len = Math.min(passTime,7*60);
+        var len = Math.min(passTime,PKConfig.addCoinTime);
         var baseCost1 = 15 + 20*this.random()
         var baseCost2 = 50 - baseCost1
         var oo = {
@@ -201,8 +201,11 @@ class PKManager {
     }
 
     public getMoneyRate(my,other){
-        var rate = other/my
-        return Math.max(105,Math.floor(100 + rate*50));
+        if(other > my)
+            var rate = Math.pow(other/my,1.5)
+        else
+            var rate = other/my;
+        return Math.max(105,Math.floor(100 + rate*30));
     }
 
     //加载关卡数据
@@ -246,7 +249,14 @@ class PKManager {
                         MyWindow.ShowTips('你在上一轮竞猜中，获得了'+NumberUtil.addNumSeparator(addCoin)+'金币')
                     }
                     UM.addCoin(addCoin)
-                    UM.coinwin += addCoin - showData.cost1 - showData.cost2;
+
+                    var coinWin = addCoin - showData.cost1 - showData.cost2;
+                    if(coinWin > 0)
+                    {
+                        UM.coinwin += coinWin
+                        UM.win ++;
+                    }
+                    UM.total ++;
 
                     var roundData = this.getRoundDataByKey(showData.key);
                     showData.result = result;
@@ -261,6 +271,8 @@ class PKManager {
                     var updateData:any = {
                         coin:UM.coin,
                         coinwin:UM.coinwin,
+                        win:UM.win,
+                        total:UM.total,
                         lastGuess:showData,
                     };
 
@@ -320,13 +332,13 @@ class PKManager {
         if(result == 1)
         {
             var rate = this.getMoneyRate(teamCost1,teamCost2)
-            addCoin += Math.round(showData.cost1*rate/100)
+            addCoin += Math.ceil(showData.cost1*rate/100)
             //lossCoin += showData.cost2;
         }
         else if(result == 2)
         {
             var rate = this.getMoneyRate(teamCost2,teamCost1)
-            addCoin += Math.round(showData.cost2*rate/100)
+            addCoin += Math.ceil(showData.cost2*rate/100)
             //lossCoin += showData.cost1;
         }
         //else
@@ -402,8 +414,13 @@ class PKManager {
         var wx = window['wx'];
         if(!wx)
             return;
+        var upList = [{ key: 'coin', value: UM.coin + ',' + TM.now()},{ key: 'coinwin', value: UM.coinwin + ',' + TM.now()}];
+        if(UM.total >= Config.openRate)
+        {
+            upList.push({ key: 'winrate', value: (UM.win/UM.total) + ',' + TM.now()})
+        }
         wx.setUserCloudStorage({
-            KVDataList: [{ key: 'coin', value: UM.coin + ',' + TM.now()},{ key: 'coinwin', value: UM.coinwin + ',' + TM.now()}],
+            KVDataList: upList,
             success: res => {
                 console.log(res);
             },

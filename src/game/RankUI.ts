@@ -41,18 +41,45 @@ class RankUI extends game.BaseUI{
     public onShow(){
         if(!window['wx'])
             return;
+
+        var arr = [{label:'金币排行'},{label:'收益排行'},{label:'胜率排行'}]
+        if(UM.total < Config.openRate)
+        {
+            arr.pop();
+            this.tab.width = 400
+        }
+        else
+        {
+            this.tab.width = 540
+        }
+        this.tab.dataProvider = new eui.ArrayCollection(arr)
         this.showBitmapList();
     }
 
     private poseData(){
-        var key = this.tab.selectedIndex == 0?'coin':'coinwin'
-        var value = this.tab.selectedIndex == 0?UM.coin:UM.coinwin
+        if(this.tab.selectedIndex == 0)
+        {
+            var key = 'coin'
+            var value = UM.coin
+        }
+        else if(this.tab.selectedIndex == 1)
+        {
+            var key = 'coinwin'
+            var value = UM.coinwin
+        }
+        else if(this.tab.selectedIndex == 2)
+        {
+            var key = 'winrate'
+            var value = UM.win/UM.total
+        }
+
         let param:any = {
             me: UM.gameid,
             command: 'open',
             key:key,
-            x:this.bitmap.x + (GameManager.uiWidth - this.width)/2,
-            y:this.bitmap.y + (GameManager.uiHeight - this.height)/2,
+            rankHeight:GameManager.uiHeight-130-110,
+            x:this.bitmap.x,// + (GameManager.uiWidth - this.width)/2,
+            y:this.bitmap.y + (GameManager.uiHeight - this.height)/2 + GameManager.offsetHeight,
             me_value: value + ',0', //第2位时间传0，永远排在最上面
             root: "openDataContext/",
         }
@@ -76,7 +103,7 @@ class RankUI extends game.BaseUI{
         if (!this.isdisplay) {
 
             this.bitmap = platform.openDataContext.createDisplayObject(null, this.stage.stageWidth, this.stage.stageHeight);
-            this.bitmap.x = 20;
+            this.bitmap.x = 10;
             this.bitmap.y = 130;
             this.addChild(this.bitmap);
             this.bitmap.touchEnabled = false

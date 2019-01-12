@@ -26,6 +26,11 @@ class GameManager {
     public static container:egret.DisplayObjectContainer;
     public static loadStep
 
+    public static get offsetHeight(){
+        return (this.stage.stageHeight - this.uiHeight)/2;
+        //return this.stage.stageHeight;
+    }
+
     public static get uiHeight(){
         return Math.min(1136,this.stage.stageHeight);
         //return this.stage.stageHeight;
