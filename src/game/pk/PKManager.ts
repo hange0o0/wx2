@@ -25,10 +25,11 @@ class PKManager {
     }
 
 
+    public needUpUser = false;
     public baseForce = 10000;
     //public cost1 = 0
     //public cost2 = 0;
-    public costChange = false
+    //public costChange = false
 
     public pkResult = {}//所有PK结果的集合
     public levelData = {}//关卡数据的集合
@@ -89,21 +90,21 @@ class PKManager {
     }
 
     //告诉服务器我的玩费
-    private sendTimer
-    public callSendCost(b?){
-        clearTimeout(this.sendTimer);
-        if(b)
-        {
-            this.sendCost();
-        }
-        else
-        {
-            this.sendTimer = setTimeout(()=>{
-                this.sendTimer = 0;
-                this.sendCost();
-            },500)
-        }
-    }
+    //private sendTimer
+    //public callSendCost(b?){
+    //    clearTimeout(this.sendTimer);
+    //    if(b)
+    //    {
+    //        this.sendCost();
+    //    }
+    //    else
+    //    {
+    //        this.sendTimer = setTimeout(()=>{
+    //            this.sendTimer = 0;
+    //            this.sendCost();
+    //        },500)
+    //    }
+    //}
 
     public initData(str){
         var arr = str.split('\n')
@@ -201,7 +202,9 @@ class PKManager {
     }
 
     public getMoneyRate(my,other){
-        if(other > my)
+        if(other == my)
+            var rate = 1;
+        else if(other > my)
             var rate = Math.pow(other/my,1.5)
         else
             var rate = other/my;
@@ -264,29 +267,7 @@ class PKManager {
                     UM.history.unshift(showData)
                     UM.saveHistory();
                     this.upWXData();
-
-
-
-
-                    var updateData:any = {
-                        coin:UM.coin,
-                        coinwin:UM.coinwin,
-                        win:UM.win,
-                        total:UM.total,
-                        lastGuess:showData,
-                    };
-
-                    //var wx = window['wx'];
-                    //if(wx)
-                    //{
-                    //    const db = wx.cloud.database();
-                    //    const _ = db.command
-                    //    updateData.history = _.push([showData])
-                    //    if(UM.history.length > 15) //记录上限
-                    //        updateData.history = updateData.history.shift();
-                    //}
-
-                    WXDB.updata('user',updateData)
+                    this.needUpUser = true;
                     UM.lastGuess = UM.getGuessInitData(this.getCurrentKey());
                 })
                 return false;
@@ -394,20 +375,31 @@ class PKManager {
         return JSON.parse(arr[index])
     }
 
-    //发送投注信息
-    public sendCost(){
-        if(this.costChange)
+    ////发送投注信息
+    //public sendCost(){
+    //    if(this.costChange)
+    //    {
+    //
+    //    }
+    //}
+
+    public upDateUserData(){
+        if(!this.needUpUser)
+            return;
+        var wx = window['wx'];
+        if(wx)
         {
-            var wx = window['wx'];
-            if(wx)
-            {
-                WXDB.updata('user',{
-                    coin:UM.coin,
-                    lastGuess:UM.lastGuess,
-                })
-            }
-            this.costChange = false;
+            var updateData:any = {
+                coin:UM.coin,
+                coinwin:UM.coinwin,
+                win:UM.win,
+                total:UM.total,
+                lastGuess:UM.lastGuess,
+            };
+
+            WXDB.updata('user',updateData)
         }
+        this.needUpUser = false;
     }
 
     public upWXData(){

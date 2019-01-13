@@ -48,10 +48,12 @@ class PKCode {
             if(PD.isReplay && PD.actionTime >= PD.replayEndTime)
                 PD.isGameOver = true;
 
+            if(PD.actionTime > PKConfig.drawTime)//5分
+                PD.isGameOver = true;
+
             if(PD.isGameOver)
                 return true
-            if(PD.actionTime > PKConfig.drawTime)//5分
-                return true
+
 
             if(PD.quick && PD.actionTime >= PD.quickTime)
             {

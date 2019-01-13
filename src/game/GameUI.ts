@@ -59,10 +59,8 @@ class GameUI extends game.BaseUI {
     }
 
     public onShop(){
-        UM.addCoin(1000);
-        WXDB.updata('user',{
-            coin:UM.coin,
-        })
+        GetCoinUI.getInstance().show();
+
     }
 
     public show(){
@@ -187,7 +185,12 @@ class GameUI extends game.BaseUI {
         if(this.mainPKUI.visible)
             return;
         var PKM = PKManager.getInstance();
-        PKM.callSendCost(true);
+
+        setTimeout(()=>{ //10秒内随机一个时间写
+            PKM.upDateUserData();
+        },Math.random()*10*1000)
+
+        //PKM.callSendCost(true);
         var costData = PKM.getCost(this.showData.seed,60*10)
         this.addChild(MainPKUI.instance);
         MainPKUI.instance.top = 90

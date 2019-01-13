@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="GetCoinItemSkin" width="280" height="300" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" >
+	<e:Image source="bg2_png" scale9Grid="9,9,11,10" x="0" y="0" width="100%" height="100%"/>
+	<e:Image source="bg9_png" scale9Grid="12,12,6,5" left="0" right="0" top="0" height="50"/>
+	<e:Button id="goBtn" label="前往" skinName="Btn1Skin" width="160" horizontalCenter="0" bottom="20"/>
+	<e:Group y="144.66" horizontalCenter="0">
+		<e:Image source="bar_bg_png" x="0" y="0"/>
+		<e:Image id="barMC" x="2" y="2" source="bar2_png"/>
+	</e:Group>
+	<e:Label id="titleText" text="登录第 3 天" textAlign="left" y="13" size="24" lineSpacing="5" anchorOffsetY="0" verticalAlign="middle" anchorOffsetX="0" bold="true" horizontalCenter="0" textColor="0xffffff" stroke="2" strokeColor="0x140a00"/>
+	<e:Label id="rateText" text="22:33:44" textAlign="left" size="20" lineSpacing="5" anchorOffsetY="0" verticalAlign="middle" anchorOffsetX="0" height="24" horizontalCenter="0" y="149.34" textColor="0xffe1a8"/>
+	<e:Label id="desText" text="等待好友进入" textAlign="left" size="20" lineSpacing="5" anchorOffsetY="0" verticalAlign="middle" anchorOffsetX="0" height="24" horizontalCenter="0" textColor="0xFFE1A8" y="193.3"/>
+	<e:Group y="70" horizontalCenter="0">
+		<e:Image source="border1_png" scale9Grid="28,20,26,2" x="0" y="0" width="180"/>
+		<e:Image source="icon_coin_png" x="4.02" y="2" scaleX="0.8" scaleY="0.8"/>
+		<e:Label id="addCoinText" text="+12345" y="9" size="24" textColor="0xffd789" left="45" right="20" textAlign="center"/>
+	</e:Group>
+</e:Skin>

@@ -8,6 +8,6 @@
 			<e:HorizontalLayout gap="0" verticalAlign="middle" horizontalAlign="center"/>
 		</e:layout>
 		<e:Image id="iconDisplay"/>
-		<e:Label id="labelDisplay" size="24" text="123" textColor="0xffffff" stroke="2"/>
+		<e:Label id="labelDisplay" size="24" text="123" textColor="0x000000"/>
 	</e:Group>
 </e:Skin>

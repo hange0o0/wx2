@@ -32,6 +32,7 @@ class PKTalkItem extends game.BaseContainer {
 
         this.touchChildren = this.touchEnabled = false;
         this.anchorOffsetY = 110
+        this.cacheAsBitmap = true;
     }
 
 
@@ -63,7 +64,6 @@ class PKTalkItem extends game.BaseContainer {
         egret.Tween.removeTweens(this);
         this.scaleX = 0;
         this.scaleY = 0;
-        this.alpha = 1;
         var tw = egret.Tween.get(this);
         tw.to({scaleX:0.8,scaleY:0.8},200).to({scaleX:0.6,scaleY:0.6},200).wait(2500).to({scaleX:0,scaleY:0},100).call(function(){
              this.remove();

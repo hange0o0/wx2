@@ -8,14 +8,15 @@ class LogItem extends game.BaseItem {
     private cost1: eui.Label;
     private force1: eui.Label;
     private myCost1: eui.Label;
-    private result1: eui.Image;
+    private resultText1: eui.Label;
     private cost2: eui.Label;
     private force2: eui.Label;
     private myCost2: eui.Label;
-    private result2: eui.Image;
+    private resultText2: eui.Label;
     private desText: eui.Label;
     private coinText: eui.Label;
     private videoBtn: eui.Button;
+
 
 
 
@@ -59,6 +60,8 @@ class LogItem extends game.BaseItem {
         var green2 = 0x006600
         var white = 0xFFEDC9
         var red = 0xcc0000
+        var red2 = 0xFF6666
+        var yellow = 0xFFCC66
 
         this.cost1.textColor = cost1>cost2?green:white
         this.cost2.textColor = cost1<cost2?green:white
@@ -68,8 +71,28 @@ class LogItem extends game.BaseItem {
         this.force1.textColor = force1>force2?green:white
         this.force2.textColor = force1<force2?green:white
 
-        this.result1.source = showData.result ==1?'win_icon_png':'lose_icon_png'
-        this.result2.source = showData.result ==2?'win_icon_png':'lose_icon_png'
+
+        if(showData.result ==1)
+        {
+            this.resultText1.text = '胜利'
+            this.resultText2.text = '失败'
+            this.resultText1.textColor = green
+            this.resultText2.textColor = red2
+        }
+        else if(showData.result ==2)
+        {
+            this.resultText2.text = '胜利'
+            this.resultText1.text = '失败'
+            this.resultText2.textColor = green
+            this.resultText1.textColor = red2
+        }
+        else
+        {
+            this.resultText2.text = '平局'
+            this.resultText1.text = '平局'
+            this.resultText2.textColor = yellow
+            this.resultText1.textColor = yellow
+        }
 
         this.coinText.text = finalCoin>=0?('+' + finalCoin):('' + finalCoin);
         this.coinText.textColor = finalCoin>=0?green2:red;

@@ -39,7 +39,7 @@ class PKConfig {
     public static maxHandCard = 6; //手牌上限
     public static maxPosCard = 4; //上阵牌上限
     public static typeAdd = 10; //类型加成百分比
-    public static drawTime = 1000*100; //超时 100s
+    public static drawTime = 1000*99; //超时 100s
     //public static autoDef = 10; //防守方队伍加成
     public static skillBeginID = 200; //大于这个的是技能
     public static heroCD = 3*1000;//40*1000; //出英雄的CD

@@ -43,9 +43,7 @@
 			<e:Label id="cost1" text="1,000,000,000" x="40" size="24" verticalCenter="0" y="54" height="50" verticalAlign="middle"/>
 			<e:Label id="force1" text="队伍1" x="40" size="24" verticalCenter="0" y="54" height="50" verticalAlign="middle"/>
 			<e:Label id="myCost1" text="队伍1" x="50" size="24" verticalCenter="0" y="64" height="50" verticalAlign="middle"/>
-			<e:Group x="75" y="200" width="50" height="50">
-				<e:Image id="result1" source="win_icon_png" x="0"/>
-			</e:Group>
+			<e:Label id="resultText1" text="队伍1" x="60" size="24" verticalCenter="0" y="74" height="50" verticalAlign="middle" textColor="0xffcc7a"/>
 			<e:layout>
 			<e:VerticalLayout horizontalAlign="center" gap="0"/>
 			</e:layout>
@@ -58,9 +56,7 @@
 			<e:Label id="cost2" text="队伍1" x="40" size="24" verticalCenter="0" y="54" height="50" verticalAlign="middle" textColor="0x999999"/>
 			<e:Label id="force2" text="队伍1" x="40" size="24" verticalCenter="0" y="54" height="50" verticalAlign="middle"/>
 			<e:Label id="myCost2" text="队伍1" x="50" size="24" verticalCenter="0" y="64" height="50" verticalAlign="middle"/>
-			<e:Group x="75" y="200" width="50" height="50">
-				<e:Image id="result2" x="0" source="lose_icon_png"/>
-			</e:Group>
+			<e:Label id="resultText2" text="队伍1" x="60" size="24" verticalCenter="0" y="74" height="50" verticalAlign="middle" textColor="0xff6666"/>
 			<e:layout>
 			<e:VerticalLayout horizontalAlign="center" gap="0"/>
 			</e:layout>

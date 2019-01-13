@@ -78,7 +78,11 @@ class UserManager {
                     complete: (res) => {
                         console.log(res)
                         this.gameid = res.result.openid
+                        TimeManager.getInstance().initlogin(res.result.time)
                         this.loginUser(fun)
+                    },
+                    fail:()=>{
+                       MyWindow.Alert('请求用户数据超时，请重新登录')
                     }
                 })
         //    }

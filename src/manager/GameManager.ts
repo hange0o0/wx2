@@ -190,7 +190,7 @@ if(window["wx"])
     wx.onHide(function(res){
         if(!GameManager.stage)
             return;
-        PKManager.getInstance().callSendCost();
+        PKManager.getInstance().upDateUserData();
         SoundManager.getInstance().stopBgSound();
         GameManager.stage.dispatchEventWith(egret.Event.DEACTIVATE);
         console.log('hide')
@@ -205,6 +205,11 @@ if(window["wx"])
         //GameUI.getInstance().cleanTouch();
         console.log('show')
     });
+    //wx.exitMiniProgram(function(res){
+    //    if(!GameManager.stage)
+    //        return;
+    //    PKManager.getInstance().upDateUserData();
+    //});
 
     wx.onShareAppMessage(function(res){
         return {

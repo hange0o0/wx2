@@ -43,6 +43,8 @@
 		"resource/skin/game/TeamUISkin.exml",
 		"resource/skin/game/MainPKUISkin.exml",
 		"resource/skin/game/GameUISkin.exml",
+		"resource/skin/game/GetCoinItemSkin.exml",
+		"resource/skin/game/GetCoinUISkin.exml",
 		"resource/skin/game/LogItemSkin.exml",
 		"resource/skin/game/LogUISkin.exml",
 		"resource/skin/game/MainPKItemSkin.exml",

@@ -11,16 +11,32 @@ class TimeManager {
     }
     
     public timeDiff: number = 0;
-    
+    public loginTime: number = 0;//等陆时的服务器时间
+
     public init(time:number):void{
         //本地和服务器的时间差
         this.timeDiff = Math.floor(Date.now() / 1000 - time);
     }
+
+    public initlogin(t){
+        var wx = window['wx'];
+        this.loginTime = Math.floor((t - wx.getPerformance().now())/1000);
+    }
     
     public now():number{
+        if(this.loginTime)
+        {
+            var wx = window['wx'];
+            return this.loginTime + Math.floor(wx.getPerformance().now()/1000)
+        }
         return Math.floor(Date.now() / 1000) - this.timeDiff //+ 24*3600 *7;
     }
     public nowMS():number{
+        if(this.loginTime)
+        {
+            var wx = window['wx'];
+            return this.loginTime*1000 + wx.getPerformance().now()
+        }
         return Date.now() - this.timeDiff*1000
     }
 

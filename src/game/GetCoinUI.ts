@@ -1,9 +1,9 @@
-class LogUI extends game.BaseUI {
+class GetCoinUI extends game.BaseUI {
 
-    private static _instance: LogUI;
-    public static getInstance(): LogUI {
+    private static _instance: GetCoinUI;
+    public static getInstance(): GetCoinUI {
         if(!this._instance)
-            this._instance = new LogUI();
+            this._instance = new GetCoinUI();
         return this._instance;
     }
 
@@ -11,7 +11,7 @@ class LogUI extends game.BaseUI {
     private bottomUI: BottomUI;
     private scroller: eui.Scroller;
     private list: eui.List;
-    private desText: eui.Label;
+
 
 
 
@@ -19,17 +19,17 @@ class LogUI extends game.BaseUI {
 
     public constructor() {
         super();
-        this.skinName = "LogUISkin";
+        this.skinName = "GetCoinUISkin";
     }
 
     public childrenCreated() {
         super.childrenCreated();
 
         this.bottomUI.setHide(this.onClose,this);
-        this.topUI.setTitle('投注日志')
+        this.topUI.setTitle('获取金币')
 
         this.scroller.viewport = this.list;
-        this.list.itemRenderer = LogItem
+        this.list.itemRenderer = GetCoinItem
         this.list.dataProvider = this.dataProvider = new eui.ArrayCollection();
 
     }
@@ -60,28 +60,11 @@ class LogUI extends game.BaseUI {
 
 
     public renew(){
-        this.dataProvider.source = UM.history
+        this.dataProvider.source =[1,1,1]
         this.dataProvider.refresh();
         //this.list.dataProvider = new eui.ArrayCollection(UM.history);
     }
 
 
-    public showHistory(userData,roundData){
-        var PKM = PKManager.getInstance();
-        var costData = PKM.getCost(roundData.seed,60*10)
-        this.addChild(MainPKUI.instance);
-        MainPKUI.instance.top = 60
-        MainPKUI.instance.bottom = 100
-        MainPKUI.instance.show({
-            key:userData.key,
-            list1:roundData.list1,
-            list2:roundData.list2,
-            seed:roundData.seed,
-            showData:userData,
-            force1:PKM.getForceAdd(costData.cost1 + userData.teamCost1) + PKM.baseForce,
-            force2:PKM.getForceAdd(costData.cost2 + userData.teamCost2) + PKM.baseForce
-        });
-
-    }
 
 }

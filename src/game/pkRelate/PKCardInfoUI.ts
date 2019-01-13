@@ -156,7 +156,8 @@ class PKCardInfoUI extends game.BaseContainer {
         if(atk)
         {
             arr2.push({index:2,icon:'icon_atk_png',iconScale:1,title:'攻击力',value:atk,valueAdd:ark2-atk})
-            arr2.push({index:5,icon:'icon_atkcd_png',iconScale:1,title:'攻击间隔',value:MyTool.toFixed(vo.atkcd/1000,1)+'秒',valueAdd:0})
+            arr2.push({index:7,icon:'icon_atkcd_png',iconScale:1,title:'秒伤',value:Math.round(atk/(vo.atkcd/1000))})
+            arr2.push({index:5,icon:'icon_clock_png',iconScale:1,title:'攻击间隔',value:MyTool.toFixed(vo.atkcd/1000,1)+'秒',valueAdd:0})
             arr2.push({index:6,icon:'icon_rage_png',iconScale:1,title:'攻击距离',value:vo.isNearAtk()?'近战':vo.atkrage,valueAdd:0})
         }
 

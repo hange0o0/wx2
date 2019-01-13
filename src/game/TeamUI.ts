@@ -89,9 +89,8 @@ class TeamUI extends game.BaseItem {
             UM.lastGuess.teamCost2 += v
         }
         AddCoinItem.showMV(v,this);
-        PKManager.getInstance().costChange = true
+        PKManager.getInstance().needUpUser = true
         UM.addCoin(-v);
-        PKManager.getInstance().callSendCost();
         GameUI.getInstance().onTimer();
         this.giftTalk(v);
     }
@@ -193,7 +192,7 @@ class TeamUI extends game.BaseItem {
         this.addBtn100.skinName = UM.coin >= 100 ?'Btn1Skin':'Btn3Skin'
         this.addBtn1000.skinName = UM.coin >= 1000 ?'Btn1Skin':'Btn3Skin'
 
-        this.setHtml(this.totalText,this.createHtml('总投资：',0xFFCC8C) +NumberUtil.addNumSeparator(parseInt(myCost)));
+        this.setHtml(this.totalText,this.createHtml('总投资：',0xFFCC8C) +this.createHtml(NumberUtil.addNumSeparator(parseInt(myCost)),myCost>otherCost?0x00ff00:0xffffff));
         this.setHtml(this.myText,this.createHtml('我的：',0xFFCC8C) +this.createHtml(NumberUtil.addNumSeparator(userCost),userCost > 0?0x00ff00:0xffffff));
         //this.myText.text = '我的：' +NumberUtil.addNumSeparator(userCost);
         //this.myText.textColor = userCost > 0?0x00ff00:0xffffff

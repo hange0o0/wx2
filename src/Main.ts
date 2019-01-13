@@ -27,6 +27,7 @@ class Main extends eui.UILayer {
         //}
 
 
+
         // initialize the Resource loading library
         //初始化Resource资源加载库
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
@@ -167,6 +168,9 @@ class Main extends eui.UILayer {
         CM.initData(RES.getRes("data_json"));
         GameManager.stage = this.stage;
         GameManager.container = this;
+        if(App.isIOS){
+            GameManager.stage.frameRate = 60;
+        }
         GameManager.getInstance().init();
         console.log('_11')
 
