@@ -29,6 +29,7 @@ class GameUI extends game.BaseUI {
     private loadMC: eui.Image;
 
 
+    private pkMV
 
     public showIndex = -1;
     public showData;
@@ -38,6 +39,18 @@ class GameUI extends game.BaseUI {
         this.addBtnEvent(this.mailBtn,this.onMail)
         this.addBtnEvent(this.shopBtn,this.onShop)
         this.addBtnEvent(this.rankBtn,this.onRank)
+
+        var name = 'pk_mv'
+        var data:any = RES.getRes(name + "_json"); //qid
+        var texture:egret.Texture = RES.getRes(name + "_png");
+        var mcFactory = new egret.MovieClipDataFactory(data, texture);
+        this.pkMV = new egret.MovieClip();
+        this.pkMV.movieClipData = mcFactory.generateMovieClipData('mv');
+        this.addChild(this.pkMV);
+        this.pkMV.y = GameManager.uiHeight - 80;
+        this.pkMV.x = 320;
+        this.pkMV.scaleX = this.pkMV.scaleY = 1.5
+        this.pkMV.play(-1);
 
         this.team1.teamID = 1
         this.team2.teamID = 2

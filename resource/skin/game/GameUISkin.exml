@@ -13,26 +13,31 @@
 			<e:Label id="coinText" text="1234567890" x="50" size="24" verticalCenter="-5" textColor="0xffe3b7"/>
 			<e:Image x="2.02" source="icon_coin_png" y="-1.33"/>
 		</e:Group>
-	<e:Image source="title_bg4_png" x="0" width="640" fillMode="repeat" bottom="-20"/>
-    <e:Group id="bottomGroup" height="75" bottom="20" horizontalCenter="0">
-					<e:Group id="shopBtn" x="100" y="0" height="80" width="80">
-						<e:Image source="main_shop_png" verticalCenter="0" horizontalCenter="0"/>
-						<e:Image id="shopRedMC" source="red_mc_png" right="0" top="12"/>
-						<e:Label text="商城" size="22" horizontalCenter="0" stroke="2" bottom="5"/>
+	<e:Image source="title_bg4_png" x="-1.52" width="640" fillMode="repeat" bottom="-20"/>
+    <e:Group id="bottomGroup" height="100" bottom="2" horizontalCenter="0">
+					<e:Group id="shopBtn" x="100" y="0" height="90" width="90">
+						<e:Image source="coin_btn_png" horizontalCenter="0" verticalCenter="0"/>
+						<e:Image id="shopRedMC" source="red_mc_png" right="-10" top="-5"/>
 					</e:Group>
-					<e:Group id="rankBtn" x="100" y="0" height="80" width="80">
-					<e:Image source="main_rank_png" horizontalCenter="0" verticalCenter="0"/>
-					<e:Label text="排行" size="22" horizontalCenter="0" stroke="2" bottom="5"/>
+					<e:Group id="rankBtn" x="100" y="0" height="90" width="90">
+					<e:Image source="rank_btn_png" horizontalCenter="0" verticalCenter="0"/>
 					</e:Group>
-			<e:Label id="cdText" text="Label" x="250" y="35" size="40"/>
-					<e:Group id="mailBtn" x="10" y="0" width="80" height="80">
-						<e:Image source="main_mail_png" verticalCenter="0" horizontalCenter="0"/>
-						<e:Label text="消息" size="22" horizontalCenter="0" stroke="2" bottom="5"/>
-						<e:Image id="mailRed" source="red_mc_png" right="0" top="12"/>
+			<e:Group x="220" y="18" width="120">
+				<e:Group x="0" y="0" height="31" width="100">
+					<e:BitmapLabel id="b1" x="15" y="15" font="font1_fnt" text="对" anchorOffsetX="15" anchorOffsetY="15"/>
+					<e:BitmapLabel id="b2" x="50" y="15" font="font1_fnt" text="战" anchorOffsetX="15" anchorOffsetY="15"/>
+					<e:BitmapLabel id="b3" x="85" y="15" font="font1_fnt" text="中" anchorOffsetX="15" anchorOffsetY="15"/>
+				</e:Group>
+				<e:Label id="cdText" text="Label" x="0" y="0" size="30"/>
+				<e:layout>
+					<e:VerticalLayout horizontalAlign="center"/>
+				</e:layout>
+			</e:Group>
+					<e:Group id="mailBtn" x="10" y="0" width="90" height="90">
+						<e:Image verticalCenter="0" horizontalCenter="0" source="log_btn_png"/>
 					</e:Group>
-					<e:Group id="settingBtn" x="100" y="0" width="80" height="80">
-					<e:Image source="icon_setting_png" horizontalCenter="0" verticalCenter="0"/>
-					<e:Label text="设置" size="22" horizontalCenter="0" stroke="2" bottom="5"/>
+					<e:Group id="settingBtn" x="100" y="0" width="90" height="90">
+					<e:Image id="soundBtn" horizontalCenter="0" verticalCenter="0" source="sound_btn1_png"/>
 					</e:Group>
 					<e:layout>
 					<e:HorizontalLayout horizontalAlign="right" paddingLeft="0" paddingRight="0" gap="30" verticalAlign="middle"/>
