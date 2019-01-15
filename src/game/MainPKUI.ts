@@ -45,7 +45,7 @@ class MainPKUI extends game.BaseItem {
     public list1Data
     public list2Data
     public resultTimer
-    //public stopScrollTimer
+    public isQuick
 
 
 
@@ -174,6 +174,8 @@ class MainPKUI extends game.BaseItem {
     }
 
     public show(data){
+        PKManager.getInstance().isPKing = true
+
         //if(this.visible)
             //return;
         //console.log('show' , egret.getTimer())
@@ -234,11 +236,14 @@ class MainPKUI extends game.BaseItem {
     }
 
     public hide(){
+        PKManager.getInstance().isPKing = false
+        SoundManager.getInstance().playSound('bg');
         //console.log('hide' , egret.getTimer())
         this.visible = false;
         this.removeEventListener(egret.Event.ENTER_FRAME,this.onStep,this)
         PKVideoCon.getInstance().remove();
         PKManager.getInstance().testSendResult();
+
 
         this.dispatchEventWith('visible_change')
     }
@@ -265,12 +270,14 @@ class MainPKUI extends game.BaseItem {
     }
 
     public reset(){
+
         PKVideoCon.getInstance().x = -(PKConfig.floorWidth + PKConfig.appearPos*2 - 640)/2;
         //this.stopScrollTimer = 0;
         this.winGroup.visible = false;
         this.failGroup.visible = false;
         this.btnGroup.visible = false;
         this.finish = false;
+        this.isQuick = true;
 
         clearTimeout(this.resultTimer);
         egret.Tween.removeTweens(this.failGroup)
@@ -310,6 +317,7 @@ class MainPKUI extends game.BaseItem {
 
         PD.start();
         this.onStep()
+        this.isQuick = false;
         if(PD.isGameOver)
         {
             PKVideoCon.getInstance().resetView();
@@ -345,6 +353,8 @@ class MainPKUI extends game.BaseItem {
             }
 
         }
+        else
+            SoundManager.getInstance().playSound('pkbg')
     }
 
     public onStep(){
@@ -440,12 +450,33 @@ class MainPKUI extends game.BaseItem {
 
     public delayShowResult(mc)
     {
+
         clearTimeout(this.resultTimer);
+        if(this.isQuick)
+        {
+            SoundManager.getInstance().playSound('bg');
+            if(this.showData.isMain && this.showData.key != PKManager.getInstance().getCurrentKey())
+            {
+                this.hide();
+                return;
+            }
+            mc.visible = true;
+            mc.scaleX = mc.scaleY = 1;
+            this.desGroup.visible = this.desGroup['callVisible'];
+            this.btnGroup.visible = true
+            return;
+        }
+
         this.resultTimer = setTimeout(()=>{
+            if(mc == this.winGroup)
+                SoundManager.getInstance().playEffect('win');
+            else
+                SoundManager.getInstance().playEffect('fail');
             mc.visible = true;
             mc.scaleX = mc.scaleY = 0;
             var tw = egret.Tween.get(mc).to({scaleX:1.2,scaleY:1.2},300).to({scaleX:1,scaleY:1},300)
             tw.call(()=>{
+                SoundManager.getInstance().playSound('bg');
                 this.desGroup.visible = this.desGroup['callVisible'];
             })
             if(this.showData.isMain && this.showData.key != PKManager.getInstance().getCurrentKey())

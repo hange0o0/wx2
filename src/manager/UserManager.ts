@@ -11,6 +11,7 @@ class UserManager {
         return UserManager._instance;
     }
 
+    public onLineAwardCD = [5*60,30*60,3600,2*3600,3*3600]
 
 
     public gameid: string;
@@ -25,21 +26,50 @@ class UserManager {
     public win: number = 0;
     public history = [];
     public lastGuess: any = {};
+    public friendNew: any = {};
+    public coinObj:{
+        loginTime,
+        loginDays,
+        loginDayAward,
+        onLineAwardTime,
+        onLineAwardNum,
+        shareNum,
+        newAward,
+        shareAward
+    }
     public isScope: boolean = false;
+
+
+    public initDataTime;
 
 
     public fill(data:any):void{
         this.dbid = data._id;
-        this.coin = data.coin || 999;
+        this.coin = data.coin || 0;
         this.coinwin = data.coinwin || 0;
         this.total = data.total || 0;
         this.win = data.win || 0;
         this.lastGuess = data.lastGuess;
+        this.coinObj = data.coinObj || {
+                loginTime:TM.now(),   //登陆时间
+                loginDays:1,   //登陆天数
+                loginDayAward:0,   //领取登陆礼包
+                onLineAwardTime:TM.now(),   //在线礼包领取时间
+                onLineAwardNum:0,   //在线礼包领取数量
+                shareNum:0,   //分享金币次数
+                shareAward:0,   //分享金币次数
+                newAward:0,   //分享金币次数
+            };
+        this.friendNew = data.friendNew;
         //this.writeKey = data.writeKey;
+
+        this.initDataTime = TM.now();
 
         this.history = SharedObjectManager.getInstance().getMyValue('history') || [];
         if(this.history.length > 20)
             this.history.length = 20;
+
+        this.testPassDay();
     }
 
     public renewInfo(userInfo){
@@ -78,7 +108,9 @@ class UserManager {
                     complete: (res) => {
                         console.log(res)
                         this.gameid = res.result.openid
+                        //console.log(11)
                         TimeManager.getInstance().initlogin(res.result.time)
+                        //console.log(res.result.time)
                         this.loginUser(fun)
                     },
                     fail:()=>{
@@ -102,6 +134,32 @@ class UserManager {
                     return;
                 }
                 this.fill(res.data[0]);
+                fun && fun();
+            }
+        })
+    }
+
+    public renewFriendNew(fun)
+    {
+        if(TM.now() - this.initDataTime < 10*60)
+        {
+            fun && fun();
+            return;
+        }
+        this.initDataTime = TM.now();
+        var wx = window['wx'];
+        if(!wx)
+        {
+            fun && fun();
+            return;
+        }
+        const db = wx.cloud.database();
+        db.collection('user').where({     //取玩家数据
+            _openid: this.gameid,
+        }).get({
+            success: (res)=>{
+                var data = res.data[0];
+                this.friendNew = data.friendNew;
                 fun && fun();
             }
         })
@@ -144,11 +202,40 @@ class UserManager {
 
     private orginUserData(){
          return {
-             coin:200,   //$
-             coinwin:200,   //$
-             lastGuess:this.getGuessInitData(0)
+             coin:300,   //$
+             coinwin:0,   //$
+             win:0,   //$
+             total:0,   //$
+             lastGuess:this.getGuessInitData(0),
+             coinObj:{
+                 loginTime:TM.now(),   //登陆时间
+                 loginDays:1,   //登陆天数
+                 loginDayAward:0,   //领取登陆礼包
+                 onLineAwardTime:TM.now(),   //在线礼包领取时间
+                 onLineAwardNum:0,   //在线礼包领取数量
+                 shareNum:0,   //分享金币次数
+                 shareAward:0,   //分享金币次数
+                 newAward:0,   //拉新领奖次数
+             },
+             friendNew:{}//拉新
          };
     }
+
+    //跨天处理
+    public testPassDay(){
+        if(this.coinObj && DateUtil.isSameDay(this.coinObj.loginTime))
+            return false;
+        this.coinObj.loginTime = TM.now();
+        this.coinObj.loginDays ++;
+        this.coinObj.loginDayAward = 0;
+        this.coinObj.onLineAwardTime = this.coinObj.loginTime;
+        this.coinObj.onLineAwardNum = 0;
+        this.coinObj.shareNum = 0;
+        this.coinObj.shareAward = 0;
+        PKManager.getInstance().needUpUser = true;
+        return true;
+    }
+
 
     public getGuessInitData(key){
         return {
@@ -161,33 +248,4 @@ class UserManager {
         }
     }
 
-
-
-    //public testDiamond(v){
-    //    if(UM.diamond < v)
-    //    {
-    //        MyWindow.Confirm('钻石不足！\n需要：' +v+'\n当前：'+UM.diamond + '\n是否前往购买钻石？',function(v){
-    //            if(v == 1)
-    //            {
-    //                //ShopUI.getInstance().show(true);
-    //            }
-    //        },['取消','购买'])
-    //        return false;
-    //    }
-    //    return true;
-    //}
-    //public testCoin(v){
-    //    var coin = UM.coin;
-    //    if(coin < v)
-    //    {
-    //        MyWindow.Confirm('金币不足！\n需要：' +v+'\n当前：'+coin + '\n是否前往购买金币？',function(v){
-    //            if(v == 1)
-    //            {
-    //                //ShopUI.getInstance().show('coin');
-    //            }
-    //        },['取消','购买'])
-    //        return false;
-    //    }
-    //    return true;
-    //}
 }

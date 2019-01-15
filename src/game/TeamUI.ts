@@ -93,10 +93,13 @@ class TeamUI extends game.BaseItem {
         UM.addCoin(-v);
         GameUI.getInstance().onTimer();
         this.giftTalk(v);
+        SoundManager.getInstance().playEffect('buy');
     }
 
     private lastTalk = 0
     public randomTalk(){
+        if(PKManager.getInstance().isPKing)
+            return;
         if(Math.random() > 0.5)
             return;
         var item = this.monsterArr[Math.floor(this.monsterArr.length*Math.random())];
@@ -110,6 +113,8 @@ class TeamUI extends game.BaseItem {
     }
 
     public giftTalk(cost){
+        if(PKManager.getInstance().isPKing)
+            return;
         if(Math.random() > cost/20)
             return;
         var item = this.monsterArr[Math.floor(this.monsterArr.length*Math.random())];
@@ -198,7 +203,8 @@ class TeamUI extends game.BaseItem {
         //this.myText.textColor = userCost > 0?0x00ff00:0xffffff
 
         var rate = PKM.getMoneyRate(myCost,otherCost);
-        this.setHtml(this.rateText,this.createHtml('赔率：',0xFFCC8C) +this.createHtml(rate+'%',rate > 150?0x00ff00:0xffffff));
+        var rate2 = PKM.getMoneyRate(otherCost,myCost);
+        this.setHtml(this.rateText,this.createHtml('赔率：',0xFFCC8C) +this.createHtml(rate+'%',rate > rate2?0x00ff00:0xffffff));
         //this.rateText.text = '赔率：' +rate + '%'
         //this.rateText.textColor = rate > 150?0x00ff00:0xffffff
 

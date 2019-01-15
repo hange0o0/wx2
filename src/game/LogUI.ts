@@ -49,12 +49,13 @@ class LogUI extends game.BaseUI {
     }
 
     public hide() {
-        MainPKUI.instance.hide();
+        //MainPKUI.instance.hide();
         super.hide();
-        GameUI.getInstance().onTimer();
+        //GameUI.getInstance().onTimer();
     }
 
     public onShow(){
+        //SoundManager.getInstance().playSound('bg');
         this.renew();
     }
 

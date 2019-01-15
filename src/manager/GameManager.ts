@@ -83,6 +83,7 @@ class GameManager {
             //DayGameManager.getInstance().passDay();
             //GuessManager.getInstance().passDay();
 
+            UserManager.getInstance().testPassDay();
             EM.dispatch(GameEvent.client.pass_day);
         }
         EM.dispatch(GameEvent.client.timer);
@@ -102,13 +103,16 @@ class GameManager {
 
     //取现在到晚上12点还差的时间
     public getZeroCD(){
+        return this.getZeroTime() - TM.now();
+    }
+    public getZeroTime(){
         var d= DateUtil.timeToChineseDate(TM.now());
         d.setMinutes(0);
         d.setSeconds(0);
         d.setMilliseconds(0);
         d.setHours(24);
 
-        return Math.floor(d.getTime()/1000) - TM.now();
+        return Math.floor(d.getTime()/1000);
     }
 
 }
@@ -200,8 +204,12 @@ if(window["wx"])
     wx.onShow(function(res){
         if(!GameManager.stage)
             return;
-        SoundManager.getInstance().playSound('bg');
+        if(PKManager.getInstance().isPKing && !MainPKUI.instance.finish)
+            SoundManager.getInstance().playSound('pkbg');
+        else
+            SoundManager.getInstance().playSound('bg');
         GameManager.stage.dispatchEventWith(egret.Event.ACTIVATE);
+        ShareTool.stopShare();
         //GameUI.getInstance().cleanTouch();
         console.log('show')
     });

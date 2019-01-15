@@ -4,6 +4,7 @@ class LogItem extends game.BaseItem {
         this.skinName = "LogItemSkin";
     }
 
+    private con: eui.Group;
     private timeText: eui.Label;
     private cost1: eui.Label;
     private force1: eui.Label;
@@ -25,9 +26,11 @@ class LogItem extends game.BaseItem {
 
 
 
+
     public childrenCreated() {
         super.childrenCreated();
         this.addBtnEvent(this.videoBtn,this.onClick)
+        //this.con.cacheAsBitmap = true;
     }
 
 

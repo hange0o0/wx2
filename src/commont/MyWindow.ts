@@ -11,6 +11,7 @@ class MyWindow {
 
         var panel = new AlertUI();
         panel.show(msg, fun, btnLabel);
+        return panel;
     }
     public static AlertRelogin(msg) {
 

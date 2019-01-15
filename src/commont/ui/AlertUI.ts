@@ -7,7 +7,7 @@ class AlertUI extends game.BaseWindow {
     private cancelBtn: eui.Button;
     private okBtn: eui.Button;
     private closeBtn: eui.Button;
-    private text: eui.Label;
+    public text: eui.Label;
 
     private textIn;
     private fun;

@@ -37,6 +37,8 @@ class PKManager {
 
     private beginTime = 1546012800;//2018-12-29
 
+    public isPKing = false;
+
     constructor(){
 
     }
@@ -78,8 +80,6 @@ class PKManager {
         }
         return 'map'+index+'_jpg'
     }
-
-
 
     public getTodayIndex(){
         var t = this.beginTime;
@@ -237,7 +237,7 @@ class PKManager {
     }
 
     //结算投注信息
-    public testSendResult(){
+    public testSendResult(alertWindow?){
         if(this.getCurrentKey() != UM.lastGuess.key)
         {
             if(UM.lastGuess.key && UM.lastGuess.isDeal == 0 && (UM.lastGuess.cost1 || UM.lastGuess.cost2))//需要结算
@@ -249,7 +249,11 @@ class PKManager {
                     var addCoin = this.getAddCoin(showData,result);
                     if(addCoin)
                     {
-                        MyWindow.ShowTips('你在上一轮竞猜中，获得了'+NumberUtil.addNumSeparator(addCoin)+'金币')
+                        SoundManager.getInstance().playEffect('coin');
+                        if(alertWindow)
+                            MyWindow.Alert('你在上一轮竞猜中，赢得了'+MyTool.createHtml(NumberUtil.addNumSeparator(addCoin),0x00ff00)+'金币')
+                        else
+                            MyWindow.ShowTips('你在上一轮竞猜中，赢得了'+MyTool.createHtml(NumberUtil.addNumSeparator(addCoin),0x00ff00)+'金币',3000)
                     }
                     UM.addCoin(addCoin)
 
@@ -258,6 +262,13 @@ class PKManager {
                     {
                         UM.coinwin += coinWin
                         UM.win ++;
+                    }
+                    else if(!addCoin)
+                    {
+                        if(alertWindow)
+                            MyWindow.Alert('你在上一轮竞猜中输了\n'+MyTool.createHtml('血本无归',0xFF0000)).text.textAlign='center'
+                        else
+                            MyWindow.ShowTips('你在上一轮竞猜中输了，'+MyTool.createHtml('血本无归',0xFF0000),3000)
                     }
                     UM.total ++;
 
@@ -395,6 +406,7 @@ class PKManager {
                 win:UM.win,
                 total:UM.total,
                 lastGuess:UM.lastGuess,
+                coinObj:UM.coinObj,
             };
 
             WXDB.updata('user',updateData)

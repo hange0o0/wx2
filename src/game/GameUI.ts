@@ -19,23 +19,32 @@ class GameUI extends game.BaseUI {
     private shopBtn: eui.Group;
     private shopRedMC: eui.Image;
     private rankBtn: eui.Group;
+    private wordGroup: eui.Group;
+    private b1: eui.BitmapLabel;
+    private b2: eui.BitmapLabel;
+    private b3: eui.BitmapLabel;
     private cdText: eui.Label;
-    private loadText: eui.Label;
     private mailBtn: eui.Group;
-    private mailRed: eui.Image;
     private settingBtn: eui.Group;
+    private soundBtn: eui.Image;
     private mainPKUI: MainPKUI;
     private loadingGroup: eui.Group;
     private loadMC: eui.Image;
+    private loadText: eui.Label;
+
+
 
 
     private pkMV
+    private mvState = ''
 
+
+    private firstShow = true;
     public showIndex = -1;
     public showData;
     public childrenCreated() {
         super.childrenCreated();
-        this.addBtnEvent(this.settingBtn,this.onClick)
+        this.addBtnEvent(this.settingBtn,this.onSetting)
         this.addBtnEvent(this.mailBtn,this.onMail)
         this.addBtnEvent(this.shopBtn,this.onShop)
         this.addBtnEvent(this.rankBtn,this.onRank)
@@ -50,7 +59,7 @@ class GameUI extends game.BaseUI {
         this.pkMV.y = GameManager.uiHeight - 80;
         this.pkMV.x = 320;
         this.pkMV.scaleX = this.pkMV.scaleY = 1.5
-        this.pkMV.play(-1);
+        this.pkMV.visible = false;
 
         this.team1.teamID = 1
         this.team2.teamID = 2
@@ -58,13 +67,22 @@ class GameUI extends game.BaseUI {
         this.mainPKUI.addEventListener('visible_change',this.onMainVisibleChange,this)
     }
 
+
     private onRank(){
         RankUI.getInstance().show();
     }
 
-    public onClick(){
-       this.playGame();
+    private onSetting(){
+        SoundManager.getInstance().soundPlaying = !SoundManager.getInstance().soundPlaying
+        SoundManager.getInstance().bgPlaying = !SoundManager.getInstance().bgPlaying
+        this.renewSound();
+
     }
+
+    private renewSound(){
+        this.soundBtn.source = SoundManager.getInstance().bgPlaying?'sound_btn1_png':'sound_btn2_png'
+    }
+
     public onMail(){
         LogUI.getInstance().show();
         //this.mainPKUI.hide();
@@ -73,7 +91,6 @@ class GameUI extends game.BaseUI {
 
     public onShop(){
         GetCoinUI.getInstance().show();
-
     }
 
     public show(){
@@ -93,7 +110,9 @@ class GameUI extends game.BaseUI {
 
     public onShow(){
         var self = this;
+        this.bottomGroup.visible = false;
         this.onCoinChange();
+        this.renewSound();
         this.cdText.text = '加载中'
         this.loadingGroup.visible = true;
         egret.Tween.get(this.loadMC,{loop:true}).to({rotation:360},3000)
@@ -126,8 +145,10 @@ class GameUI extends game.BaseUI {
     }
 
     private initData(){
+        SoundManager.getInstance().playSound('bg');
+        this.bottomGroup.visible = true;
         this.loadingGroup.visible = false;
-        egret.Tween.get(this.loadMC,{loop:true}).to({rotation:360},3000)
+        egret.Tween.get(this.loadMC,{loop:true}).to({rotation:360},3000);
         this.mainPKUI.visible = false;
         this.showIndex = -1;
         this.onTimer();
@@ -135,13 +156,44 @@ class GameUI extends game.BaseUI {
 
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.onCoinChange)
+        this.firstShow = false;
     }
 
     private onCoinChange(){
         this.coinText.text = UM.coin + ''
     }
 
+    private renewCoinRed(){
+        var coinObj = UM.coinObj;
+        this.shopRedMC.visible = !coinObj.loginDayAward;
+
+        if(!this.shopRedMC.visible && coinObj.onLineAwardNum < 5)
+        {
+            var coinCD = UM.onLineAwardCD
+            var nextAwardTime = coinObj.onLineAwardTime + coinCD[coinObj.onLineAwardNum];
+            this.shopRedMC.visible = TM.now() >=  nextAwardTime
+        }
+    }
+
+    public onVisibleChange(){
+        //SoundManager.getInstance().playSound('pkbg');
+        if(this.visible)
+            this.onTimer();
+        else
+        {
+            SoundManager.getInstance().playSound('bg');
+            this.mainPKUI.hide();
+        }
+    }
+
     public onTimer(){
+        if(!this.visible)
+            return;
+        //console.log(TM.now(),TM.loginTime,TM.getTimer())
+         this.renewCoinRed();
+
+
+
         var PKM = PKManager.getInstance();
         var index = PKM.getCurrentIndex()
         if(index != this.showIndex)
@@ -166,15 +218,13 @@ class GameUI extends game.BaseUI {
                 this.team1.showList([])
                 this.team2.showList([])
             }
-            PKManager.getInstance().testSendResult();
+            PKManager.getInstance().testSendResult(this.firstShow);
         }
         if(!this.showData)
         {
             var t0 = DateUtil.getNextDateTimeByHours(6) - TM.now()
-            if(t0 >=3600)
-                this.cdText.text = '修战中\n'+DateUtil.getStringBySeconds(t0,true,2);
-            else
-                this.cdText.text = '修战中\n'+DateUtil.getStringBySecond(t0).substr(-5);
+            this.showCurrentMV('stop',t0)
+
             return;
         }
 
@@ -183,10 +233,12 @@ class GameUI extends game.BaseUI {
         if(cd <= 0)
         {
             this.playGame();
-            this.cdText.text = '战斗中\n'+DateUtil.getStringBySecond(cd + playCD).substr(-5);
+            this.showCurrentMV('pking',cd + playCD)
+            //this.cdText.text = '战斗中\n'+DateUtil.getStringBySecond(cd + playCD).substr(-5);
             return;
         }
-        this.cdText.text = '投注中\n'+DateUtil.getStringBySecond(cd).substr(-5);
+        this.showCurrentMV('addCoin',cd)
+
         var costData = PKM.getCost(this.showData.seed,PKConfig.addCoinTime - cd)
         this.team1.renewCost(costData);
         this.team2.renewCost(costData);
@@ -226,6 +278,56 @@ class GameUI extends game.BaseUI {
 
     public onMainVisibleChange(){
         this.team1.visible = this.team2.visible = !this.mainPKUI.visible
+    }
+
+    private showCurrentMV(stat,cdIn){
+        if(cd >=3600)
+            this.cdText.text = DateUtil.getStringBySeconds(cdIn,true,2);
+        else
+            this.cdText.text = DateUtil.getStringBySecond(cdIn).substr(-5);
+
+        if(this.mvState == stat)
+            return;
+        this.mvState = stat;
+        this.pkMV.visible = false
+        this.pkMV.stop();
+        this.wordGroup.visible = false;
+        this.reInitWord(this.b1,0)
+        this.reInitWord(this.b2,1)
+        this.reInitWord(this.b3,2)
+        switch(this.mvState)
+        {
+            case 'pking':
+                this.pkMV.visible = true
+                this.pkMV.play(-1);
+                break;
+            case 'stop':
+                this.wordGroup.visible = true;
+                var cd = 400;
+                this.getWordTween(this.b1,'休').to({rotation:360},cd).wait(cd+cd + 2000)
+                this.getWordTween(this.b2,'战').wait(cd).to({rotation:360},cd).wait(cd + 2000)
+                this.getWordTween(this.b3,'中').wait(cd+cd).to({rotation:360},cd).wait(0 + 2000)
+                break;
+            case 'addCoin':
+                this.wordGroup.visible = true;
+                var cd = 400;
+                this.getWordTween(this.b1,'投').to({y:5},cd/2).to({y:18},cd/2).wait(cd+cd+2000)
+                this.getWordTween(this.b2,'注').wait(cd).to({y:5},cd/2).to({y:18},cd/2).wait(cd+2000)
+                this.getWordTween(this.b3,'中').wait(cd+cd).to({y:5},cd/2).to({y:18},cd/2).wait(0 + 2000)
+                break;
+        }
+    }
+
+    private reInitWord(mc,index){
+        egret.Tween.removeTweens(mc)
+        mc.rotation = 0;
+        mc.x = 18 + 35*index;
+        mc.y = 18;
+    }
+
+    private getWordTween(mc,word){
+        mc.text = word;
+        return egret.Tween.get(mc,{loop:true})
     }
 
 

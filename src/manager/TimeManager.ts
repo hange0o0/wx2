@@ -13,21 +13,30 @@ class TimeManager {
     public timeDiff: number = 0;
     public loginTime: number = 0;//等陆时的服务器时间
 
+    private loginWXTime = 0;
     public init(time:number):void{
         //本地和服务器的时间差
         this.timeDiff = Math.floor(Date.now() / 1000 - time);
     }
 
+    public getTimer(){
+        var wx = window['wx'];
+        if(wx)
+            return  Math.floor((wx.getPerformance().now() -  this.loginWXTime)/1000)
+        return egret.getTimer();
+    }
+
     public initlogin(t){
         var wx = window['wx'];
-        this.loginTime = Math.floor((t - wx.getPerformance().now())/1000);
+        this.loginWXTime = wx.getPerformance().now()
+        this.loginTime = Math.floor(t/1000)//Math.floor((t - wx.getPerformance().now())/1000);
     }
     
     public now():number{
         if(this.loginTime)
         {
             var wx = window['wx'];
-            return this.loginTime + Math.floor(wx.getPerformance().now()/1000)
+            return this.loginTime + Math.floor(this.getTimer()/1000)
         }
         return Math.floor(Date.now() / 1000) - this.timeDiff //+ 24*3600 *7;
     }
@@ -35,7 +44,7 @@ class TimeManager {
         if(this.loginTime)
         {
             var wx = window['wx'];
-            return this.loginTime*1000 + wx.getPerformance().now()
+            return this.loginTime*1000 + this.getTimer();
         }
         return Date.now() - this.timeDiff*1000
     }

@@ -26,7 +26,7 @@ class GetCoinUI extends game.BaseUI {
         super.childrenCreated();
 
         this.bottomUI.setHide(this.onClose,this);
-        this.topUI.setTitle('获取金币')
+        this.topUI.setTitle('每日金币')
 
         this.scroller.viewport = this.list;
         this.list.itemRenderer = GetCoinItem
@@ -45,7 +45,12 @@ class GetCoinUI extends game.BaseUI {
 
 
     public show(){
-        super.show()
+        UM.testPassDay();
+
+        UM.renewFriendNew(()=>{
+            super.show()
+        })
+
     }
 
     public hide() {
@@ -56,11 +61,26 @@ class GetCoinUI extends game.BaseUI {
 
     public onShow(){
         this.renew();
+        this.addPanelOpenEvent(GameEvent.client.pass_day,this.renew)
+        this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
+    }
+
+    private onTimer(){
+        MyTool.runListFun(this.list,'onTimer')
     }
 
 
     public renew(){
-        this.dataProvider.source =[1,1,1]
+        this.dataProvider.source =[
+            {type:1,title:'等陆第X天'},
+            {type:2,title:'X小时后可领'},
+            {type:3,title:'告诉我的好友们'},
+            {type:4,title:'邀请X位新的好友'},
+            {type:99,title:'DEBUG'},
+            //{type:4,title:'炮打金币'},
+            //{type:4,title:'观看广告'},
+
+        ]
         this.dataProvider.refresh();
         //this.list.dataProvider = new eui.ArrayCollection(UM.history);
     }

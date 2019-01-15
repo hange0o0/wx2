@@ -95,7 +95,10 @@ class SoundManager {
             this.stopBgSound();
         }
         else{
-            this.playSound('bg');
+            if(MainPKUI.instance.visible)
+                this.playSound('pkbg');
+            else
+                this.playSound('bg');
         }
     }
     public set openShake(v){
@@ -228,7 +231,7 @@ class SoundManager {
                             //this.playTime = setTimeout(()=>{
                             //
                             //}, 150);
-                            // fun();
+                             fun();
                     // }
                     // catch(e){
                     // }

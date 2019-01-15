@@ -1,6 +1,7 @@
 class ShareTool {
     private static SHARE_KEYS = ["ACT_TYPE","FROM_SERVER","FROM_USER","ACT_ITEMID","ACT_MODE","CHANGE_S"];//注意，还有顺序之分，只能在数组后面添加顺序
 
+    public static shareTimer
     /**
      * 分享
      */
@@ -66,6 +67,10 @@ class ShareTool {
                 imageUrl:imgUrl,
                 query:ObjectUtil.join(shareArgs)
             })
+
+        clearTimeout(this.shareTimer)
+        if(success)
+            this.shareTimer = setTimeout(success,2000)
                 //platform.shareMessage(title, imgUrl, ObjectUtil.join(shareArgs) + addPath);
                 //AppFunQueen.e.app_success = (hideTime)=>{
                 //    if(success) success();
@@ -78,7 +83,10 @@ class ShareTool {
             //}
         //    return;
         //}
+    }
 
+    public static stopShare(){
+        clearTimeout(this.shareTimer)
     }
 
 
