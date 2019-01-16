@@ -146,6 +146,8 @@ class SoundManager {
     }
 
     public playEffect(v:string, fun?,thisObj?){
+        if(GuideManager.getInstance().isGuiding)
+            return;
         if(!this.soundPlaying) return;
         //console.log('call:',v)
         var url = "resource/sound/" + v +".mp3"
@@ -169,7 +171,8 @@ class SoundManager {
     private tempLoop:number;
     public playSound(key:string, loop:number = 9999){
 
-
+        if(GuideManager.getInstance().isGuiding)
+            return;
         //console.log(key)
         if(!this.bgPlaying) return;
         if(this.bgKey == key) return;

@@ -40,7 +40,9 @@ class PKManager {
     public isPKing = false;
 
     constructor(){
-
+        var todayData = SharedObjectManager.getInstance().getMyValue('today_data') || {};
+        if(todayData.key)
+            this.levelData[todayData.key] = todayData.value
     }
 
     public pkWord = ['投降，或者死亡','来战个痛快','小心你的背后','这招看你怎么躲','我要认真了','你就只会这几招吗','我要出大招了','我会赐予你死亡','你究竟想怎样...','我的魔法会撕碎你','我已饥渴难耐','你会记住我的名字的',
@@ -106,9 +108,16 @@ class PKManager {
     //    }
     //}
 
-    public initData(str){
+
+    //初始化今天的数据
+    public initData(index,str){
         var arr = str.split('\n')
         this.roundData = arr;
+
+        SharedObjectManager.getInstance().setMyValue('today_data',{
+            key:index,
+            value:str
+        })
     }
 
     public getCurrentKey(){
@@ -125,6 +134,10 @@ class PKManager {
     }
 
     public getCurrentData(){
+        if(GuideManager.getInstance().isGuiding)
+        {
+            return JSON.parse('{"list1":"73,32,71,46,64,1","list2":"32,39,2,43,70,62,14,63","seed":15561043749}')
+        }
         var index =  this.getCurrentIndex();
         if(this.roundData[index])
             return JSON.parse(this.roundData[index])
@@ -132,6 +145,24 @@ class PKManager {
     }
 
     public getEndTime(){
+        if(GuideManager.getInstance().isGuiding)
+        {
+            if(GuideManager.getInstance().guideKey == 'count')
+            {
+                var endTime = GuideManager.getInstance().temp + 10*60
+                if(endTime <= TM.now() - (10*60 - PKConfig.addCoinTime))
+                    endTime = TM.now() - (10*60 - PKConfig.addCoinTime)+1
+                return endTime;
+            }
+            else if(GuideManager.getInstance().guideKey == 'pk')
+            {
+                var endTime = GuideManager.getInstance().temp + (10*60 - PKConfig.addCoinTime)
+                if(TM.now() >= endTime)
+                    endTime = TM.now()+1
+                return endTime;
+            }
+            return TM.now() + 10*60;
+        }
         var t0 = DateUtil.getNextDateTimeByHours(0)  - 24*3600
         var index =  this.getCurrentIndex();
         return t0 + 3600*6 + (index + 1)*10*60;
@@ -407,6 +438,7 @@ class PKManager {
                 total:UM.total,
                 lastGuess:UM.lastGuess,
                 coinObj:UM.coinObj,
+                guideFinish:UM.guideFinish,
             };
 
             WXDB.updata('user',updateData)

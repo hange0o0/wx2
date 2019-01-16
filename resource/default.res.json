@@ -1,7 +1,7 @@
 {
 	"groups":[
 		{
-			"keys":"1th_png,2th_png,3th_png,arror4_png,arrow1_png,arrow2_png,arrow3_png,arrow4_png,arrow5_png,back_btn_png,block1_png,block2_png,border_5_png,border_6_png,border_7_png,border_8_png,border_14_png,card_battle_png,card_battle2_png,change_icon_png,close_btn2_png,door_png,door2_png,get_award_png,icon_atk_png,icon_atk2_png,icon_atk3_png,icon_atkcd_png,icon_atkhp_png,icon_clock_png,icon_clock2_png,icon_disable_png,icon_edit_png,icon_empty_png,icon_error_png,icon_force2_png,icon_like_png,icon_monster_png,icon_pos_png,icon_rage_png,icon_right_png,icon_skill_png,icon_speed_png,icon_times_png,icon_unlike_png,monster_all_icon_png,skill_all_icon_png,skill_type1_png,skill_type2_png,skill_type3_png,skill_type4_png,skill_type5_png,tab3_png,talk_bg_png,title_bg2_png,title_bg3_png,title_bg6_png,title_bg7_png,title_bg8_png,icon_fight_png,gift_mc_png,copy_btn_png,border_16_png,icon_card_png,tec_slave_icon_png,main_button_png,icon_test_png,icon_wenhao_png,icon_wenhao2_png,hero_bg0_png,hero_bg1_png,hero_bg2_png,hero_bg3_png,hero_bg4_png,hero_bg5_png,bg_icon_png,data_json,lose_icon_png,win_icon_png,font1_fnt,log_btn_png,rank_btn_png,sound_btn1_png,sound_btn2_png,v18_png,coin_btn_png,pk_mv_json,pk_mv_png,rect_1_png",
+			"keys":"1th_png,2th_png,3th_png,arror4_png,arrow1_png,arrow2_png,arrow3_png,arrow4_png,arrow5_png,back_btn_png,block1_png,block2_png,border_5_png,border_6_png,border_7_png,border_8_png,border_14_png,card_battle_png,card_battle2_png,change_icon_png,close_btn2_png,door_png,door2_png,get_award_png,icon_atk_png,icon_atk2_png,icon_atk3_png,icon_atkcd_png,icon_atkhp_png,icon_clock_png,icon_clock2_png,icon_disable_png,icon_edit_png,icon_empty_png,icon_error_png,icon_force2_png,icon_like_png,icon_monster_png,icon_pos_png,icon_rage_png,icon_right_png,icon_skill_png,icon_speed_png,icon_times_png,icon_unlike_png,monster_all_icon_png,skill_all_icon_png,skill_type1_png,skill_type2_png,skill_type3_png,skill_type4_png,skill_type5_png,tab3_png,talk_bg_png,title_bg2_png,title_bg3_png,title_bg6_png,title_bg7_png,title_bg8_png,icon_fight_png,gift_mc_png,copy_btn_png,border_16_png,icon_card_png,tec_slave_icon_png,main_button_png,icon_test_png,icon_wenhao_png,icon_wenhao2_png,hero_bg0_png,hero_bg1_png,hero_bg2_png,hero_bg3_png,hero_bg4_png,hero_bg5_png,bg_icon_png,data_json,lose_icon_png,win_icon_png,font1_fnt,log_btn_png,rank_btn_png,sound_btn1_png,sound_btn2_png,v18_png,coin_btn_png,pk_mv_json,pk_mv_png,rect_1_png,guide_1_png",
 			"name":"preload_png"
 		},
 		{
@@ -1499,6 +1499,11 @@
 			"name":"rect_1_png",
 			"type":"image",
 			"url":"game_assets/rect_1.png"
+		},
+		{
+			"name":"guide_1_png",
+			"type":"image",
+			"url":"game_assets/guide_1.png"
 		}
 	]
 }

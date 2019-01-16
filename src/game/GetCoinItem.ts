@@ -82,23 +82,24 @@ class GetCoinItem extends game.BaseItem {
         switch(this.data.type)
         {
             case 1:  //{type:1,title:'等陆第X天'},
+                min = coinObj.loginDays
+                max = coinObj.loginDays
                 if(coinObj.loginDayAward)
                 {
-                     min = coinObj.loginDays
-                     max = coinObj.loginDays + 1
+                     //min = coinObj.loginDays
+                     //max = coinObj.loginDays + 1
                     this.goBtn.skinName = 'Btn3Skin'
-                    this.goBtn.label = '明天可领'
+                    this.goBtn.label = '今日已领'
 
                 }
                 else
                 {
-                    min = coinObj.loginDays
-                    max = coinObj.loginDays
+
                     this.goBtn.label = '领取'
                     this.canAward = true;
                 }
-                this.titleText.text = '第'+max+'天登陆'
-                this.addCoin = 200*max;
+                this.titleText.text = '每日登陆奖励'
+                this.addCoin = 1000;
                 break;
             case 2:   //{type:2,title:'X小时后可领'},
                 if(coinObj.onLineAwardNum >= 5)

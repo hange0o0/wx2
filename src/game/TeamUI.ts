@@ -4,7 +4,8 @@ class TeamUI extends game.BaseItem {
         this.skinName = "TeamUISkin";
     }
 
-    private con: eui.Group;
+    public con: eui.Group;
+    public guideCon: eui.Group;
     private bg: eui.Image;
     private addBtn1: eui.Button;
     private addBtn10: eui.Button;
@@ -13,10 +14,17 @@ class TeamUI extends game.BaseItem {
     private totalText: eui.Label;
     private rateText: eui.Label;
     private myText: eui.Label;
-    private forceGroup: eui.Group;
+    public forceGroup: eui.Group;
     private forceText: eui.Label;
     private addGroup: eui.Group;
     private forceText1: eui.Label;
+    private guideMC: eui.Image;
+    public bottomBG: eui.Image;
+
+
+
+
+
 
 
 
@@ -33,7 +41,38 @@ class TeamUI extends game.BaseItem {
         this.addBtnEvent(this.addBtn1000,this.onClick1000)
 
         this.addBtnEvent(this.con,this.onMClick)
+        this.guideMC.visible = false;
     }
+
+    public showGuide(){
+        this.guideMC.visible = true;
+        var ww0 = 50;
+        var ww = 640-200;
+        var anchX0 = 105;
+        var anchX =anchX0 +  ww - ww0
+        if(this.teamID == 2)
+        {
+            this.guideMC.x = 640-50;
+            egret.Tween.get(this.guideMC,{loop:true}).set({width:ww0,alpha:1,anchorOffsetX:anchX0})
+                .to({width:ww,anchorOffsetX:anchX},15*42).to({alpha:0},9*42)
+        }
+        else
+        {
+            this.guideMC.x =50;
+            this.guideMC.scaleX = -1
+            egret.Tween.get(this.guideMC,{loop:true}).set({width:ww0,alpha:1,anchorOffsetX:anchX0})
+                .to({width:ww,anchorOffsetX:anchX},15*42).to({alpha:0},9*42)
+        }
+
+    }
+    public hideGuide(){
+        this.guideMC.visible = false;
+        egret.Tween.removeTweens(this.guideMC);
+    }
+
+    //public getMiddleMoster(){
+    //     return this.monsterArr[Math.floor(this.monsterArr.length/2)]
+    //}
 
     private onMClick(e){
         var x = e.stageX;
@@ -44,7 +83,6 @@ class TeamUI extends game.BaseItem {
             var mc = this.monsterArr[i];
             if(mc.currentMV.hitTestPoint(x,y,true))
             {
-                console.log(mc.id);
                 CardInfoUI.getInstance().show(mc.id)
                 break;
             }
@@ -99,6 +137,8 @@ class TeamUI extends game.BaseItem {
     private lastTalk = 0
     public randomTalk(){
         if(PKManager.getInstance().isPKing)
+            return;
+        if(GuideManager.getInstance().isGuiding)
             return;
         if(Math.random() > 0.5)
             return;

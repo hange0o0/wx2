@@ -11,7 +11,7 @@ class GameUI extends game.BaseUI {
         this.skinName = "GameUISkin";
     }
 
-    private team1: TeamUI;
+    public team1: TeamUI;
     private team2: TeamUI;
     private coinGroup: eui.Group;
     private coinText: eui.Label;
@@ -23,12 +23,12 @@ class GameUI extends game.BaseUI {
     private b1: eui.BitmapLabel;
     private b2: eui.BitmapLabel;
     private b3: eui.BitmapLabel;
-    private cdText: eui.Label;
+    public cdText: eui.Label;
     private mailBtn: eui.Group;
     private settingBtn: eui.Group;
     private soundBtn: eui.Image;
     private mainPKUI: MainPKUI;
-    private loadingGroup: eui.Group;
+    public loadingGroup: eui.Group;
     private loadMC: eui.Image;
     private loadText: eui.Label;
 
@@ -94,13 +94,15 @@ class GameUI extends game.BaseUI {
     }
 
     public show(){
+        GuideManager.getInstance().isGuiding = !UM.guideFinish;
         super.show();
     }
 
     private callShow(){
         this.loadText.text = '初始化中'
-        PKManager.getInstance().loadLevelData(PKManager.getInstance().getTodayIndex(),(data)=>{
-            PKManager.getInstance().initData(data);
+        var index = PKManager.getInstance().getTodayIndex();
+        PKManager.getInstance().loadLevelData(index,(data)=>{
+            PKManager.getInstance().initData(index,data);
             this.initData();
         })
     }
@@ -113,10 +115,10 @@ class GameUI extends game.BaseUI {
         this.bottomGroup.visible = false;
         this.onCoinChange();
         this.renewSound();
-        this.cdText.text = '加载中'
+        //this.cdText.text = '.'
         this.loadingGroup.visible = true;
         egret.Tween.get(this.loadMC,{loop:true}).to({rotation:360},3000)
-        self.loadText.text = '0%'
+        self.loadText.text = '正在加载素材，请耐心等候..'
         var wx =  window["wx"];
         if(wx)
         {
@@ -132,7 +134,7 @@ class GameUI extends game.BaseUI {
             })
 
             loadTask.onProgressUpdate(res => {
-                self.loadText.text = res.progress + '%'
+                self.loadText.text = '正在加载素材，请耐心等候..\n' + res.progress + '%'
                 //console.log('下载进度', res.progress)
                 //console.log('已经下载的数据长度', res.totalBytesWritten)
                 //console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
@@ -145,7 +147,7 @@ class GameUI extends game.BaseUI {
     }
 
     private initData(){
-        SoundManager.getInstance().playSound('bg');
+
         this.bottomGroup.visible = true;
         this.loadingGroup.visible = false;
         egret.Tween.get(this.loadMC,{loop:true}).to({rotation:360},3000);
@@ -157,10 +159,46 @@ class GameUI extends game.BaseUI {
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.onCoinChange)
         this.firstShow = false;
+
+        if(GuideManager.getInstance().isGuiding)
+        {
+            GuideManager.getInstance().showGuide();
+        }
+        else
+        {
+            SoundManager.getInstance().playSound('bg');
+            if(this.mvState == 'stop')
+                MyWindow.Alert('每天0:00-6:00是休战时间，休战结束后即可参与投注')
+        }
+    }
+
+    public showGuideArrow(){
+        this.team1.showGuide()
+        this.team2.showGuide()
+    }
+    public hideGuideArrow(){
+        this.team1.hideGuide()
+        this.team2.hideGuide()
+    }
+
+    public endGuide(){
+        //SoundManager.getInstance().playSound('bg');
+        this.mainPKUI.hide();
+        this.showIndex = -1;
+        this.onTimer();
+
+        if(this.mvState == 'stop')
+        {
+            MyWindow.Alert('每天0:00-6:00是休战时间，休战结束后即可参与投注')
+        }
+        else if(this.mvState == 'pking')
+        {
+             MyWindow.Alert('当前正在PK中，PK结束后可参与下一轮投注')
+        }
     }
 
     private onCoinChange(){
-        this.coinText.text = UM.coin + ''
+        this.coinText.text = NumberUtil.formatStrNum(UM.coin);
     }
 
     private renewCoinRed(){

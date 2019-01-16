@@ -8,7 +8,9 @@ class CardInfoUI extends game.BaseWindow {
     }
 
     private item: PKCardInfoUI;
+    public con: eui.Group;
     private closeBtn: eui.Image;
+
 
 
 
@@ -48,6 +50,10 @@ class CardInfoUI extends game.BaseWindow {
 
         this.renew();
 
+    }
+
+    public showFinish(){
+         GuideManager.getInstance().testShowGuide()
     }
 
 

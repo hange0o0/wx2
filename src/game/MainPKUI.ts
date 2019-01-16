@@ -8,7 +8,7 @@ class MainPKUI extends game.BaseItem {
 
     private con: eui.Group;
     private scroller: eui.Scroller;
-    private list1: eui.List;
+    public list1: eui.List;
     private lineMC: eui.Rect;
     private list2: eui.List;
     private teamCost1Text: eui.Label;
@@ -28,6 +28,7 @@ class MainPKUI extends game.BaseItem {
     private cost1Group: eui.Group;
     private cost2Group: eui.Group;
     private btnGroup: eui.Group;
+    public cdGroup: eui.Group;
     private backBtn: eui.Button;
     private replayBtn: eui.Button;
 

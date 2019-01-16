@@ -37,7 +37,7 @@ class UserManager {
         newAward,
         shareAward
     }
-    public isScope: boolean = false;
+    public guideFinish: boolean = false;
 
 
     public initDataTime;
@@ -50,6 +50,7 @@ class UserManager {
         this.total = data.total || 0;
         this.win = data.win || 0;
         this.lastGuess = data.lastGuess;
+        this.guideFinish = data.guideFinish;
         this.coinObj = data.coinObj || {
                 loginTime:TM.now(),   //登陆时间
                 loginDays:1,   //登陆天数
@@ -72,12 +73,12 @@ class UserManager {
         this.testPassDay();
     }
 
-    public renewInfo(userInfo){
-        this.isScope = true;
-        this.nick = userInfo.nickName
-        this.head = userInfo.avatarUrl
-        this.gender = userInfo.gender || 1 //性别 0：未知、1：男、2：女
-    }
+    //public renewInfo(userInfo){
+    //    this.isScope = true;
+    //    this.nick = userInfo.nickName
+    //    this.head = userInfo.avatarUrl
+    //    this.gender = userInfo.gender || 1 //性别 0：未知、1：男、2：女
+    //}
 
     public saveHistory(){
         SharedObjectManager.getInstance().setMyValue('history',this.history)
@@ -206,6 +207,7 @@ class UserManager {
              coinwin:0,   //$
              win:0,   //$
              total:0,   //$
+             guideFinish:false,
              lastGuess:this.getGuessInitData(0),
              coinObj:{
                  loginTime:TM.now(),   //登陆时间
@@ -223,7 +225,9 @@ class UserManager {
 
     //跨天处理
     public testPassDay(){
-        if(this.coinObj && DateUtil.isSameDay(this.coinObj.loginTime))
+        if(!this.coinObj)
+            return false;
+        if(DateUtil.isSameDay(this.coinObj.loginTime))
             return false;
         this.coinObj.loginTime = TM.now();
         this.coinObj.loginDays ++;

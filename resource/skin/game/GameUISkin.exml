@@ -47,6 +47,6 @@
 	<e:Group id="loadingGroup" left="0" right="0" top="90" bottom="105">
 		<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" top="0" bottom="0"/>
 		<e:Image id="loadMC" source="ui_loading_png" verticalCenter="-50" horizontalCenter="0"/>
-		<e:Label id="loadText" text="Label" horizontalCenter="0" verticalCenter="50" size="24"/>
+		<e:Label id="loadText" text="Label" horizontalCenter="0" verticalCenter="50" size="24" textAlign="center" height="60" lineSpacing="20" textColor="0xffe493"/>
 	</e:Group>
 </e:Skin>
