@@ -127,7 +127,7 @@ class GuideManager {
         })
 
         this.addGuideObj({
-            text:'进入对战阶段后，双方按顺序进入战场进行对决，直到消灭所有敌人或有一人冲破对方出生点',
+            text:'进入对战阶段后，双方按顺序进入战场进行对决，直到消灭所有敌人或其中一方冲破对方出生点',
             toBottom:true,
             fun:function(){
                 self.showGuide()

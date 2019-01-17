@@ -1504,6 +1504,16 @@
 			"name":"guide_1_png",
 			"type":"image",
 			"url":"game_assets/guide_1.png"
+		},
+		{
+			"name":"share_img_1_jpg",
+			"type":"image",
+			"url":"game_assets/share_img_1.jpg"
+		},
+		{
+			"name":"share_img_2_jpg",
+			"type":"image",
+			"url":"game_assets/share_img_2.jpg"
 		}
 	]
 }

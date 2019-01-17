@@ -11,6 +11,8 @@ class GameManager {
     private lastTime: number;
     public lastTouchTime: number;
     public lastTouchMC;
+
+    public onShowFun
 	public constructor() {
         this.timeID = new egret.Timer(1000);
         this.timeID.addEventListener(egret.TimerEvent.TIMER,this.timerun,this);
@@ -209,7 +211,8 @@ if(window["wx"])
         else
             SoundManager.getInstance().playSound('bg');
         GameManager.stage.dispatchEventWith(egret.Event.ACTIVATE);
-        ShareTool.stopShare();
+        GameManager.getInstance().onShowFun && GameManager.getInstance().onShowFun();
+        GameManager.getInstance().onShowFun = null;
         //GameUI.getInstance().cleanTouch();
         console.log('show')
     });
@@ -219,12 +222,10 @@ if(window["wx"])
     //    PKManager.getInstance().upDateUserData();
     //});
 
-    wx.onShareAppMessage(function(res){
-        return {
-            title: '这个游戏很好玩，推荐一下',
-            imageUrl: Config.localResRoot + "share_img_2.jpg"
-        };
-    });
+    wx.onShareAppMessage(() => ({
+        title: '这个游戏很好玩，推荐一下',
+        imageUrl: Config.localResRoot + "share_img_2.jpg"
+    }))
 
     window["wx"].setKeepScreenOn && window["wx"].setKeepScreenOn({keepScreenOn:true});//屏幕常亮
 }

@@ -1,7 +1,6 @@
 class ShareTool {
     private static SHARE_KEYS = ["ACT_TYPE","FROM_SERVER","FROM_USER","ACT_ITEMID","ACT_MODE","CHANGE_S"];//注意，还有顺序之分，只能在数组后面添加顺序
 
-    public static shareTimer
     /**
      * 分享
      */
@@ -59,18 +58,20 @@ class ShareTool {
                 let addPath = ''//AppFunQueen.formatShareArg();
 
             var wx = window['wx'];
-        console.log(title)
-        console.log(imgUrl)
-        console.log(ObjectUtil.join(shareArgs))
-            wx.shareAppMessage({
-                title:title,
-                imageUrl:imgUrl,
-                query:ObjectUtil.join(shareArgs)
-            })
+        //console.log(title)
+        //console.log(imgUrl)
+        //console.log(ObjectUtil.join(shareArgs))
+        GameManager.getInstance().onShowFun = success
+        wx.shareAppMessage({
+            title:title,
+            imageUrl:imgUrl,
+            query:ObjectUtil.join(shareArgs),
+            cancel:()=>{
+                GameManager.getInstance().onShowFun = null;
+            }
+        })
 
-        clearTimeout(this.shareTimer)
-        if(success)
-            this.shareTimer = setTimeout(success,2000)
+
                 //platform.shareMessage(title, imgUrl, ObjectUtil.join(shareArgs) + addPath);
                 //AppFunQueen.e.app_success = (hideTime)=>{
                 //    if(success) success();
@@ -85,9 +86,6 @@ class ShareTool {
         //}
     }
 
-    public static stopShare(){
-        clearTimeout(this.shareTimer)
-    }
 
 
     //广告

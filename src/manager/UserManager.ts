@@ -99,6 +99,7 @@ class UserManager {
         if(!wx)
         {
             this.fill(this.orginUserData());
+            this.guideFinish = true;   //本地不进新手了
             fun && fun();
             return;
         }
@@ -115,7 +116,9 @@ class UserManager {
                         this.loginUser(fun)
                     },
                     fail:()=>{
-                       MyWindow.Alert('请求用户数据超时，请重新登录')
+                       MyWindow.Alert('请求用户数据超时，请重新启动',()=>{
+                           wx.exitMiniProgram({});
+                       })
                     }
                 })
         //    }

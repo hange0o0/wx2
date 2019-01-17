@@ -43,7 +43,7 @@ class LogItem extends game.BaseItem {
         var showData = this.data;
         var roundData = showData.roundData;
         var PKM = PKManager.getInstance();
-        var addCoin = PKM.getAddCoin(showData,showData.result);
+        var addCoin = PKM.getAddCoin(showData,showData.result,roundData);
         var finalCoin = addCoin - showData.cost1 - showData.cost2;
 
         var costData = PKM.getCost(roundData.seed,60*10)

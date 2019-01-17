@@ -28,15 +28,13 @@ class GetCoinItem extends game.BaseItem {
             if(this.data.type == 3)
             {
                 UM.coinObj.shareNum ++;
-                ShareTool.share('好游戏，日常推荐一下',Config.localResRoot + "share_img_1.jpg",{},()=>{
+                ShareTool.share('日常推荐一个好游戏',Config.localResRoot + "share_img_2.jpg",{},()=>{
                     this.dataChanged();
                 })
-
             }
             else  if(this.data.type == 4)
             {
-
-                ShareTool.share('我看你就是我一直在寻觅的人，快加入我们吧',Config.localResRoot + "share_img_1.jpg",{type:1,from:UM.gameid},()=>{
+                ShareTool.share('我需要你们的帮助！！',Config.localResRoot + "share_img_1.jpg",{type:1,from:UM.gameid},()=>{
                     this.desText.text = '等待好友加入'
                 })
             }
@@ -131,6 +129,7 @@ class GetCoinItem extends game.BaseItem {
                     }
                     else
                     {
+                        this.goBtn.skinName = 'Btn2Skin'
                         this.goBtn.label = '前往'
                         this.goWork = true
                     }
@@ -148,6 +147,7 @@ class GetCoinItem extends game.BaseItem {
                 }
                 else
                 {
+                    this.goBtn.skinName = 'Btn2Skin'
                     this.goBtn.label = '邀请'
                     this.goWork = true
                 }

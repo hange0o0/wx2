@@ -40,7 +40,7 @@ class PKManager {
     public isPKing = false;
 
     constructor(){
-        var todayData = SharedObjectManager.getInstance().getMyValue('today_data') || {};
+        var todayData = SharedObjectManager.getInstance().getMyValue('today_data_1') || {};
         if(todayData.key)
             this.levelData[todayData.key] = todayData.value
     }
@@ -86,8 +86,6 @@ class PKManager {
     public getTodayIndex(){
         var t = this.beginTime;
         var index = Math.ceil((TM.now() - t)/24/3600)
-
-        index = 5;
         return index;
     }
 
@@ -114,7 +112,7 @@ class PKManager {
         var arr = str.split('\n')
         this.roundData = arr;
 
-        SharedObjectManager.getInstance().setMyValue('today_data',{
+        SharedObjectManager.getInstance().setMyValue('today_data_1',{
             key:index,
             value:str
         })
@@ -249,7 +247,30 @@ class PKManager {
             fun && fun(this.levelData[index])
             return;
         }
+        var wx = window['wx'];
+        if(wx) //微信加载
+        {
+            var self = this;
+            var totalNum = 13
+            var tempIndex = index%totalNum || totalNum
+            wx.cloud.getTempFileURL({
+                fileList: ['cloud://hange0o0-1-797611.6861-hange0o0-1-797611/level/level_'+tempIndex+'.txt'],
+                success: res => {
+                    self.loadUrl(index,res.fileList[0].tempFileURL,fun,showMsging)
+                },
+                fail: err => {
+                    console.log(err)
+                }
+            })
+            return;
+        }
 
+        //本地加载
+        this.loadUrl(index,'resource/level/level_'+5+'.txt',fun,showMsging)
+    }
+
+    private loadUrl(index,url,fun,showMsging){
+        console.log(url);
         var loader: egret.URLLoader = new egret.URLLoader();
         loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
         loader.once(egret.Event.COMPLETE,()=>{
@@ -259,10 +280,7 @@ class PKManager {
             //PKManager.getInstance().initData(loader.data);
             fun && fun(loader.data);
         },this);
-
-        var url = 'resource/level/level_'+index+'.txt'
         loader.load(new egret.URLRequest(url));
-
         if(showMsging)
             MsgingUI.getInstance().show();
     }

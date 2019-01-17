@@ -198,7 +198,7 @@ class GameUI extends game.BaseUI {
     }
 
     private onCoinChange(){
-        this.coinText.text = NumberUtil.formatStrNum(UM.coin);
+        this.coinText.text = NumberUtil.addNumSeparator(UM.coin);
     }
 
     private renewCoinRed(){
@@ -296,7 +296,7 @@ class GameUI extends game.BaseUI {
         //PKM.callSendCost(true);
         var costData = PKM.getCost(this.showData.seed,60*10)
         this.addChild(MainPKUI.instance);
-        MainPKUI.instance.top = 90
+        MainPKUI.instance.top = 75
         MainPKUI.instance.bottom = 105
         var playCD = 10*60 - PKConfig.addCoinTime;
         this.mainPKUI.show({
