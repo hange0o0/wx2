@@ -109,8 +109,10 @@ class DebugManager {
 
 
     private testNum = 0;
+    private drawNum = 0;
     public test(){
         this.testNum = 0;
+        this.drawNum = 0;
         this.stop = 0;
         this.winMonster = {};
         this.winUseCard = [];
@@ -152,7 +154,7 @@ class DebugManager {
         var arr = []
         var n = 1024;
 
-        var cost = 30 + Math.floor(Math.random()*20)
+        var cost = 30 + Math.floor(Math.random()*30)
         for(var i=0;i<n;i++)
         {
             arr.push(this.randomList(cost))
@@ -183,8 +185,20 @@ class DebugManager {
         var xxx = {list1:arr[0],list2:arr[1]};
         arr = this.testOne(arr.shift(),arr.shift())
 
-        if(!PKData.getInstance().isDraw())
+        if(PKData.getInstance().isDraw())////平手局数不超过1/30
+        {
+            if(this.drawNum/this.outPut.length < 1/30)
+            {
+                this.outPut.push(xxx);
+                this.drawNum ++;
+            }
+        }
+        else
+        {
             this.outPut.push(xxx);
+        }
+
+
         for(var i=0;i<arr.length;i++)
         {
             var temp = arr[i].split(',');
@@ -213,7 +227,7 @@ class DebugManager {
                 {
                     this.outPut[i] = this.format(this.outPut[i])
                 }
-                egret.localStorage.setItem('mapData', this.outPut.join('\n'));
+                egret.localStorage.setItem('mapData_' + DateUtil.formatDate('MM-dd hh:mm:ss',new Date()), this.outPut.join('\n'));
             }
             return;
         }

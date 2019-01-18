@@ -393,7 +393,13 @@ class MainPKUI extends game.BaseItem {
                     this.winText.text = '胜利'
                     this.delayShowResult(this.winGroup);
                     if(this.showData.isMain)
-                        this.des1.text = '等待到帐'
+                    {
+                        var isFinish = PKManager.getInstance().getFinishTimeByKey(this.showData.key) > TM.now();
+                        if(isFinish)
+                            this.des1.text = '恭喜获得'
+                        else
+                            this.des1.text = '等待到帐'
+                    }
                     else
                         this.des1.text = '恭喜获得'
 

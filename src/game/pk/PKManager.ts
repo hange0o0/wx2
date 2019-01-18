@@ -227,17 +227,17 @@ class PKManager {
     }
 
     public getForceAdd(cost){
-        return Math.floor(Math.pow(cost,0.8));
+        return Math.floor(Math.pow(cost,0.57)*3);
     }
 
     public getMoneyRate(my,other){
         if(other == my)
             var rate = 1;
         else if(other > my)
-            var rate = Math.pow(other/my,1.5)
+            var rate = Math.pow(other/my,1.75)
         else
-            var rate = other/my;
-        return Math.max(105,Math.floor(100 + rate*30));
+            var rate = Math.pow(other/my,1.5)
+        return Math.min(500,Math.max(105,Math.floor(100 + rate*30)));
     }
 
     //加载关卡数据
@@ -353,12 +353,17 @@ class PKManager {
         //},b=>{console.log(b)})
     }
 
-    public getDayStrByKey(key){
+    public getFinishTimeByKey(key){
         var day = Math.floor(key/1000)
         var index = key%1000;
 
         var time = this.beginTime + (day-1)*3600*24 + 3600*6 + (index + 1)*60*10
+        return time;
+    }
 
+    public getDayStrByKey(key){
+
+         var time = this.getFinishTimeByKey(key);
          return DateUtil.formatDate('yyyy-MM-dd hh:mm',DateUtil.timeToChineseDate(time))
     }
 
