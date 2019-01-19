@@ -102,6 +102,11 @@ class PKMonsterMV extends eui.Group {
      }
 
     public talk(gift?){
+        if(this.talkItm)
+        {
+            PKTalkItem.freeItem(this.talkItm)
+            this.talkItm = null;
+        }
         this.talkItm = PKTalkItem.createItem();
         this.talkItm.setData(this,gift);
         this.addChild(this.talkItm);

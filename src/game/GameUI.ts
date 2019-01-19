@@ -31,12 +31,21 @@ class GameUI extends game.BaseUI {
     public loadingGroup: eui.Group;
     private loadMC: eui.Image;
     private loadText: eui.Label;
+    private stopingGroup: eui.Group;
+    private stopCon: eui.Group;
+    private stopBG: eui.Image;
+    private scroller: eui.Scroller;
+    private list: eui.List;
 
 
 
 
     private pkMV
     private mvState = ''
+
+    private stopRote = 1
+    private stopVO
+    private stopMV = new PKMonsterMV()
 
 
     private firstShow = true;
@@ -65,6 +74,23 @@ class GameUI extends game.BaseUI {
         this.team2.teamID = 2
 
         this.mainPKUI.addEventListener('visible_change',this.onMainVisibleChange,this)
+
+
+        this.scroller.viewport = this.list
+        this.list.itemRenderer = MainPKItem;
+        this.list.dataProvider = new eui.ArrayCollection(ObjectUtil.objToArray(MonsterVO.data))
+
+        this.stopCon.addChild(this.stopMV)
+        this.stopMV.scaleX = this.stopMV.scaleY = 1.2
+        this.addBtnEvent(this.stopCon,this.onStopClick)
+    }
+
+    private onStopClick(e)
+    {
+        if(this.stopMV.hitTestPoint(e.stageX,e.stageY,true))
+        {
+            this.stopMV.talk()
+        }
     }
 
 
@@ -113,6 +139,7 @@ class GameUI extends game.BaseUI {
     public onShow(){
         var self = this;
         this.bottomGroup.visible = false;
+        this.stopingGroup.visible = false;
         this.onCoinChange();
         this.renewSound();
         //this.cdText.text = '.'
@@ -157,6 +184,7 @@ class GameUI extends game.BaseUI {
         this.onCoinChange();
 
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
+        this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.onCoinChange)
         this.firstShow = false;
 
@@ -224,11 +252,24 @@ class GameUI extends game.BaseUI {
         }
     }
 
+    private onE(){
+        if(this.mvState == 'stop')
+        {
+            this.stopMV.x += (this.stopRote*this.stopVO.speed/10)*20/60
+            if(this.stopMV.x < -100 || this.stopMV.x > 640 +100)
+            {
+                this.randomStoping();
+            }
+        }
+    }
+
     public onTimer(){
         if(!this.visible)
             return;
         //console.log(TM.now(),TM.loginTime,TM.getTimer())
          this.renewCoinRed();
+
+
 
 
 
@@ -326,6 +367,11 @@ class GameUI extends game.BaseUI {
 
         if(this.mvState == stat)
             return;
+
+        this.stopingGroup.visible = false;
+        this.stopMV.stop()
+
+
         this.mvState = stat;
         this.pkMV.visible = false
         this.pkMV.stop();
@@ -341,6 +387,10 @@ class GameUI extends game.BaseUI {
                 break;
             case 'stop':
                 this.wordGroup.visible = true;
+                this.stopingGroup.visible = true;
+                this.stopBG.source =  'map'+Math.ceil(Math.random()*7)+'_jpg'
+                this.randomStoping();
+
                 var cd = 400;
                 this.getWordTween(this.b1,'休').to({rotation:360},cd).wait(cd+cd + 2000)
                 this.getWordTween(this.b2,'战').wait(cd).to({rotation:360},cd).wait(cd + 2000)
@@ -354,6 +404,27 @@ class GameUI extends game.BaseUI {
                 this.getWordTween(this.b3,'中').wait(cd+cd).to({y:5},cd/2).to({y:18},cd/2).wait(0 + 2000)
                 break;
         }
+    }
+
+    private randomStoping(){
+        var arr = ObjectUtil.objToArray(MonsterVO.data)
+        var mvo = this.stopVO =  ArrayUtil.randomOne(arr);
+        this.stopMV.load(mvo.id);
+        this.stopMV.run()
+        this.stopRote = Math.random()>0.5?1:-1
+
+        if(this.stopRote > 0)
+        {
+            this.stopMV.x = -100
+            this.stopMV.currentMV.scaleX = -1
+        }
+        else
+        {
+            this.stopMV.x = 640 + 100;
+            this.stopMV.currentMV.scaleX = 1
+        }
+        this.stopMV.y = 350 + Math.random()*100
+
     }
 
     private reInitWord(mc,index){
