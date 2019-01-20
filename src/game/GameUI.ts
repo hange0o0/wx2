@@ -87,10 +87,7 @@ class GameUI extends game.BaseUI {
 
     private onStopClick(e)
     {
-        if(this.stopMV.hitTestPoint(e.stageX,e.stageY,true))
-        {
-            this.stopMV.talk()
-        }
+        this.stopMV.talk()
     }
 
 
