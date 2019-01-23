@@ -17,12 +17,6 @@ class M8 extends MBase {
         user.doubleRate = 0
     }
 
-    //protected getAtkerAtk(user:PKMonsterData,target:PKMonsterData){
-    //    var atk = super.getAtkerAtk(user,target);
-    //    if(target.dieTime)
-    //        atk *= 2;
-    //    return atk;
-    //}
 
 
     public skill(user:PKMonsterData,target:PKMonsterData){
