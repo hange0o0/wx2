@@ -276,7 +276,7 @@ class GameUI extends game.BaseUI {
         {
             if(this.showIndex != -1)
             {
-                 if(this.mainPKUI.visible && this.mainPKUI.finish && this.mainPKUI.showData.isMain)
+                 if(this.mainPKUI.visible && this.mainPKUI.finish && this.mainPKUI.dataIn.isMain)
                  {
                      this.mainPKUI.hide();
                      this.team1.visible = this.team2.visible = !this.mainPKUI.visible

@@ -459,6 +459,7 @@ class PKManager {
                 coinwin:UM.coinwin,
                 win:UM.win,
                 total:UM.total,
+                tipsLevel:UM.tipsLevel,
                 lastGuess:UM.lastGuess,
                 coinObj:UM.coinObj,
                 guideFinish:UM.guideFinish,

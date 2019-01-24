@@ -24,6 +24,7 @@ class UserManager {
     public coinwin: number = 0;
     public total: number = 0;
     public win: number = 0;
+    public tipsLevel: number = 0;
     public history = [];
     public lastGuess: any = {};
     public friendNew: any = {};
@@ -49,6 +50,7 @@ class UserManager {
         this.coinwin = data.coinwin || 0;
         this.total = data.total || 0;
         this.win = data.win || 0;
+        this.tipsLevel = data.tipsLevel || 0;
         this.lastGuess = data.lastGuess;
         this.guideFinish = data.guideFinish;
         this.coinObj = data.coinObj || {
@@ -90,6 +92,7 @@ class UserManager {
         this.coin += v;
         if(this.coin < 0)
             this.coin = 0;
+        PKManager.getInstance().needUpUser = true
         EM.dispatch(GameEvent.client.COIN_CHANGE)
     }
 

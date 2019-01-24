@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<e:Skin class="MainPKUISkin" width="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" height="800">
+<e:Skin class="MainPKUISkin" width="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" height="800" states="s1,s2" >
 	<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" top="0" bottom="0"/>
 	<e:Group id="con" top="0" left="0" right="0" height="512">
 
@@ -28,14 +28,14 @@
 	</e:Scroller>
 	<e:Image source="black_bg2_png" x="0" y="0" height="110" width="310"/>
 	<e:Image source="black_bg2_png" y="0" height="110" width="310" right="0" scaleX="-1"/>
-	<e:Group x="10" y="10">
+	<e:Group x="10" y="10" includeIn="s1">
 		<e:Image source="icon_coin_png" x="0" y="1.5"/>
 		<e:Label id="teamCost1Text" text="Label" x="49" y="0" textColor="0xffe2a5"/>
 		<e:layout>
 			<e:HorizontalLayout verticalAlign="middle"/>
 		</e:layout>
 	</e:Group>
-	<e:Group id="cost1Group" x="0" y="472">
+	<e:Group id="cost1Group" x="0" y="472" includeIn="s1">
 		<e:Image source="black_bg2_png" x="0" y="0" height="40" width="320"/>
 		<e:Group x="5" verticalCenter="0">
 			<e:Image source="icon_coin_png" x="0" y="1.5" scaleX="0.8" scaleY="0.8"/>
@@ -45,7 +45,7 @@
 			</e:layout>
 		</e:Group>
 	</e:Group>
-	<e:Group id="cost2Group" y="472" right="0">
+	<e:Group id="cost2Group" y="472" right="0" includeIn="s1">
 		<e:Image source="black_bg2_png" y="0" height="40" width="320" scaleX="-1" right="0"/>
 		<e:Group right="5" verticalCenter="0">
 			<e:Label id="costText2" text="Label" x="49" y="0" size="24" textColor="0xFFE2A5" stroke="3"/>
@@ -55,21 +55,21 @@
 		</e:layout>
 		</e:Group>
 	</e:Group>
-	<e:Group x="10" y="60">
+	<e:Group x="10" y="60" includeIn="s1">
 		<e:Image source="icon_force2_png" x="0" y="1.5"/>
 		<e:Label id="forceText1" text="Label" x="49" y="0" size="24" textColor="0xffe2a5"/>
 		<e:layout>
 		<e:HorizontalLayout verticalAlign="middle"/>
 		</e:layout>
 	</e:Group>
-	<e:Group y="10" right="10">
+	<e:Group y="10" right="10" includeIn="s1">
 		<e:Label id="teamCost2Text" text="Label" x="49" y="0" textColor="0xffe2a5"/>
 		<e:Image source="icon_coin_png" x="0" y="1.5"/>
 		<e:layout>
 		<e:HorizontalLayout verticalAlign="middle"/>
 		</e:layout>
 	</e:Group>
-	<e:Group y="60" right="10">
+	<e:Group y="60" right="10" includeIn="s1">
 		<e:Label id="forceText2" text="123" x="49" y="0" textColor="0xffe2a5" size="24"/>
 		<e:Image source="icon_force2_png" x="0" y="1.5"/>
 		<e:layout>
