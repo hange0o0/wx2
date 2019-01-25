@@ -15,12 +15,12 @@
 		</e:Group>
 	<e:Image source="title_bg4_png" x="-1.52" width="640" fillMode="repeat" bottom="-20"/>
     <e:Group id="bottomGroup" height="100" bottom="2" horizontalCenter="0">
+			<e:Group id="rankBtn" x="100" y="0" height="90" width="90">
+				<e:Image source="rank_btn_png" horizontalCenter="0" verticalCenter="0"/>
+			</e:Group>
 					<e:Group id="shopBtn" x="100" y="0" height="90" width="90">
 						<e:Image source="coin_btn_png" horizontalCenter="0" verticalCenter="0"/>
 						<e:Image id="shopRedMC" source="red_mc_png" right="-10" top="-5"/>
-					</e:Group>
-					<e:Group id="rankBtn" x="100" y="0" height="90" width="90">
-					<e:Image source="rank_btn_png" horizontalCenter="0" verticalCenter="0"/>
 					</e:Group>
 			<e:Group x="220" y="18" width="120">
 				<e:Group id="wordGroup" x="0" y="0" height="31" width="100">
@@ -33,17 +33,18 @@
 					<e:VerticalLayout horizontalAlign="center" gap="10"/>
 				</e:layout>
 			</e:Group>
+			<e:Group id="settingBtn" x="100" y="0" width="90" height="90">
+				<e:Image source="chapter_btn_png" verticalCenter="0" horizontalCenter="0"/>
+			</e:Group>
 					<e:Group id="mailBtn" x="10" y="0" width="90" height="90">
 						<e:Image verticalCenter="0" horizontalCenter="0" source="log_btn_png"/>
-					</e:Group>
-					<e:Group id="settingBtn" x="100" y="0" width="90" height="90">
-					<e:Image id="soundBtn" horizontalCenter="0" verticalCenter="0" source="sound_btn2_png"/>
 					</e:Group>
 					<e:layout>
 					<e:HorizontalLayout horizontalAlign="right" paddingLeft="0" paddingRight="0" gap="30" verticalAlign="middle"/>
 					</e:layout>
 				</e:Group>
 	<ns1:MainPKUI id="mainPKUI" x="0" skinName="MainPKUISkin" top="75" bottom="105"/>
+	<e:Image id="soundBtn" x="350.91" y="21.21" source="sound_btn2_png"/>
 	<e:Group id="loadingGroup" left="0" right="0" top="75" bottom="105">
 		<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" top="0" bottom="0"/>
 		<e:Image id="loadMC" source="ui_loading_png" verticalCenter="-50" horizontalCenter="0"/>

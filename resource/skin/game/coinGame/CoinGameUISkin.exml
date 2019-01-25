@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="CoinGameUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="bg3_png" scale9Grid="16,15,7,7" x="0" y="0" width="100%" height="100%"/>
-	<ns1:TopUI id="topUI" width="100%" x="0" y="0" skinName="TopUISkin"/>
-	<ns1:BottomUI id="bottomUI" x="0" skinName="BottomUISkin" bottom="0"/>
-	<e:Group id="con" x="0" width="640" height="400" y="60" scrollEnabled="true">
-		<e:Image id="bg" horizontalCenter="0" bottom="-30"/>
+	<ns1:TopUI id="topUI" width="100%" x="0" y="0" skinName="TopUISkin" locked="true"/>
+	<ns1:BottomUI id="bottomUI" x="0" skinName="BottomUISkin" bottom="0" locked="true"/>
+	<e:Group id="con" x="0" width="640" height="450" y="60" scrollEnabled="true">
+		<e:Image id="bg" horizontalCenter="0" bottom="0"/>
 	</e:Group>
-	<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" bottom="100" top="450" x="0" y="560"/>
-	<e:Scroller id="scroller" width="640" x="0" top="550" bottom="100" bounces="false" y="565">
+	<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" bottom="100" top="500" x="0" y="560"/>
+	<e:Scroller id="scroller" width="640" x="0" top="600" bottom="100" bounces="false" y="565">
 		<e:Group>
 		<e:List id="list" x="67" y="43">
 			<e:layout>
@@ -19,17 +19,18 @@
 		</e:layout>
 		</e:Group>
 	</e:Scroller>
-	<e:Image source="bg1_png" scale9Grid="8,8,14,14" y="470" height="80" horizontalCenter="0" width="620"/>
-	<e:List id="chooseList" height="60" y="480" horizontalCenter="0">
+	<e:Image source="bg1_png" scale9Grid="8,8,14,14" y="520" height="80" horizontalCenter="0" width="620"/>
+	<e:List id="chooseList" height="60" y="530" horizontalCenter="0">
 		<e:layout>
 			<e:HorizontalLayout gap="1"/>
 		</e:layout>
 	</e:List>
-	<e:Image left="0" right="0" top="450" bottom="100" source="bg18_png" scale9Grid="34,32,3,6" touchEnabled="false" x="0" y="560"/>
+	<e:Image left="0" right="0" top="500" bottom="100" source="bg18_png" scale9Grid="34,32,3,6" touchEnabled="false" x="0" y="560"/>
 	<e:Group id="btnGroup" right="20" bottom="10">
 		<e:Group id="tipsBtn" x="0" y="2" width="100" height="80">
 			<e:Image source="icon_empty_png" y="0" horizontalCenter="0"/>
 			<e:Label text="提示" bottom="0" horizontalCenter="0" size="24" stroke="2" textColor="0xffe0c4"/>
+			<e:Image id="getTipsIcon" source="icon_right_png" bottom="0" right="0"/>
 		</e:Group>
 		<e:Group id="resetBtn" x="246" y="0" width="100" height="80">
 			<e:Image source="icon_atk3_png" y="0" horizontalCenter="0" scaleX="0.9" scaleY="0.9"/>
@@ -40,12 +41,13 @@
 			<e:Label text="出战" bottom="0" horizontalCenter="0" size="24" stroke="2" textColor="0xffe0c4"/>
 		</e:Group>
 		<e:layout>
-			<e:HorizontalLayout gap="20"/>
+			<e:HorizontalLayout gap="0"/>
 		</e:layout>
 	</e:Group>
-	<e:Group y="410" horizontalCenter="0" height="40" touchChildren="false" touchEnabled="false">
+	<e:Group y="460" horizontalCenter="0" height="40" touchChildren="false" touchEnabled="false">
 		<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0" scale9Grid="43,7,7,42"/>
-		<e:Label id="costText" text="剩余费用：12" verticalCenter="0" left="30" right="30" size="24" multiline="false"/>
+		<e:Label id="costText" text="剩余费用：12" verticalCenter="0" left="40" right="40" size="24" multiline="false"/>
 	</e:Group>
+	<e:Label id="desText" text="点击下方头像加入怪物，长按可查看详情" y="548" horizontalCenter="0" size="24" textColor="0xffefaa"/>
 
 </e:Skin>

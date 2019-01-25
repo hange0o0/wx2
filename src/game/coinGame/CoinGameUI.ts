@@ -14,16 +14,21 @@ class CoinGameUI extends game.BaseUI {
     private scroller: eui.Scroller;
     private list: eui.List;
     private chooseList: eui.List;
+    private btnGroup: eui.Group;
     private tipsBtn: eui.Group;
+    private getTipsIcon: eui.Image;
     private resetBtn: eui.Group;
     private pkBtn: eui.Group;
-    private btnGroup: eui.Group;
     private costText: eui.Label;
+    private desText: eui.Label;
+
+
 
 
 
     private monsterArr = []
     private dataProvider:eui.ArrayCollection
+    private chooseDataProvider:eui.ArrayCollection
     public leaveCost = 0
 
     public level = 1;
@@ -37,14 +42,14 @@ class CoinGameUI extends game.BaseUI {
         super.childrenCreated();
 
         this.bottomUI.setHide(this.onClose,this);
-        this.topUI.setTitle('关卡解迷')
+
 
         this.chooseList.itemRenderer = CoinGameChooseItem
         this.chooseList.dataProvider = this.dataProvider = new eui.ArrayCollection();
 
         this.scroller.viewport = this.list;
         this.list.itemRenderer = CoinGameListItem
-        this.list.dataProvider =  new eui.ArrayCollection(ObjectUtil.objToArray(MonsterVO.data))
+        this.list.dataProvider =  this.chooseDataProvider = new eui.ArrayCollection()
 
         this.addBtnEvent(this.pkBtn,this.onPK)
         this.addBtnEvent(this.resetBtn,this.reset)
@@ -54,6 +59,33 @@ class CoinGameUI extends game.BaseUI {
         this.addBtnEvent(this.con,this.onMClick)
         MainPKUI.instance.addEventListener('visible_change',this.onMainVisibleChange,this)
         this.reset();
+    }
+
+    private setChooseList() {
+        var arr = [];
+        var arr2 = [];
+        var answer = this.question.list2.split(',')
+        var data = MonsterVO.data;
+        for (var s in data) {
+            if (answer.indexOf(s) == -1) {
+                arr2.push(data[s])
+            }
+            else {
+                arr.push(data[s])
+            }
+        }
+        ArrayUtil.sortByField(arr2,['id'],[0])
+        var PKM = PKManager.getInstance();
+        PKM.randomSeed = (this.question.seed * 1.66);
+        while (arr.length < 18)
+        {
+            var index = Math.floor(PKM.random()*arr2.length)
+            arr.push(arr2[index])
+            arr2.splice(index,1);
+        }
+        ArrayUtil.sortByField(arr,['cost','type'],[0,0])
+        this.chooseDataProvider.source = arr;
+        this.chooseDataProvider.refresh();
     }
 
     private onMainVisibleChange(){
@@ -68,7 +100,7 @@ class CoinGameUI extends game.BaseUI {
             this.showTips();
             return;
         }
-        var cost = Math.ceil(this.level/10)*200
+        var cost = Math.min(2000,Math.ceil(this.level/20)*100)
         MyWindow.Confirm('确定花费'+cost+'金币得到提示答案吗？',(b)=>{
             if(b==1)
             {
@@ -79,6 +111,7 @@ class CoinGameUI extends game.BaseUI {
                }
                 UM.addCoin(-cost);
                 UM.tipsLevel = this.level;
+                this.showTips()
 
             }
         },['再想想','要提示']);
@@ -94,6 +127,7 @@ class CoinGameUI extends game.BaseUI {
         this.dataProvider.source = list;
         this.dataProvider.refresh();
         this.onItemChange();
+        this.getTipsIcon.visible = true;
     }
 
 
@@ -108,6 +142,7 @@ class CoinGameUI extends game.BaseUI {
         MainPKUI.instance.top = 60
         MainPKUI.instance.bottom = 100
         MainPKUI.instance.show({
+            level:this.level,
             isPK:true,
             list1:this.question.list1,
             list2:myList,
@@ -153,7 +188,7 @@ class CoinGameUI extends game.BaseUI {
             item.stand();
             item.scaleX = item.scaleY = 1.2;
             item.currentMV.scaleX = -Math.abs(item.currentMV.scaleX);
-            item.bottom = -20+vo.height*1.2 - 5 + 10*Math.random()// + Math.random()*80
+            item.bottom = 0+vo.height*1.2 - 5 + 10*Math.random()// + Math.random()*80
             item['w'] = vo.width
             item.x = begin + i*des
             this.monsterArr.push(item);
@@ -179,7 +214,10 @@ class CoinGameUI extends game.BaseUI {
 
 
     public show(){
-        super.show()
+        PKManager.getInstance().loadChapterData(Math.ceil(UM.chapterLevel/100),()=>{
+            super.show()
+        },true)
+
     }
 
     public hide() {
@@ -202,6 +240,7 @@ class CoinGameUI extends game.BaseUI {
         this.leaveCost = (this.question.cost - cost)
         this.costText.text = '剩余费用：' + this.leaveCost
         MyTool.renewList(this.list)
+        this.desText.visible = cost == 0
     }
 
     public getChooseNum(){
@@ -209,13 +248,38 @@ class CoinGameUI extends game.BaseUI {
     }
 
     public onShow(){
+
+        this.renew();
+        this.addPanelOpenEvent(GameEvent.client.CHAPTER_CHANGE,this.onChapterChange)
+    }
+
+    private onChapterChange(){
+        PKManager.getInstance().loadChapterData(Math.ceil(UM.chapterLevel/100),()=>{
+            super.show()
+        },true)
+    }
+
+    private renew(){
+        this.level = UM.chapterLevel;
+        this.question = PKManager.getInstance().getChapterData();
+        this.topUI.setTitle('关卡解迷 - 第'+this.level+'关')
         this.showQuestion();
-        this.onItemChange();
+        this.setChooseList();
+        if(UM.tipsLevel == this.level)
+        {
+            this.showTips();
+        }
+        else
+        {
+            this.getTipsIcon.visible = false;
+            this.reset();
+        }
     }
 
     public reset(){
         this.dataProvider.source = [];
         this.dataProvider.refresh();
+        this.onItemChange();
     }
 
     private getMyCost(){
@@ -237,6 +301,4 @@ class CoinGameUI extends game.BaseUI {
         }
         return list.join(',')
     }
-
-
 }

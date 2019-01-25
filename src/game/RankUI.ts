@@ -42,15 +42,15 @@ class RankUI extends game.BaseUI{
         if(!window['wx'])
             return;
 
-        var arr = [{label:'金币排行'},{label:'收益排行'},{label:'胜率排行'}]
+        var arr = [{label:'金币排行'},{label:'收益排行'},{label:'关卡排行'},{label:'胜率排行'}]
         if(UM.total < Config.openRate)
         {
             arr.pop();
-            this.tab.width = 400
+            this.tab.width = 450
         }
         else
         {
-            this.tab.width = 540
+            this.tab.width = 560
         }
         this.tab.dataProvider = new eui.ArrayCollection(arr)
         this.showBitmapList();
@@ -68,6 +68,11 @@ class RankUI extends game.BaseUI{
             var value = UM.coinwin
         }
         else if(this.tab.selectedIndex == 2)
+        {
+            var key = 'level'
+            var value = UM.chapterLevel
+        }
+        else if(this.tab.selectedIndex == 3)
         {
             var key = 'winrate'
             var value = UM.win/UM.total

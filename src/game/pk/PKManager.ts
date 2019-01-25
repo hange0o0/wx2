@@ -33,6 +33,7 @@ class PKManager {
 
     public pkResult = {}//所有PK结果的集合
     public levelData = {}//关卡数据的集合
+    public chapterData = {}//关卡数据的集合
     public roundTotalData = {}//关卡数据的集合
 
     private beginTime = 1546012800;//2018-12-29
@@ -43,6 +44,10 @@ class PKManager {
         var todayData = SharedObjectManager.getInstance().getMyValue('today_data_1') || {};
         if(todayData.key)
             this.levelData[todayData.key] = todayData.value
+
+        var todayData = SharedObjectManager.getInstance().getMyValue('chapter_data') || {};
+        if(todayData.key)
+            this.chapterData[todayData.key] = todayData.value
     }
 
     public pkWord = ['投降，或者死亡','来战个痛快','小心你的背后','这招看你怎么躲','我要认真了','你就只会这几招吗','我要出大招了','我会赐予你死亡','你究竟想怎样...','我的魔法会撕碎你','我已饥渴难耐','你会记住我的名字的',
@@ -166,8 +171,8 @@ class PKManager {
         return t0 + 3600*6 + (index + 1)*10*60;
     }
 
-    private randomSeed;
-    private random(seedIn?){
+    public randomSeed;
+    public random(seedIn?){
         var seed = seedIn || this.randomSeed;
         seed = ( seed * 9301 + 49297 ) % 233280;
         var rd = seed / ( 233280.0 );
@@ -251,7 +256,7 @@ class PKManager {
         if(wx) //微信加载
         {
             var self = this;
-            var totalNum = 13
+            var totalNum = 161
             var tempIndex = index%totalNum || totalNum
             wx.cloud.getTempFileURL({
                 fileList: ['cloud://hange0o0-1-797611.6861-hange0o0-1-797611/level/level_'+tempIndex+'.txt'],
@@ -269,12 +274,49 @@ class PKManager {
         this.loadUrl(index,'resource/level/level_'+5+'.txt',fun,showMsging)
     }
 
-    private loadUrl(index,url,fun,showMsging){
+    public loadChapterData(index,fun,showMsging?){
+        if(this.chapterData[index])
+        {
+            fun && fun(this.chapterData[index])
+            return;
+        }
+        var wx = window['wx'];
+        if(wx) //微信加载
+        {
+            var self = this;
+            var totalNum = 9
+            var tempIndex = index%totalNum || totalNum
+            wx.cloud.getTempFileURL({
+                fileList: ['cloud://hange0o0-1-797611.6861-hange0o0-1-797611/chapter/chapter_'+tempIndex+'.txt'],
+                success: res => {
+                    self.loadUrl(index,res.fileList[0].tempFileURL,fun,showMsging,true)
+                },
+                fail: err => {
+                    console.log(err)
+                }
+            })
+            return;
+        }
+
+        //本地加载
+        this.loadUrl(index,'resource/level/chapter_1.txt',fun,showMsging,true)
+    }
+
+    private loadUrl(index,url,fun,showMsging,isChapter?){
         console.log(url);
         var loader: egret.URLLoader = new egret.URLLoader();
         loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
         loader.once(egret.Event.COMPLETE,()=>{
-            this.levelData[index] = loader.data
+            if(isChapter)
+            {
+                this.chapterData[index] = loader.data
+                SharedObjectManager.getInstance().setMyValue('chapter_data',{
+                    key:index,
+                    value:loader.data
+                })
+            }
+            else
+                this.levelData[index] = loader.data
             if(showMsging)
                 MsgingUI.getInstance().hide();
             //PKManager.getInstance().initData(loader.data);
@@ -283,6 +325,13 @@ class PKManager {
         loader.load(new egret.URLRequest(url));
         if(showMsging)
             MsgingUI.getInstance().show();
+    }
+
+    public getChapterData(){
+        var index = Math.ceil(UM.chapterLevel/100)
+        var id = (UM.chapterLevel%100 || 100)-1
+        var data = this.chapterData[index].split('\n')
+        return JSON.parse(data[id])
     }
 
     //结算投注信息
@@ -460,6 +509,7 @@ class PKManager {
                 win:UM.win,
                 total:UM.total,
                 tipsLevel:UM.tipsLevel,
+                chapterLevel:UM.chapterLevel,
                 lastGuess:UM.lastGuess,
                 coinObj:UM.coinObj,
                 guideFinish:UM.guideFinish,
@@ -479,6 +529,33 @@ class PKManager {
         {
             upList.push({ key: 'winrate', value: (UM.win/UM.total) + ',' + TM.now()})
         }
+        wx.setUserCloudStorage({
+            KVDataList: upList,
+            success: res => {
+                console.log(res);
+            },
+            fail: res => {
+                console.log(res);
+            }
+        });
+    }
+
+    public onChapterWin(level){
+        if(UM.chapterLevel != level)
+            return;
+        var cost = Math.min(2000,Math.ceil(level/20)*100)/2
+        UM.addCoin(cost);
+        UM.chapterLevel ++;
+        EM.dispatch(GameEvent.client.CHAPTER_CHANGE)
+        this.upWXChapter();
+        return cost
+    }
+
+    public upWXChapter(){
+        var wx = window['wx'];
+        if(!wx)
+            return;
+        var upList = [{ key: 'level', value: UM.chapterLevel + ',' + TM.now()}];
         wx.setUserCloudStorage({
             KVDataList: upList,
             success: res => {

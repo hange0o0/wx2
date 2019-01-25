@@ -25,6 +25,7 @@ class UserManager {
     public total: number = 0;
     public win: number = 0;
     public tipsLevel: number = 0;
+    public chapterLevel: number = 0;
     public history = [];
     public lastGuess: any = {};
     public friendNew: any = {};
@@ -51,6 +52,7 @@ class UserManager {
         this.total = data.total || 0;
         this.win = data.win || 0;
         this.tipsLevel = data.tipsLevel || 0;
+        this.chapterLevel = data.chapterLevel || 1;
         this.lastGuess = data.lastGuess;
         this.guideFinish = data.guideFinish;
         this.coinObj = data.coinObj || {
@@ -214,6 +216,8 @@ class UserManager {
              win:0,   //$
              total:0,   //$
              guideFinish:false,
+             chapterLevel:1,
+             tipsLevel:0,
              lastGuess:this.getGuessInitData(0),
              coinObj:{
                  loginTime:TM.now(),   //登陆时间

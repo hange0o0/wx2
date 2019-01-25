@@ -9,7 +9,7 @@ class DebugManager {
 
     public stop = 0;
     public winCardArr = [];
-    public finishFun = function(){return false}
+    public finishFun = function(winArr){return false}
 
 
     public constructor() {
@@ -215,7 +215,7 @@ class DebugManager {
 
         console.log(this.testNum + ':' + (egret.getTimer()-t))
 
-        if(this.finishFun())
+        if(this.finishFun(arr))
             return;
         if(this.stop)
         {
@@ -229,6 +229,14 @@ class DebugManager {
                 }
                 egret.localStorage.setItem('mapData_' + DateUtil.formatDate('MM-dd hh:mm:ss',new Date()), this.outPut.join('\n'));
             }
+            if(this.stop == 3)
+            {
+                for(var i=0;i<this.levelArr.length;i++)
+                {
+                    this.levelArr[i] = JSON.stringify(this.levelArr[i])
+                }
+                egret.localStorage.setItem('levelData_' + DateUtil.formatDate('MM-dd hh:mm:ss',new Date()), this.levelArr.join('\n'));
+            }
             return;
         }
 
@@ -241,10 +249,10 @@ class DebugManager {
         return JSON.stringify(data);
     }
 
-    private testOne(list1,list2,hp=10){
+    private testOne(list1,list2,seed?){
         var PD = PKData.getInstance()
         var data = {
-            seed:TM.now() + Math.floor(100000000*Math.random()),
+            seed:seed ||TM.now() + Math.floor(100000000*Math.random()),
             players:[
                 {id:1,gameid:'test1',team:1,autolist:list1,force:10000,type:0,hp:1},
                 {id:2,gameid:'test2',team:2,autolist:list2,force:10000,type:0,hp:1}
@@ -278,6 +286,49 @@ class DebugManager {
         }
         console.log(cost);
     }
+
+
+    //创建关卡数据，输入花费比例
+    public levelArr = []
+    public createLevel(rate){
+        this.levelArr = [];
+       this.finishFun = (winArr)=>{
+           var list1 = winArr[0]
+           var cost = 0;
+           var arr = list1.split(',');
+           for(var i=0;i<arr.length;i++)
+           {
+               cost += MonsterVO.getObject(arr[i]).cost;
+           }
+           cost = Math.floor(cost*rate);
+           var oo:any = {
+               list1:list1,
+               cost:cost,
+               seed:Math.floor(Math.random() * 100000000000),
+           }
+           var num = 0;
+           do{
+               oo.list2 = this.randomList(cost);
+               if(oo.list2.split(',').length>10)
+                   continue;
+               this.testOne(oo.list1,oo.list2,oo.seed);
+               if(PKData.getInstance().getPKResult() == 2)
+               {
+                   this.levelArr.push(oo);
+                   break;
+               }
+               num ++
+               if(num >1000)
+               {
+                   console.log('fail')
+                   break;
+               }
+           }while(true);
+           return false;
+       }
+        this.testRound();
+    }
+
 }
 
 //DM.testCard('1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16','1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16')

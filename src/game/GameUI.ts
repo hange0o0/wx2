@@ -53,7 +53,8 @@ class GameUI extends game.BaseUI {
     public showData;
     public childrenCreated() {
         super.childrenCreated();
-        this.addBtnEvent(this.settingBtn,this.onSetting)
+        this.addBtnEvent(this.soundBtn,this.onSetting)
+        this.addBtnEvent(this.settingBtn,this.onChapter)
         this.addBtnEvent(this.mailBtn,this.onMail)
         this.addBtnEvent(this.shopBtn,this.onShop)
         this.addBtnEvent(this.rankBtn,this.onRank)
@@ -100,6 +101,9 @@ class GameUI extends game.BaseUI {
         SoundManager.getInstance().bgPlaying = !SoundManager.getInstance().bgPlaying
         this.renewSound();
 
+    }
+    private onChapter(){
+        CoinGameUI.getInstance().show();
     }
 
     private renewSound(){
