@@ -57,8 +57,15 @@ class LogUI extends game.BaseUI {
     public onShow(){
         //SoundManager.getInstance().playSound('bg');
         this.renew();
+        this.addPanelOpenEvent(GameEvent.client.HISTORY_CHANGE,this.onHistoryChange)
     }
 
+    private onHistoryChange(){
+        var v = this.scroller.viewport.scrollV;
+        this.renew();
+        this.validateNow();
+        this.scroller.viewport.scrollV = v;
+    }
 
     public renew(){
         this.dataProvider.source = UM.history

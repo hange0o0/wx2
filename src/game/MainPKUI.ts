@@ -335,9 +335,12 @@ class MainPKUI extends game.BaseItem {
                     this.delayShowResult(this.winGroup);
                     this.winText.text = '胜利'
                     var addCoin = PKManager.getInstance().onChapterWin(this.dataIn.level);
-                    this.desGroup['callVisible'] = true
-                    this.des1.text = '恭喜获得'
-                    this.des2.text = 'x' + NumberUtil.addNumSeparator(addCoin)
+                    if(addCoin)
+                    {
+                        this.desGroup['callVisible'] = true
+                        this.des1.text = '恭喜获得'
+                        this.des2.text = 'x' + NumberUtil.addNumSeparator(addCoin)
+                    }
                 }
                 else
                 {

@@ -361,7 +361,7 @@ class GameUI extends game.BaseUI {
     }
 
     private showCurrentMV(stat,cdIn){
-        if(cd >=3600)
+        if(cdIn >=3600)
             this.cdText.text = DateUtil.getStringBySeconds(cdIn,true,2);
         else
             this.cdText.text = DateUtil.getStringBySecond(cdIn).substr(-5);

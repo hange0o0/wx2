@@ -86,6 +86,7 @@ class UserManager {
 
     public saveHistory(){
         SharedObjectManager.getInstance().setMyValue('history',this.history)
+        EM.dispatch(GameEvent.client.HISTORY_CHANGE)
     }
 
     public addCoin(v){

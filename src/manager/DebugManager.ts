@@ -22,6 +22,8 @@ class DebugManager {
 
     public outPut = []
 
+    public callCost = 0
+
     public randomList(cost){
         var arr = []
         for(var s in MonsterVO.data)
@@ -154,7 +156,8 @@ class DebugManager {
         var arr = []
         var n = 1024;
 
-        var cost = 30 + Math.floor(Math.random()*30)
+        var cost = this.callCost || (30 + Math.floor(Math.random()*30))
+        console.log(cost)
         for(var i=0;i<n;i++)
         {
             arr.push(this.randomList(cost))
@@ -294,39 +297,60 @@ class DebugManager {
         this.levelArr = [];
        this.finishFun = (winArr)=>{
            var list1 = winArr[0]
-           var cost = 0;
-           var arr = list1.split(',');
-           for(var i=0;i<arr.length;i++)
-           {
-               cost += MonsterVO.getObject(arr[i]).cost;
-           }
-           cost = Math.floor(cost*rate);
+           var myCost = 36;
+           //var cost = 0;
+           //var arr = list1.split(',');
+           //for(var i=0;i<arr.length;i++)
+           //{
+           //    cost += MonsterVO.getObject(arr[i]).cost;
+           //}
+           //cost = Math.floor(cost*rate);
            var oo:any = {
                list1:list1,
-               cost:cost,
+               cost:myCost,
                seed:Math.floor(Math.random() * 100000000000),
            }
            var num = 0;
            do{
-               oo.list2 = this.randomList(cost);
+               oo.list2 = this.randomList(myCost);
                if(oo.list2.split(',').length>10)
                    continue;
                this.testOne(oo.list1,oo.list2,oo.seed);
                if(PKData.getInstance().getPKResult() == 2)
                {
                    this.levelArr.push(oo);
+                   this.resetCost();
                    break;
                }
                num ++
                if(num >1000)
                {
-                   console.log('fail')
+                   this.testNum --;
+                   //console.log('fail')
                    break;
                }
            }while(true);
            return false;
        }
+
+
+        this.resetCost();
         this.testRound();
+    }
+
+    private resetCost(){
+        var num = Math.floor((this.levelArr.length + 2110)/10)
+        for(var cost=0;cost < 31;cost++)
+        {
+            num-=cost;
+            if(num <= 0)
+                break;
+        }
+        if(cost > 20)
+        {
+            cost =20 + Math.floor(Math.min(cost-20,11)*Math.random())
+        }
+        this.callCost = cost + 30
     }
 
 }

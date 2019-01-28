@@ -8,10 +8,13 @@ class CoinGameChooseItem extends game.BaseItem {
     private mc: eui.Image;
 
 
+    public stopMove=true
     public childrenCreated() {
         super.childrenCreated();
         this.addBtnEvent(this,this.onClick)
         MyTool.addLongTouch(this,this.onInfo,this)
+
+        DragManager.getInstance().setDrag(this,true);
     }
 
 
@@ -28,6 +31,10 @@ class CoinGameChooseItem extends game.BaseItem {
         var vo = MonsterVO.getObject(this.data.id)
         this.bg.source = vo.getBG()
         this.mc.source = vo.getImage()
+    }
+
+    public setChoose(b){
+        this.alpha = b?0.3:1
     }
 
 

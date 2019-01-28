@@ -4,6 +4,7 @@ class GameEvent {
         COIN_CHANGE:'COIN_CHANGE',
         INFO_CHANGE:'INFO_CHANGE',
         CHAPTER_CHANGE:'CHAPTER_CHANGE',
+        HISTORY_CHANGE:'HISTORY_CHANGE',
 
         red_change:'red_change',
         pass_day:'pass_day',

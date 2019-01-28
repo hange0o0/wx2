@@ -24,6 +24,7 @@ class CoinGameUI extends game.BaseUI {
 
 
 
+    private dragTarget = new CoinGameChooseItem()
 
 
     private monsterArr = []
@@ -55,10 +56,51 @@ class CoinGameUI extends game.BaseUI {
         this.addBtnEvent(this.resetBtn,this.reset)
         this.addBtnEvent(this.tipsBtn,this.onTips)
 
+        this.chooseList.addEventListener('start_drag',this.onDragStart,this);
+        this.chooseList.addEventListener('end_drag',this.onDragEnd,this);
+        this.chooseList.addEventListener('move_drag',this.onDragMove,this);
+
 
         this.addBtnEvent(this.con,this.onMClick)
         MainPKUI.instance.addEventListener('visible_change',this.onMainVisibleChange,this)
         this.reset();
+    }
+
+    private onDragStart(e){
+        e.target.setChoose(true);
+        this.dragTarget.data = e.target.data
+        this.stage.addChild(this.dragTarget);
+        this.dragTarget.x = e.data.x;
+        this.dragTarget.y = e.data.y;
+    }
+
+    private onDragMove(e){
+        this.dragTarget.x = e.data.x - this.dragTarget.width/2;
+        this.dragTarget.y = e.data.y - this.dragTarget.height/2;
+    }
+
+    private onDragEnd(e){
+        MyTool.removeMC(this.dragTarget)
+        var x = this.dragTarget.x + this.dragTarget.width/2
+        var y = this.dragTarget.y + this.dragTarget.height/2
+        for(var i=0;i<this.chooseList.numChildren;i++)
+        {
+            var mc:any = this.chooseList.getChildAt(i);
+            if(mc.hitTestPoint(x,y))
+            {
+                if(mc.data == this.dragTarget.data)
+                    break
+                var index = this.dataProvider.source.indexOf(this.dragTarget.data)
+                this.dataProvider.source[index] = mc.data
+                this.dataProvider.source[i] = this.dragTarget.data
+                this.dataProvider.refresh();
+                break
+            }
+        }
+        for(var i=0;i<this.chooseList.numChildren;i++) {
+            var mc:any = this.chooseList.getChildAt(i);
+            mc.setChoose(false);
+        }
     }
 
     private setChooseList() {
@@ -152,6 +194,8 @@ class CoinGameUI extends game.BaseUI {
         });
 
         this.btnGroup.visible = false
+
+        SharedObjectManager.getInstance().setMyValue('coin_game_value',{key:this.level,value:myList})
     }
 
     private onMClick(e){
@@ -272,7 +316,24 @@ class CoinGameUI extends game.BaseUI {
         else
         {
             this.getTipsIcon.visible = false;
-            this.reset();
+
+
+            var oo = SharedObjectManager.getInstance().getMyValue('coin_game_value')
+            if(oo && oo.key == this.level)
+            {
+                var arr = oo.value.split(',');
+                for(var i=0;i<arr.length;i++)
+                {
+                    arr[i] = MonsterVO.getObject(arr[i]);
+                }
+                this.dataProvider.source = arr
+                this.dataProvider.refresh();
+                this.onItemChange();
+            }
+            else
+            {
+                this.reset();
+            }
         }
     }
 

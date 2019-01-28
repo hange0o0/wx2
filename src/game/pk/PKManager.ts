@@ -45,7 +45,7 @@ class PKManager {
         if(todayData.key)
             this.levelData[todayData.key] = todayData.value
 
-        var todayData = SharedObjectManager.getInstance().getMyValue('chapter_data') || {};
+        var todayData = SharedObjectManager.getInstance().getMyValue('chapter_data_1') || {};
         if(todayData.key)
             this.chapterData[todayData.key] = todayData.value
     }

@@ -232,10 +232,10 @@ class TeamUI extends game.BaseItem {
             var userCost =  UM.lastGuess.cost2;
         }
 
-        this.addBtn1.skinName = UM.coin >= 1 ?'Btn1Skin':'Btn3Skin'
-        this.addBtn10.skinName = UM.coin >= 10 ?'Btn1Skin':'Btn3Skin'
-        this.addBtn100.skinName = UM.coin >= 100 ?'Btn1Skin':'Btn3Skin'
-        this.addBtn1000.skinName = UM.coin >= 1000 ?'Btn1Skin':'Btn3Skin'
+        this.addBtn1.skinName = UM.coin >= 1 && userCost <= 9999 ?'Btn1Skin':'Btn3Skin'
+        this.addBtn10.skinName = UM.coin >= 10 && userCost <= 9990 ?'Btn1Skin':'Btn3Skin'
+        this.addBtn100.skinName = UM.coin >= 100 && userCost <= 9900 ?'Btn1Skin':'Btn3Skin'
+        this.addBtn1000.skinName = UM.coin >= 1000 && userCost <= 9000 ?'Btn1Skin':'Btn3Skin'
 
         this.setHtml(this.totalText,this.createHtml('总投资：',0xFFCC8C) +this.createHtml(NumberUtil.addNumSeparator(parseInt(myCost)),myCost>otherCost?0x00ff00:0xffffff));
         this.setHtml(this.myText,this.createHtml('我的：',0xFFCC8C) +this.createHtml(NumberUtil.addNumSeparator(userCost),userCost > 0?0x00ff00:0xffffff));
