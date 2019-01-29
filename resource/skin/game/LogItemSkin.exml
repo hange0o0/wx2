@@ -26,9 +26,9 @@
 	<e:Group y="70" x="20">
 		<e:Group y="0" width="160" height="200" x="0">
 		<e:Group x="0" y="-3.03" height="55"/>
-		<e:Label text="最终投注" x="40" size="24" verticalCenter="0" y="54" height="50" verticalAlign="middle"/>
+		<e:Label text="最终打赏" x="40" size="24" verticalCenter="0" y="54" height="50" verticalAlign="middle"/>
 		<e:Label text="最终战力" x="40" size="24" verticalCenter="0" y="54" height="50" verticalAlign="middle"/>
-		<e:Label text="我的投注" x="50" size="24" verticalCenter="0" y="64" height="50" verticalAlign="middle"/>
+		<e:Label text="我的打赏" x="50" size="24" verticalCenter="0" y="64" height="50" verticalAlign="middle"/>
 		<e:Label text="战斗结果" x="60" size="24" verticalCenter="0" y="74" height="50" verticalAlign="middle"/>
 		<e:layout>
 			<e:VerticalLayout horizontalAlign="center" gap="0"/>

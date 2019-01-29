@@ -110,7 +110,7 @@ class TeamUI extends game.BaseItem {
         {
             if(UM.lastGuess.cost1 + v > this.maxCost)
             {
-                MyWindow.ShowTips('本轮投注上限为' + this.maxCost)
+                MyWindow.ShowTips('本轮打赏上限为' + this.maxCost)
                 return;
             }
             UM.lastGuess.cost1 += v
@@ -120,7 +120,7 @@ class TeamUI extends game.BaseItem {
         {
             if(UM.lastGuess.cost2 + v > this.maxCost)
             {
-                MyWindow.ShowTips('本轮投注上限为' + this.maxCost)
+                MyWindow.ShowTips('本轮打赏上限为' + this.maxCost)
                 return;
             }
             UM.lastGuess.cost2 += v
@@ -237,14 +237,14 @@ class TeamUI extends game.BaseItem {
         this.addBtn100.skinName = UM.coin >= 100 && userCost <= 9900 ?'Btn1Skin':'Btn3Skin'
         this.addBtn1000.skinName = UM.coin >= 1000 && userCost <= 9000 ?'Btn1Skin':'Btn3Skin'
 
-        this.setHtml(this.totalText,this.createHtml('总投资：',0xFFCC8C) +this.createHtml(NumberUtil.addNumSeparator(parseInt(myCost)),myCost>otherCost?0x00ff00:0xffffff));
+        this.setHtml(this.totalText,this.createHtml('总打赏：',0xFFCC8C) +this.createHtml(NumberUtil.addNumSeparator(parseInt(myCost)),myCost>otherCost?0x00ff00:0xffffff));
         this.setHtml(this.myText,this.createHtml('我的：',0xFFCC8C) +this.createHtml(NumberUtil.addNumSeparator(userCost),userCost > 0?0x00ff00:0xffffff));
         //this.myText.text = '我的：' +NumberUtil.addNumSeparator(userCost);
         //this.myText.textColor = userCost > 0?0x00ff00:0xffffff
 
         var rate = PKM.getMoneyRate(myCost,otherCost);
         var rate2 = PKM.getMoneyRate(otherCost,myCost);
-        this.setHtml(this.rateText,this.createHtml('赔率：',0xFFCC8C) +this.createHtml(rate+'%',rate > rate2?0x00ff00:0xffffff));
+        this.setHtml(this.rateText,this.createHtml('回报：',0xFFCC8C) +this.createHtml(rate+'%',rate > rate2?0x00ff00:0xffffff));
         //this.rateText.text = '赔率：' +rate + '%'
         //this.rateText.textColor = rate > 150?0x00ff00:0xffffff
 

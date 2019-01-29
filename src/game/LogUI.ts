@@ -26,7 +26,7 @@ class LogUI extends game.BaseUI {
         super.childrenCreated();
 
         this.bottomUI.setHide(this.onClose,this);
-        this.topUI.setTitle('投注日志')
+        this.topUI.setTitle('打赏日志')
 
         this.scroller.viewport = this.list;
         this.list.itemRenderer = LogItem

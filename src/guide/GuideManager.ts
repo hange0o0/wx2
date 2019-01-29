@@ -63,7 +63,7 @@ class GuideManager {
                 self.guideKey = 'count';
                 self.temp = TM.now();
             },
-            text:'这是一个考验玩家眼光的游戏，选出你认为能取胜队伍进行投注，赢取无尽的财富',
+            text:'这是一个考验玩家眼光的游戏，选出你认为能取胜队伍进行打赏激励，你的打赏队伍会对你的付出进行回报',
         })
 
         this.addGuideObj({
@@ -101,7 +101,7 @@ class GuideManager {
 
         this.addGuideObj({
             mc:function(){return GameUI.getInstance().team1.bottomBG},
-            text:'了解队伍情况后，可选择你感兴趣的队伍进行投注',
+            text:'了解队伍情况后，可选择你感兴趣的队伍进行打赏',
             fun:function(){
                 self.showGuide()
             }
@@ -109,7 +109,7 @@ class GuideManager {
 
         this.addGuideObj({
             mc:function(){return GameUI.getInstance().team1.forceGroup},
-            text:'越多人投注的队伍实力会越强，但赔率也会相应降低，而少人投注的队伍赔率就会比较高',
+            text:'越多人打赏的队伍实力会越强，但回报率也会相应降低，而少人打赏的队伍回报率就会比较高',
             fun:function(){
                 self.showGuide()
             }
@@ -117,7 +117,7 @@ class GuideManager {
 
         this.addGuideObj({
             mc:function(){return GameUI.getInstance().cdText},
-            text:'投注会有时间限制，投注时间结束后就会进入对战阶段',
+            text:'你只能在备战阶段进行打赏，备战会有时间限制，备战结束后就会进入对战阶段',
             fun:function(){
                 self.guideKey = 'pk';
                 self.temp = TM.now();

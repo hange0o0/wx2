@@ -198,7 +198,7 @@ class GameUI extends game.BaseUI {
         {
             SoundManager.getInstance().playSound('bg');
             if(this.mvState == 'stop')
-                MyWindow.Alert('每天0:00-6:00是休战时间，休战结束后即可参与投注')
+                MyWindow.Alert('每天0:00-6:00是休战时间，休战结束后即可参与队伍互动')
         }
     }
 
@@ -219,11 +219,11 @@ class GameUI extends game.BaseUI {
 
         if(this.mvState == 'stop')
         {
-            MyWindow.Alert('每天0:00-6:00是休战时间，休战结束后即可参与投注')
+            MyWindow.Alert('每天0:00-6:00是休战时间，休战结束后即可参与互动打赏')
         }
         else if(this.mvState == 'pking')
         {
-             MyWindow.Alert('当前正在PK中，PK结束后可参与下一轮投注')
+             MyWindow.Alert('当前正在PK中，PK结束后可参与下一轮互动')
         }
     }
 
@@ -401,8 +401,8 @@ class GameUI extends game.BaseUI {
             case 'addCoin':
                 this.wordGroup.visible = true;
                 var cd = 400;
-                this.getWordTween(this.b1,'投').to({y:5},cd/2).to({y:18},cd/2).wait(cd+cd+2000)
-                this.getWordTween(this.b2,'注').wait(cd).to({y:5},cd/2).to({y:18},cd/2).wait(cd+2000)
+                this.getWordTween(this.b1,'备').to({y:5},cd/2).to({y:18},cd/2).wait(cd+cd+2000)
+                this.getWordTween(this.b2,'战').wait(cd).to({y:5},cd/2).to({y:18},cd/2).wait(cd+2000)
                 this.getWordTween(this.b3,'中').wait(cd+cd).to({y:5},cd/2).to({y:18},cd/2).wait(0 + 2000)
                 break;
         }
