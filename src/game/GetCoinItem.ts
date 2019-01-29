@@ -155,7 +155,7 @@ class GetCoinItem extends game.BaseItem {
                 this.addCoin = 500*max;
                 break;
             case 99: // debug
-                this.titleText.text = 'debug add'
+                this.titleText.text = '临时加钱'
                 this.addCoin = 1000;
                 this.goBtn.label = '领取'
                 this.canAward = true;

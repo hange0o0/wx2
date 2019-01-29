@@ -122,6 +122,7 @@ class GameUI extends game.BaseUI {
 
     public show(){
         GuideManager.getInstance().isGuiding = !UM.guideFinish;
+        UM.drawSaveData();
         super.show();
     }
 

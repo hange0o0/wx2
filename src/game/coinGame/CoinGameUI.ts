@@ -134,6 +134,7 @@ class CoinGameUI extends game.BaseUI {
         if(!this.stage)
             return;
         this.btnGroup.visible = !MainPKUI.instance.visible
+        this.renewTitle();
     }
 
     public onTips(){
@@ -303,10 +304,17 @@ class CoinGameUI extends game.BaseUI {
         },true)
     }
 
+    private renewTitle(){
+        if(MainPKUI.instance.visible && MainPKUI.instance.dataIn.isPK)
+            this.topUI.setTitle('关卡解迷 - 第'+MainPKUI.instance.dataIn.level+'关')
+        else
+            this.topUI.setTitle('关卡解迷 - 第'+this.level+'关')
+    }
+
     private renew(){
         this.level = UM.chapterLevel;
         this.question = PKManager.getInstance().getChapterData();
-        this.topUI.setTitle('关卡解迷 - 第'+this.level+'关')
+        this.renewTitle();
         this.showQuestion();
         this.setChooseList();
         if(UM.tipsLevel == this.level)

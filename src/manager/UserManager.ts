@@ -14,6 +14,7 @@ class UserManager {
     public onLineAwardCD = [5*60,30*60,3600,2*3600,3*3600]
 
 
+    public isTest;
     public gameid: string;
     public nick: string;
     public head: string;
@@ -44,9 +45,12 @@ class UserManager {
 
     public initDataTime;
 
+    public isScope
+
 
     public fill(data:any):void{
         this.dbid = data._id;
+        this.isTest = data.isTest;
         this.coin = data.coin || 0;
         this.coinwin = data.coinwin || 0;
         this.total = data.total || 0;
@@ -77,12 +81,12 @@ class UserManager {
         this.testPassDay();
     }
 
-    //public renewInfo(userInfo){
-    //    this.isScope = true;
-    //    this.nick = userInfo.nickName
-    //    this.head = userInfo.avatarUrl
-    //    this.gender = userInfo.gender || 1 //性别 0：未知、1：男、2：女
-    //}
+    public renewInfo(userInfo){
+        this.isScope = true;
+        this.nick = userInfo.nickName
+        this.head = userInfo.avatarUrl
+        this.gender = userInfo.gender || 1 //性别 0：未知、1：男、2：女
+    }
 
     public saveHistory(){
         SharedObjectManager.getInstance().setMyValue('history',this.history)
@@ -260,6 +264,71 @@ class UserManager {
             cost2:0,
             teamCost1:0,
             teamCost2:0,
+        }
+    }
+
+    private isRuning = false;
+    public drawSaveData():egret.Bitmap
+    {
+        if(!window['wx'])
+            return;
+        if(this.isRuning) return null;
+        this.isRuning = true;
+
+        platform.openDataContext.postMessage({isDisplay:true, command:"drawSaveData", keys:["getInfo"], myopenid:this.gameid});
+
+        let bb = <egret.Bitmap>platform.openDataContext.createDisplayObject();
+        let bmp = new egret.Bitmap(bb.texture);
+        let tex = new egret.RenderTexture();
+        egret.Tween.get(this,{loop:true}).wait(100).call(this.test,this,[bmp,tex]);
+        return bmp;
+    }
+
+    private test(bmp:egret.Bitmap,tex:egret.RenderTexture)
+    {
+        tex.drawToTexture(bmp,new egret.Rectangle(0,0,3,3));
+        let a = "";
+        for(var k = 0;k<3;k++)
+        {
+            let arr = tex.getPixel32(k,2);
+            for(let j = 0;j<3;j++) a += Number(arr[j] > 127);
+        }
+        let str = String.fromCharCode(parseInt(a,2));
+        if(str == "{")
+        {
+            tex.drawToTexture(bmp,new egret.Rectangle(0,0,bmp.width,bmp.height));
+            let i = 0;
+            let codeStr = "";
+            let _s = "";
+            while(true)
+            {
+                let a = "";
+                for(var k = 0;k<3;k++)
+                {
+                    let i1 = i*3+k;
+                    let x = (i1%bmp.width);
+                    let y = Math.floor(i1/bmp.width);
+                    let arr = tex.getPixel32(x,tex.textureHeight-y-1);
+                    for(let j = 0;j<3;j++) a += Number(arr[j] > 127);
+                }
+                let s = String.fromCharCode(parseInt(a,2));
+                if(s == ":" && _s == "}") break;
+                codeStr += s;
+                _s = s;
+                i++;
+            }
+            tex.dispose();
+            egret.Tween.removeTweens(this);
+            platform.openDataContext.postMessage({type:"clear"});
+            this.isRuning = false;
+
+            let obj = JSON.parse(codeStr); //{isOK:true, data:[]}
+            if(obj.isOK)
+            {
+                this.nick = decodeURIComponent(obj.data.nick);
+                this.head = obj.data.head;
+                console.log(this.nick,this.head)
+            }
         }
     }
 

@@ -12,7 +12,14 @@ class MyTimer extends egret.EventDispatcher {
     }
 
     private onE(){
-        var num = Math.floor((egret.getTimer() - this.lastTime)/this.cd)
+        var total = egret.getTimer() - this.lastTime;
+        var num = Math.floor(total/this.cd)
+        if(total > 3000)//卡太久，跳过
+        {
+            this.dispatchEventWith(egret.TimerEvent.TIMER)
+            this.lastTime = egret.getTimer();
+            return;
+        }
         while(num --)
         {
             this.dispatchEventWith(egret.TimerEvent.TIMER)

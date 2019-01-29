@@ -284,7 +284,7 @@ class PKManager {
         if(wx) //微信加载
         {
             var self = this;
-            var totalNum = 9
+            var totalNum = 999
             var tempIndex = index%totalNum || totalNum
             wx.cloud.getTempFileURL({
                 fileList: ['cloud://hange0o0-1-797611.6861-hange0o0-1-797611/chapter/chapter_'+tempIndex+'.txt'],
@@ -524,11 +524,11 @@ class PKManager {
         var wx = window['wx'];
         if(!wx)
             return;
-        var upList = [{ key: 'coin', value: UM.coin + ',' + TM.now()},{ key: 'coinwin', value: UM.coinwin + ',' + TM.now()}];
-        if(UM.total >= Config.openRate)
-        {
-            upList.push({ key: 'winrate', value: (UM.win/UM.total) + ',' + TM.now()})
-        }
+        var upList = [{ key: 'coinwin', value: UM.coinwin + ',' + TM.now()}];
+        //if(UM.total >= Config.openRate)
+        //{
+        //    upList.push({ key: 'winrate', value: (UM.win/UM.total) + ',' + TM.now()})
+        //}
         wx.setUserCloudStorage({
             KVDataList: upList,
             success: res => {

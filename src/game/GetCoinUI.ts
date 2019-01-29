@@ -71,16 +71,18 @@ class GetCoinUI extends game.BaseUI {
 
 
     public renew(){
-        this.dataProvider.source =[
+         var arr =[
             {type:1,title:'等陆第X天'},
             {type:2,title:'X小时后可领'},
-            {type:3,title:'告诉我的好友们'},
-            {type:4,title:'邀请X位新的好友'},
-            {type:99,title:'DEBUG'},
-            //{type:4,title:'炮打金币'},
-            //{type:4,title:'观看广告'},
-
         ]
+        if(!UM.isTest)
+            arr.push({type:3,title:'告诉我的好友们'})
+        arr.push({type:4,title:'邀请X位新的好友'})
+
+
+        arr.push({type:99,title:'DEBUG'})
+
+            this.dataProvider.source = arr;
         this.dataProvider.refresh();
         //this.list.dataProvider = new eui.ArrayCollection(UM.history);
     }

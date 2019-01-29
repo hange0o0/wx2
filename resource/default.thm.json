@@ -59,6 +59,7 @@
 		"resource/skin/game/pk/ui/scene/PKTotemSkin.exml",
 		"resource/skin/game/pk/ui/scene/PKVideoConSkin.exml",
 		"resource/skin/game/pkRelate/PKCardInfoItemSkin.exml",
+		"resource/skin/game/RankItemSkin.exml",
 		"resource/skin/game/RankUISkin.exml",
 		"resource/skin/guide/GuideSkin.exml"
 	],
