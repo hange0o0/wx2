@@ -64,6 +64,8 @@ class CoinGameUI extends game.BaseUI {
         this.addBtnEvent(this.con,this.onMClick)
         MainPKUI.instance.addEventListener('visible_change',this.onMainVisibleChange,this)
         this.reset();
+
+        this.dragTarget.initDragItem();
     }
 
     private onDragStart(e){
@@ -72,11 +74,43 @@ class CoinGameUI extends game.BaseUI {
         this.stage.addChild(this.dragTarget);
         this.dragTarget.x = e.data.x;
         this.dragTarget.y = e.data.y;
+        this.dragTarget.showDragState(0)
     }
 
     private onDragMove(e){
         this.dragTarget.x = e.data.x - this.dragTarget.width/2;
         this.dragTarget.y = e.data.y - this.dragTarget.height/2;
+
+
+
+        var x = this.dragTarget.x + this.dragTarget.width/2
+        var y = this.dragTarget.y + this.dragTarget.height/2
+        if(this.chooseList.hitTestPoint(x,y))
+        {
+            for(var i=0;i<this.chooseList.numChildren;i++)
+            {
+                var mc:any = this.chooseList.getChildAt(i);
+                if(mc.hitTestPoint(x,y))
+                {
+                    if(mc.data == this.dragTarget.data)
+                    {
+                        this.dragTarget.showDragState(0);
+                        break;
+                    }
+                    var p = mc.globalToLocal(x,y);
+                    if(p.x < mc.width/4 || p.x > mc.width/4*3)
+                        this.dragTarget.showDragState(2);
+                    else
+                        this.dragTarget.showDragState(1)
+                    break
+                }
+            }
+        }
+        else
+        {
+            this.dragTarget.showDragState(0)
+        }
+
     }
 
     private onDragEnd(e){
@@ -91,8 +125,24 @@ class CoinGameUI extends game.BaseUI {
                 if(mc.data == this.dragTarget.data)
                     break
                 var index = this.dataProvider.source.indexOf(this.dragTarget.data)
-                this.dataProvider.source[index] = mc.data
-                this.dataProvider.source[i] = this.dragTarget.data
+                var p = mc.globalToLocal(x,y);
+                if(p.x < mc.width/4 || p.x > mc.width/4*3)//insert
+                {
+                    var targetIndex = p.x < mc.width/4?i:i+1;
+                    if(targetIndex == index)
+                        break;
+                    this.dataProvider.removeItemAt(index)
+                    if(targetIndex > index)
+                        targetIndex --;
+                    this.dataProvider.addItemAt(this.dragTarget.data,targetIndex)
+                }
+                else//swap
+                {
+                    this.dataProvider.source[index] = mc.data
+                    this.dataProvider.source[i] = this.dragTarget.data
+                }
+
+
                 this.dataProvider.refresh();
                 break
             }

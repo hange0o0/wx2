@@ -28,13 +28,15 @@ class GameManager {
     public static container:egret.DisplayObjectContainer;
     public static loadStep
 
-    public static get offsetHeight(){
-        return (this.stage.stageHeight - this.uiHeight)/2;
-        //return this.stage.stageHeight;
+    public static isLiuHai(){
+        return this.stage.stageHeight > 1250;
     }
 
     public static get uiHeight(){
-        return Math.min(1136,this.stage.stageHeight);
+        var h = this.stage.stageHeight;
+        if(this.isLiuHai())
+            return h-50;
+        return h//Math.min(1136,this.stage.stageHeight);
         //return this.stage.stageHeight;
     }
     public static get uiWidth(){

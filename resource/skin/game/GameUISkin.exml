@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="GameUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="GameUISkin" width="640" height="960" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="title_bg4_png" x="0" width="640" fillMode="repeat" scaleY="-1" y="77"/>
 	<e:Group x="0" top="75" bottom="105">
 		<ns1:TeamUI id="team1" x="0" y="0" skinName="TeamUISkin"/>
@@ -14,7 +14,7 @@
 			<e:Image x="2.02" source="icon_coin_png" y="-1.33"/>
 		</e:Group>
 	<e:Image source="title_bg4_png" x="-1.52" width="640" fillMode="repeat" bottom="-20"/>
-    <e:Group id="bottomGroup" height="100" bottom="2" horizontalCenter="0">
+    <e:Group id="bottomGroup" height="100" bottom="2" horizontalCenter="0" visible="false">
 			<e:Group id="rankBtn" x="100" y="0" height="90" width="90">
 				<e:Image source="rank_btn_png" horizontalCenter="0" verticalCenter="0"/>
 			</e:Group>
@@ -24,7 +24,7 @@
 					</e:Group>
 			<e:Group x="220" y="18" width="120">
 				<e:Group id="wordGroup" x="0" y="0" height="31" width="100">
-					<e:BitmapLabel id="b1" x="18" y="15" font="font1_fnt" text="对" anchorOffsetX="18" anchorOffsetY="18"/>
+					<e:BitmapLabel id="b1" x="18" y="15" font="font1_fnt" text="休" anchorOffsetX="18" anchorOffsetY="18"/>
 					<e:BitmapLabel id="b2" x="53" y="15" font="font1_fnt" text="战" anchorOffsetX="18" anchorOffsetY="18"/>
 					<e:BitmapLabel id="b3" x="88" y="15" font="font1_fnt" text="中" anchorOffsetX="18" anchorOffsetY="18"/>
 				</e:Group>
@@ -47,10 +47,12 @@
 	<e:Image id="soundBtn" x="350.91" y="21.21" source="sound_btn2_png"/>
 	<e:Group id="loadingGroup" left="0" right="0" top="75" bottom="105">
 		<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" top="0" bottom="0"/>
-		<e:Image id="loadMC" source="ui_loading_png" verticalCenter="-50" horizontalCenter="0"/>
-		<e:Label id="loadText" text="Label" horizontalCenter="0" verticalCenter="50" size="24" textAlign="center" height="60" lineSpacing="20" textColor="0xffe493"/>
+		<e:Image id="loadMC" source="ui_loading_png" horizontalCenter="0" verticalCenter="0"/>
+		<e:Label id="loadText" text="加载中" horizontalCenter="0" verticalCenter="100" size="24" textAlign="center" height="60" lineSpacing="20" textColor="0xffe493"/>
+		<e:Label text="《健康游戏忠告》" y="70" horizontalCenter="0"/>
+		<e:Label text="抵制不良游戏，拒绝盗版游戏。\n注意自我保护，谨防受骗上当。\n适度游戏益脑，沉迷游戏伤身。\n合理安排时间，享受健康生活。" y="130" size="24" lineSpacing="5" textAlign="center" horizontalCenter="0"/>
 	</e:Group>
-	<e:Group id="stopingGroup" left="0" right="0" top="75" bottom="105">
+	<e:Group id="stopingGroup" left="0" right="0" top="75" bottom="105" visible="false">
 		<e:Group id="stopCon" x="0" width="640" height="512" y="0">
 			<e:Image id="stopBG" horizontalCenter="0" bottom="0"/>
 		</e:Group>

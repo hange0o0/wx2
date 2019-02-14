@@ -6,7 +6,13 @@ class CoinGameChooseItem extends game.BaseItem {
 
     private bg: eui.Image;
     private mc: eui.Image;
+    private insertMC: eui.Image;
+    private changeMC: eui.Image;
 
+
+
+    private arrowTW
+    private changeTW
 
     public stopMove=true
     public childrenCreated() {
@@ -15,7 +21,40 @@ class CoinGameChooseItem extends game.BaseItem {
         MyTool.addLongTouch(this,this.onInfo,this)
 
         DragManager.getInstance().setDrag(this,true);
+
+
     }
+
+    public initDragItem(){
+        var tw = this.arrowTW = egret.Tween.get(this.insertMC,{loop:true});
+        tw.to({scaleX:1.1,scaleY:0.8},200).to({scaleX:1,scaleY:1.1,y:this.insertMC.y -10},200).
+            to({scaleX:1.1,scaleY:0.8,y:this.insertMC.y},200).to({scaleX:1,scaleY:1},300).wait(200);
+        this.arrowTW.setPaused(true)
+
+
+        var tw = this.changeTW = egret.Tween.get(this.changeMC,{loop:true});
+        tw.to({rotation:30},100).to({rotation:-30},200).to({rotation:20},150).to({rotation:-20},150).to({rotation:0},70).wait(200);
+        this.changeTW.setPaused(true)
+    }
+
+    public showDragState(type){
+        this.arrowTW.setPaused(true)
+        this.changeTW.setPaused(true)
+        this.insertMC.visible = false
+        this.changeMC.visible = false
+        if(type == 1)
+        {
+            this.changeTW.setPaused(false)
+            this.changeMC.visible = true
+        }
+        else if(type == 2)
+        {
+            this.arrowTW.setPaused(false)
+            this.insertMC.visible = true
+        }
+    }
+
+
 
 
     private onInfo(){

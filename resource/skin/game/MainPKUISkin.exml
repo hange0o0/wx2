@@ -6,6 +6,7 @@
 	</e:Group>
 	<e:Image source="line2_png" y="0" fillMode="repeat" right="0" left="0"/>
 	<e:Image source="line2_png" y="512" fillMode="repeat" right="0" left="0"/>
+	<e:Rect id="lineMC" width="2" fillColor="0x4C2904" horizontalCenter="0" top="520" bottom="5"/>
 	<e:Scroller id="scroller" width="640" x="0" top="520" bottom="5" bounces="false">
 		<e:Group>
 			<e:List id="list1" width="297" x="67" y="43" >
@@ -14,7 +15,6 @@
 				</e:layout>
 			
 			</e:List>
-			<e:Rect id="lineMC" width="2" x="242" y="146" fillColor="0x4c2904" height="100"/>
 			<e:List id="list2" width="297" x="67" y="43" >
 				<e:layout>
 				<e:TileLayout requestedColumnCount="3"/>
@@ -22,7 +22,7 @@
 		
 			</e:List>
 			<e:layout>
-				<e:HorizontalLayout horizontalAlign="center" gap="10" paddingTop="10" paddingBottom="10"/>
+				<e:HorizontalLayout horizontalAlign="center" gap="20" paddingTop="10" paddingBottom="10"/>
 			</e:layout>
 		</e:Group>
 	</e:Scroller>

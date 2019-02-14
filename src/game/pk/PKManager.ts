@@ -41,13 +41,13 @@ class PKManager {
     public isPKing = false;
 
     constructor(){
-        var todayData = SharedObjectManager.getInstance().getMyValue('today_data_1') || {};
-        if(todayData.key)
-            this.levelData[todayData.key] = todayData.value
-
-        var todayData = SharedObjectManager.getInstance().getMyValue('chapter_data_1') || {};
-        if(todayData.key)
-            this.chapterData[todayData.key] = todayData.value
+        //var todayData = SharedObjectManager.getInstance().getMyValue('today_data_1') || {};
+        //if(todayData.key)
+        //    this.levelData[todayData.key] = todayData.value
+        //
+        //var todayData = SharedObjectManager.getInstance().getMyValue('chapter_data_1') || {};
+        //if(todayData.key)
+        //    this.chapterData[todayData.key] = todayData.value
     }
 
     public pkWord = ['投降，或者死亡','来战个痛快','小心你的背后','这招看你怎么躲','我要认真了','你就只会这几招吗','我要出大招了','我会赐予你死亡','你究竟想怎样...','我的魔法会撕碎你','我已饥渴难耐','你会记住我的名字的',
@@ -258,15 +258,25 @@ class PKManager {
             var self = this;
             var totalNum = 161
             var tempIndex = index%totalNum || totalNum
-            wx.cloud.getTempFileURL({
-                fileList: ['cloud://hange0o0-1-797611.6861-hange0o0-1-797611/level/level_'+tempIndex+'.txt'],
+            wx.cloud.downloadFile({
+                fileID: 'cloud://hange0o0-1-797611.6861-hange0o0-1-797611/level/level_'+tempIndex+'.txt',
                 success: res => {
-                    self.loadUrl(index,res.fileList[0].tempFileURL,fun,showMsging)
+                    console.log(res);
+                    self.loadUrl(index,res.tempFilePath,fun,showMsging)
                 },
                 fail: err => {
                     console.log(err)
                 }
             })
+            //wx.cloud.getTempFileURL({
+            //    fileList: ['cloud://hange0o0-1-797611.6861-hange0o0-1-797611/level/level_'+tempIndex+'.txt'],
+            //    success: res => {
+            //        self.loadUrl(index,res.fileList[0].tempFileURL,fun,showMsging)
+            //    },
+            //    fail: err => {
+            //        console.log(err)
+            //    }
+            //})
             return;
         }
 
@@ -286,10 +296,10 @@ class PKManager {
             var self = this;
             var totalNum = 999
             var tempIndex = index%totalNum || totalNum
-            wx.cloud.getTempFileURL({
-                fileList: ['cloud://hange0o0-1-797611.6861-hange0o0-1-797611/chapter/chapter_'+tempIndex+'.txt'],
+            wx.cloud.downloadFile({
+                fileID: 'cloud://hange0o0-1-797611.6861-hange0o0-1-797611/chapter/chapter_'+tempIndex+'.txt',
                 success: res => {
-                    self.loadUrl(index,res.fileList[0].tempFileURL,fun,showMsging,true)
+                    self.loadUrl(index,res.tempFilePath,fun,showMsging,true)
                 },
                 fail: err => {
                     console.log(err)
@@ -310,7 +320,7 @@ class PKManager {
             if(isChapter)
             {
                 this.chapterData[index] = loader.data
-                SharedObjectManager.getInstance().setMyValue('chapter_data',{
+                SharedObjectManager.getInstance().setMyValue('chapter_data_1',{
                     key:index,
                     value:loader.data
                 })

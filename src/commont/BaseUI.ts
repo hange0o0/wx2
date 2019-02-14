@@ -227,7 +227,11 @@ module game {
             }
 
             this.scrollRect = new egret.Rectangle(0,0, GameManager.uiWidth, GameManager.uiHeight);
-            this.y = (GameManager.stage.stageHeight - GameManager.uiHeight)/2
+            if(GameManager.isLiuHai())
+                this.y = 50
+            else
+                this.y = 0;
+            //this.y = (GameManager.stage.stageHeight - GameManager.uiHeight)/2
 
             if(this.parent)
                 this.resizeFun();
