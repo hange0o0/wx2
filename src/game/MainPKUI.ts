@@ -135,6 +135,7 @@ class MainPKUI extends game.BaseItem {
         else
         {
             this.btnGroup.addChildAt(this.backBtn,0)
+            this.backBtn.label = '关闭'
         }
 
         if(this.dataIn.isPK)
@@ -329,6 +330,7 @@ class MainPKUI extends game.BaseItem {
                 {
                     this.delayShowResult(this.failGroup);
                     this.failText.text = '失败'
+                    this.backBtn.label = '重试'
                 }
                 else if(result == 2)
                 {
@@ -341,11 +343,13 @@ class MainPKUI extends game.BaseItem {
                         this.des1.text = '恭喜获得'
                         this.des2.text = 'x' + NumberUtil.addNumSeparator(addCoin)
                     }
+                    this.backBtn.label = '下一关'
                 }
                 else
                 {
                     this.delayShowResult(this.failGroup);
                     this.failText.text = '平手'
+                    this.backBtn.label = '重试'
                 }
             }
             else
@@ -368,7 +372,7 @@ class MainPKUI extends game.BaseItem {
                         this.delayShowResult(this.winGroup);
                         if(this.dataIn.isMain)
                         {
-                            var isFinish = PKManager.getInstance().getFinishTimeByKey(this.dataIn.key) > TM.now();
+                            var isFinish = PKManager.getInstance().getFinishTimeByKey(this.dataIn.key) <= TM.now();
                             if(isFinish)
                                 this.des1.text = '恭喜获得'
                             else

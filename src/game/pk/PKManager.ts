@@ -36,7 +36,7 @@ class PKManager {
     public chapterData = {}//关卡数据的集合
     public roundTotalData = {}//关卡数据的集合
 
-    private beginTime = 1546012800;//2018-12-29
+    private beginTime = 1550073600;//2019-2-14 0:0:0
 
     public isPKing = false;
 
@@ -256,10 +256,11 @@ class PKManager {
         if(wx) //微信加载
         {
             var self = this;
-            var totalNum = 161
+            var totalNum = 300;
             var tempIndex = index%totalNum || totalNum
             wx.cloud.downloadFile({
-                fileID: 'cloud://hange0o0-1-797611.6861-hange0o0-1-797611/level/level_'+tempIndex+'.txt',
+                fileID: 'cloud://hange0o0-2-57ae87.6861-hange0o0-2-57ae87/level/level_'+tempIndex+'.txt',
+                //fileID: 'cloud://hange0o0-16b7c5.6861-hange0o0-16b7c5/level/level_'+tempIndex+'.txt',
                 success: res => {
                     console.log(res);
                     self.loadUrl(index,res.tempFilePath,fun,showMsging)
@@ -294,10 +295,10 @@ class PKManager {
         if(wx) //微信加载
         {
             var self = this;
-            var totalNum = 999
-            var tempIndex = index%totalNum || totalNum
+            var tempIndex = index
             wx.cloud.downloadFile({
-                fileID: 'cloud://hange0o0-1-797611.6861-hange0o0-1-797611/chapter/chapter_'+tempIndex+'.txt',
+                fileID: 'cloud://hange0o0-2-57ae87.6861-hange0o0-2-57ae87/chapter/chapter_'+tempIndex+'.txt',
+                //fileID: 'cloud://hange0o0-16b7c5.6861-hange0o0-16b7c5/chapter/chapter_'+tempIndex+'.txt',
                 success: res => {
                     self.loadUrl(index,res.tempFilePath,fun,showMsging,true)
                 },
@@ -312,7 +313,7 @@ class PKManager {
         this.loadUrl(index,'resource/level/chapter_1.txt',fun,showMsging,true)
     }
 
-    private loadUrl(index,url,fun,showMsging,isChapter?){
+  private loadUrl(index,url,fun,showMsging,isChapter?){
         console.log(url);
         var loader: egret.URLLoader = new egret.URLLoader();
         loader.dataFormat = egret.URLLoaderDataFormat.TEXT;

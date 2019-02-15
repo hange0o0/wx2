@@ -50,7 +50,6 @@ class UserManager {
 
     public fill(data:any):void{
         this.dbid = data._id;
-        this.isTest = data.isTest;
         this.coin = data.coin || 0;
         this.coinwin = data.coinwin || 0;
         this.total = data.total || 0;
@@ -120,6 +119,7 @@ class UserManager {
                     complete: (res) => {
                         console.log(res)
                         this.gameid = res.result.openid
+                        this.isTest = res.result.isTest;
                         //console.log(11)
                         TimeManager.getInstance().initlogin(res.result.time)
                         //console.log(res.result.time)

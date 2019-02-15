@@ -129,7 +129,7 @@ class DragManager extends egret.EventDispatcher{
         GameManager.stage.addEventListener(egret.TouchEvent.TOUCH_END,this.onEnd,this)
     }
 
-    private endDrag(){
+    public endDrag(){
         this.isDraging = false;
         GameManager.stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.onMove,this)
         GameManager.stage.removeEventListener(egret.TouchEvent.TOUCH_END,this.onEnd,this)

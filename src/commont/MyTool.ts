@@ -365,7 +365,7 @@ class MyTool {
     public static stopClick(cd){
         GameManager.container.touchChildren = GameManager.container.touchEnabled = false;
         setTimeout(function(){
-            GameManager.container.touchChildren = GameManager.container.touchEnabled = Net.getInstance().modeNum <= 0;
+            GameManager.container.touchChildren = GameManager.container.touchEnabled = true
         },cd)
 
     }

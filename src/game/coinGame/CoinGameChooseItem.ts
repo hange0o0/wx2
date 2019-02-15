@@ -23,9 +23,14 @@ class CoinGameChooseItem extends game.BaseItem {
         DragManager.getInstance().setDrag(this,true);
 
 
+        MyTool.removeMC(this.insertMC)
+        MyTool.removeMC(this.changeMC)
     }
 
     public initDragItem(){
+        this.addChild(this.insertMC)
+        this.addChild(this.changeMC)
+
         var tw = this.arrowTW = egret.Tween.get(this.insertMC,{loop:true});
         tw.to({scaleX:1.1,scaleY:0.8},200).to({scaleX:1,scaleY:1.1,y:this.insertMC.y -10},200).
             to({scaleX:1.1,scaleY:0.8,y:this.insertMC.y},200).to({scaleX:1,scaleY:1},300).wait(200);
@@ -58,6 +63,8 @@ class CoinGameChooseItem extends game.BaseItem {
 
 
     private onInfo(){
+        CoinGameUI.getInstance().stopDrag();
+        DragManager.getInstance().endDrag();
         CardInfoUI.getInstance().show(this.data.id)
     }
 

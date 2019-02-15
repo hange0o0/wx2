@@ -17,9 +17,12 @@ class TeamUI extends game.BaseItem {
     public forceGroup: eui.Group;
     private forceText: eui.Label;
     private addGroup: eui.Group;
+    private btnGroup: eui.Group;
     private forceText1: eui.Label;
     private guideMC: eui.Image;
     public bottomBG: eui.Image;
+
+
 
 
 
@@ -214,6 +217,22 @@ class TeamUI extends game.BaseItem {
         }
 
         this.bg.source = PKManager.getInstance().getPKBG()
+
+        if(UM.total < 1)
+        {
+             MyTool.removeMC(this.addBtn100)
+             MyTool.removeMC(this.addBtn1000)
+        }
+        else if(UM.total < 10)
+        {
+            this.btnGroup.addChild(this.addBtn100)
+            MyTool.removeMC(this.addBtn1000)
+        }
+        else
+        {
+            this.btnGroup.addChild(this.addBtn100)
+            this.btnGroup.addChild(this.addBtn1000)
+        }
     }
 
     public renewCost(data) {

@@ -71,6 +71,7 @@ class GetCoinUI extends game.BaseUI {
 
 
     public renew(){
+        console.log(UM.isTest);
          var arr =[
             {type:1,title:'等陆第X天'},
             {type:2,title:'X小时后可领'},
@@ -80,13 +81,10 @@ class GetCoinUI extends game.BaseUI {
         arr.push({type:4,title:'邀请X位新的好友'})
 
 
-        arr.push({type:99,title:'DEBUG'})
+        //arr.push({type:99,title:'DEBUG'})
 
             this.dataProvider.source = arr;
         this.dataProvider.refresh();
         //this.list.dataProvider = new eui.ArrayCollection(UM.history);
     }
-
-
-
 }

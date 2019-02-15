@@ -179,8 +179,11 @@ class App {
 //    return false
 //}
 
-function sendClientError(txt){
-    Net.send(GameEvent.sys.client_error,{msg:UM.gameid + ':' + txt},null,false);
+function sendClientError(str){
+    //var url =  'http://172.17.196.195:90/error_wx2/log_error.php'
+    //if(window["wx"])
+    var url =  'https://120.77.153.203/error_wx2/log_error.php'
+    Net.getInstance().send(url,{str:str});
 }
 //window.onerror=handleErr;
 
@@ -195,6 +198,13 @@ if(window["wx"])
 
 
     var wx =  window["wx"];
+
+    wx.onError(function(res){
+        PKManager.getInstance().upDateUserData();
+        //var str = "onError:" + ("openid:" + _get["openid"] + "--") + res.message + "--" + res.stack;
+        //this.sendClientError(str);
+    });
+
     wx.onHide(function(res){
         if(!GameManager.stage)
             return;

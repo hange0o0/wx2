@@ -155,7 +155,6 @@ class Main extends eui.UILayer {
      * loading process of preload resource
      */
     private onResourceProgress(event:RES.ResourceEvent):void {
-        console.log(event.itemsLoaded, event.itemsTotal)
         if (event.groupName == "game") {
             this.loadingView.setProgress(event.itemsLoaded, event.itemsTotal);
         }

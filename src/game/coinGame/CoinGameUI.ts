@@ -65,7 +65,17 @@ class CoinGameUI extends game.BaseUI {
         MainPKUI.instance.addEventListener('visible_change',this.onMainVisibleChange,this)
         this.reset();
 
+        this.stage.addChild(this.dragTarget);
         this.dragTarget.initDragItem();
+        MyTool.removeMC(this.dragTarget);
+    }
+
+    public stopDrag(){
+        MyTool.removeMC(this.dragTarget)
+        for(var i=0;i<this.chooseList.numChildren;i++) {
+            var mc:any = this.chooseList.getChildAt(i);
+            mc.setChoose(false);
+        }
     }
 
     private onDragStart(e){
@@ -78,6 +88,8 @@ class CoinGameUI extends game.BaseUI {
     }
 
     private onDragMove(e){
+        if(!this.dragTarget.parent)
+            return;
         this.dragTarget.x = e.data.x - this.dragTarget.width/2;
         this.dragTarget.y = e.data.y - this.dragTarget.height/2;
 
@@ -114,6 +126,8 @@ class CoinGameUI extends game.BaseUI {
     }
 
     private onDragEnd(e){
+        if(!this.dragTarget.parent)
+            return;
         MyTool.removeMC(this.dragTarget)
         var x = this.dragTarget.x + this.dragTarget.width/2
         var y = this.dragTarget.y + this.dragTarget.height/2

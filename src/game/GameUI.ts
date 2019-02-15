@@ -79,7 +79,7 @@ class GameUI extends game.BaseUI {
 
         this.scroller.viewport = this.list
         this.list.itemRenderer = MainPKItem;
-        this.list.dataProvider = new eui.ArrayCollection(ObjectUtil.objToArray(MonsterVO.data))
+
 
         this.stopCon.addChild(this.stopMV)
         this.stopMV.scaleX = this.stopMV.scaleY = 1.2
@@ -122,7 +122,7 @@ class GameUI extends game.BaseUI {
 
     public show(){
         GuideManager.getInstance().isGuiding = !UM.guideFinish;
-        UM.drawSaveData();
+
         super.show();
     }
 
@@ -131,7 +131,10 @@ class GameUI extends game.BaseUI {
         var index = PKManager.getInstance().getTodayIndex();
         PKManager.getInstance().loadLevelData(index,(data)=>{
             PKManager.getInstance().initData(index,data);
-            this.initData();
+            setTimeout(()=>{
+                this.initData();
+            },1000)
+            this.list.dataProvider = new eui.ArrayCollection(ObjectUtil.objToArray(MonsterVO.data))
         })
     }
 
@@ -169,6 +172,11 @@ class GameUI extends game.BaseUI {
                 //console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
             })
 
+            setTimeout(()=>{
+                UM.drawSaveData();
+            },100);
+
+
             return;
         }
 
@@ -188,6 +196,7 @@ class GameUI extends game.BaseUI {
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.onCoinChange)
+        this.addPanelOpenEvent(GameEvent.client.pass_day,this.onPassDay)
         this.firstShow = false;
 
         if(GuideManager.getInstance().isGuiding)
@@ -200,6 +209,13 @@ class GameUI extends game.BaseUI {
             if(this.mvState == 'stop')
                 MyWindow.Alert('每天0:00-6:00是休战时间，休战结束后即可参与队伍互动')
         }
+    }
+
+    private onPassDay(){
+        var index = PKManager.getInstance().getTodayIndex();
+        PKManager.getInstance().loadLevelData(index,(data)=>{
+            PKManager.getInstance().initData(index,data);
+        })
     }
 
     public showGuideArrow(){
