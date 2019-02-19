@@ -18,6 +18,7 @@ class GameUI extends game.BaseUI {
     private bottomGroup: eui.Group;
     private shopBtn: eui.Group;
     private shopRedMC: eui.Image;
+    private chapterRedMC: eui.Image;
     private rankBtn: eui.Group;
     private wordGroup: eui.Group;
     private b1: eui.BitmapLabel;
@@ -25,7 +26,7 @@ class GameUI extends game.BaseUI {
     private b3: eui.BitmapLabel;
     public cdText: eui.Label;
     private mailBtn: eui.Group;
-    private settingBtn: eui.Group;
+    public settingBtn: eui.Group;
     private soundBtn: eui.Image;
     private mainPKUI: MainPKUI;
     public loadingGroup: eui.Group;
@@ -47,6 +48,9 @@ class GameUI extends game.BaseUI {
     private stopVO
     private stopMV = new PKMonsterMV()
 
+
+    private haveGetInfo = false;
+    private haveLoadFinish = false;
 
     private firstShow = true;
     public showIndex = -1;
@@ -121,7 +125,7 @@ class GameUI extends game.BaseUI {
     }
 
     public show(){
-        GuideManager.getInstance().isGuiding = !UM.guideFinish;
+
 
         super.show();
     }
@@ -129,9 +133,11 @@ class GameUI extends game.BaseUI {
     private callShow(){
         this.loadText.text = '初始化中'
         var index = PKManager.getInstance().getTodayIndex();
-        PKManager.getInstance().loadLevelData(index,(data)=>{
-            PKManager.getInstance().initData(index,data);
+        PKManager.getInstance().loadLevelData(()=>{
+        //PKManager.getInstance().loadLevelData(index,(data)=>{
+            //PKManager.getInstance().initData(index,data);
             setTimeout(()=>{
+                this.haveLoadFinish = true;
                 this.initData();
             },1000)
             this.list.dataProvider = new eui.ArrayCollection(ObjectUtil.objToArray(MonsterVO.data))
@@ -145,12 +151,18 @@ class GameUI extends game.BaseUI {
         var self = this;
         this.bottomGroup.visible = false;
         this.stopingGroup.visible = false;
-        this.onCoinChange();
+        this.coinText.text = '???'
+
         this.renewSound();
         //this.cdText.text = '.'
         this.loadingGroup.visible = true;
         egret.Tween.get(this.loadMC,{loop:true}).to({rotation:360},3000)
         self.loadText.text = '正在加载素材，请耐心等候..'
+        UserManager.getInstance().getUserInfo(()=>{
+            this.haveGetInfo = true;
+            UM.drawSaveData();
+            this.initData();
+        });
         var wx =  window["wx"];
         if(wx)
         {
@@ -172,9 +184,7 @@ class GameUI extends game.BaseUI {
                 //console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
             })
 
-            setTimeout(()=>{
-                UM.drawSaveData();
-            },100);
+
 
 
             return;
@@ -184,7 +194,9 @@ class GameUI extends game.BaseUI {
     }
 
     private initData(){
-
+        if(!this.haveLoadFinish || !this.haveGetInfo)
+            return;
+        GuideManager.getInstance().isGuiding = !UM.guideFinish;
         this.bottomGroup.visible = true;
         this.loadingGroup.visible = false;
         egret.Tween.get(this.loadMC,{loop:true}).to({rotation:360},3000);
@@ -192,11 +204,12 @@ class GameUI extends game.BaseUI {
         this.showIndex = -1;
         this.onTimer();
         this.onCoinChange();
+        this.renewChapterRed();
 
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.onCoinChange)
-        this.addPanelOpenEvent(GameEvent.client.pass_day,this.onPassDay)
+        //this.addPanelOpenEvent(GameEvent.client.pass_day,this.onPassDay)
         this.firstShow = false;
 
         if(GuideManager.getInstance().isGuiding)
@@ -211,12 +224,12 @@ class GameUI extends game.BaseUI {
         }
     }
 
-    private onPassDay(){
-        var index = PKManager.getInstance().getTodayIndex();
-        PKManager.getInstance().loadLevelData(index,(data)=>{
-            PKManager.getInstance().initData(index,data);
-        })
-    }
+    //private onPassDay(){
+    //    var index = PKManager.getInstance().getTodayIndex();
+    //    PKManager.getInstance().loadLevelData(index,(data)=>{
+    //        PKManager.getInstance().initData(index,data);
+    //    })
+    //}
 
     public showGuideArrow(){
         this.team1.showGuide()
@@ -259,10 +272,17 @@ class GameUI extends game.BaseUI {
         }
     }
 
+    private renewChapterRed(){
+        this.chapterRedMC.visible = UM.chapterLevel < 2;
+    }
+
     public onVisibleChange(){
         //SoundManager.getInstance().playSound('pkbg');
         if(this.visible)
+        {
             this.onTimer();
+            this.renewChapterRed()
+        }
         else
         {
             SoundManager.getInstance().playSound('bg');
@@ -305,7 +325,7 @@ class GameUI extends game.BaseUI {
             }
             this.showIndex = index;
             this.showData = PKM.getCurrentData();
-            if(this.showData)
+            if(this.showData && this.showIndex != -1)
             {
                 this.team1.showList(this.showData.list1.split(','))
                 this.team2.showList(this.showData.list2.split(','))
@@ -317,7 +337,7 @@ class GameUI extends game.BaseUI {
             }
             PKManager.getInstance().testSendResult(this.firstShow);
         }
-        if(!this.showData)
+        if(!this.showData || this.showIndex == -1)
         {
             var t0 = DateUtil.getNextDateTimeByHours(6) - TM.now()
             this.showCurrentMV('stop',t0)

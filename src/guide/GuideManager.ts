@@ -12,6 +12,7 @@ class GuideManager {
 
 
     public guideKey;
+    public guideKey2;
     public guideStep = 0;
 
     public guideRandom = 0;
@@ -72,6 +73,7 @@ class GuideManager {
             fun:function(){
                 self.showGuide()
                 GameUI.getInstance().hideGuideArrow();
+                self.guideKey2 = 'info';
             },
             showFun:()=>{
                 GameUI.getInstance().showGuideArrow();
@@ -84,6 +86,7 @@ class GuideManager {
         this.addGuideObj({
             mc:function(){return GameUI.getInstance().team1.guideCon},
             text:'可选中其中一个单位查看详细数据',
+
             //fun:()=>{
             //    CardInfoUI.getInstance().show(GameUI.getInstance().team1.getMiddleMoster().id)
             //}
@@ -140,10 +143,19 @@ class GuideManager {
                 self.showGuide()
             }
         })
+
         this.addGuideObj({
             mc:function(){return MainPKUI.instance.list1.getChildAt(0)},
             text:'你可以点击下方头像查看单位的详细信息',
             toBottom:true,
+            fun:function(){
+                self.showGuide()
+            }
+        })
+
+        this.addGuideObj({
+            mc:function(){return GameUI.getInstance().settingBtn},
+            text:'如果在等待下一环节时，可尝试挑战一下里面的关卡，胜利后可获得金币哦',
             fun:function(){
                 self.showGuide()
             }

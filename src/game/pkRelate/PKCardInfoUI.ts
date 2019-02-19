@@ -14,6 +14,22 @@ class PKCardInfoUI extends game.BaseContainer {
     private desText: eui.Label;
     private list: eui.List;
     private teamIcon: eui.Image;
+    private s0: eui.Image;
+    private s1: eui.Image;
+    private s2: eui.Image;
+    private s3: eui.Image;
+    private s4: eui.Image;
+    private s5: eui.Image;
+    private s6: eui.Image;
+    private s7: eui.Image;
+    private s8: eui.Image;
+    private s9: eui.Image;
+    private s10: eui.Image;
+    private s11: eui.Image;
+    private s12: eui.Image;
+    private s13: eui.Image;
+    private s14: eui.Image;
+
 
 
 
@@ -23,6 +39,8 @@ class PKCardInfoUI extends game.BaseContainer {
 
     private stageX
     private stageY
+
+    private starArr = [];
     public constructor() {
         super();
         this.skinName = "PKCardInfoSkin";
@@ -38,6 +56,11 @@ class PKCardInfoUI extends game.BaseContainer {
         this.heroItem.y = 160
         this.heroItem.scaleX = this.heroItem.scaleY = 1.2
         this.cardGroup.addChild(this.heroItem);
+
+        for(var i=0;i<15;i++)
+        {
+            this.starArr.push(this['s' + i])
+        }
     }
 
 
@@ -100,8 +123,20 @@ class PKCardInfoUI extends game.BaseContainer {
         this.heroItem.load(this.dataIn.mid)
         this.heroItem.stand();
 
-        this.nameText.text = vo.name;
+        this.nameText.text = vo.name + '（'+vo.cost+'）';
         this.type.source = vo.getTypeIcon()
+
+        for(var i=0;i<this.starArr.length;i++)
+        {
+            if(i<vo.cost)
+            {
+                this.starArr[i].source = 'start1_png'
+            }
+            else
+            {
+                this.starArr[i].source = 'start2_png'
+            }
+        }
 
         if(this.dataIn.rota)
         {

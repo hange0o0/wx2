@@ -183,9 +183,7 @@ class Main extends eui.UILayer {
         //    return;
         //}
         //console.log('_12')
-        UserManager.getInstance().getUserInfo(()=>{
             GameUI.getInstance().show();
-        });
 
     }
 }

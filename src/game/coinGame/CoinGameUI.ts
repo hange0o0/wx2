@@ -207,6 +207,17 @@ class CoinGameUI extends game.BaseUI {
             this.showTips();
             return;
         }
+        if(this.level <= 10)
+        {
+            MyWindow.Confirm('本关可免费或得提示，但你确定不再想一下吗？',(b)=>{
+                if(b==1)
+                {
+                    UM.tipsLevel = this.level;
+                    this.showTips()
+                }
+            },['再想想','要提示']);
+            return;
+        }
         var cost = Math.min(2000,Math.ceil(this.level/20)*100)
         MyWindow.Confirm('确定花费'+cost+'金币得到提示答案吗？',(b)=>{
             if(b==1)
@@ -323,7 +334,7 @@ class CoinGameUI extends game.BaseUI {
 
 
     public show(){
-        PKManager.getInstance().loadChapterData(Math.ceil(UM.chapterLevel/100),()=>{
+        PKManager.getInstance().loadChapterData(()=>{
             super.show()
         },true)
 
@@ -359,14 +370,14 @@ class CoinGameUI extends game.BaseUI {
     public onShow(){
 
         this.renew();
-        this.addPanelOpenEvent(GameEvent.client.CHAPTER_CHANGE,this.onChapterChange)
+        this.addPanelOpenEvent(GameEvent.client.CHAPTER_CHANGE,this.renew)
     }
 
-    private onChapterChange(){
-        PKManager.getInstance().loadChapterData(Math.ceil(UM.chapterLevel/100),()=>{
-            super.show()
-        },true)
-    }
+    //private onChapterChange(){
+    //    PKManager.getInstance().loadChapterData(Math.ceil(UM.chapterLevel/100),()=>{
+    //        super.show()
+    //    },true)
+    //}
 
     private renewTitle(){
         if(MainPKUI.instance.visible && MainPKUI.instance.dataIn.isPK)

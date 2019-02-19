@@ -61,6 +61,10 @@ class GuideUI extends game.BaseContainer{
             //this.hide();
             this.clickFun();
         }
+        else if(GuideManager.getInstance().guideKey2 == 'info')
+        {
+            MyWindow.ShowTips('请点击上方怪物进行查看')
+        }
 
     }
 

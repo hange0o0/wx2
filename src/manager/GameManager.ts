@@ -240,4 +240,6 @@ if(window["wx"])
     }))
 
     window["wx"].setKeepScreenOn && window["wx"].setKeepScreenOn({keepScreenOn:true});//屏幕常亮
+
+    Config.isDebug = false;
 }

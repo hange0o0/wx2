@@ -86,6 +86,8 @@ class TeamUI extends game.BaseItem {
             var mc = this.monsterArr[i];
             if(mc.currentMV.hitTestPoint(x,y,true))
             {
+                if(GuideManager.getInstance().isGuiding && GuideManager.getInstance().guideKey2 == 'info')
+                    GuideManager.getInstance().guideKey2 = ''
                 CardInfoUI.getInstance().show(mc.id)
                 break;
             }

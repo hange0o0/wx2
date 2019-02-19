@@ -16,6 +16,7 @@ class TipsUI extends game.BaseContainer{
 	public constructor() {
 		super();
 		this.skinName = 'TipsUISkin';
+		this.touchChildren = this.touchEnabled = false;
 	}
 
 	public show(v?,cd?){

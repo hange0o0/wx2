@@ -32,9 +32,9 @@ class PKManager {
     //public costChange = false
 
     public pkResult = {}//所有PK结果的集合
-    public levelData = {}//关卡数据的集合
-    public chapterData = {}//关卡数据的集合
-    public roundTotalData = {}//关卡数据的集合
+    public levelData = []//关卡数据的集合
+    public chapterData = []//关卡数据的集合
+    //public roundTotalData = {}//关卡数据的集合
 
     private beginTime = 1550073600;//2019-2-14 0:0:0
 
@@ -141,10 +141,11 @@ class PKManager {
         {
             return JSON.parse('{"list1":"73,32,71,46,64,1","list2":"32,39,2,43,70,62,14,63","seed":15561043749}')
         }
-        var index =  this.getCurrentIndex();
-        if(this.roundData[index])
-            return JSON.parse(this.roundData[index])
-        return 0;
+        return this.getLevelData(this.getCurrentKey());
+        //var index =  this.getCurrentIndex();
+        //if(this.roundData[index])
+        //    return JSON.parse(this.roundData[index])
+        //return 0;
     }
 
     public getEndTime(){
@@ -246,103 +247,128 @@ class PKManager {
     }
 
     //加载关卡数据
-    public loadLevelData(index,fun,showMsging?){
-        if(this.levelData[index])
-        {
-            fun && fun(this.levelData[index])
-            return;
-        }
-        var wx = window['wx'];
-        if(wx) //微信加载
-        {
-            var self = this;
-            var totalNum = 300;
-            var tempIndex = index%totalNum || totalNum
-            wx.cloud.downloadFile({
-                fileID: 'cloud://hange0o0-2-57ae87.6861-hange0o0-2-57ae87/level/level_'+tempIndex+'.txt',
-                //fileID: 'cloud://hange0o0-16b7c5.6861-hange0o0-16b7c5/level/level_'+tempIndex+'.txt',
-                success: res => {
-                    console.log(res);
-                    self.loadUrl(index,res.tempFilePath,fun,showMsging)
-                },
-                fail: err => {
-                    console.log(err)
-                }
-            })
-            //wx.cloud.getTempFileURL({
-            //    fileList: ['cloud://hange0o0-1-797611.6861-hange0o0-1-797611/level/level_'+tempIndex+'.txt'],
-            //    success: res => {
-            //        self.loadUrl(index,res.fileList[0].tempFileURL,fun,showMsging)
-            //    },
-            //    fail: err => {
-            //        console.log(err)
-            //    }
-            //})
-            return;
-        }
+    public loadLevelData(fun,showMsging?){
+        //if(this.levelData[index])
+        //{
+        //    fun && fun(this.levelData[index])
+        //    return;
+        //}
+        //var wx = window['wx'];
+        //if(wx) //微信加载
+        //{
+        //    var self = this;
+        //    var totalNum = 300;
+        //    var tempIndex = index%totalNum || totalNum
+        //    wx.cloud.downloadFile({
+        //        fileID: 'cloud://hange0o0-2-57ae87.6861-hange0o0-2-57ae87/level/level_'+tempIndex+'.txt',
+        //        //fileID: 'cloud://hange0o0-16b7c5.6861-hange0o0-16b7c5/level/level_'+tempIndex+'.txt',
+        //        success: res => {
+        //            console.log(res);
+        //            self.loadUrl(index,res.tempFilePath,fun,showMsging)
+        //        },
+        //        fail: err => {
+        //            console.log(err)
+        //        }
+        //    })
+        //    //wx.cloud.getTempFileURL({
+        //    //    fileList: ['cloud://hange0o0-1-797611.6861-hange0o0-1-797611/level/level_'+tempIndex+'.txt'],
+        //    //    success: res => {
+        //    //        self.loadUrl(index,res.fileList[0].tempFileURL,fun,showMsging)
+        //    //    },
+        //    //    fail: err => {
+        //    //        console.log(err)
+        //    //    }
+        //    //})
+        //    return;
+        //}
 
         //本地加载
-        this.loadUrl(index,'resource/level/level_'+5+'.txt',fun,showMsging)
+        this.loadUrl('resource/level.txt',fun,showMsging)
     }
 
-    public loadChapterData(index,fun,showMsging?){
-        if(this.chapterData[index])
+    public loadChapterData(fun,showMsging?){
+        if(this.chapterData.length)
         {
-            fun && fun(this.chapterData[index])
+            fun && fun()
             return;
         }
-        var wx = window['wx'];
-        if(wx) //微信加载
-        {
-            var self = this;
-            var tempIndex = index
-            wx.cloud.downloadFile({
-                fileID: 'cloud://hange0o0-2-57ae87.6861-hange0o0-2-57ae87/chapter/chapter_'+tempIndex+'.txt',
-                //fileID: 'cloud://hange0o0-16b7c5.6861-hange0o0-16b7c5/chapter/chapter_'+tempIndex+'.txt',
-                success: res => {
-                    self.loadUrl(index,res.tempFilePath,fun,showMsging,true)
-                },
-                fail: err => {
-                    console.log(err)
-                }
-            })
-            return;
-        }
+        //var wx = window['wx'];
+        //if(wx) //微信加载
+        //{
+        //    var self = this;
+        //    var tempIndex = index
+        //    wx.cloud.downloadFile({
+        //        fileID: 'cloud://hange0o0-2-57ae87.6861-hange0o0-2-57ae87/chapter/chapter_'+tempIndex+'.txt',
+        //        //fileID: 'cloud://hange0o0-16b7c5.6861-hange0o0-16b7c5/chapter/chapter_'+tempIndex+'.txt',
+        //        success: res => {
+        //            self.loadUrl(index,res.tempFilePath,fun,showMsging,true)
+        //        },
+        //        fail: err => {
+        //            console.log(err)
+        //        }
+        //    })
+        //    return;
+        //}
 
         //本地加载
-        this.loadUrl(index,'resource/level/chapter_1.txt',fun,showMsging,true)
+        this.loadUrl('resource/chapter.txt',fun,showMsging,true)
     }
 
-  private loadUrl(index,url,fun,showMsging,isChapter?){
-        console.log(url);
+  private loadUrl(url,fun,showMsging,isChapter?){
         var loader: egret.URLLoader = new egret.URLLoader();
         loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
         loader.once(egret.Event.COMPLETE,()=>{
             if(isChapter)
             {
-                this.chapterData[index] = loader.data
-                SharedObjectManager.getInstance().setMyValue('chapter_data_1',{
-                    key:index,
-                    value:loader.data
-                })
+                this.chapterData = loader.data.split('\n');
             }
             else
-                this.levelData[index] = loader.data
+                this.levelData = loader.data.split('\n');
             if(showMsging)
                 MsgingUI.getInstance().hide();
-            //PKManager.getInstance().initData(loader.data);
-            fun && fun(loader.data);
+            fun && fun();
         },this);
         loader.load(new egret.URLRequest(url));
         if(showMsging)
             MsgingUI.getInstance().show();
     }
+  //private loadUrl(index,url,fun,showMsging,isChapter?){
+  //      console.log(url);
+  //      var loader: egret.URLLoader = new egret.URLLoader();
+  //      loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
+  //      loader.once(egret.Event.COMPLETE,()=>{
+  //          if(isChapter)
+  //          {
+  //              this.chapterData[index] = loader.data
+  //              SharedObjectManager.getInstance().setMyValue('chapter_data_1',{
+  //                  key:index,
+  //                  value:loader.data
+  //              })
+  //          }
+  //          else
+  //              this.levelData[index] = loader.data
+  //          if(showMsging)
+  //              MsgingUI.getInstance().hide();
+  //          //PKManager.getInstance().initData(loader.data);
+  //          fun && fun(loader.data);
+  //      },this);
+  //      loader.load(new egret.URLRequest(url));
+  //      if(showMsging)
+  //          MsgingUI.getInstance().show();
+  //  }
 
     public getChapterData(){
-        var index = Math.ceil(UM.chapterLevel/100)
-        var id = (UM.chapterLevel%100 || 100)-1
-        var data = this.chapterData[index].split('\n')
-        return JSON.parse(data[id])
+        //var index = Math.ceil(UM.chapterLevel/100)
+        //var id = (UM.chapterLevel%100 || 100)-1
+        //var data = this.chapterData[index].split('\n')
+        //return JSON.parse(data[id])
+        var arr = this.chapterData[UM.chapterLevel-1].split('|')
+        return {
+            list1:arr[0],
+            list2:arr[1],
+            cost:36,
+            seed:parseInt(arr[2]),
+        }
     }
 
     //结算投注信息
@@ -381,7 +407,7 @@ class PKManager {
                     }
                     UM.total ++;
 
-                    var roundData = this.getRoundDataByKey(showData.key);
+                    var roundData = this.getLevelData(showData.key);
                     showData.result = result;
                     showData.roundData = roundData;
                     UM.history.unshift(showData)
@@ -431,7 +457,7 @@ class PKManager {
         var addCoin = 0;
         //var lossCoin = 0;
         if(!roundData)
-            roundData = this.getRoundDataByKey(showData.key);
+            roundData = this.getLevelData(showData.key);
         var costData = this.getCost(roundData.seed,999999)
         var teamCost1 = costData.cost1 + showData.teamCost1;
         var teamCost2 = costData.cost2 + showData.teamCost2;
@@ -455,6 +481,18 @@ class PKManager {
         return addCoin
     }
 
+    public getLevelData(key){
+        var day = Math.floor(key/1000)-1
+        var index = Math.floor(key%1000)-1
+        var num = (day*108+index)%this.levelData.length;
+        var arr = this.levelData[num].split('|')
+        return {
+            list1:arr[0],
+            list2:arr[1],
+            seed:parseInt(arr[2]),
+        }
+    }
+
     //取PK结果
     public getPKResult(data,fun){
         if(this.pkResult[data.key])
@@ -463,11 +501,11 @@ class PKManager {
             return ;
         }
 
-        var day = Math.floor(data.key/1000)
-        var index = Math.floor(data.key%1000)
-        this.loadLevelData(day,(levelData)=>{
-            var arr = levelData.split('\n')
-            var showData = JSON.parse(arr[index]);
+        //var day = Math.floor(data.key/1000)
+        //var index = Math.floor(data.key%1000)
+        //this.loadLevelData(day,(levelData)=>{
+        //    var arr = levelData.split('\n')
+            var showData = this.getLevelData(data.key)//JSON.parse(arr[index]);
             var costData = this.getCost(showData.seed,999999)
             var force1 = this.getForceAdd(costData.cost1 + data.teamCost1) + this.baseForce;
             var force2 = this.getForceAdd(costData.cost2 + data.teamCost2) + this.baseForce
@@ -487,18 +525,18 @@ class PKManager {
             this.pkResult[data.key] = PD.getPKResult();
             fun(PD.getPKResult());
             PKData.instanceIndex = 1;
-        })
+        //})
     }
 
-    //保证已加载了
-    public getRoundDataByKey(key){
-        if(this.roundTotalData[key])
-              return this.roundTotalData[key]
-        var day = Math.floor(key/1000)
-        var index = Math.floor(key%1000)
-        var arr = this.levelData[day].split('\n')
-        return JSON.parse(arr[index])
-    }
+    ////保证已加载了
+    //public getRoundDataByKey(key){
+    //    if(this.roundTotalData[key])
+    //          return this.roundTotalData[key]
+    //    var day = Math.floor(key/1000)
+    //    var index = Math.floor(key%1000)
+    //    var arr = this.levelData[day].split('\n')
+    //    return JSON.parse(arr[index])
+    //}
 
     ////发送投注信息
     //public sendCost(){

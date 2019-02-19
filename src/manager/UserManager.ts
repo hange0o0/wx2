@@ -148,6 +148,7 @@ class UserManager {
                     return;
                 }
                 this.fill(res.data[0]);
+                //this.testAddInvite();
                 fun && fun();
             }
         })

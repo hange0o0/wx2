@@ -353,6 +353,43 @@ class DebugManager {
         this.callCost = cost + 30
     }
 
+    private loadArr = []
+    private resultArr = []
+    public m(){
+        for(var i=1;i<=61;i++)
+        {
+             this.loadArr.push('resource/levelX/chapter/chapter_'+i+'.txt')
+        }
+        this.m1();
+    }
+
+    private m1(){
+        var url = this.loadArr.shift();
+        if(!url)
+        {
+            console.log(this.resultArr.length);
+            console.log('finish');
+            egret.localStorage.setItem('result' + DateUtil.formatDate('MM-dd hh:mm:ss',new Date()), this.resultArr.join('\n'));
+            return;
+        }
+        console.log(this.resultArr.length)
+        var loader: egret.URLLoader = new egret.URLLoader();
+        loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
+        loader.once(egret.Event.COMPLETE,()=>{
+            var arr = loader.data.split('\n');
+            for(var i=0;i<arr.length;i++)
+            {
+                if(arr[i])
+                {
+                    var oo = JSON.parse(arr[i]);
+                    this.resultArr.push(oo.list1+'|'+oo.list2+'|' +oo.seed)
+                }
+            }
+            this.m1();
+        },this);
+        loader.load(new egret.URLRequest(url));
+    }
+
 }
 
 //DM.testCard('1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16','1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16')

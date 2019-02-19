@@ -35,7 +35,7 @@ class LogItem extends game.BaseItem {
 
 
     private onClick(){
-        PKManager.getInstance().roundTotalData[this.data.key] = this.data.roundData;
+        //PKManager.getInstance().roundTotalData[this.data.key] = this.data.roundData;
         LogUI.getInstance().showHistory(this.data,this.data.roundData)
     }
 

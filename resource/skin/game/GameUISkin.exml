@@ -35,6 +35,7 @@
 			</e:Group>
 			<e:Group id="settingBtn" x="100" y="0" width="90" height="90">
 				<e:Image source="chapter_btn_png" verticalCenter="0" horizontalCenter="0"/>
+				<e:Image id="chapterRedMC" source="red_mc_png" right="-10" top="-5"/>
 			</e:Group>
 					<e:Group id="mailBtn" x="10" y="0" width="90" height="90">
 						<e:Image verticalCenter="0" horizontalCenter="0" source="log_btn_png"/>
