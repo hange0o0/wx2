@@ -211,9 +211,10 @@ class MainPKUI extends game.BaseItem {
     }
 
     private resetList(list){
+        var orginList = list.concat();
         for(var i=0;i<list.length;i++)
         {
-            list[i]  = {id:list[i],isDie:true,index:i+1}
+            list[i]  = {id:list[i],isDie:true,index:i+1,list:orginList}
         }
     }
 

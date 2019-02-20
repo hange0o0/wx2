@@ -140,7 +140,16 @@ class GameUI extends game.BaseUI {
                 this.haveLoadFinish = true;
                 this.initData();
             },1000)
-            this.list.dataProvider = new eui.ArrayCollection(ObjectUtil.objToArray(MonsterVO.data))
+            var arr = ObjectUtil.objToArray(MonsterVO.data);
+            ArrayUtil.sortByField(arr,['type','cost'],[0,0])
+
+            var orginArr = []
+            for(var i=0;i<arr.length;i++)
+            {
+                orginArr.push(arr[i].id)
+                arr[i] = {id:arr[i].id,list:orginArr,index:i+1};
+            }
+            this.list.dataProvider = new eui.ArrayCollection(arr)
         })
     }
 

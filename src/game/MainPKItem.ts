@@ -23,7 +23,7 @@ class MainPKItem extends game.BaseItem {
 
 
     private onClick(){
-        CardInfoUI.getInstance().show(this.data.id)
+        CardInfoUI.getInstance().show(this.data.id,this.data.list,this.data.index-1)
     }
 
     public dataChanged(){

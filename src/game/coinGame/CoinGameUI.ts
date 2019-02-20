@@ -102,7 +102,7 @@ class CoinGameUI extends game.BaseUI {
             for(var i=0;i<this.chooseList.numChildren;i++)
             {
                 var mc:any = this.chooseList.getChildAt(i);
-                if(mc.hitTestPoint(x,y))
+                if(mc.visible && mc.hitTestPoint(x,y))
                 {
                     if(mc.data == this.dragTarget.data)
                     {
@@ -134,15 +134,16 @@ class CoinGameUI extends game.BaseUI {
         for(var i=0;i<this.chooseList.numChildren;i++)
         {
             var mc:any = this.chooseList.getChildAt(i);
-            if(mc.hitTestPoint(x,y))
+            if(mc.visible && mc.hitTestPoint(x,y))
             {
                 if(mc.data == this.dragTarget.data)
                     break
+                var currentIndex =  this.dataProvider.source.indexOf(mc.data)// this.chooseList会有不存在数组中数据的显示对象
                 var index = this.dataProvider.source.indexOf(this.dragTarget.data)
                 var p = mc.globalToLocal(x,y);
                 if(p.x < mc.width/4 || p.x > mc.width/4*3)//insert
                 {
-                    var targetIndex = p.x < mc.width/4?i:i+1;
+                    var targetIndex = p.x < mc.width/4?currentIndex:currentIndex+1;
                     if(targetIndex == index)
                         break;
                     this.dataProvider.removeItemAt(index)
@@ -153,7 +154,7 @@ class CoinGameUI extends game.BaseUI {
                 else//swap
                 {
                     this.dataProvider.source[index] = mc.data
-                    this.dataProvider.source[i] = this.dragTarget.data
+                    this.dataProvider.source[currentIndex] = this.dragTarget.data
                 }
 
 
@@ -190,6 +191,10 @@ class CoinGameUI extends game.BaseUI {
             arr2.splice(index,1);
         }
         ArrayUtil.sortByField(arr,['cost','type'],[0,0])
+        for(var i=0;i<arr.length;i++)
+        {
+            arr[i] = {id:arr[i].id,list:arr,index:i};
+        }
         this.chooseDataProvider.source = arr;
         this.chooseDataProvider.refresh();
     }
@@ -239,9 +244,9 @@ class CoinGameUI extends game.BaseUI {
         var list:any = this.question.list2.split(',')
         for(var i=0;i<list.length;i++)
         {
-            list[i] = {id:list[i]} ;
+            list[i] = {id:list[i],list:list} ;
         }
-        console.log(list)
+        //console.log(list)
         this.dataProvider.source = list;
         this.dataProvider.refresh();
         this.onItemChange();
@@ -283,7 +288,12 @@ class CoinGameUI extends game.BaseUI {
             var mc = this.monsterArr[i];
             if(mc.currentMV.hitTestPoint(x,y,true))
             {
-                CardInfoUI.getInstance().show(mc.id)
+                var list = [];
+                for(var j=0;j<this.monsterArr.length;j++)
+                {
+                    list.push(this.monsterArr[j].id)
+                }
+                CardInfoUI.getInstance().show(mc.id,list,i);
                 break;
             }
         }
@@ -313,13 +323,12 @@ class CoinGameUI extends game.BaseUI {
             item.x = begin + i*des
             this.monsterArr.push(item);
         }
-
-        ArrayUtil.sortByField(this.monsterArr,['bottom','w'],[1,1]);
-        for(var i=0;i<this.monsterArr.length;i++)
+        var sortList = this.monsterArr.concat();
+        ArrayUtil.sortByField(sortList,['bottom','w'],[1,1]);
+        for(var i=0;i<sortList.length;i++)
         {
-            this.con.addChild(this.monsterArr[i]);
+            this.con.addChild(sortList[i]);
         }
-
         this.bg.source = PKManager.getInstance().getPKBG(this.question)
     }
 
@@ -345,7 +354,7 @@ class CoinGameUI extends game.BaseUI {
     }
 
     public addChoose(id){
-        this.dataProvider.addItem({id:id})
+        this.dataProvider.addItem({id:id,list:this.dataProvider.source})
         this.onItemChange();
     }
 
@@ -407,7 +416,7 @@ class CoinGameUI extends game.BaseUI {
                 var arr = oo.value.split(',');
                 for(var i=0;i<arr.length;i++)
                 {
-                    arr[i] = MonsterVO.getObject(arr[i]);
+                    arr[i] = {id:MonsterVO.getObject(arr[i]).id,list:arr};
                 }
                 this.dataProvider.source = arr
                 this.dataProvider.refresh();

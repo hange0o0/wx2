@@ -88,7 +88,13 @@ class TeamUI extends game.BaseItem {
             {
                 if(GuideManager.getInstance().isGuiding && GuideManager.getInstance().guideKey2 == 'info')
                     GuideManager.getInstance().guideKey2 = ''
-                CardInfoUI.getInstance().show(mc.id)
+
+                var list = [];
+                for(var j=0;j<this.monsterArr.length;j++)
+                {
+                    list.push(this.monsterArr[j].id)
+                }
+                CardInfoUI.getInstance().show(mc.id,list,i);
                 break;
             }
         }
@@ -212,10 +218,11 @@ class TeamUI extends game.BaseItem {
             this.monsterArr.push(item);
         }
 
-        ArrayUtil.sortByField(this.monsterArr,['bottom','w'],[1,1]);
-        for(var i=0;i<this.monsterArr.length;i++)
+        var sortList = this.monsterArr.concat();
+        ArrayUtil.sortByField(sortList,['bottom','w'],[1,1]);
+        for(var i=0;i<sortList.length;i++)
         {
-            this.con.addChild(this.monsterArr[i]);
+            this.con.addChild(sortList[i]);
         }
 
         this.bg.source = PKManager.getInstance().getPKBG()

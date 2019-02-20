@@ -65,7 +65,12 @@ class CoinGameChooseItem extends game.BaseItem {
     private onInfo(){
         CoinGameUI.getInstance().stopDrag();
         DragManager.getInstance().endDrag();
-        CardInfoUI.getInstance().show(this.data.id)
+        var arr = [];
+        for(var i=0;i<this.data.list.length;i++)
+        {
+            arr.push(this.data.list[i].id)
+        }
+        CardInfoUI.getInstance().show(this.data.id,arr,this.data.list.indexOf(this.data))
     }
 
     private onClick(){

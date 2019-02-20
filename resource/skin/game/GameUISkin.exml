@@ -53,7 +53,7 @@
 		<e:Label text="《健康游戏忠告》" y="70" horizontalCenter="0"/>
 		<e:Label text="抵制不良游戏，拒绝盗版游戏。\n注意自我保护，谨防受骗上当。\n适度游戏益脑，沉迷游戏伤身。\n合理安排时间，享受健康生活。" y="130" size="24" lineSpacing="5" textAlign="center" horizontalCenter="0"/>
 	</e:Group>
-	<e:Group id="stopingGroup" left="0" right="0" top="75" bottom="105" visible="false">
+	<e:Group id="stopingGroup" left="0" right="0" top="75" bottom="105">
 		<e:Group id="stopCon" x="0" width="640" height="512" y="0">
 			<e:Image id="stopBG" horizontalCenter="0" bottom="0"/>
 		</e:Group>
@@ -71,6 +71,7 @@
 			</e:Group>
 		</e:Scroller>
 		<e:Image left="0" right="0" top="500" bottom="0" source="bg18_png" scale9Grid="34,32,3,6" touchEnabled="false"/>
+		<e:Image source="black_bg_png" y="23" horizontalCenter="0" scale9Grid="37,7,17,42" width="200"/>
 		<e:BitmapLabel y="30" font="font1_fnt" text="休战中" scaleX="1.2" scaleY="1.2" horizontalCenter="0"/>
 	</e:Group>
 </e:Skin>

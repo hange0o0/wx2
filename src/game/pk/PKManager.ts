@@ -128,6 +128,7 @@ class PKManager {
     }
 
     public getCurrentIndex(){
+        //return -1;
         var t0 = DateUtil.getNextDateTimeByHours(0)  - 24*3600
         var t1 = TM.now()
         var dec = (t1 - t0) - 3600*6;
