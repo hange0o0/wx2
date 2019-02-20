@@ -1,7 +1,7 @@
 {
 	"groups":[
 		{
-			"keys":"border_5_png,border_6_png,border_7_png,border_8_png,border_14_png,change_icon_png,close_btn2_png,icon_atk_png,icon_atk2_png,icon_atk3_png,icon_atkcd_png,icon_atkhp_png,icon_clock_png,icon_clock2_png,icon_disable_png,icon_empty_png,icon_error_png,icon_force2_png,icon_pos_png,icon_rage_png,icon_right_png,icon_skill_png,icon_speed_png,icon_times_png,talk_bg_png,copy_btn_png,border_16_png,main_button_png,icon_test_png,icon_wenhao_png,icon_wenhao2_png,bg_icon_png,data_json,font1_fnt,log_btn_png,rank_btn_png,sound_btn1_png,sound_btn2_png,coin_btn_png,pk_mv_json,pk_mv_png,rect_1_png,guide_1_png,chapter_btn_png,state1_png,pk_win_png,pk_fail_png,icon_vs_png,buff_5_png,buff_42_png,buff_41_png,buff_31_png,buff_3_png,buff_25_png,buff_24_png,buff_23_png,buff_22_png,buff_21_png,buff_2_png,buff_15_png,buff_13_png,buff_12_png,buff_11_png,buff_1_png,bar_bg_png,bar2_png,bar1_png,loading_ani_png,loading_ani_json,line2_png,line_png,icon_type3_png,icon_type2_png,icon_type1_png,icon_type0_png,icon_setting_png,icon_lock_png,icon_force_png,icon_diamond_png,icon_def2_png,icon_def1_png,icon_cost_bg_png,icon_cost_png,icon_coin_png,guide2_png,btn4_png,btn3_png,btn2_png,btn1_png,border_4_png,border_15_png,border_13_png,border_10_png,border3_png,border2_png,border1_png,bg9_png,bg8_png,bg7_png,bg6_png,bg5_png,bg4_png,bg3_png,bg2_png,bg18_png,bg17_png,bg16_png,bg15_png,bg14_png,bg13_png,bg12_png,bg11_png,bg10_png,bg1_png,start2_png,start1_png,red_mc_png,ui_loading_png,type_tips_png,title_bg4_png,tab4_png,tab2_png,tab1_png",
+			"keys":"border_5_png,border_6_png,border_7_png,border_8_png,border_14_png,change_icon_png,close_btn2_png,icon_atk_png,icon_atk2_png,icon_atk3_png,icon_atkcd_png,icon_atkhp_png,icon_clock_png,icon_clock2_png,icon_disable_png,icon_empty_png,icon_error_png,icon_force2_png,icon_pos_png,icon_rage_png,icon_right_png,icon_skill_png,icon_speed_png,icon_times_png,talk_bg_png,copy_btn_png,border_16_png,main_button_png,icon_test_png,icon_wenhao_png,icon_wenhao2_png,bg_icon_png,data_json,font1_fnt,log_btn_png,rank_btn_png,sound_btn1_png,sound_btn2_png,coin_btn_png,pk_mv_json,pk_mv_png,rect_1_png,guide_1_png,chapter_btn_png,state1_png,icon_vs_png,buff_5_png,buff_42_png,buff_41_png,buff_31_png,buff_3_png,buff_25_png,buff_24_png,buff_23_png,buff_22_png,buff_21_png,buff_2_png,buff_15_png,buff_13_png,buff_12_png,buff_11_png,buff_1_png,bar_bg_png,bar2_png,bar1_png,loading_ani_png,loading_ani_json,line2_png,line_png,icon_type3_png,icon_type2_png,icon_type1_png,icon_type0_png,icon_setting_png,icon_lock_png,icon_force_png,icon_diamond_png,icon_def2_png,icon_def1_png,icon_cost_bg_png,icon_cost_png,icon_coin_png,guide2_png,btn4_png,btn3_png,btn2_png,btn1_png,border_4_png,border_15_png,border_13_png,border_10_png,border3_png,border2_png,border1_png,bg9_png,bg8_png,bg7_png,bg6_png,bg5_png,bg4_png,bg3_png,bg2_png,bg18_png,bg17_png,bg16_png,bg15_png,bg14_png,bg13_png,bg12_png,bg11_png,bg10_png,bg1_png,start2_png,start1_png,red_mc_png,ui_loading_png,type_tips_png,title_bg4_png,tab4_png,tab2_png,tab1_png",
 			"name":"preload_png"
 		},
 		{
@@ -1473,6 +1473,16 @@
 			"name":"wx_btn_info_png",
 			"type":"image",
 			"url":"game_assets/wx_btn_info.png"
+		},
+		{
+			"name":"point2_png",
+			"type":"image",
+			"url":"game_assets/point2.png"
+		},
+		{
+			"name":"point1_png",
+			"type":"image",
+			"url":"game_assets/point1.png"
 		}
 	]
 }
