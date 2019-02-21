@@ -113,6 +113,7 @@
 	</e:Group>
 	<e:Group id="btnGroup" y="410" horizontalCenter="0">
 		<e:Button id="backBtn" label="关闭" y="0" width="150" x="0" skinName="Btn2Skin"/>
+		<e:Button id="doubleBtn" label="炫耀" y="10" width="150" x="10" skinName="Btn1Skin"/>
 		<e:Button id="replayBtn" label="回放" y="0" skinName="Btn1Skin" width="150" x="0"/>
 		<e:layout>
 		<e:HorizontalLayout gap="30"/>

@@ -31,6 +31,7 @@ class MainPKUI extends game.BaseItem {
     public cdGroup: eui.Group;
     private backBtn: eui.Button;
     private replayBtn: eui.Button;
+    private doubleBtn: eui.Button;
 
 
 
@@ -49,12 +50,14 @@ class MainPKUI extends game.BaseItem {
     public isQuick
 
 
+    private shareStr
 
     public childrenCreated() {
         super.childrenCreated();
 
         this.addBtnEvent(this.replayBtn,this.onReplay)
         this.addBtnEvent(this.backBtn,this.onBack)
+        this.addBtnEvent(this.doubleBtn,this.onDouble)
 
         var pkvideo = PKVideoCon.getInstance();
         this.con.addChild(pkvideo)
@@ -65,6 +68,12 @@ class MainPKUI extends game.BaseItem {
 
         this.list1.itemRenderer = MainPKItem
         this.list2.itemRenderer = MainPKItem
+    }
+
+    private onDouble(){
+        ShareTool.share(this.shareStr,Config.localResRoot + "share_img_2.jpg",{},()=>{
+
+        })
     }
 
     private onBack(){
@@ -320,6 +329,7 @@ class MainPKUI extends game.BaseItem {
         this.timeText.text = Math.floor(PD.actionTime/1000) + ''
         if(PD.isGameOver)
         {
+            this.shareStr = ''
             this.finish = true;
             this.desGroup.visible = false;
             this.desGroup['callVisible'] = false
@@ -344,6 +354,7 @@ class MainPKUI extends game.BaseItem {
                         this.des1.text = '恭喜获得'
                         this.des2.text = 'x' + NumberUtil.addNumSeparator(addCoin)
                     }
+                    this.shareStr = '已成功通过第'+this.dataIn.level+'关，需要向我取经吗？'
                     this.backBtn.label = '下一关'
                 }
                 else
@@ -383,6 +394,10 @@ class MainPKUI extends game.BaseItem {
                             this.des1.text = '恭喜获得'
 
                         this.des2.text = 'x' + NumberUtil.addNumSeparator(addCoin)
+                        if(addCoin)
+                        {
+                            this.shareStr = '轻松赚取'+addCoin+'金，这个游戏对我来说太简单了!'
+                        }
                     }
                     else
                     {
@@ -401,6 +416,15 @@ class MainPKUI extends game.BaseItem {
 
 
             PKManager.getInstance().testSendResult();  //可能看录像
+
+            if(this.shareStr)
+            {
+                this.btnGroup.addChild(this.doubleBtn)
+            }
+            else
+            {
+                MyTool.removeMC(this.doubleBtn)
+            }
         }
         else
         {

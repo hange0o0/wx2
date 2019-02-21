@@ -123,7 +123,7 @@ class PKCardInfoUI extends game.BaseContainer {
         this.heroItem.load(this.dataIn.mid)
         this.heroItem.stand();
 
-        this.nameText.text = vo.name + '（'+vo.cost+'）';
+        this.setHtml(this.nameText, vo.name +this.createHtml( '（'+vo.des2+'）',0xFFE6BA,22));
         this.type.source = vo.getTypeIcon()
 
         for(var i=0;i<this.starArr.length;i++)

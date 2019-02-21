@@ -29,6 +29,7 @@ class MonsterVO {
     public name: string;
     //public num2: number;
     public des: string;
+    public des2: string;
     public speed: number;
     public hp: number;
     public skillcd: number;
@@ -82,6 +83,7 @@ class MonsterVO {
         this.skillcd = data.skillcd * 1000
         this.mv_atk = data.mv_atk * 1000
         this.mv_atk2 = data.mv_atk2
+        this.des2 = data.des2
 
         //this.speed = 50;
 

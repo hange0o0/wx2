@@ -115,22 +115,28 @@ class RankUI extends game.BaseUI{
         this.scroller.visible = true;
         var arr = this.rankData[type].list;
         var b = false;
+        var myScore = type=='coin'?UM.coinwin:UM.chapterLevel;
         for(var i=0;i<arr.length;i++) //更新自己成绩
         {
             arr[i].type = type;
             if(arr[i].openid == UM.gameid)
             {
-                arr[i].value = type=='coin'?UM.coinwin:UM.chapterLevel;
+                arr[i].value = myScore;
                 arr[i].nick = UM.nick;
                 arr[i].head = UM.head;
                 b = true;
             }
+            if(arr[i].value < 1)
+            {
+                arr.splice(i,1);
+                i--;
+            }
         }
-        if(!b && UM.nick)
+        if(!b && UM.nick && arr.length<50 && myScore > 1)
         {
             arr.push({
                 nick:UM.nick,
-                value:type=='coin'?UM.coinwin:UM.chapterLevel,
+                value:myScore,
                 head:UM.head,
             })
         }
