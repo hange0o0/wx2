@@ -71,7 +71,7 @@ class PKVideoCon extends game.BaseContainer {
         for(var i=0;i<PD.monsterList.length;i++)
         {
             var item = PKMonsterItem.createItem();
-            item.y =  this.monsterY + (-30 + Math.random()*60);
+            item.y =  this.monsterY + PD.monsterList[i].y;
 
             this.con.addChildAt(item,this.getIndexByY(item.y));
             item.data =PD.monsterList[i];
@@ -140,6 +140,13 @@ class PKVideoCon extends game.BaseContainer {
         if(underItem)
             return this.con.getChildIndex(underItem) + 1;
         return 1
+    }
+
+    public resetAllMVSpeed(){
+        for(var i=0;i<this.itemArr.length;i++)
+        {
+            this.itemArr[i].resetSpeed();
+        }
     }
 
     public onVideoEvent(e){

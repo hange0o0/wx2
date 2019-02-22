@@ -1483,6 +1483,26 @@
 			"name":"point1_png",
 			"type":"image",
 			"url":"game_assets/point1.png"
+		},
+		{
+			"name":"coin_bg1_jpg",
+			"type":"image",
+			"url":"game_assets/coin_bg1.jpg"
+		},
+		{
+			"name":"coin_bg3_jpg",
+			"type":"image",
+			"url":"game_assets/coin_bg3.jpg"
+		},
+		{
+			"name":"coin_bg4_jpg",
+			"type":"image",
+			"url":"game_assets/coin_bg4.jpg"
+		},
+		{
+			"name":"coin_bg2_jpg",
+			"type":"image",
+			"url":"game_assets/coin_bg2.jpg"
 		}
 	]
 }

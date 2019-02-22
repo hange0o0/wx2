@@ -32,6 +32,12 @@ class MainPKUI extends game.BaseItem {
     private backBtn: eui.Button;
     private replayBtn: eui.Button;
     private doubleBtn: eui.Button;
+    private addSpeedBtn: eui.Group;
+    private speedMC: eui.Image;
+    private speedMC2: eui.Image;
+    private hurt1: eui.Image;
+    private hurt2: eui.Image;
+
 
 
 
@@ -50,6 +56,7 @@ class MainPKUI extends game.BaseItem {
     public isQuick
 
 
+
     private shareStr
 
     public childrenCreated() {
@@ -58,6 +65,7 @@ class MainPKUI extends game.BaseItem {
         this.addBtnEvent(this.replayBtn,this.onReplay)
         this.addBtnEvent(this.backBtn,this.onBack)
         this.addBtnEvent(this.doubleBtn,this.onDouble)
+        this.addBtnEvent(this.addSpeedBtn,this.onSpeed)
 
         var pkvideo = PKVideoCon.getInstance();
         this.con.addChild(pkvideo)
@@ -65,9 +73,38 @@ class MainPKUI extends game.BaseItem {
         pkvideo.x = -(PKConfig.floorWidth + PKConfig.appearPos*2 - 640)/2;
 
         PKData.getInstance().addEventListener('video_word',this.onVideoEvent,this);
+        PKData.getInstance().addEventListener('video',this.onVideoEvent2,this);
 
         this.list1.itemRenderer = MainPKItem
         this.list2.itemRenderer = MainPKItem
+
+        // egret.Tween.get(this.speedMC,{loop:true}).to({rotation:360},3000)
+        // egret.Tween.get(this.speedMC2,{loop:true}).to({rotation:-360},3000)
+    }
+
+    public onVideoEvent2(e){
+        if(!this.stage)
+            return;
+        var videoData = e.data;
+        switch(videoData.type)//动画类型
+        {
+            case PKConfig.VIDEO_MONSTER_WIN:
+                var rota = videoData.user.getOwner().teamData.atkRota == PKConfig.ROTA_LEFT?PKConfig.ROTA_RIGHT:PKConfig.ROTA_LEFT
+                this.showHurt(rota);
+                break;
+        }
+    }
+
+    private onSpeed(){
+        PKData.getInstance().playSpeed ++;
+        if(PKData.getInstance().playSpeed > 3)
+            PKData.getInstance().playSpeed = 1;
+        this.renewSpeedBtn();
+    }
+
+    private renewSpeedBtn(){
+        this.speedMC.visible = PKData.getInstance().playSpeed > 1
+        this.speedMC2.visible = PKData.getInstance().playSpeed > 2
     }
 
     private onDouble(){
@@ -135,6 +172,10 @@ class MainPKUI extends game.BaseItem {
 
         this.dataIn = data,
         this.visible = true;
+
+        PKData.getInstance().playSpeed = 1;
+        this.renewSpeedBtn();
+        this.addSpeedBtn.visible = !this.dataIn.noSpeed
 
 
         if(this.dataIn.isMain)
@@ -215,8 +256,9 @@ class MainPKUI extends game.BaseItem {
     public onReplay(){
 
         this.dataIn.passTime = 0;
-
+        this.addSpeedBtn.visible = true;
         this.reset();
+        this.renewSpeedBtn();
     }
 
     private resetList(list){
@@ -234,6 +276,10 @@ class MainPKUI extends game.BaseItem {
         this.winGroup.visible = false;
         this.failGroup.visible = false;
         this.btnGroup.visible = false;
+        this.hurt1.visible = false
+        this.hurt2.visible = false
+        egret.Tween.removeTweens(this.hurt1)
+        egret.Tween.removeTweens(this.hurt2)
         this.finish = false;
         this.isQuick = true;
 
@@ -279,7 +325,8 @@ class MainPKUI extends game.BaseItem {
         if(PD.isGameOver)
         {
             PKVideoCon.getInstance().resetView();
-
+            
+        
 
             var videoCon = PKVideoCon.getInstance();
             var result = PD.getPKResult();
@@ -315,6 +362,22 @@ class MainPKUI extends game.BaseItem {
             SoundManager.getInstance().playSound('pkbg')
     }
 
+    public showHurt(rota){
+        var mc;
+        if(rota == PKConfig.ROTA_LEFT)
+            mc = this.hurt1
+        else
+            mc = this.hurt2
+
+
+        egret.Tween.removeTweens(mc);
+        mc.visible = true
+        mc.alpha = 0
+        egret.Tween.get(mc).to({alpha:1},150).to({alpha:0},150).call(function(){
+            mc.visible = false
+        },this)
+    }
+
     public onStep(){
         if(this.finish)
         {
@@ -329,6 +392,10 @@ class MainPKUI extends game.BaseItem {
         this.timeText.text = Math.floor(PD.actionTime/1000) + ''
         if(PD.isGameOver)
         {
+            this.addSpeedBtn.visible = false;
+            PD.playSpeed = 1;
+            
+
             this.shareStr = ''
             this.finish = true;
             this.desGroup.visible = false;
@@ -480,6 +547,7 @@ class MainPKUI extends game.BaseItem {
         }
 
         this.resultTimer = setTimeout(()=>{
+            PKVideoCon.getInstance().resetAllMVSpeed();
             if(mc == this.winGroup)
                 SoundManager.getInstance().playEffect('win');
             else

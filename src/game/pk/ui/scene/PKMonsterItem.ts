@@ -244,6 +244,10 @@ class PKMonsterItem extends game.BaseItem {
         }
     }
 
+    public resetSpeed(){
+        this.monsterMV.speed = (PKData.getInstance().playSpeed-1)*100
+    }
+
 
     public stand(){
         if(this.monsterMV.state != MonsterMV.STAT_STAND)
@@ -251,7 +255,6 @@ class PKMonsterItem extends game.BaseItem {
     }
 
     public die(){
-
         this.monsterMV.speed = (PKData.getInstance().playSpeed-1)*100
         this.monsterMV.die();
         this.bar.width = 0;

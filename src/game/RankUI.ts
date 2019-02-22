@@ -11,6 +11,7 @@ class RankUI extends game.BaseUI{
     private topUI: TopUI;
     private bottomUI: BottomUI;
     private tab: eui.TabBar;
+    private desText: eui.Label;
 
 
 
@@ -23,6 +24,8 @@ class RankUI extends game.BaseUI{
 
 
     private infoBtn:UserInfoBtn
+
+    private tips = ['世界榜中的数据存在一定的延时','收益排行以打赏赢取收入为依据']
 
     private rankData = {}
     public constructor() {
@@ -50,7 +53,7 @@ class RankUI extends game.BaseUI{
 
 
     public onShow(){
-        var arr = [{label:'收益世界榜'},{label:'关卡世界榜'},{label:'收益好友榜'},{label:'关卡好友榜'}]
+        var arr = [{label:'世界收益'},{label:'世界关卡'},{label:'好友收益'},{label:'好友关卡'}]
         this.tab.width = 600;
         this.tab.dataProvider = new eui.ArrayCollection(arr)
         this.renew();
@@ -73,6 +76,7 @@ class RankUI extends game.BaseUI{
         {
               this.showBitmapList()
         }
+        this.desText.text = this.tips[Math.floor(Math.random()*this.tips.length)];
     }
 
     private worldRank(type,myValue){
@@ -126,7 +130,7 @@ class RankUI extends game.BaseUI{
                 arr[i].head = UM.head;
                 b = true;
             }
-            if(arr[i].value < 1)
+            if(arr[i].value <= 1)
             {
                 arr.splice(i,1);
                 i--;

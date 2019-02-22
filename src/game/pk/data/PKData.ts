@@ -43,6 +43,7 @@ class PKData extends egret.EventDispatcher{
 
     public monsterChange = false//怪有变化
     public randomSeed = 0//随机的种子
+    public randomSeed2 = 0//随机的种子2
     public randomTimes = 0//随机的次数
     public monsterList = [];//场上的怪的数据
     public playerObj = {};//场上的玩家的数据
@@ -143,6 +144,7 @@ class PKData extends egret.EventDispatcher{
 
         this.randomTimes = 0;
         this.randomSeed = data.seed;
+        this.randomSeed2 = data.seed;
         this.showTopNum = data.showTopNum || 0
         this.endless = data.endless || 0;
         this.needcd = data.needcd || 0;
@@ -204,6 +206,14 @@ class PKData extends egret.EventDispatcher{
         seed = ( seed * 9301 + 49297 ) % 233280;
         var rd = seed / ( 233280.0 );
         this.randomSeed = rd * 100000000;
+        return rd;
+    }
+
+    public random2(){
+        var seed = this.randomSeed2;
+        seed = ( seed * 9301 + 49297 ) % 233280;
+        var rd = seed / ( 233280.0 );
+        this.randomSeed2 = rd * 100000000;
         return rd;
     }
 

@@ -63,7 +63,7 @@ class PKPlayerData {
             fromPos:true,
             index:this.maxPlayer - this.autoList.length,
             x:x,
-            y:-25 + Math.random()*50,
+            y:-25 + PKData.getInstance().random2()*50,
             actionTime:PKData.getInstance().actionTime
         })
     }

@@ -18,7 +18,7 @@ class M66 extends MBase {
                 owner:user.owner,
                 atkRota:atkRota,
                 x:target.x,
-                y:-30 + Math.random()*60,
+                y:-30 + PD.random2()*60,
                 lastSkill:Number.MAX_VALUE,
                 dieTime:PD.actionTime + user.getSkillValue(2)*1000,
                 actionTime:PD.actionTime

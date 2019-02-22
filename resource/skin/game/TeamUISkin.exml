@@ -44,9 +44,9 @@
 			<e:HorizontalLayout gap="10"/>
 		</e:layout>
 	</e:Group>
-	<e:Group y="0" horizontalCenter="0">
+	<e:Group y="0" horizontalCenter="0" width="100%">
 		<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0" scale9Grid="37,7,17,42"/>
-		<e:Group id="forceGroup" verticalCenter="0" left="20" right="20">
+		<e:Group id="forceGroup" verticalCenter="0" horizontalCenter="0">
 			<e:Image source="icon_force2_png" x="0" y="0"/>
 			<e:Label id="forceText" text="战力:12345" x="-135" y="11" size="25"/>
 			<e:Group id="addGroup" x="172" y="7">

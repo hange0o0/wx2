@@ -4,12 +4,13 @@ class GetCoinItem extends game.BaseItem {
         this.skinName = "GetCoinItemSkin";
     }
 
+    private bg: eui.Image;
     private goBtn: eui.Button;
-    private barMC: eui.Image;
     private titleText: eui.Label;
     private rateText: eui.Label;
     private desText: eui.Label;
     private addCoinText: eui.Label;
+
 
 
 
@@ -36,6 +37,7 @@ class GetCoinItem extends game.BaseItem {
             {
                 ShareTool.share('我需要你们的帮助！！',Config.localResRoot + "share_img_1.jpg",{type:1,from:UM.gameid},()=>{
                     this.desText.text = '等待好友加入'
+                    this.goBtn.visible = false;
                 })
             }
             return;
@@ -77,6 +79,7 @@ class GetCoinItem extends game.BaseItem {
         var max=1
         this.goBtn.visible = true;
         this.goBtn.skinName = 'Btn1Skin'
+        this.bg.source = 'coin_bg'+this.data.type+'_jpg'
         switch(this.data.type)
         {
             case 1:  //{type:1,title:'等陆第X天'},
@@ -167,10 +170,12 @@ class GetCoinItem extends game.BaseItem {
         if(min > max)
             min = max;
         this.addCoinText.text = 'x' + this.addCoin;
-        this.barMC.mask = new egret.Rectangle(0,0,min/max*204,26);
-        this.rateText.text = min+'/'+max;
-        if(coinObj.onLineAwardNum >= 5)
-            this.rateText.text = ''
+        //this.rateText.text = min+'/'+max;
+        this.rateText.text = ''
+        //if(this.data.type == 2 && coinObj.onLineAwardNum >= 5)
+        //    this.rateText.text = '明天继续'
+        //else if(this.data.type == 2 && coinObj.onLineAwardNum >= 5)
+        //    this.rateText.text = '明天继续'
         this.onTimer();
     }
 
@@ -191,15 +196,15 @@ class GetCoinItem extends game.BaseItem {
                 this.goBtn.label = '领取'
                 this.goBtn.visible = true;
                 this.canAward = true;
+                this.rateText.text = ''
             }
             else
             {
                 this.goBtn.visible = false;
                 this.canAward = false;
+                this.rateText.text = DateUtil.getStringBySecond(max - min);
             }
 
-            this.barMC.mask = new egret.Rectangle(0,0,min/max*204,26);
-            this.rateText.text = DateUtil.getStringBySecond(max - min);
         }
 
     }

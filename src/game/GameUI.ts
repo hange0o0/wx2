@@ -389,6 +389,7 @@ class GameUI extends game.BaseUI {
         var playCD = 10*60 - PKConfig.addCoinTime;
         this.mainPKUI.show({
             isMain:true,
+            noSpeed:true,
             key:PKM.getCurrentKey(),
             list1:this.showData.list1,
             list2:this.showData.list2,

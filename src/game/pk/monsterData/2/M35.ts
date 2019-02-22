@@ -27,7 +27,7 @@ class M35 extends MBase {
                 owner:user.owner,
                 atkRota:atkRota,
                 x:user.x,
-                y:-25 + Math.random()*50,
+                y:-25 + PD.random2()*50,
                 lastSkill:Number.MAX_VALUE,
                 dieTime:PD.actionTime + user.getSkillValue(1)*1000,
                 actionTime:PD.actionTime
