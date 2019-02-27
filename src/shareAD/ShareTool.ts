@@ -89,10 +89,9 @@ class ShareTool {
 
 
     //广告
-    public static openGDTV(success?, fail?, adindex?, share_acttype?){
+    public static openGDTV(success?, fail?, adindex?){
         if(DEBUG) {
-            console.log('视频广告', share_acttype);
-            if(!share_acttype) console.error("当前游戏有在底层统计 视频分享次数，必现传递share_acttype 参数！");
+            console.log('视频广告');
             success && success();
             return
         }

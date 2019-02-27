@@ -33,7 +33,7 @@ class GameManager {
     }
 
     public static get uiHeight(){
-        var h = this.stage.stageHeight;
+        var h = this.stage.stageHeight - Config.adHeight;
         if(this.isLiuHai())
             return h-50;
         return h//Math.min(1136,this.stage.stageHeight);

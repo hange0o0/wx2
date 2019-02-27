@@ -38,6 +38,9 @@ class UserManager {
         onLineAwardNum,
         shareNum,
         newAward,
+        videoNum,
+        videoAwardNum,
+        gameNum,
         shareAward
     }
     public guideFinish: boolean = false;
@@ -67,7 +70,19 @@ class UserManager {
                 shareNum:0,   //分享金币次数
                 shareAward:0,   //分享金币次数
                 newAward:0,   //分享金币次数
+                videoNum:0,
+                videoAwardNum:0,
+                gameNum:0,
             };
+
+
+        //容错
+        this.coinObj.videoNum = this.coinObj.videoNum || 0
+        this.coinObj.videoAwardNum = this.coinObj.videoAwardNum || 0
+        this.coinObj.gameNum = this.coinObj.gameNum || 0
+
+
+
         this.friendNew = data.friendNew;
         //this.writeKey = data.writeKey;
 
@@ -234,6 +249,9 @@ class UserManager {
                  shareNum:0,   //分享金币次数
                  shareAward:0,   //分享金币次数
                  newAward:0,   //拉新领奖次数
+                 videoNum:0,
+                 videoAwardNum:0,
+                 gameNum:0,
              },
              friendNew:{}//拉新
          };
@@ -252,6 +270,9 @@ class UserManager {
         this.coinObj.onLineAwardNum = 0;
         this.coinObj.shareNum = 0;
         this.coinObj.shareAward = 0;
+        this.coinObj.videoNum = 0;
+        this.coinObj.videoAwardNum = 0;
+        this.coinObj.gameNum = 0;
         PKManager.getInstance().needUpUser = true;
         return true;
     }

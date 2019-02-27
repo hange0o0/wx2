@@ -254,6 +254,13 @@ class PKMonsterItem extends game.BaseItem {
             this.monsterMV.stand();
     }
 
+    public onBeHit(){
+        this.monsterMV.alpha = 0.5;
+        this.once(egret.Event.ENTER_FRAME,()=>{
+            this.monsterMV.alpha = 1;
+        },this)
+    }
+
     public die(){
         this.monsterMV.speed = (PKData.getInstance().playSpeed-1)*100
         this.monsterMV.die();

@@ -61,6 +61,7 @@
 		"resource/skin/game/pkRelate/PKCardInfoItemSkin.exml",
 		"resource/skin/game/RankItemSkin.exml",
 		"resource/skin/game/RankUISkin.exml",
+		"resource/skin/game/shootGame/ShootGameUISkin.exml",
 		"resource/skin/guide/GuideSkin.exml"
 	],
 	"path": "resource/default.thm.json"

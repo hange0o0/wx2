@@ -40,6 +40,19 @@ class GetCoinItem extends game.BaseItem {
                     this.goBtn.visible = false;
                 })
             }
+            else if(this.data.type == 5)
+            {
+                ShareTool.openGDTV(()=>{
+                    UM.coinObj.videoNum ++;
+                    this.dataChanged();
+                })
+            }
+            else if(this.data.type == 6)
+            {
+                UM.coinObj.gameNum ++;
+                this.dataChanged();
+                ShootGameUI.getInstance().show();
+            }
             return;
         }
         if(!this.canAward)
@@ -65,6 +78,9 @@ class GetCoinItem extends game.BaseItem {
                 break;
             case 4: // {type:4,title:'邀请X位新的好友'},
                 UM.coinObj.newAward ++;
+                break;
+            case 5: //
+                UM.coinObj.videoAwardNum ++;
                 break;
         }
         this.dataChanged();
@@ -154,8 +170,45 @@ class GetCoinItem extends game.BaseItem {
                     this.goBtn.label = '邀请'
                     this.goWork = true
                 }
-                this.titleText.text = '邀请'+max+'位新的好友'
+                this.titleText.text = '邀请第'+max+'位新好友'
                 this.addCoin = 500*max;
+                break;
+            case 5: // 观看广告
+                if(coinObj.videoAwardNum >= 3)
+                {
+                    this.goBtn.skinName = 'Btn3Skin'
+                    this.goBtn.label = '今日已领'
+                }
+                else
+                {
+                    if(coinObj.videoAwardNum < coinObj.videoNum)
+                    {
+                        this.goBtn.label = '领取'
+                        this.canAward = true;
+                    }
+                    else
+                    {
+                        this.goBtn.skinName = 'Btn2Skin'
+                        this.goBtn.label = '观看广告'
+                        this.goWork = true
+                    }
+                }
+                this.titleText.text = '观看广告（'+coinObj.videoAwardNum+'/3）'
+                this.addCoin = 300;
+                break;
+            case 6: // 射击游戏
+                if(coinObj.gameNum >= 3)
+                {
+                    this.goBtn.skinName = 'Btn3Skin'
+                    this.goBtn.label = '今日已领'
+                }
+                else
+                {
+                    this.goBtn.skinName = 'Btn2Skin'
+                    this.goBtn.label = '开始游戏'
+                    this.goWork = true
+                }
+                this.titleText.text = '怪物射击（'+coinObj.gameNum+'/3）'
                 break;
             case 99: // debug
                 this.titleText.text = '临时加钱'
@@ -170,6 +223,8 @@ class GetCoinItem extends game.BaseItem {
         if(min > max)
             min = max;
         this.addCoinText.text = 'x' + this.addCoin;
+        if(this.data.type == 6)
+            this.addCoinText.text = 'x ???';
         //this.rateText.text = min+'/'+max;
         this.rateText.text = ''
         //if(this.data.type == 2 && coinObj.onLineAwardNum >= 5)

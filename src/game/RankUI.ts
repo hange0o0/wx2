@@ -101,11 +101,14 @@ class RankUI extends game.BaseUI{
             name: 'getRank',
             data: oo,
             complete: (res) => {
-                this.rankData[oo.type] = {
-                    list:res.result,
-                    time:TM.now()
+                if(res.result)
+                {
+                    this.rankData[oo.type] = {
+                        list:res.result,
+                        time:TM.now()
+                    }
+                    this.showRank(type);
                 }
-                this.showRank(type);
             },
             fail:()=>{
 
@@ -116,6 +119,8 @@ class RankUI extends game.BaseUI{
     }
 
     public showRank(type){
+        if(!this.rankData[type])
+            return;
         this.scroller.visible = true;
         var arr = this.rankData[type].list;
         var b = false;

@@ -17,6 +17,7 @@ class ShootBulletItem extends game.BaseItem{
     }
 
 
+    public mc;
     public constructor() {
         super();
         this.touchChildren = this.touchEnabled = false;
@@ -24,6 +25,9 @@ class ShootBulletItem extends game.BaseItem{
 
     public childrenCreated() {
         super.childrenCreated();
+        this.anchorOffsetX = this.anchorOffsetY = 9;
+        this.mc = new eui.Image('bullet9_png')
+        this.addChild(this.mc);
     }
 
     public dataChanged():void {

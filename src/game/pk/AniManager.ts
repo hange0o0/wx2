@@ -244,7 +244,8 @@ class AniManager {
     public getAni(id){
         var name = this.getMVKey(id);
         var mc = this.getMV(name);
-        mc.gotoAndPlay(1, -1);
+        if(mc.totalFrames)
+            mc.gotoAndPlay(1, -1);
         this.mvList.push(mc);
         return mc;
     }
@@ -253,6 +254,11 @@ class AniManager {
     public getAniOnce(sid,fun?,thisObj?){
         var name = this.getMVKey(sid);
         var mc = this.getMV(name);
+        if(!mc.totalFrames)
+        {
+            fun && fun.apply(thisObj);
+            return mc;
+        }
         mc.comFun = fun;
         mc.thisObj = thisObj;
 
