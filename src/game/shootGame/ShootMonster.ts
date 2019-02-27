@@ -43,6 +43,8 @@ class ShootMonster extends game.BaseItem{
 
         this.list.visible = false
         this.teamMC.visible = false
+
+        this.bar.fillColor = 0xFF0000
     }
 
     private onDieFinish(){

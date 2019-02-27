@@ -37,6 +37,7 @@ class ShootBulletItem extends game.BaseItem{
     public remove(){
         MyTool.removeMC(this);
         egret.Tween.removeTweens(this);
+        console.log('remove')
     }
 
 }

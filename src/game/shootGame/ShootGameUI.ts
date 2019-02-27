@@ -82,6 +82,8 @@ class ShootGameUI extends game.BaseUI {
         this.lastShootTime[index] = egret.getTimer();
 
 
+        if(this.tipText.visible)
+            egret.Tween.removeTweens(this.tipText)
         this.tipText.visible = false
 
         var mc = this['c'+index];
@@ -120,6 +122,7 @@ class ShootGameUI extends game.BaseUI {
         {
              ShootBulletItem.freeItem(this.bulletArr.pop())
         }
+        
         this.cdGroup.visible = false
         this.cannonGroup.visible = false
         this.coinGroup.visible = false
@@ -149,6 +152,8 @@ class ShootGameUI extends game.BaseUI {
                 this.cannonGroup.visible = true
                 this.coinGroup.visible = true
                 this.tipText.visible = true
+                this.tipText.alpha = 1;
+                egret.Tween.get(this.tipText,{loop:true}).to({alpha:0},500).to({alpha:1},500)
                 SoundManager.getInstance().playSound('pkbg')
             }
             return;
@@ -197,7 +202,7 @@ class ShootGameUI extends game.BaseUI {
     }
 
     private showResult(){
-        this.resultCoinText.text = this.coin + ''
+        this.resultCoinText.text = 'x'+this.coin + ''
         this.resultGroup.visible = true;
         SoundManager.getInstance().playSound('bg');
     }
