@@ -169,27 +169,27 @@ class CoinGameUI extends game.BaseUI {
     }
 
     private setChooseList() {
-        var arr = [];
-        var arr2 = [];
-        var answer = this.question.list2.split(',')
-        var data = MonsterVO.data;
-        for (var s in data) {
-            if (answer.indexOf(s) == -1) {
-                arr2.push(data[s])
-            }
-            else {
-                arr.push(data[s])
-            }
-        }
-        ArrayUtil.sortByField(arr2,['id'],[0])
-        var PKM = PKManager.getInstance();
-        PKM.randomSeed = (this.question.seed * 1.66);
-        while (arr.length < 18)
-        {
-            var index = Math.floor(PKM.random()*arr2.length)
-            arr.push(arr2[index])
-            arr2.splice(index,1);
-        }
+        var arr = PKManager.getInstance().getChapterChooseList(this.question);
+        //var arr2 = [];
+        //var answer = this.question.list2.split(',')
+        //var data = MonsterVO.data;
+        //for (var s in data) {
+        //    if (answer.indexOf(s) == -1) {
+        //        arr2.push(data[s])
+        //    }
+        //    else {
+        //        arr.push(data[s])
+        //    }
+        //}
+        //ArrayUtil.sortByField(arr2,['id'],[0])
+        //var PKM = PKManager.getInstance();
+        //PKM.randomSeed = (this.question.seed * 1.66);
+        //while (arr.length < 18)
+        //{
+        //    var index = Math.floor(PKM.random()*arr2.length)
+        //    arr.push(arr2[index])
+        //    arr2.splice(index,1);
+        //}
         ArrayUtil.sortByField(arr,['cost','type'],[0,0])
         for(var i=0;i<arr.length;i++)
         {
@@ -240,8 +240,12 @@ class CoinGameUI extends game.BaseUI {
         },['再想想','要提示']);
     }
 
+    private getAnswer(){
+        return PKManager.getInstance().chapterResetData[this.level] || this.question.list2
+    }
+
     private showTips(){
-        var list:any = this.question.list2.split(',')
+        var list:any = this.getAnswer().split(',')
         for(var i=0;i<list.length;i++)
         {
             list[i] = {id:list[i],list:list} ;

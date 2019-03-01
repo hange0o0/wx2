@@ -89,51 +89,43 @@ class ShareTool {
 
 
     //广告
-    public static openGDTV(success?, fail?, adindex?){
+    private static videoAD
+    private static adSuccFun;
+    public static openGDTV(success?){
         if(DEBUG) {
             console.log('视频广告');
             success && success();
             return
         }
+        this.adSuccFun = success;
         //if(MobileQU.isWXGame){ //视频广告，需要基础库版本号 >= 2.0.4
-            if(!window["wx"].createRewardedVideoAd){
-                MyWindow.Alert('暂不支持视频广告')
+        if(!window["wx"].createRewardedVideoAd){
+            MyWindow.Alert('暂不支持视频广告')
+        }
+        if(window["wx"].isPlayAD) return;//不能重复触发，否则会触发error
+        window["wx"].isPlayAD = true;
+
+
+        let errorFun = (res)=>{
+            window["wx"].isPlayAD = false
+        }
+        let close = (res) => {
+            if(!res || res.isEnded){ //部分版本（比如：2.0.9，不能提前关闭广告）播放完成回调res为undefined，故没有res当做成功
+                success && success();
             }
-            if(window["wx"].isPlayAD) return;//不能重复触发，否则会触发error
-            window["wx"].isPlayAD = true;
-            let adid = ADUI.getADID(adindex)// || ConfigQU.appData.wx_adtvCode;//'adunit-b0ef44339fa585f0';
-            let videoAd = window["wx"].createRewardedVideoAd({ adUnitId: adid });
-            videoAd.load().then(() =>videoAd.show()).catch(err => {
-                //err.errMsg 测试遇到3种错误：1、undefined 2、no advertisement 3、can't invoke load() while video-ad is showed
-                // fail && fail();
-                videoAd.offClose(close);
-                //EventManagerQU.dispatch(ServerQueenEvent.Client.HIDEWINDOW);
-                //if(ConfigQU.opShare(QST.T117)){
-                //    new WXGameNOADUIQueen().show(success, share_acttype);
-                //}
-                //else{
-                    success && success();
-                //    ShareTool.gdSuccessToServer(share_acttype);
-                //}
-                // AppFunction.jsErrorReport("ad_error_" + (err ? err.errMsg : "0000"), true);
-                window["wx"].isPlayAD = false;
-            })
-            let close = (res) => {
-                if(!res || res.isEnded){ //部分版本（比如：2.0.9，不能提前关闭广告）播放完成回调res为undefined，故没有res当做成功
-                    success && success();
-                    //ShareTool.gdSuccessToServer(share_acttype);
-                }else{
-                    fail && fail();
-                }
-                videoAd.offClose(close);
-                //EventManagerQU.dispatch(ServerQueenEvent.Client.HIDEWINDOW);
-                window["wx"].isPlayAD = false;
-            };
-            videoAd.onClose(close);
-            //EventManagerQU.dispatch(ServerQueenEvent.Client.SHOWWINDOW, true);//播放全屏广告的时候要隐藏banner广告
-            //return;
-        //}
-        //WXAddCode.execute();
+            window["wx"].isPlayAD = false
+        };
+        let adid = 'adunit-927ee662776f3dcc';//ADUI.getADID(adindex)// || ConfigQU.appData.wx_adtvCode;//'adunit-b0ef44339fa585f0';
+        if(!this.videoAD)
+        {
+            this.videoAD = window["wx"].createRewardedVideoAd({ adUnitId: adid });
+            this.videoAD.onClose(close);
+            this.videoAD.onError(errorFun);
+        }
+        this.videoAD.load().then(() =>this.videoAD.show()).catch(err => {
+            MyWindow.ShowTips('没有可观看的广告，请稍后再尝试')
+            window["wx"].isPlayAD = false
+        })
     }
 
     //是否支持播放视频广告

@@ -34,6 +34,7 @@ class PKManager {
     public pkResult = {}//所有PK结果的集合
     public levelData = []//关卡数据的集合
     public chapterData = []//关卡数据的集合
+    public chapterResetData = {}//关卡重置数据的集合
     //public roundTotalData = {}//关卡数据的集合
 
     private beginTime = 1550073600;//2019-2-14 0:0:0
@@ -312,16 +313,23 @@ class PKManager {
         //}
 
         //本地加载
-        this.loadUrl('resource/chapter.txt',fun,showMsging,true)
+        this.loadUrl('resource/chapter.txt',()=>{
+            this.loadUrl('resource/chapter_reset.txt',fun,showMsging,2)
+        },showMsging,1)
     }
 
-  private loadUrl(url,fun,showMsging,isChapter?){
+  private loadUrl(url,fun,showMsging,type?){
         var loader: egret.URLLoader = new egret.URLLoader();
         loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
         loader.once(egret.Event.COMPLETE,()=>{
-            if(isChapter)
+            loader.data = (loader.data || '').replace(/\r/g,'');
+            if(type==1)
             {
                 this.chapterData = loader.data.split('\n');
+            }
+            else if(type==2)
+            {
+                this.setResetData(loader.data.split('\n'))
             }
             else
                 this.levelData = loader.data.split('\n');
@@ -332,6 +340,15 @@ class PKManager {
         loader.load(new egret.URLRequest(url));
         if(showMsging)
             MsgingUI.getInstance().show();
+    }
+
+    private setResetData(arr){
+        this.chapterResetData = {};
+        for(var i=0;i<arr.length;i++)
+        {
+            var temp = arr[i].split('|')
+            this.chapterResetData[temp[0]] = temp[1];
+        }
     }
   //private loadUrl(index,url,fun,showMsging,isChapter?){
   //      console.log(url);
@@ -370,6 +387,32 @@ class PKManager {
             cost:36,
             seed:parseInt(arr[2]),
         }
+    }
+
+    public getChapterChooseList(question) {
+        var arr = [];
+        var arr2 = [];
+        var answer = question.list2.split(',')
+        var data = MonsterVO.data;
+        for (var s in data) {
+            if (answer.indexOf(s) == -1) {
+                arr2.push(data[s])
+            }
+            else {
+                arr.push(data[s])
+            }
+        }
+        ArrayUtil.sortByField(arr2,['id'],[0])
+        var PKM = PKManager.getInstance();
+        PKM.randomSeed = (question.seed * 1.66);
+        while (arr.length < 18)
+        {
+            var index = Math.floor(PKM.random()*arr2.length)
+            arr.push(arr2[index])
+            arr2.splice(index,1);
+        }
+
+        return arr;
     }
 
     //结算投注信息
@@ -528,6 +571,7 @@ class PKManager {
             PKData.instanceIndex = 1;
         //})
     }
+
 
     ////保证已加载了
     //public getRoundDataByKey(key){

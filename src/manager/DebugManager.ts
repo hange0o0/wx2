@@ -24,13 +24,33 @@ class DebugManager {
 
     public callCost = 0
 
-    public randomList(cost){
+    private delayCD(cd) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve()
+            }, cd);
+        } )
+    }
+
+    public randomList(cost,arrIn?){
         var arr = []
-        for(var s in MonsterVO.data)
+        if(arrIn)
         {
-            var mvo = MonsterVO.data[s]
-            arr.push(mvo)
+            arr = arrIn;
+            //for(var i=0;i<arrIn.length;i++)
+            //{
+            //    arr.push(MonsterVO.getObject(arrIn[i]));
+            //}
         }
+        else
+        {
+            for(var s in MonsterVO.data)
+            {
+                var mvo = MonsterVO.data[s]
+                arr.push(mvo)
+            }
+        }
+
 
         var num = 0;
         var newList = [];
@@ -388,6 +408,69 @@ class DebugManager {
             this.m1();
         },this);
         loader.load(new egret.URLRequest(url));
+    }
+
+    //重新生成关卡答案
+    public resetChapter(){
+        var PKM = PKManager.getInstance();
+        var newArr = [];
+        var myCost = 36;
+
+        PKM.loadChapterData(async ()=>{
+
+            var arr = PKM.chapterData;
+            for(var i=0;i<arr.length && i<100;i++)
+            {
+                var temp = arr[i].split('|')
+                var question = {
+                    list1:temp[0],
+                    list2:temp[1],
+                    cost:myCost,
+                    seed:parseInt(temp[2]),
+                }
+                this.testOne(question.list1,question.list2,question.seed)
+                if(PKData.getInstance().getPKResult() != 2) //原来默认的答案不对
+                {
+                    //调整后的答案是正确的
+                    if(PKM.chapterResetData[i+1])
+                    {
+                        this.testOne(question.list1,PKM.chapterResetData[i+1],question.seed)
+                        if(PKData.getInstance().getPKResult() == 2)
+                        {
+                            newArr.push((i+1)+'|'+PKM.chapterResetData[i+1]);
+                            continue;
+                        }
+                    }
+
+                    //重新找
+                    var chooseList =  PKManager.getInstance().getChapterChooseList(question);
+                    do{
+                        var list2 = this.randomList(myCost,chooseList);
+                        if(list2.split(',').length>Math.min(10,5+Math.floor(i/100)))
+                            continue;
+                        this.testOne(question.list1,list2,question.seed);
+                        if(PKData.getInstance().getPKResult() == 2)
+                        {
+                            console.log('error:',(i+1))
+                            newArr.push((i+1)+'|'+list2);
+                            break;
+                        }
+                    }while(true);
+                }
+                else
+                {
+                    console.log('1');
+                }
+                if(i%10 == 9) //防循环时间过长
+                {
+                    await this.delayCD(1);
+                }
+            }
+
+            console.log('finish',newArr.length);
+            if(newArr.length)
+                egret.localStorage.setItem('resetChapter' + DateUtil.formatDate('MM-dd hh:mm:ss',new Date()), newArr.join('\n'));
+        },true)
     }
 
 }

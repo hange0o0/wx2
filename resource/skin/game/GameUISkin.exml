@@ -14,7 +14,7 @@
 			<e:Image x="2.02" source="icon_coin_png" y="-1.33"/>
 		</e:Group>
 	<e:Image source="title_bg4_png" x="-1.52" width="640" fillMode="repeat" bottom="-20"/>
-    <e:Group id="bottomGroup" height="100" bottom="2" horizontalCenter="0" visible="false">
+    <e:Group id="bottomGroup" height="100" bottom="2" horizontalCenter="0">
 			<e:Group id="rankBtn" x="100" y="0" height="90" width="90">
 				<e:Image source="rank_btn_png" horizontalCenter="0" verticalCenter="0"/>
 			</e:Group>
@@ -22,7 +22,7 @@
 						<e:Image source="coin_btn_png" horizontalCenter="0" verticalCenter="0"/>
 						<e:Image id="shopRedMC" source="red_mc_png" right="-10" top="-5"/>
 					</e:Group>
-			<e:Group x="220" y="18" width="120">
+			<e:Group id="mainGroup" x="220" y="18" width="120" height="71">
 				<e:Group id="wordGroup" x="0" y="0" height="31" width="100">
 					<e:BitmapLabel id="b1" x="18" y="15" font="font1_fnt" text="休" anchorOffsetX="18" anchorOffsetY="18"/>
 					<e:BitmapLabel id="b2" x="53" y="15" font="font1_fnt" text="战" anchorOffsetX="18" anchorOffsetY="18"/>

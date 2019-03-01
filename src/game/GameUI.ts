@@ -14,6 +14,7 @@ class GameUI extends game.BaseUI {
     public team1: TeamUI;
     private team2: TeamUI;
     private coinGroup: eui.Group;
+    private mainGroup: eui.Group;
     private coinText: eui.Label;
     private bottomGroup: eui.Group;
     private shopBtn: eui.Group;
@@ -69,9 +70,9 @@ class GameUI extends game.BaseUI {
         var mcFactory = new egret.MovieClipDataFactory(data, texture);
         this.pkMV = new egret.MovieClip();
         this.pkMV.movieClipData = mcFactory.generateMovieClipData('mv');
-        this.addChild(this.pkMV);
-        this.pkMV.y = GameManager.uiHeight - 80;
-        this.pkMV.x = 320;
+        this.mainGroup.addChild(this.pkMV);
+        this.pkMV.y = 5;
+        this.pkMV.x = 58;
         this.pkMV.scaleX = this.pkMV.scaleY = 1.5
         this.pkMV.visible = false;
 
