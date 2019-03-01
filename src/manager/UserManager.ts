@@ -14,6 +14,7 @@ class UserManager {
     public onLineAwardCD = [5*60,30*60,3600,2*3600,3*3600]
 
 
+    public testVersion = 1//与服务器相同则为测试版本
     public isTest;
     public gameid: string;
     public nick: string;
@@ -134,7 +135,10 @@ class UserManager {
                     complete: (res) => {
                         console.log(res)
                         this.gameid = res.result.openid
-                        this.isTest = res.result.isTest;
+                        if(res.result.testVersion)
+                            this.isTest = res.result.testVersion == this.testVersion;
+                        else
+                            this.isTest = res.result.isTest;
                         //console.log(11)
                         TimeManager.getInstance().initlogin(res.result.time)
                         //console.log(res.result.time)

@@ -618,7 +618,7 @@ class PKManager {
         var wx = window['wx'];
         if(!wx)
             return;
-        var upList = [{ key: 'coinwin', value: UM.coinwin + ',' + TM.now()}];
+        var upList = [{ key: 'coinwin', value: UM.coinwin + ',' + TM.now()},{ key: 'coin', value: UM.coinwin},{ key: 'coinTime', value:TM.now()}];
         //if(UM.total >= Config.openRate)
         //{
         //    upList.push({ key: 'winrate', value: (UM.win/UM.total) + ',' + TM.now()})
@@ -649,7 +649,7 @@ class PKManager {
         var wx = window['wx'];
         if(!wx)
             return;
-        var upList = [{ key: 'level', value: UM.chapterLevel + ',' + TM.now()}];
+        var upList = [{ key: 'level', value: UM.chapterLevel + ',' + TM.now()},{ key: 'chapter', value: UM.chapterLevel},{ key: 'chapterTime', value:TM.now()}];
         wx.setUserCloudStorage({
             KVDataList: upList,
             success: res => {

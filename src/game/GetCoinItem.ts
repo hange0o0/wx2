@@ -154,7 +154,7 @@ class GetCoinItem extends game.BaseItem {
                     }
                 }
                 this.titleText.text = '告诉我的好友们'
-                this.addCoin = 100;
+                this.addCoin = 200;
                 break;
             case 4: // {type:4,title:'邀请X位新的好友'},
                 min = ObjectUtil.objLength(UM.friendNew),
@@ -171,7 +171,7 @@ class GetCoinItem extends game.BaseItem {
                     this.goWork = true
                 }
                 this.titleText.text = '邀请第'+max+'位新好友'
-                this.addCoin = 500*max;
+                this.addCoin = 2000*max;
                 break;
             case 5: // 观看广告
                 if(coinObj.videoAwardNum >= 3)
