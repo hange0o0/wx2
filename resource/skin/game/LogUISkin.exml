@@ -13,8 +13,14 @@
 		</e:Group>
 	</e:Scroller>
 
-    <e:Group bottom="28" right="20">
-		<e:Image source="bg3_png" scale9Grid="16,15,7,7" left="0" right="0" top="0" bottom="0"/>
-		<e:Label id="desText" text="日志只保留最近20条" stroke="2" strokeColor="0x301200" size="24" left="15" right="15" top="10" bottom="10"/>
+	<e:Group right="20" height="80" bottom="10">
+		<e:Group x="231" y="18">
+			<e:Image source="bg3_png" scale9Grid="16,15,7,7" left="0" right="0" top="0" bottom="0"/>
+			<e:Label id="desText" text="日志只保留最近20条" stroke="2" strokeColor="0x301200" size="24" left="15" right="15" top="10" bottom="10"/>
+		</e:Group>
+		<ns1:JumpMC x="0" skinName="JumpMCSkin" scaleX="1" scaleY="1" width="70" height="70" y="0"/>
+		<e:layout>
+			<e:HorizontalLayout verticalAlign="middle" gap="20"/>
+		</e:layout>
 	</e:Group>
 </e:Skin>

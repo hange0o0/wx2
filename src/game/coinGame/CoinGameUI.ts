@@ -223,6 +223,16 @@ class CoinGameUI extends game.BaseUI {
             },['再想想','要提示']);
             return;
         }
+
+        if(this.level % 5 == 0 && !UM.isTest)
+        {
+            ShareTool.share('日常推荐一个好游戏',Config.localResRoot + "share_img_2.jpg",{},()=>{
+                UM.tipsLevel = this.level;
+                this.showTips()
+            })
+            return;
+        }
+
         var cost = Math.min(2000,Math.ceil(this.level/20)*100)
         MyWindow.Confirm('确定花费'+cost+'金币得到提示答案吗？',(b)=>{
             if(b==1)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="GetCoinUISkin" width="640" height="960" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="ChangeUserUISkin" width="640" height="960" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="bg3_png" scale9Grid="16,15,7,7" x="0" y="0" width="100%" height="100%"/>
 	<ns1:TopUI id="topUI" width="100%" x="0" y="0" skinName="TopUISkin"/>
 	<ns1:BottomUI id="bottomUI" x="0" skinName="BottomUISkin" bottom="0"/>
@@ -7,11 +7,14 @@
 		<e:Group>
 			<e:List id="list" width="200" height="200" x="96" y="96">
 				<e:layout>
-					<e:TileLayout requestedColumnCount="2" horizontalGap="20" verticalGap="20" paddingLeft="30" paddingTop="20" paddingBottom="20" paddingRight="20"/>
+					<e:VerticalLayout paddingLeft="10" gap="10" paddingBottom="10" paddingTop="10"/>
 				</e:layout>
 			</e:List>
 		</e:Group>
 	</e:Scroller>
-	<ns1:JumpMC skinName="JumpMCSkin" scaleX="1" scaleY="1" width="70" height="70" bottom="15" right="15"/>
+	<e:Group id="changeBtn" width="100" height="80" bottom="10" right="10">
+		<e:Image y="0" horizontalCenter="0" scaleX="1.5" scaleY="1.5" source="change_icon_png"/>
+		<e:Label text="换一组" bottom="0" horizontalCenter="0" size="24" stroke="2" textColor="0xFFE0C4"/>
+	</e:Group>
 
 </e:Skin>

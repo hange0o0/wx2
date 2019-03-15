@@ -160,12 +160,14 @@ class RankUI extends game.BaseUI{
     private poseData(){
         if(this.tab.selectedIndex == 2)
         {
-            var key = 'coinwin'
+            var key = 'coin'
+            var oldKey = 'coinwin'
             var value = UM.coinwin;
         }
         else if(this.tab.selectedIndex == 3)
         {
-            var key = 'level'
+            var key = 'chapter'
+            var oldKey = 'level'
             var value = UM.chapterLevel
         }
 
@@ -173,10 +175,11 @@ class RankUI extends game.BaseUI{
             me: UM.gameid,
             command: 'open',
             key:key,
+            key2:oldKey,
             rankHeight:GameManager.uiHeight-130-110,
             x:this.bitmap.x,// + (GameManager.uiWidth - this.width)/2,
             y:this.bitmap.y + (GameManager.uiHeight - this.height)/2 + (GameManager.isLiuHai()?50:0),
-            me_value: value + ',0', //第2位时间传0，永远排在最上面
+            me_value: value, //第2位时间传0，永远排在最上面
             root: "openDataContext/",
         }
 

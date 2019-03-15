@@ -98,6 +98,7 @@ class GameUI extends game.BaseUI {
 
 
     private onRank(){
+        //this['sfasfsfsadf']();
         RankUI.getInstance().show();
     }
 
@@ -206,6 +207,7 @@ class GameUI extends game.BaseUI {
     private initData(){
         if(!this.haveLoadFinish || !this.haveGetInfo)
             return;
+        JumpMC.getAD();
         GuideManager.getInstance().isGuiding = !UM.guideFinish;
         this.bottomGroup.visible = true;
         this.loadingGroup.visible = false;

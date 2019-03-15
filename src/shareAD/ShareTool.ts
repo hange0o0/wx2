@@ -4,7 +4,7 @@ class ShareTool {
     /**
      * 分享
      */
-    public static share(title, imgUrl,shareArgs,success?){
+    public static share(title, imgUrl,shareArgs,success?,mustSuccess?){
         if(DEBUG){
             //if(!shareArgs || !shareArgs.ACT_TYPE){
             //    console.error("需要配置 ACT_TYPE");
@@ -61,7 +61,35 @@ class ShareTool {
         //console.log(title)
         //console.log(imgUrl)
         //console.log(ObjectUtil.join(shareArgs))
-        GameManager.getInstance().onShowFun = success
+        var shareTime = egret.getTimer();
+        var failText = '分享失败！建议分享受到其它群试试'
+        GameManager.getInstance().onShowFun = function(){
+            if(mustSuccess || !UM.shareFail)
+            {
+                success && success();
+                return;
+            }
+            var cd = egret.getTimer()-shareTime;
+            if(cd < 2500)
+            {
+                GameManager.getInstance().shareFailTime ++;
+                MyWindow.ShowTips(failText)
+                return;
+            }
+
+            if(GameManager.getInstance().shareFailTime < 3)
+            {
+                if(Math.random()*(GameManager.getInstance().shareFailTime+1) < 0.8)
+                {
+                    GameManager.getInstance().shareFailTime ++;
+                    MyWindow.ShowTips(failText)
+                    return;
+                }
+            }
+
+            GameManager.getInstance().shareFailTime = 0;
+            success && success();
+        }
         wx.shareAppMessage({
             title:title,
             imageUrl:imgUrl,

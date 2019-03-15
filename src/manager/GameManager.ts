@@ -13,6 +13,7 @@ class GameManager {
     public lastTouchMC;
 
     public onShowFun
+    public shareFailTime = 0
 	public constructor() {
         this.timeID = new egret.Timer(1000);
         this.timeID.addEventListener(egret.TimerEvent.TIMER,this.timerun,this);
@@ -63,7 +64,7 @@ class GameManager {
             return;
 
 
-        var btnw = Math.min((GameManager.stage.stageHeight/1380)*640,640)
+        var btnw = Math.min(Math.pow(GameManager.stage.stageHeight/1330,1.6)*640,640)
 
         let scalex = screen.availWidth/640;
         let scaley = screen.availHeight/GameManager.stage.stageHeight;
@@ -247,7 +248,7 @@ class App {
 function sendClientError(str){
     //var url =  'http://172.17.196.195:90/error_wx2/log_error.php'
     //if(window["wx"])
-    var url =  'https://120.77.153.203/error_wx2/log_error.php'
+    var url =  'https://www.hangegame.com/error_wx2/log_error.php'
     Net.getInstance().send(url,{str:str});
 }
 //window.onerror=handleErr;
@@ -255,19 +256,23 @@ function sendClientError(str){
 
 if(window["wx"])
 {
+    window['sendClientError'] =  sendClientError;
     window["TeamUI"] = TeamUI;
     window["MainPKUI"] = MainPKUI;
     window["PKCardInfoUI"] = PKCardInfoUI;
     window["BottomUI"] = BottomUI;
     window["TopUI"] = TopUI
+    window["JumpMC"] = JumpMC
 
 
     var wx =  window["wx"];
 
     wx.onError(function(res){
         PKManager.getInstance().upDateUserData();
-        //var str = "onError:" + ("openid:" + _get["openid"] + "--") + res.message + "--" + res.stack;
-        //this.sendClientError(str);
+        try{
+            var str = "onError:" + ("openid:" + UM.gameid + "--") + res.message + "--" + res.stack;
+            sendClientError(str);
+        }catch(e){}
     });
 
     wx.onHide(function(res){

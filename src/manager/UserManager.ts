@@ -14,8 +14,11 @@ class UserManager {
     public onLineAwardCD = [5*60,30*60,3600,2*3600,3*3600]
 
 
-    public testVersion = 1//与服务器相同则为测试版本
+    public testVersion = 3//与服务器相同则为测试版本
     public isTest;
+    public shareFail;
+
+
     public gameid: string;
     public nick: string;
     public head: string;
@@ -135,6 +138,7 @@ class UserManager {
                     complete: (res) => {
                         console.log(res)
                         this.gameid = res.result.openid
+                        this.shareFail = res.result.shareFail
                         if(res.result.testVersion)
                             this.isTest = res.result.testVersion == this.testVersion;
                         else

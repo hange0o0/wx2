@@ -38,7 +38,7 @@ class GetCoinItem extends game.BaseItem {
                 ShareTool.share('我需要你们的帮助！！',Config.localResRoot + "share_img_1.jpg",{type:1,from:UM.gameid},()=>{
                     this.desText.text = '等待好友加入'
                     this.goBtn.visible = false;
-                })
+                },true)
             }
             else if(this.data.type == 5)
             {
