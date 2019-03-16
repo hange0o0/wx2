@@ -14,11 +14,13 @@ class PKTalkItem extends game.BaseContainer {
         item.remove();
         this.pool.push(item);
     }
+    public static randomRate = 0.2;
 
     public constructor() {
         super();
         this.skinName = "PKTalkItemSkin";
     }
+
 
     private text: eui.Label;
     private bg: eui.Image;
@@ -43,7 +45,15 @@ class PKTalkItem extends game.BaseContainer {
         if(gift)
             this.text.text = PKManager.getInstance().costWord[Math.floor(Math.random()*PKManager.getInstance().costWord.length)];
         else
-            this.text.text = PKManager.getInstance().pkWord[Math.floor(Math.random()*PKManager.getInstance().pkWord.length)];
+        {
+            if(Math.random() < PKTalkItem.randomRate)
+            {
+                this.text.text = '上拉屏幕有惊喜！'
+                PKTalkItem.randomRate /= 2;
+            }
+            else
+                this.text.text = PKManager.getInstance().pkWord[Math.floor(Math.random()*PKManager.getInstance().pkWord.length)];
+        }
         this.relateItem = data;
 
 

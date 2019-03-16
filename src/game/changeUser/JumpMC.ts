@@ -38,7 +38,7 @@ class JumpMC extends game.BaseItem{
 
     private onClick(){
         this.redMC.visible = false;
-        ChangeUserUI.getInstance().show();
+        //ChangeUserUI.getInstance().show();
     }
 
     public dataChanged():void {

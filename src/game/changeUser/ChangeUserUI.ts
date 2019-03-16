@@ -1,21 +1,8 @@
-class ChangeUserUI extends game.BaseUI {
+class ChangeUserUI extends game.BaseContainer {
 
-    private static _instance: ChangeUserUI;
-    public static getInstance(): ChangeUserUI {
-        if(!this._instance)
-            this._instance = new ChangeUserUI();
-        return this._instance;
-    }
 
-    private topUI: TopUI;
-    private bottomUI: BottomUI;
-    private scroller: eui.Scroller;
+
     private list: eui.List;
-    private changeBtn: eui.Group;
-
-
-
-
     private dataProvider:eui.ArrayCollection
 
     public constructor() {
@@ -23,36 +10,41 @@ class ChangeUserUI extends game.BaseUI {
         this.skinName = "ChangeUserUISkin";
     }
 
+    public adList = []
+    private lastGetADTime = 0;
+    public getAD(fun?){
+        var wx = window['wx'];
+        //console.log(333333)
+        if(!wx) {
+            MyTool.removeMC(this);
+            return;
+        }
+        if(TM.now() - this.lastGetADTime < 5*60)
+            return;
+        this.adList.length = 0;
+        var self = this
+        wx.wladGetAds(10,function (res) { //第⼀一个参数为获取⼴广告条数，第⼆二个参数为获取成功后回调⽅方法;
+            //console.log(res);
+            self.lastGetADTime = TM.now();
+            self.adList = res.data;
+            self.renew();
+            fun && fun();
+        })
+    }
+
     public childrenCreated() {
         super.childrenCreated();
-
-        this.bottomUI.setHide(this.hide,this);
-        this.topUI.setTitle('精品应用推荐')
-
-        this.scroller.viewport = this.list;
         this.list.itemRenderer = ChangeUserItem
         this.list.dataProvider = this.dataProvider = new eui.ArrayCollection();
-
-        this.addBtnEvent(this.changeBtn,this.onChange);
-
-    }
-
-    private onChange(){
-           JumpMC.getAD(()=>{
-               this.renew();
-           })
-    }
-
-    public show(){
-        super.show()
-    }
-
-    public onShow(){
-        this.renew();
     }
 
     public renew(){
-        this.dataProvider.source = JumpMC.adList;
+        if(this.adList.length == 0)
+        {
+            MyTool.removeMC(this);
+            return;
+        }
+        this.dataProvider.source = this.adList;
         this.dataProvider.refresh();
     }
 

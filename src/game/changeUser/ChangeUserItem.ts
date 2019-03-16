@@ -9,7 +9,7 @@ class ChangeUserItem extends game.BaseItem{
 
     private mc: eui.Image;
     private nameText: eui.Label;
-    private desText: eui.Label;
+    //private desText: eui.Label;
 
 
     public constructor() {
@@ -35,8 +35,8 @@ class ChangeUserItem extends game.BaseItem{
 
     public dataChanged():void {
         this.mc.source = this.data.logo;
-        this.nameText.text = this.data.name;
-        this.desText.text = this.data.desc;
+        this.nameText.text = StringUtil.getStringByLength(this.data.name,5);
+        //this.desText.text = this.data.desc;
     }
 
 }

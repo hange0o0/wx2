@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="ChangeUserItemSkin" width="620" height="120" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="bg2_png" scale9Grid="9,9,11,10" x="0" y="0" width="100%" height="100%"/>
-	<e:Image id="mc" width="100" height="100" x="10" y="10"/>
-	<e:Label id="nameText" text="Label" x="130" y="10"/>
-	<e:Label id="desText" text="LabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabel" y="55" left="130" right="10" textColor="0xf9d7ae" size="24" lineSpacing="6"/>
+<e:Skin class="ChangeUserItemSkin" width="100" height="120" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="mc" width="90" height="90" y="0" horizontalCenter="0"/>
+	<e:Label id="nameText" text="一一一一一" horizontalCenter="0" size="20" bottom="0" textAlign="center" textColor="0xfcf3c9"/>
 </e:Skin>

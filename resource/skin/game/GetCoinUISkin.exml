@@ -12,6 +12,5 @@
 			</e:List>
 		</e:Group>
 	</e:Scroller>
-	<ns1:JumpMC skinName="JumpMCSkin" scaleX="1" scaleY="1" width="70" height="70" bottom="15" right="15"/>
 
 </e:Skin>

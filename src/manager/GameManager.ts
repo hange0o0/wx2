@@ -263,6 +263,7 @@ if(window["wx"])
     window["BottomUI"] = BottomUI;
     window["TopUI"] = TopUI
     window["JumpMC"] = JumpMC
+    window["ChangeUserUI"] = ChangeUserUI
 
 
     var wx =  window["wx"];

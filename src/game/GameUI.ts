@@ -38,6 +38,7 @@ class GameUI extends game.BaseUI {
     private stopBG: eui.Image;
     private scroller: eui.Scroller;
     private list: eui.List;
+    private changeUser: ChangeUserUI;
 
 
 
@@ -94,6 +95,10 @@ class GameUI extends game.BaseUI {
     private onStopClick(e)
     {
         this.stopMV.talk()
+    }
+
+    public resizeFun(){
+        this.team1.height = this.team2.height = (this.height- 75 -105)/2
     }
 
 
@@ -164,6 +169,7 @@ class GameUI extends game.BaseUI {
         this.stopingGroup.visible = false;
         this.coinText.text = '???'
 
+        this.changeUser.getAD()
         this.renewSound();
         //this.cdText.text = '.'
         this.loadingGroup.visible = true;
@@ -207,7 +213,7 @@ class GameUI extends game.BaseUI {
     private initData(){
         if(!this.haveLoadFinish || !this.haveGetInfo)
             return;
-        JumpMC.getAD();
+        //JumpMC.getAD();
         GuideManager.getInstance().isGuiding = !UM.guideFinish;
         this.bottomGroup.visible = true;
         this.loadingGroup.visible = false;
@@ -382,6 +388,7 @@ class GameUI extends game.BaseUI {
 
         setTimeout(()=>{ //10秒内随机一个时间写
             PKM.upDateUserData();
+            this.changeUser.getAD();
         },Math.random()*10*1000)
 
         //PKM.callSendCost(true);

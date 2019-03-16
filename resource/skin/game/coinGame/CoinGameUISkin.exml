@@ -27,9 +27,6 @@
 	</e:List>
 	<e:Image left="0" right="0" top="500" bottom="100" source="bg18_png" scale9Grid="34,32,3,6" touchEnabled="false" x="0" y="560"/>
 	<e:Group id="btnGroup" right="20" bottom="10">
-		<e:Group x="0" y="0" width="100" height="80">
-			<ns1:JumpMC id="jumpMC" skinName="JumpMCSkin" scaleX="1" scaleY="1" width="70" height="70" horizontalCenter="0" verticalCenter="0"/>
-		</e:Group>
 		<e:Group id="tipsBtn" x="0" y="2" width="100" height="80">
 			<e:Image source="icon_empty_png" y="0" horizontalCenter="0"/>
 			<e:Label text="提示" bottom="0" horizontalCenter="0" size="24" stroke="2" textColor="0xffe0c4"/>
@@ -51,6 +48,6 @@
 		<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0" scale9Grid="43,7,7,42"/>
 		<e:Label id="costText" text="剩余费用：12" verticalCenter="0" left="40" right="40" size="24" multiline="false"/>
 	</e:Group>
-	<e:Label id="desText" text="点击下方头像加入怪物，长按可查看详情" y="548" horizontalCenter="0" size="24" textColor="0xffefaa"/>
+	<e:Label id="desText" text="点击加入/移除怪物，长按查看详情，拖动调整位置" y="548" horizontalCenter="0" size="24" textColor="0xffefaa"/>
 
 </e:Skin>
