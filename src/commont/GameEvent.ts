@@ -7,6 +7,7 @@ class GameEvent {
         HISTORY_CHANGE:'HISTORY_CHANGE',
 
         red_change:'red_change',
+        energy_change:'energy_change',
         pass_day:'pass_day',
         timer:'timer',
         timerE:'timerE'

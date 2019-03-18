@@ -12,6 +12,7 @@ class GameManager {
     public lastTouchTime: number;
     public lastTouchMC;
 
+    public changeUserTime = 0
     public onShowFun
     public shareFailTime = 0
 	public constructor() {
@@ -147,6 +148,8 @@ class GameManager {
             EM.dispatch(GameEvent.client.pass_day);
         }
         EM.dispatch(GameEvent.client.timer);
+
+
 
         //if(UM.friendtime == 0){  //拿过日志了
         //    if(now%30 == 0) //5分钟请求一次
@@ -298,6 +301,16 @@ if(window["wx"])
         GameManager.getInstance().onShowFun = null;
         //GameUI.getInstance().cleanTouch();
         console.log('show')
+
+        if(GameManager.getInstance().changeUserTime)
+        {
+            if(TM.now() - GameManager.getInstance().changeUserTime > 30 && !UM.coinObj.shareNum) //停留超过30秒
+            {
+                UM.coinObj.shareNum ++;
+                PKManager.getInstance().needUpUser = true;;
+            }
+        }
+        GameManager.getInstance().changeUserTime = 0;
     });
     //wx.exitMiniProgram(function(res){
     //    if(!GameManager.stage)

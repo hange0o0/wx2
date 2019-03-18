@@ -40,6 +40,8 @@
 		"resource/skin/game/changeUser/ChangeUserUISkin.exml",
 		"resource/skin/game/changeUser/JumpMCSkin.exml",
 		"resource/skin/game/coinGame/CoinGameChooseItemSkin.exml",
+		"resource/skin/game/coinGame/CoinGameHistoryItemSkin.exml",
+		"resource/skin/game/coinGame/CoinGameHistoryUISkin.exml",
 		"resource/skin/game/coinGame/CoinGameListItemSkin.exml",
 		"resource/skin/game/coinGame/CoinGameUISkin.exml",
 		"resource/skin/game/common/AwardItemSkin.exml",

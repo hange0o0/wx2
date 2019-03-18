@@ -121,7 +121,7 @@ class TeamUI extends game.BaseItem {
         {
             if(UM.lastGuess.cost1 + v > this.maxCost)
             {
-                MyWindow.ShowTips('本轮打赏上限为' + this.maxCost)
+                MyWindow.ShowTips('本轮投注上限为' + this.maxCost)
                 return;
             }
             UM.lastGuess.cost1 += v
@@ -131,7 +131,7 @@ class TeamUI extends game.BaseItem {
         {
             if(UM.lastGuess.cost2 + v > this.maxCost)
             {
-                MyWindow.ShowTips('本轮打赏上限为' + this.maxCost)
+                MyWindow.ShowTips('本轮投注上限为' + this.maxCost)
                 return;
             }
             UM.lastGuess.cost2 += v
@@ -171,7 +171,7 @@ class TeamUI extends game.BaseItem {
         var item = this.monsterArr[Math.floor(this.monsterArr.length*Math.random())];
         if(item && !item.talkItm)
         {
-            item.talk(true);
+            item.talk(1);
             setTimeout(()=>{
                 this.giftTalk(cost*0.6)
             },100)
@@ -265,7 +265,7 @@ class TeamUI extends game.BaseItem {
         this.addBtn100.skinName = UM.coin >= 100 && userCost <= 9900 ?'Btn1Skin':'Btn3Skin'
         this.addBtn1000.skinName = UM.coin >= 1000 && userCost <= 9000 ?'Btn1Skin':'Btn3Skin'
 
-        this.setHtml(this.totalText,this.createHtml('总打赏：',0xFFCC8C) +this.createHtml(NumberUtil.addNumSeparator(parseInt(myCost)),myCost>otherCost?0x00ff00:0xffffff));
+        this.setHtml(this.totalText,this.createHtml('总投注：',0xFFCC8C) +this.createHtml(NumberUtil.addNumSeparator(parseInt(myCost)),myCost>otherCost?0x00ff00:0xffffff));
         this.setHtml(this.myText,this.createHtml('我的：',0xFFCC8C) +this.createHtml(NumberUtil.addNumSeparator(userCost),userCost > 0?0x00ff00:0xffffff));
         //this.myText.text = '我的：' +NumberUtil.addNumSeparator(userCost);
         //this.myText.textColor = userCost > 0?0x00ff00:0xffffff

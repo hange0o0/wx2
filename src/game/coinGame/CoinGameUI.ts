@@ -19,8 +19,14 @@ class CoinGameUI extends game.BaseUI {
     private getTipsIcon: eui.Image;
     private resetBtn: eui.Group;
     private pkBtn: eui.Group;
+    private historyBtn: eui.Group;
+    private energyGroup: eui.Group;
     private costText: eui.Label;
+    private energyText: eui.Label;
+    private addEnergyBtn: eui.Image;
     private desText: eui.Label;
+    private freeEnergyText: eui.Label;
+
 
 
 
@@ -55,6 +61,9 @@ class CoinGameUI extends game.BaseUI {
         this.addBtnEvent(this.pkBtn,this.onPK)
         this.addBtnEvent(this.resetBtn,this.reset)
         this.addBtnEvent(this.tipsBtn,this.onTips)
+        this.addBtnEvent(this.historyBtn,()=>{
+            CoinGameHistoryUI.getInstance().show();
+        })
 
         this.chooseList.addEventListener('start_drag',this.onDragStart,this);
         this.chooseList.addEventListener('end_drag',this.onDragEnd,this);
@@ -68,6 +77,15 @@ class CoinGameUI extends game.BaseUI {
         this.stage.addChild(this.dragTarget);
         this.dragTarget.initDragItem();
         MyTool.removeMC(this.dragTarget);
+
+        this.addBtnEvent(this.addEnergyBtn,this.onAddEnergy)
+    }
+
+    private onAddEnergy() {
+        ShareTool.share('日常推荐一个好游戏', Config.localResRoot + "share_img_2.jpg", {}, ()=> {
+            UM.addEnergy(20);
+            this.renewEnergy();
+        })
     }
 
     public stopDrag(){
@@ -275,6 +293,16 @@ class CoinGameUI extends game.BaseUI {
             MyWindow.ShowTips('请点击上方头像配置你的队伍')
             return;
         }
+        if(this.energyGroup.visible)
+        {
+            if(UM.getEnergy()<1)
+            {
+                MyWindow.ShowTips('体力不足')
+                return;
+            }
+            UM.addEnergy(-1);
+        }
+
         this.addChild(MainPKUI.instance);
         MainPKUI.instance.top = 60
         MainPKUI.instance.bottom = 100
@@ -332,7 +360,7 @@ class CoinGameUI extends game.BaseUI {
             item.stand();
             item.scaleX = item.scaleY = 1.2;
             item.currentMV.scaleX = -Math.abs(item.currentMV.scaleX);
-            item.bottom = 0+vo.height*1.2 - 5 + 10*Math.random()// + Math.random()*80
+            item.bottom = 20+vo.height*1.2 - 5 + 10*Math.random()// + Math.random()*80
             item['w'] = vo.width
             item.x = begin + i*des
             this.monsterArr.push(item);
@@ -350,6 +378,11 @@ class CoinGameUI extends game.BaseUI {
         if(MainPKUI.instance.visible && MainPKUI.instance.parent == this)
         {
             MainPKUI.instance.hide();
+            return;
+        }
+        if(this.level != UM.chapterLevel)
+        {
+            this.renew();
             return;
         }
         this.hide();
@@ -381,7 +414,7 @@ class CoinGameUI extends game.BaseUI {
     private onItemChange(){
          var cost = this.getMyCost();
         this.leaveCost = (this.question.cost - cost)
-        this.costText.text = '剩余费用：' + this.leaveCost
+        this.costText.text = '剩余费用：' + this.leaveCost + '/' + this.question.cost;
         MyTool.renewList(this.list)
         this.desText.visible = cost == 0
     }
@@ -393,7 +426,47 @@ class CoinGameUI extends game.BaseUI {
     public onShow(){
 
         this.renew();
-        this.addPanelOpenEvent(GameEvent.client.CHAPTER_CHANGE,this.renew)
+        this.addPanelOpenEvent(GameEvent.client.CHAPTER_CHANGE,()=>{
+            this.renew();
+        })
+        this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
+    }
+
+    private onTimer(){
+        this.renewEnergy();
+        this.randomTalk();
+    }
+    private renewEnergy(){
+        var energy = UM.getEnergy();
+        if(energy > 0)
+        {
+            this.energyText.text = '剩余体力：' + energy + '/' + UM.maxEnergy
+            this.energyText.textColor = 0xFFE3B7
+            MyTool.removeMC(this.addEnergyBtn)
+        }
+        else
+        {
+            this.energyText.text = '下次恢复：' + DateUtil.getStringBySecond(UM.getNextEnergyCD()).substr(-5);
+            this.energyText.textColor = 0xFF0000
+            if(UM.isTest)
+                MyTool.removeMC(this.addEnergyBtn)
+            else if(!this.addEnergyBtn.parent)
+                this.energyGroup.addChild(this.addEnergyBtn);
+        }
+    }
+
+    private lastTalk = 0;
+    public randomTalk(){
+        if(Math.random() > 0.5)
+            return;
+        var item = this.monsterArr[Math.floor(this.monsterArr.length*Math.random())];
+        if(item && !item.talkItm)
+        {
+            if(egret.getTimer() < this.lastTalk)
+                return;
+            item.talk(2);
+            this.lastTalk = egret.getTimer() + 3000 + Math.floor(Math.random()*2000);
+        }
     }
 
     //private onChapterChange(){
@@ -409,12 +482,13 @@ class CoinGameUI extends game.BaseUI {
             this.topUI.setTitle('关卡解迷 - 第'+this.level+'关')
     }
 
-    private renew(){
-        this.level = UM.chapterLevel;
-        this.question = PKManager.getInstance().getChapterData();
+    public renew(level?){
+        this.level = level || UM.chapterLevel;
+        this.question = PKManager.getInstance().getChapterData(this.level);
         this.renewTitle();
         this.showQuestion();
         this.setChooseList();
+        this.renewEnergy();
         if(UM.tipsLevel == this.level)
         {
             this.showTips();
@@ -440,6 +514,17 @@ class CoinGameUI extends game.BaseUI {
             {
                 this.reset();
             }
+        }
+
+        this.energyGroup.visible = this.level == UM.chapterLevel;
+        this.freeEnergyText.visible = !this.energyGroup.visible;
+        if(this.level == UM.chapterLevel && UM.chapterLevel > 1)
+        {
+            this.btnGroup.addChildAt(this.historyBtn,0)
+        }
+        else
+        {
+            MyTool.removeMC(this.historyBtn);
         }
     }
 

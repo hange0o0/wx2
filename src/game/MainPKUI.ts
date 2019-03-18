@@ -216,8 +216,8 @@ class MainPKUI extends game.BaseItem {
             this.forceText2.textColor = this.dataIn.force1 < this.dataIn.force2 ? green:white
 
 
-            this.cost1Text.text = '1 队打赏：' + NumberUtil.addNumSeparator(showData.cost1)
-            this.costText2.text = '2 队打赏：' + NumberUtil.addNumSeparator(showData.cost2)
+            this.cost1Text.text = '1 队投注：' + NumberUtil.addNumSeparator(showData.cost1)
+            this.costText2.text = '2 队投注：' + NumberUtil.addNumSeparator(showData.cost2)
             this.cost1Group.visible = showData.cost1 > 0
             this.cost2Group.visible = showData.cost2 > 0
             this.cost1Text.textColor = showData.cost1 > showData.cost2 ? green:white
@@ -460,7 +460,10 @@ class MainPKUI extends game.BaseItem {
                         else
                             this.des1.text = '恭喜获得'
 
+                        var coinWin = addCoin - this.dataIn.showData.cost1 - this.dataIn.showData.cost2;
                         this.des2.text = 'x' + NumberUtil.addNumSeparator(addCoin)
+                        if(coinWin>0)
+                            this.des2.text +=   '，积分 +' + coinWin
                         if(addCoin)
                         {
                             this.shareStr = '轻松赚取'+addCoin+'金，这个游戏对我来说太简单了!'

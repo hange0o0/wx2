@@ -28,10 +28,12 @@ class GetCoinItem extends game.BaseItem {
         {
             if(this.data.type == 3)
             {
-                UM.coinObj.shareNum ++;
-                ShareTool.share('日常推荐一个好游戏',Config.localResRoot + "share_img_2.jpg",{},()=>{
-                    this.dataChanged();
-                })
+                GetCoinUI.getInstance().hide();
+                GameUI.getInstance().scrollToBottom();
+                //UM.coinObj.shareNum ++;
+                //ShareTool.share('日常推荐一个好游戏',Config.localResRoot + "share_img_2.jpg",{},()=>{
+                //    this.dataChanged();
+                //})
             }
             else  if(this.data.type == 4)
             {
@@ -153,8 +155,8 @@ class GetCoinItem extends game.BaseItem {
                         this.goWork = true
                     }
                 }
-                this.titleText.text = '告诉我的好友们'
-                this.addCoin = 200;
+                this.titleText.text = '体验任意小程序30秒'
+                this.addCoin = 800;
                 break;
             case 4: // {type:4,title:'邀请X位新的好友'},
                 min = ObjectUtil.objLength(UM.friendNew),
@@ -171,7 +173,7 @@ class GetCoinItem extends game.BaseItem {
                     this.goWork = true
                 }
                 this.titleText.text = '邀请第'+max+'位新好友'
-                this.addCoin = 2000*max;
+                this.addCoin = 5000*max;
                 break;
             case 5: // 观看广告
                 if(coinObj.videoAwardNum >= 3)
@@ -194,7 +196,7 @@ class GetCoinItem extends game.BaseItem {
                     }
                 }
                 this.titleText.text = '观看广告（'+coinObj.videoAwardNum+'/3）'
-                this.addCoin = 300;
+                this.addCoin = 500;
                 break;
             case 6: // 射击游戏
                 if(coinObj.gameNum >= 3)
@@ -208,7 +210,7 @@ class GetCoinItem extends game.BaseItem {
                     this.goBtn.label = '开始游戏'
                     this.goWork = true
                 }
-                this.titleText.text = '怪物射击（'+coinObj.gameNum+'/3）'
+                this.titleText.text = '炮击怪物（'+coinObj.gameNum+'/3）'
                 break;
             case 99: // debug
                 this.titleText.text = '临时加钱'
@@ -224,7 +226,7 @@ class GetCoinItem extends game.BaseItem {
             min = max;
         this.addCoinText.text = 'x' + this.addCoin;
         if(this.data.type == 6)
-            this.addCoinText.text = 'x ???';
+            this.addCoinText.text = '无上限';
         //this.rateText.text = min+'/'+max;
         this.rateText.text = ''
         //if(this.data.type == 2 && coinObj.onLineAwardNum >= 5)

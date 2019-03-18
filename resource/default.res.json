@@ -1523,6 +1523,11 @@
 			"name":"coin_bg6_jpg",
 			"type":"image",
 			"url":"game_assets/coin_bg6.jpg"
+		},
+		{
+			"name":"energy_icon_png",
+			"type":"image",
+			"url":"game_assets/energy_icon.png"
 		}
 	]
 }

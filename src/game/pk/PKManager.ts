@@ -67,10 +67,17 @@ class PKManager {
         '我来给他点颜色瞧瞧','好疼啊','活着就要战斗','要打架了','所有人，都过来','死亡没什么好怕的','我，会让你安息','我可没时间陪你玩','死亡之神在召唤','待宰羔羊！','医生，我流血了','啊！医生！','我闻到血的味道','是吗？那就去死吧！',
         '祝你好运！','赐予我力量！','你们这是自寻死路！','我快没有时间了！','哈，那家伙死定了！','你想玩个游戏吗','灵魂，躁动不安','恐惧，如影随形','不可饶恕','都是你的错','恐惧吧，哀嚎吧','放纵你内心的恐惧吧','死期将至','戳死你！','残酷的命运',
         '$%&*&$@','@#$%&','( T___T ) ','( 3__3 ) ','zzz ZZZ','╭∩╮','...']
+
     public costWord = ['老铁666','感谢老铁的支持','非常感谢','老铁真土豪','谢谢！','我们不会让你失望的','明智的选择','圈粉了','谢谢同志们','欢呼','高兴','万分感谢','太高兴了','无法用言语表达的感谢',
         '果然是真爱','感谢大哥','要理性消费哦','关注走一波啊','关注可抽奖','输了会发红包的','实锤土壕','感谢感谢','鞠躬感谢','谢谢老铁','谢谢大哥','这波不亏','疯狂打call','你们都是老板','老板大气',
         '谢谢老板','666','礼物走一走','谢谢你的礼物','老板长命百岁','老板万寿无疆','老板千秋万代','祝老板发财','出门遇贵人了','老板我爱你','老板我要和你生小孩','老板公司还缺人吗','￥￥￥￥￥','$$$$$',
     '老板一统江湖','老板好眼光','比心','老板真土豪','老板真豪气','双击关注666']
+
+    public chapterWord = ['点击可以上下怪','已上阵怪物可拖动换位','要注意怪物间属性相克','长按头像可查看详情','要善用怪物技能','低费怪物也有春天','加入低费怪物调整节奏','过不了可以要个提示','赢了就会有收入',
+        '费用越大，强度越大','冲破出生点也能获胜','属性相克影响最大','可以重复挑战已过关卡','熟悉怪物才能更易取胜']
+
+
+    public helpWord = ['上拉屏幕有惊喜！','关卡教学能提高水平！','晚上要注意休息！','关卡数量代表实力强度','抓住一切机会赚钱','只投注有信心的战局','投注越多，队伍越强','投注越少，赔率越大']
 
     public roundData;
 
@@ -375,12 +382,13 @@ class PKManager {
   //          MsgingUI.getInstance().show();
   //  }
 
-    public getChapterData(){
+    public getChapterData(level?){
+        level = level || UM.chapterLevel
         //var index = Math.ceil(UM.chapterLevel/100)
         //var id = (UM.chapterLevel%100 || 100)-1
         //var data = this.chapterData[index].split('\n')
         //return JSON.parse(data[id])
-        var arr = this.chapterData[UM.chapterLevel-1].split('|')
+        var arr = this.chapterData[level-1].split('|')
         return {
             list1:arr[0],
             list2:arr[1],
@@ -603,6 +611,7 @@ class PKManager {
                 win:UM.win,
                 total:UM.total,
                 tipsLevel:UM.tipsLevel,
+                energy:UM.energy,
                 chapterLevel:UM.chapterLevel,
                 lastGuess:UM.lastGuess,
                 coinObj:UM.coinObj,

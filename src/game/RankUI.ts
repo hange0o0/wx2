@@ -25,7 +25,7 @@ class RankUI extends game.BaseUI{
 
     private infoBtn:UserInfoBtn
 
-    private tips = ['世界榜中的数据存在一定的延时','收益排行以打赏赢取收入为依据']
+    private tips = ['世界榜中的数据存在一定的延时']
 
     private rankData = {}
     public constructor() {
@@ -53,7 +53,7 @@ class RankUI extends game.BaseUI{
 
 
     public onShow(){
-        var arr = [{label:'世界收益'},{label:'世界关卡'},{label:'好友收益'},{label:'好友关卡'}]
+        var arr = [{label:'世界积分'},{label:'世界关卡'},{label:'好友积分'},{label:'好友关卡'}]
         this.tab.width = 600;
         this.tab.dataProvider = new eui.ArrayCollection(arr)
         this.renew();

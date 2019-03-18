@@ -14,7 +14,7 @@ class PKTalkItem extends game.BaseContainer {
         item.remove();
         this.pool.push(item);
     }
-    public static randomRate = 0.2;
+    public static randomRate = 0.1;
 
     public constructor() {
         super();
@@ -38,18 +38,19 @@ class PKTalkItem extends game.BaseContainer {
     }
 
 
-    public setData(data,gift?) {
+    public setData(data,type?) {
         this.active = true;
 
 
-        if(gift)
+        if(type == 1)
             this.text.text = PKManager.getInstance().costWord[Math.floor(Math.random()*PKManager.getInstance().costWord.length)];
+        else if(type == 2)
+            this.text.text = PKManager.getInstance().chapterWord[Math.floor(Math.random()*PKManager.getInstance().chapterWord.length)];
         else
         {
             if(Math.random() < PKTalkItem.randomRate)
             {
-                this.text.text = '上拉屏幕有惊喜！'
-                PKTalkItem.randomRate /= 2;
+                this.text.text = PKManager.getInstance().helpWord[Math.floor(Math.random()*PKManager.getInstance().helpWord.length)];
             }
             else
                 this.text.text = PKManager.getInstance().pkWord[Math.floor(Math.random()*PKManager.getInstance().pkWord.length)];

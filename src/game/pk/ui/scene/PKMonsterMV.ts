@@ -101,14 +101,14 @@ class PKMonsterMV extends eui.Group {
          this.currentMV.die();
      }
 
-    public talk(gift?){
+    public talk(type?){
         if(this.talkItm)
         {
             PKTalkItem.freeItem(this.talkItm)
             this.talkItm = null;
         }
         this.talkItm = PKTalkItem.createItem();
-        this.talkItm.setData(this,gift);
+        this.talkItm.setData(this,type);
         this.addChild(this.talkItm);
         SoundManager.getInstance().playEffect('talk');
     }

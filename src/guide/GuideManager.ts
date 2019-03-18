@@ -64,7 +64,7 @@ class GuideManager {
                 self.guideKey = 'count';
                 self.temp = TM.now();
             },
-            text:'这是一个考验玩家眼光的游戏，选出你认为能取胜队伍进行打赏激励，你的打赏队伍会对你的付出进行回报',
+            text:'这是一个考验玩家判断力的游戏，选出你认为能取胜队伍进行投注，如果取胜即可获得大量回报',
         })
 
         this.addGuideObj({
@@ -104,7 +104,7 @@ class GuideManager {
 
         this.addGuideObj({
             mc:function(){return GameUI.getInstance().team1.bottomBG},
-            text:'了解队伍情况后，可选择你感兴趣的队伍进行打赏',
+            text:'了解队伍情况后，可选择你感兴趣的队伍进行投注',
             fun:function(){
                 self.showGuide()
             }
@@ -112,7 +112,7 @@ class GuideManager {
 
         this.addGuideObj({
             mc:function(){return GameUI.getInstance().team1.forceGroup},
-            text:'越多人打赏的队伍实力会越强，但回报率也会相应降低，而少人打赏的队伍回报率就会比较高',
+            text:'越多人投注的队伍实力会越强，但回报率也会相应降低，而投注额少的队伍回报率就会比较高',
             fun:function(){
                 self.showGuide()
             }
@@ -120,7 +120,7 @@ class GuideManager {
 
         this.addGuideObj({
             mc:function(){return GameUI.getInstance().cdText},
-            text:'你只能在备战阶段进行打赏，备战会有时间限制，备战结束后就会进入对战阶段',
+            text:'你只能在备战阶段进行投注，备战会有时间限制，备战结束后就会进入对战阶段',
             fun:function(){
                 self.guideKey = 'pk';
                 self.temp = TM.now();
@@ -136,6 +136,7 @@ class GuideManager {
                 self.showGuide()
             }
         })
+
         this.addGuideObj({
             mc:function(){return MainPKUI.instance.cdGroup},
             text:'对战会时间限制，如果在'+Math.round(PKConfig.drawTime/1000)+'秒内未能决出胜负，则算双方平手，庄家通杀^_^',
@@ -154,21 +155,39 @@ class GuideManager {
         })
 
         this.addGuideObj({
-            mc:function(){return GameUI.getInstance().settingBtn},
-            text:'如果在等待下一环节时，可尝试挑战一下里面的关卡，胜利后可获得金币哦',
+            text:'获胜后根据玩家投注表现，会获得一定的积分奖励',
+            toBottom:true,
             fun:function(){
                 self.showGuide()
             }
         })
 
+        this.addGuideObj({
+            mc:function(){return GameUI.getInstance().settingBtn},
+            text:'这里有大量可供玩家挑战的关卡，是熟练掌握怪物战斗最有效的途径，而且胜利后还会有金币奖励哦',
+            fun:function(){
+                self.showGuide()
+            }
+        })
 
         this.addGuideObj({
-            text:'介绍到此结束，下面正式进入游戏',
+            //mc:function(){return GameUI.getInstance().settingBtn},
+            text:'传说能不靠提示打通最后一关的都是天纵奇才，你就是吗？那下面就请开始你的表演吧！',
             fun:function(){
+                //self.showGuide()
                 self.endGuide()
                 GameUI.getInstance().endGuide();
             }
         })
+
+        //
+        //this.addGuideObj({
+        //    text:'介绍到此结束，下面就请开始你的表演吧',
+        //    fun:function(){
+        //        self.endGuide()
+        //        GameUI.getInstance().endGuide();
+        //    }
+        //})
     }
 
     private endGuide(){

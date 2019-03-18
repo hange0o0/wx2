@@ -29,6 +29,7 @@ class ChangeUserItem extends game.BaseItem{
         wx.previewImage({
             urls: [this.data.img],
             success: function () {
+                GameManager.getInstance().changeUserTime = TM.now();
             }
         })
     }

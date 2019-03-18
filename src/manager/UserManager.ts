@@ -14,7 +14,7 @@ class UserManager {
     public onLineAwardCD = [5*60,30*60,3600,2*3600,3*3600]
 
 
-    public testVersion = 4//与服务器相同则为测试版本
+    public testVersion = 318//与服务器相同则为测试版本
     public isTest;
     public shareFail;
 
@@ -34,6 +34,7 @@ class UserManager {
     public history = [];
     public lastGuess: any = {};
     public friendNew: any = {};
+    public energy: any;
     public coinObj:{
         loginTime,
         loginDays,
@@ -53,6 +54,7 @@ class UserManager {
     public initDataTime;
 
     public isScope
+    public maxEnergy = 20;
 
 
     public fill(data:any):void{
@@ -61,6 +63,7 @@ class UserManager {
         this.coinwin = data.coinwin || 0;
         this.total = data.total || 0;
         this.win = data.win || 0;
+        this.energy = data.energy || {v:0,t:0};
         this.tipsLevel = data.tipsLevel || 0;
         this.chapterLevel = data.chapterLevel || 1;
         this.lastGuess = data.lastGuess;
@@ -296,6 +299,48 @@ class UserManager {
             teamCost2:0,
         }
     }
+
+    public addEnergy(v){
+        if(!v)
+            return;
+        this.resetEnergy();
+        if(this.energy.v >= this.maxEnergy)
+            this.energy.t = TM.now();
+        this.energy.v += v;
+
+        PKManager.getInstance().needUpUser = true;
+    }
+
+    private resetEnergy(){
+        var v = this.getEnergyStep();
+        var t = TM.now();
+        var add =  Math.floor((t - this.energy.t)/v)
+        if(add > 0)
+        {
+            this.energy.v = Math.min(this.maxEnergy,this.energy.v + add);
+            this.energy.t = this.energy.t + add*v;
+            EM.dispatchEventWith(GameEvent.client.energy_change)
+        }
+    }
+
+    public getEnergy(){
+        this.resetEnergy();
+        return this.energy.v;
+    }
+
+    public getEnergyStep(){
+        return 30*60;
+    }
+
+    public getNextEnergyCD(){
+        var v = this.getEnergyStep();
+        this.getEnergy();
+        //if(this.energy.t == TM.now())
+        //    return 0;
+        return  this.energy.t + v -  TM.now();
+    }
+
+
 
     private isRuning = false;
     public drawSaveData():egret.Bitmap

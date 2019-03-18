@@ -78,7 +78,7 @@ class ShootMonster extends game.BaseItem{
             this.mc.die()
             this.barGroup.visible = false
 
-            var addCoin = Math.floor(this.data.vo.cost)
+            var addCoin = Math.floor(this.data.vo.cost*2)
            ShootGameUI.getInstance().addCoin(addCoin)
         }
         else

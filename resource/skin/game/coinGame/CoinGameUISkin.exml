@@ -40,13 +40,27 @@
 			<e:Image source="icon_atk2_png" y="0" horizontalCenter="0" scaleX="0.8" scaleY="0.8"/>
 			<e:Label text="出战" bottom="0" horizontalCenter="0" size="24" stroke="2" textColor="0xffe0c4"/>
 		</e:Group>
+		<e:Group id="historyBtn" x="159" y="16" width="100" height="80">
+			<e:Image y="0" horizontalCenter="0" scaleX="0.6" scaleY="0.6" source="icon_edit_png"/>
+			<e:Label text="记录" bottom="0" horizontalCenter="0" size="24" stroke="2" textColor="0xFFE0C4"/>
+		</e:Group>
 		<e:layout>
 			<e:HorizontalLayout gap="0"/>
 		</e:layout>
 	</e:Group>
-	<e:Group y="460" horizontalCenter="0" height="40" touchChildren="false" touchEnabled="false">
-		<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0" scale9Grid="43,7,7,42"/>
-		<e:Label id="costText" text="剩余费用：12" verticalCenter="0" left="40" right="40" size="24" multiline="false"/>
+	<e:Group y="450" horizontalCenter="0" height="50" touchEnabled="false" width="640">
+		<e:Image left="0" right="0" top="0" bottom="0" source="bg8_png" scale9Grid="6,4,18,19"/>
+		<e:Label id="costText" text="剩余费用：12" size="24" multiline="false" verticalCenter="0" x="45"/>
+		<e:Image source="icon_cost_png" x="10" verticalCenter="0"/>
+		<e:Label id="freeEnergyText" text="已完成关卡免体力" right="10" size="24" verticalCenter="0"/>
+		<e:Group id="energyGroup" right="10" verticalCenter="0" height="50">
+			<e:Image source="energy_icon_png" x="388" y="2" scaleX="0.25" scaleY="0.25"/>
+			<e:Label id="energyText" text="剩余费用：12" size="24" multiline="false" x="0" y="0"/>
+			<e:Image id="addEnergyBtn" source="icon_add2_png" x="83" y="21"/>
+			<e:layout>
+				<e:HorizontalLayout verticalAlign="middle" gap="10"/>
+			</e:layout>
+		</e:Group>
 	</e:Group>
 	<e:Label id="desText" text="点击加入/移除怪物，长按查看详情，拖动调整位置" y="548" horizontalCenter="0" size="24" textColor="0xffefaa"/>
 
