@@ -69,7 +69,7 @@ class GuideManager {
 
         this.addGuideObj({
             mc:function(){return GameUI.getInstance().loadingGroup},
-            text:'这里是参战双方的队伍，他们会按箭头所指方向顺序加入战场',
+            text:'这里是参战双方的队伍，他们会按箭头所指方向依次加入战场',
             fun:function(){
                 self.showGuide()
                 GameUI.getInstance().hideGuideArrow();
@@ -85,7 +85,7 @@ class GuideManager {
 
         this.addGuideObj({
             mc:function(){return GameUI.getInstance().team1.guideCon},
-            text:'可选中其中一个单位查看详细数据',
+            text:'可点击其中一个怪物查看详细数据',
 
             //fun:()=>{
             //    CardInfoUI.getInstance().show(GameUI.getInstance().team1.getMiddleMoster().id)
@@ -94,7 +94,7 @@ class GuideManager {
 
         this.addGuideObj({
             mc:function(){return CardInfoUI.getInstance().con},
-            text:'要注意单位间的属性相克关系',
+            text:'要特别注意单位间的属性相克',
             toBottom:true,
             fun:function(){
                 CardInfoUI.getInstance().hide();
@@ -119,7 +119,7 @@ class GuideManager {
         })
 
         this.addGuideObj({
-            mc:function(){return GameUI.getInstance().cdText},
+            mc:function(){return GameUI.getInstance().mainGroup},
             text:'你只能在备战阶段进行投注，备战会有时间限制，备战结束后就会进入对战阶段',
             fun:function(){
                 self.guideKey = 'pk';
@@ -130,7 +130,7 @@ class GuideManager {
         })
 
         this.addGuideObj({
-            text:'进入对战阶段后，双方按顺序进入战场进行对决，直到消灭所有敌人或其中一方冲破对方出生点',
+            text:'进入对战阶段后，双方按顺序进入战场进行对决，直到消灭所有的敌人或其中一方冲破对方出生点',
             toBottom:true,
             fun:function(){
                 self.showGuide()
@@ -155,7 +155,7 @@ class GuideManager {
         })
 
         this.addGuideObj({
-            text:'获胜后根据玩家投注表现，会获得一定的积分奖励',
+            text:'获胜后系统会根据玩家投注表现，奖励一定的积分',
             toBottom:true,
             fun:function(){
                 self.showGuide()
@@ -164,7 +164,7 @@ class GuideManager {
 
         this.addGuideObj({
             mc:function(){return GameUI.getInstance().settingBtn},
-            text:'这里有大量可供玩家挑战的关卡，是熟练掌握怪物战斗最有效的途径，而且胜利后还会有金币奖励哦',
+            text:'这里有大量可供玩家挑战的关卡，能帮助玩家更好地熟悉游戏，而且获胜后还会有金币奖励哦',
             fun:function(){
                 self.showGuide()
             }
@@ -172,7 +172,7 @@ class GuideManager {
 
         this.addGuideObj({
             //mc:function(){return GameUI.getInstance().settingBtn},
-            text:'传说能不靠提示打通最后一关的都是天纵奇才，你就是吗？那下面就请开始你的表演吧！',
+            text:'传说能打通最后一关的都是天纵奇，心动了吗，那下面就请开始你的表演吧！',
             fun:function(){
                 //self.showGuide()
                 self.endGuide()

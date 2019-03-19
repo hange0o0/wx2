@@ -163,7 +163,8 @@ class GuideUI extends game.BaseContainer{
         this.tipTxt.removeEventListener(egret.Event.ENTER_FRAME,this.onText,this)
         egret.callLater(function(){
             GameManager.container.addChild(this);
-            this.height = GameManager.stage.stageHeight;
+            this.y = 0//GameManager.paddingTop();
+            this.height = this.stage.stageHeight - Config.adHeight//GameManager.uiHeight + GameManager.paddingTop();
             this.tipTxt.text = '';
             this.clickFun = fun;
 
@@ -198,7 +199,7 @@ class GuideUI extends game.BaseContainer{
                 {
                     var rect = mc.getBounds();
                     rect.x += mc.anchorOffsetX
-                    rect.y += mc.anchorOffsetY
+                    rect.y += mc.anchorOffsetY// + GameManager.paddingTop()
                     var p1 = mc.localToGlobal(rect.x,rect.y);
                     var p2 = mc.localToGlobal(rect.x + rect.width,rect.y + rect.height);
 
@@ -207,7 +208,7 @@ class GuideUI extends game.BaseContainer{
                 //console.log(p1,p2)
                 this.setBG(p1.x,p1.y,p2.x-p1.x,p2.y-p1.y,fun == null);
                 if(toBottom)
-                    this.tipsGroup.y = GameManager.stage.stageHeight - this.tipsGroup.height - toBottom;
+                    this.tipsGroup.y = GameManager.uiHeight - this.tipsGroup.height - toBottom - 20;
                 //if(fun == null)
                 //    mc.once(egret.TouchEvent.TOUCH_TAP,this.hide, this);
 
@@ -243,7 +244,7 @@ class GuideUI extends game.BaseContainer{
             }
             else
             {
-                this.setBG(320,GameManager.stage.stageHeight/2,0,0,fun == null);
+                this.setBG(320,this.height/2,0,0,fun == null);
                 this.handMC.visible = false;
             }
 
@@ -255,7 +256,7 @@ class GuideUI extends game.BaseContainer{
 
     public setBG(x,y,width,height,itemClick?){
         var x2 = 640-x-width;
-        var y2 = GameManager.stage.stageHeight - y-height
+        var y2 = this.height - y-height
         var borderWidth = Math.max(x,y,x2,y2)
 
         //this.tipsBg.strokeWeight = borderWidth
@@ -293,7 +294,7 @@ class GuideUI extends game.BaseContainer{
 
         if(height == 0)
         {
-            this.tipsGroup.y = (GameManager.stage.stageHeight - this.tipsGroup.height)/5*2
+            this.tipsGroup.y = (this.height - this.tipsGroup.height)/5*2
         }
         else if(y2 > y)//点在上方
         {

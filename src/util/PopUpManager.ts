@@ -32,7 +32,7 @@ class PopUpManager {
     public static addPopUp(display: egret.DisplayObject,isWindow:boolean,noMV? ){
         var haveShow = display.stage && display.visible;
         var ww = GameManager.container.width;
-        var hh = GameManager.container.height;
+        var hh = GameManager.uiHeight;
         if(!this.shape)
         {
             this.shape = new eui.Rect();
@@ -104,7 +104,7 @@ class PopUpManager {
 
     public static setMiddle(display){
         var ww = GameManager.container.width;
-        var hh = GameManager.container.height;
+        var hh = GameManager.uiHeight;
         var x = (ww - display.width) / 2;
         var y = (hh - display.height) / 2;
         display.x = x

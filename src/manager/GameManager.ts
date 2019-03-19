@@ -33,6 +33,9 @@ class GameManager {
     public static isLiuHai(){
         return this.stage.stageHeight > 1250;
     }
+    public static paddingTop(){
+        return GameManager.isLiuHai()?50:0
+    }
 
     public static get uiHeight(){
         var h = this.stage.stageHeight - Config.adHeight;
@@ -40,8 +43,8 @@ class GameManager {
         if(this.isLiuHai())
         {
             if(App.isIphoneX)
-                return h-50-30;
-            return h-50;
+                return h-this.paddingTop()-30;
+            return h-this.paddingTop();
         }
         return h//Math.min(1136,this.stage.stageHeight);
         //return this.stage.stageHeight;
@@ -61,6 +64,7 @@ class GameManager {
     }
 
     private createAD(){
+        //Config.adHeight = 200;
         if(!window['wx'])
             return;
         if(GameManager.stage.stageHeight < 1080)
@@ -76,7 +80,7 @@ class GameManager {
         }
         Config.adHeight =  btnw/640 * 224;
         var  btny = GameManager.uiHeight;//给广告留的高度
-        var  paddingTop = GameManager.isLiuHai()?50:0
+        var  paddingTop = GameManager.paddingTop();
         var btnx =  (640-btnw)/2;
 
         let left = scalex * (btnx);

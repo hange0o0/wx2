@@ -14,7 +14,7 @@ class GameUI extends game.BaseUI {
     public team1: TeamUI;
     private team2: TeamUI;
     private coinGroup: eui.Group;
-    private mainGroup: eui.Group;
+    public mainGroup: eui.Group;
     private coinText: eui.Label;
     private bottomGroup: eui.Group;
     private shopBtn: eui.Group;
@@ -25,7 +25,7 @@ class GameUI extends game.BaseUI {
     private b1: eui.BitmapLabel;
     private b2: eui.BitmapLabel;
     private b3: eui.BitmapLabel;
-    public cdText: eui.Label;
+    private cdText: eui.Label;
     private mailBtn: eui.Group;
     public settingBtn: eui.Group;
     private soundBtn: eui.Image;
