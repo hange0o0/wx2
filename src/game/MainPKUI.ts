@@ -6,18 +6,17 @@ class MainPKUI extends game.BaseItem {
         MainPKUI.instance = this;
     }
 
-    private con: eui.Group;
-    private scroller: eui.Scroller;
-    public list1: eui.List;
     private lineMC: eui.Rect;
-    private list2: eui.List;
+    private sceneCon: eui.Group;
+    private con: eui.Group;
+    private topGroup: eui.Group;
     private teamCost1Text: eui.Label;
-    private cost1Text: eui.Label;
     private forceText1: eui.Label;
     private teamCost2Text: eui.Label;
-    private costText2: eui.Label;
     private forceText2: eui.Label;
+    public cdGroup: eui.Group;
     private timeText: eui.Label;
+    private resultCon: eui.Group;
     private winGroup: eui.Group;
     private winText: eui.Label;
     private desGroup: eui.Group;
@@ -25,18 +24,24 @@ class MainPKUI extends game.BaseItem {
     private des2: eui.Label;
     private failGroup: eui.Group;
     private failText: eui.Label;
-    private cost1Group: eui.Group;
-    private cost2Group: eui.Group;
     private btnGroup: eui.Group;
-    public cdGroup: eui.Group;
     private backBtn: eui.Button;
-    private replayBtn: eui.Button;
     private doubleBtn: eui.Button;
+    private replayBtn: eui.Button;
+    private bottomGroup: eui.Group;
+    private cost1Group: eui.Group;
+    private cost1Text: eui.Label;
+    private cost2Group: eui.Group;
+    private costText2: eui.Label;
     private addSpeedBtn: eui.Group;
     private speedMC: eui.Image;
     private speedMC2: eui.Image;
     private hurt1: eui.Image;
     private hurt2: eui.Image;
+    private scroller: eui.Scroller;
+    public list1: eui.List;
+    private list2: eui.List;
+
 
 
 
@@ -69,7 +74,7 @@ class MainPKUI extends game.BaseItem {
 
         var pkvideo = PKVideoCon.getInstance();
         this.con.addChild(pkvideo)
-        pkvideo.y = 0;
+        pkvideo.bottom = 0;
         pkvideo.x = -(PKConfig.floorWidth + PKConfig.appearPos*2 - 640)/2;
 
         PKData.getInstance().addEventListener('video_word',this.onVideoEvent,this);
@@ -167,7 +172,13 @@ class MainPKUI extends game.BaseItem {
         item[funName] && item[funName]();
     }
 
+    public renewSize(){
+        this.sceneCon.height = Math.min(this.height - 317,512)
+    }
+
     public show(data){
+        this.renewSize();
+        this.once(egret.Event.ENTER_FRAME,this.renewSize,this)
         PKManager.getInstance().isPKing = true
 
         this.dataIn = data,
@@ -176,6 +187,7 @@ class MainPKUI extends game.BaseItem {
         PKData.getInstance().playSpeed = 1;
         this.renewSpeedBtn();
         this.addSpeedBtn.visible = !this.dataIn.noSpeed
+
 
 
         if(this.dataIn.isMain)
@@ -270,7 +282,6 @@ class MainPKUI extends game.BaseItem {
     }
 
     public reset(){
-
         PKVideoCon.getInstance().x = -(PKConfig.floorWidth + PKConfig.appearPos*2 - 640)/2;
         //this.stopScrollTimer = 0;
         this.winGroup.visible = false;
@@ -278,6 +289,9 @@ class MainPKUI extends game.BaseItem {
         this.btnGroup.visible = false;
         this.hurt1.visible = false
         this.hurt2.visible = false
+        this.topGroup.visible = true
+        this.bottomGroup.visible = true
+
         egret.Tween.removeTweens(this.hurt1)
         egret.Tween.removeTweens(this.hurt2)
         this.finish = false;
@@ -546,6 +560,9 @@ class MainPKUI extends game.BaseItem {
             mc.scaleX = mc.scaleY = 1;
             this.desGroup.visible = this.desGroup['callVisible'];
             this.btnGroup.visible = true
+            this.topGroup.visible = false
+            this.bottomGroup.visible = false
+
             return;
         }
 
@@ -556,6 +573,8 @@ class MainPKUI extends game.BaseItem {
             else
                 SoundManager.getInstance().playEffect('fail');
             mc.visible = true;
+            this.topGroup.visible = false
+            this.bottomGroup.visible = false
             mc.scaleX = mc.scaleY = 0;
             var tw = egret.Tween.get(mc).to({scaleX:1.2,scaleY:1.2},300).to({scaleX:1,scaleY:1},300)
             tw.call(()=>{

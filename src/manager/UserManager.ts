@@ -14,7 +14,7 @@ class UserManager {
     public onLineAwardCD = [5*60,30*60,3600,2*3600,3*3600]
 
 
-    public testVersion = 318//与服务器相同则为测试版本
+    public testVersion = 319//与服务器相同则为测试版本
     public isTest;
     public shareFail;
 

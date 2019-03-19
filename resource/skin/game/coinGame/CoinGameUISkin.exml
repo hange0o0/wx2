@@ -1,67 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="CoinGameUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="bg3_png" scale9Grid="16,15,7,7" x="0" y="0" width="100%" height="100%"/>
-	<ns1:TopUI id="topUI" width="100%" x="0" y="0" skinName="TopUISkin" locked="true"/>
-	<ns1:BottomUI id="bottomUI" x="0" skinName="BottomUISkin" bottom="0" locked="true"/>
-	<e:Group id="con" x="0" width="640" height="450" y="60" scrollEnabled="true">
-		<e:Image id="bg" horizontalCenter="0" bottom="0"/>
-	</e:Group>
-	<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" bottom="100" top="500" x="0" y="560"/>
-	<e:Scroller id="scroller" width="640" x="0" top="600" bottom="100" bounces="false" y="565">
-		<e:Group>
-		<e:List id="list" x="67" y="43">
+	<e:Group x="0" top="55" bottom="100">
+		<e:Group id="con" x="0" width="640" height="450" y="0" scrollEnabled="true">
+		<e:Image id="bg" horizontalCenter="0" bottom="-10"/>
+		</e:Group>
+		<e:Group x="0" y="390" height="100%" width="640">
+		<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" top="0" bottom="0"/>
+		<e:Scroller id="scroller" width="640" x="0" bounces="false" top="100" bottom="0">
+			<e:Group>
+			<e:List id="list" x="67" y="43">
+				<e:layout>
+				<e:TileLayout requestedColumnCount="6" paddingTop="10" paddingLeft="10" paddingBottom="10" horizontalGap="10" verticalGap="6"/>
+				</e:layout>
+			</e:List>
 			<e:layout>
-			<e:TileLayout requestedColumnCount="6" paddingTop="10" paddingLeft="10" paddingBottom="10" horizontalGap="10" verticalGap="10"/>
+				<e:HorizontalLayout horizontalAlign="center" gap="10" paddingTop="10" paddingBottom="10"/>
+			</e:layout>
+			</e:Group>
+		</e:Scroller>
+		<e:Image source="bg1_png" scale9Grid="8,8,14,14" y="20" height="80" width="620" x="10"/>
+		<e:List id="chooseList" height="60" y="30" horizontalCenter="0">
+			<e:layout>
+			<e:HorizontalLayout gap="1"/>
 			</e:layout>
 		</e:List>
-		<e:layout>
-			<e:HorizontalLayout horizontalAlign="center" gap="10" paddingTop="10" paddingBottom="10"/>
-		</e:layout>
-		</e:Group>
-	</e:Scroller>
-	<e:Image source="bg1_png" scale9Grid="8,8,14,14" y="520" height="80" horizontalCenter="0" width="620"/>
-	<e:List id="chooseList" height="60" y="530" horizontalCenter="0">
-		<e:layout>
-			<e:HorizontalLayout gap="1"/>
-		</e:layout>
-	</e:List>
-	<e:Image left="0" right="0" top="500" bottom="100" source="bg18_png" scale9Grid="34,32,3,6" touchEnabled="false" x="0" y="560"/>
-	<e:Group id="btnGroup" right="20" bottom="10">
-		<e:Group id="tipsBtn" x="0" y="2" width="100" height="80">
-			<e:Image source="icon_empty_png" y="0" horizontalCenter="0"/>
-			<e:Label text="提示" bottom="0" horizontalCenter="0" size="24" stroke="2" textColor="0xffe0c4"/>
-			<e:Image id="getTipsIcon" source="icon_right_png" bottom="0" right="0"/>
-		</e:Group>
-		<e:Group id="resetBtn" x="246" y="0" width="100" height="80">
-			<e:Image source="icon_atk3_png" y="0" horizontalCenter="0" scaleX="0.9" scaleY="0.9"/>
-			<e:Label text="重置" bottom="0" horizontalCenter="0" size="24" stroke="2." textColor="0xffe0c4"/>
-		</e:Group>
-		<e:Group id="pkBtn" x="149" y="6" width="100" height="80">
-			<e:Image source="icon_atk2_png" y="0" horizontalCenter="0" scaleX="0.8" scaleY="0.8"/>
-			<e:Label text="出战" bottom="0" horizontalCenter="0" size="24" stroke="2" textColor="0xffe0c4"/>
-		</e:Group>
-		<e:Group id="historyBtn" x="159" y="16" width="100" height="80">
-			<e:Image y="0" horizontalCenter="0" scaleX="0.6" scaleY="0.6" source="icon_edit_png"/>
-			<e:Label text="记录" bottom="0" horizontalCenter="0" size="24" stroke="2" textColor="0xFFE0C4"/>
-		</e:Group>
-		<e:layout>
-			<e:HorizontalLayout gap="0"/>
-		</e:layout>
-	</e:Group>
-	<e:Group y="450" horizontalCenter="0" height="50" touchEnabled="false" width="640">
-		<e:Image left="0" right="0" top="0" bottom="0" source="bg8_png" scale9Grid="6,4,18,19"/>
-		<e:Label id="costText" text="剩余费用：12" size="24" multiline="false" verticalCenter="0" x="45"/>
-		<e:Image source="icon_cost_png" x="10" verticalCenter="0"/>
-		<e:Label id="freeEnergyText" text="已完成关卡免体力" right="10" size="24" verticalCenter="0"/>
-		<e:Group id="energyGroup" right="10" verticalCenter="0" height="50">
+		<e:Image source="bg18_png" scale9Grid="34,32,3,6" touchEnabled="false" left="0" right="0" top="0" bottom="0"/>
+		<e:Group y="-50" height="50" touchEnabled="false" width="640" x="0">
+			<e:Image left="0" right="0" top="0" bottom="0" source="bg8_png" scale9Grid="6,4,18,19"/>
+			<e:Label id="costText" text="剩余费用：12" size="24" multiline="false" verticalCenter="0" x="45"/>
+			<e:Image source="icon_cost_png" x="10" verticalCenter="0"/>
+			<e:Label id="freeEnergyText" text="已完成关卡免体力" right="10" size="24" verticalCenter="0"/>
+			<e:Group id="energyGroup" right="10" verticalCenter="0" height="50">
 			<e:Image source="energy_icon_png" x="388" y="2" scaleX="0.25" scaleY="0.25"/>
 			<e:Label id="energyText" text="剩余费用：12" size="24" multiline="false" x="0" y="0"/>
 			<e:Image id="addEnergyBtn" source="icon_add2_png" x="83" y="21"/>
 			<e:layout>
 				<e:HorizontalLayout verticalAlign="middle" gap="10"/>
 			</e:layout>
+			</e:Group>
 		</e:Group>
+		<e:Label id="desText" text="点击加入/移除怪物，长按查看详情，拖动调整位置" y="48" size="24" textColor="0xffefaa" x="53"/>
+		</e:Group>
+		<e:layout>
+		<e:VerticalLayout gap="0"/>
+		</e:layout>
 	</e:Group>
-	<e:Label id="desText" text="点击加入/移除怪物，长按查看详情，拖动调整位置" y="548" horizontalCenter="0" size="24" textColor="0xffefaa"/>
+	<ns1:TopUI id="topUI" width="100%" x="0" y="0" skinName="TopUISkin"/>
+	<ns1:BottomUI id="bottomUI" x="0" skinName="BottomUISkin" bottom="0" locked="true"/>
+	<e:Group id="btnGroup" right="20" bottom="10">
+		<e:Group id="tipsBtn" x="0" y="2" width="100" height="80">
+		<e:Image source="icon_empty_png" y="0" horizontalCenter="0"/>
+		<e:Label text="提示" bottom="0" horizontalCenter="0" size="24" stroke="2" textColor="0xffe0c4"/>
+		<e:Image id="getTipsIcon" source="icon_right_png" bottom="0" right="0"/>
+		</e:Group>
+		<e:Group id="resetBtn" x="246" y="0" width="100" height="80">
+		<e:Image source="icon_atk3_png" y="0" horizontalCenter="0" scaleX="0.9" scaleY="0.9"/>
+		<e:Label text="重置" bottom="0" horizontalCenter="0" size="24" stroke="2." textColor="0xffe0c4"/>
+		</e:Group>
+		<e:Group id="pkBtn" x="149" y="6" width="100" height="80">
+		<e:Image source="icon_atk2_png" y="0" horizontalCenter="0" scaleX="0.8" scaleY="0.8"/>
+		<e:Label text="出战" bottom="0" horizontalCenter="0" size="24" stroke="2" textColor="0xffe0c4"/>
+		</e:Group>
+		<e:Group id="historyBtn" x="159" y="16" width="100" height="80">
+		<e:Image y="0" horizontalCenter="0" scaleX="0.6" scaleY="0.6" source="icon_edit_png"/>
+		<e:Label text="记录" bottom="0" horizontalCenter="0" size="24" stroke="2" textColor="0xFFE0C4"/>
+		</e:Group>
+		<e:layout>
+		<e:HorizontalLayout gap="0"/>
+		</e:layout>
+	</e:Group>
 
 </e:Skin>

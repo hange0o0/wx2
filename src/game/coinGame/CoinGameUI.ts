@@ -360,7 +360,7 @@ class CoinGameUI extends game.BaseUI {
             item.stand();
             item.scaleX = item.scaleY = 1.2;
             item.currentMV.scaleX = -Math.abs(item.currentMV.scaleX);
-            item.bottom = 20+vo.height*1.2 - 5 + 10*Math.random()// + Math.random()*80
+            item.bottom = 10+vo.height*1.2 - 5 + 10*Math.random()// + Math.random()*80
             item['w'] = vo.width
             item.x = begin + i*des
             this.monsterArr.push(item);
@@ -423,7 +423,13 @@ class CoinGameUI extends game.BaseUI {
         return this.dataProvider.length;
     }
 
+    public renewSize(){
+        this.con.height = Math.min(this.height-55-100 - 100 - 317,500)
+    }
+
     public onShow(){
+        this.renewSize();
+        this.once(egret.Event.ENTER_FRAME,this.renewSize,this)
 
         this.renew();
         this.addPanelOpenEvent(GameEvent.client.CHAPTER_CHANGE,()=>{

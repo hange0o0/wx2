@@ -63,6 +63,8 @@ class GameManager {
     private createAD(){
         if(!window['wx'])
             return;
+        if(GameManager.stage.stageHeight < 1080)
+            return;
 
 
         var btnw = Math.min(Math.pow(GameManager.stage.stageHeight/1330,1.6)*640,640)
