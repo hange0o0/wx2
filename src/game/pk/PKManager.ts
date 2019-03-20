@@ -25,7 +25,9 @@ class PKManager {
     }
 
 
-    public needUpUser = false;
+    private _needUpUser = false;
+    public get needUpUser(){return this._needUpUser}
+    public set needUpUser(v){this._needUpUser = v;egret.callLater(this.localSave,this)}
     public baseForce = 10000;
     //public cost1 = 0
     //public cost2 = 0;
@@ -599,28 +601,36 @@ class PKManager {
     //    }
     //}
 
+    private getUpdataData(){
+        return {
+            coin:UM.coin,
+            coinwin:UM.coinwin,
+            win:UM.win,
+            total:UM.total,
+            tipsLevel:UM.tipsLevel,
+            energy:UM.energy,
+            chapterLevel:UM.chapterLevel,
+            lastGuess:UM.lastGuess,
+            coinObj:UM.coinObj,
+            guideFinish:UM.guideFinish,
+            saveTime:TM.now()
+        };
+    }
+
     public upDateUserData(){
         if(!this.needUpUser)
             return;
         var wx = window['wx'];
         if(wx)
         {
-            var updateData:any = {
-                coin:UM.coin,
-                coinwin:UM.coinwin,
-                win:UM.win,
-                total:UM.total,
-                tipsLevel:UM.tipsLevel,
-                energy:UM.energy,
-                chapterLevel:UM.chapterLevel,
-                lastGuess:UM.lastGuess,
-                coinObj:UM.coinObj,
-                guideFinish:UM.guideFinish,
-            };
-
+            var updateData:any = this.getUpdataData();
             WXDB.updata('user',updateData)
         }
         this.needUpUser = false;
+    }
+
+    private localSave(){
+        SharedObjectManager.getInstance().setMyValue('localSave',this.getUpdataData())
     }
 
     public upWXData(){

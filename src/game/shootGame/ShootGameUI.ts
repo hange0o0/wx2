@@ -166,7 +166,7 @@ class ShootGameUI extends game.BaseUI {
             this.showResult();
             return;
         }
-        this.timeText.text = timeCD + ''
+        this.timeText.text = (99-timeCD) + ''
 
         var cd = egret.getTimer() - this.lastCreate;
         var createCD = 1*1000;

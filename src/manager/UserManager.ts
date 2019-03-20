@@ -14,7 +14,7 @@ class UserManager {
     public onLineAwardCD = [5*60,30*60,3600,2*3600,3*3600]
 
 
-    public testVersion = 31902//与服务器相同则为测试版本
+    public testVersion = 320//与服务器相同则为测试版本
     public isTest;
     public shareFail;
 
@@ -58,6 +58,17 @@ class UserManager {
 
 
     public fill(data:any):void{
+
+        var localData = SharedObjectManager.getInstance().getMyValue('localSave')
+        if(localData && localData.saveTime - data.saveTime > 10) //本地的数据更新
+        {
+            for(var s in localData)
+            {
+                data[s] = localData[s];
+            }
+        }
+
+
         this.dbid = data._id;
         this.coin = data.coin || 0;
         this.coinwin = data.coinwin || 0;
@@ -130,7 +141,7 @@ class UserManager {
         if(!wx)
         {
             this.fill(this.orginUserData());
-            //this.guideFinish = true;   //本地不进新手了
+            this.guideFinish = true;   //本地不进新手了
             fun && fun();
             return;
         }
@@ -250,6 +261,7 @@ class UserManager {
              guideFinish:false,
              chapterLevel:1,
              tipsLevel:0,
+             saveTime:0,
              lastGuess:this.getGuessInitData(0),
              coinObj:{
                  loginTime:TM.now(),   //登陆时间
