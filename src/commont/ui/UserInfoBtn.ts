@@ -98,7 +98,7 @@ class UserInfoBtn {
 
 
         if(v){
-            this.sourceBtn.visible = false;
+            //this.sourceBtn.visible = false;
             this.okBtn.show();
             this.parent.once(egret.Event.REMOVED_FROM_STAGE, this.hide, this);
         }
@@ -117,6 +117,6 @@ class UserInfoBtn {
         if(this.okBtn){
             this.okBtn.hide();
         }
-        this.sourceBtn.visible = true;
+        //this.sourceBtn.visible = true;
     }
 }

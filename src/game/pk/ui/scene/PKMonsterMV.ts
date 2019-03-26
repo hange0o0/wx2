@@ -21,6 +21,7 @@ class PKMonsterMV extends eui.Group {
     //public heroMV:HeroMVItem
     public currentMV;
     public talkItm:PKTalkItem;
+    public clickMC = new eui.Rect()
 
     public id;
     public set speed(v){
@@ -60,9 +61,15 @@ class PKMonsterMV extends eui.Group {
          MyTool.removeMC(this.currentMV)
          if(!this.monsterMV)
          {
+             this.addChild(this.clickMC);
+             this.clickMC.visible = false;
              this.monsterMV = new MonsterMV()
              this.monsterMV.addEventListener('mv_die',this.fireDie,this)
          }
+         this.clickMC.width = vo.width
+         this.clickMC.height = vo.height
+         this.clickMC.x = -vo.width/2
+         this.clickMC.y = -vo.height
          this.currentMV = this.monsterMV;
          this.addChild(this.monsterMV)
          this.monsterMV.load(id)

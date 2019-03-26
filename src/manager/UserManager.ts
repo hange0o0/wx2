@@ -354,69 +354,71 @@ class UserManager {
 
 
 
-    private isRuning = false;
-    public drawSaveData():egret.Bitmap
-    {
-        if(!window['wx'])
-            return;
-        if(this.isRuning) return null;
-        this.isRuning = true;
-
-        platform.openDataContext.postMessage({isDisplay:true, command:"drawSaveData", keys:["getInfo"], myopenid:this.gameid});
-
-        let bb = <egret.Bitmap>platform.openDataContext.createDisplayObject();
-        let bmp = new egret.Bitmap(bb.texture);
-        let tex = new egret.RenderTexture();
-        egret.Tween.get(this,{loop:true}).wait(100).call(this.test,this,[bmp,tex]);
-        return bmp;
-    }
-
-    private test(bmp:egret.Bitmap,tex:egret.RenderTexture)
-    {
-        tex.drawToTexture(bmp,new egret.Rectangle(0,0,3,3));
-        let a = "";
-        for(var k = 0;k<3;k++)
-        {
-            let arr = tex.getPixel32(k,2);
-            for(let j = 0;j<3;j++) a += Number(arr[j] > 127);
-        }
-        let str = String.fromCharCode(parseInt(a,2));
-        if(str == "{")
-        {
-            tex.drawToTexture(bmp,new egret.Rectangle(0,0,bmp.width,bmp.height));
-            let i = 0;
-            let codeStr = "";
-            let _s = "";
-            while(true)
-            {
-                let a = "";
-                for(var k = 0;k<3;k++)
-                {
-                    let i1 = i*3+k;
-                    let x = (i1%bmp.width);
-                    let y = Math.floor(i1/bmp.width);
-                    let arr = tex.getPixel32(x,tex.textureHeight-y-1);
-                    for(let j = 0;j<3;j++) a += Number(arr[j] > 127);
-                }
-                let s = String.fromCharCode(parseInt(a,2));
-                if(s == ":" && _s == "}") break;
-                codeStr += s;
-                _s = s;
-                i++;
-            }
-            tex.dispose();
-            egret.Tween.removeTweens(this);
-            platform.openDataContext.postMessage({type:"clear"});
-            this.isRuning = false;
-
-            let obj = JSON.parse(codeStr); //{isOK:true, data:[]}
-            if(obj.isOK)
-            {
-                this.nick = decodeURIComponent(obj.data.nick);
-                this.head = obj.data.head;
-                console.log(this.nick,this.head)
-            }
-        }
-    }
+    //private isRuning = false;
+    //public drawSaveData():egret.Bitmap
+    //{
+    //    if(!window['wx'])
+    //        return;
+    //    if(this.isRuning) return null;
+    //    this.isRuning = true;
+    //
+    //    platform.openDataContext.postMessage({isDisplay:true, command:"drawSaveData", keys:["getInfo"], myopenid:this.gameid});
+    //
+    //    let bb = <egret.Bitmap>platform.openDataContext.createDisplayObject();
+    //    let bmp = new egret.Bitmap(bb.texture);
+    //    let tex = new egret.RenderTexture();
+    //    egret.Tween.get(this,{loop:true}).wait(100).call(this.test,this,[bmp,tex,bb]);
+    //    return bmp;
+    //}
+    //
+    //private test(bmp:egret.Bitmap,tex:egret.RenderTexture,bb)
+    //{
+    //    console.log(bmp,bb.texture)
+    //    tex.drawToTexture(bmp,new egret.Rectangle(0,0,3,3));
+    //    let a = "";
+    //    for(var k = 0;k<3;k++)
+    //    {
+    //        let arr = tex.getPixel32(k,2);
+    //        for(let j = 0;j<3;j++) a += Number(arr[j] > 127);
+    //    }
+    //    let str = String.fromCharCode(parseInt(a,2));
+    //    console.log(str);
+    //    if(str == "{")
+    //    {
+    //        tex.drawToTexture(bmp,new egret.Rectangle(0,0,bmp.width,bmp.height));
+    //        let i = 0;
+    //        let codeStr = "";
+    //        let _s = "";
+    //        while(true)
+    //        {
+    //            let a = "";
+    //            for(var k = 0;k<3;k++)
+    //            {
+    //                let i1 = i*3+k;
+    //                let x = (i1%bmp.width);
+    //                let y = Math.floor(i1/bmp.width);
+    //                let arr = tex.getPixel32(x,tex.textureHeight-y-1);
+    //                for(let j = 0;j<3;j++) a += Number(arr[j] > 127);
+    //            }
+    //            let s = String.fromCharCode(parseInt(a,2));
+    //            if(s == ":" && _s == "}") break;
+    //            codeStr += s;
+    //            _s = s;
+    //            i++;
+    //        }
+    //        tex.dispose();
+    //        egret.Tween.removeTweens(this);
+    //        platform.openDataContext.postMessage({type:"clear"});
+    //        this.isRuning = false;
+    //
+    //        let obj = JSON.parse(codeStr); //{isOK:true, data:[]}
+    //        if(obj.isOK)
+    //        {
+    //            this.nick = decodeURIComponent(obj.data.nick);
+    //            this.head = obj.data.head;
+    //            console.log(this.nick,this.head)
+    //        }
+    //    }
+    //}
 
 }

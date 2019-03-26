@@ -328,7 +328,8 @@ class CoinGameUI extends game.BaseUI {
         for(var i=this.monsterArr.length-1;i>=0;i--)
         {
             var mc = this.monsterArr[i];
-            if(mc.currentMV.hitTestPoint(x,y,true))
+            //if(mc.currentMV.hitTestPoint(x,y,true))   //bug 3-26,去掉true
+            if(mc.clickMC.hitTestPoint(x,y))   //bug 3-26,去掉true
             {
                 var list = [];
                 for(var j=0;j<this.monsterArr.length;j++)

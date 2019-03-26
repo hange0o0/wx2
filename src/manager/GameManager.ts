@@ -329,7 +329,45 @@ if(window["wx"])
         imageUrl: Config.localResRoot + "share_img_2.jpg"
     }))
 
-    window["wx"].setKeepScreenOn && window["wx"].setKeepScreenOn({keepScreenOn:true});//屏幕常亮
+    if(wx.getUpdateManager){ //1.9.90以上版本支持
+        const updateManager = wx.getUpdateManager()
+        updateManager.onCheckForUpdate(function (res) {
+            // 请求完新版本信息的回调
+            //console.log(res.hasUpdate)
+            if(res.hasUpdate){
+                wx.showToast({icon:"none", title:"有新版本，正在下载中..", duration: 600000});//10分钟
+                window["clearTempCache"] && window["clearTempCache"]();
+            }
+        })
+        updateManager.onUpdateReady(function () {
+            wx.hideToast();
+            wx.showModal({
+                title: '更新提示',
+                content: '新版本已经准备好，请点击确定重启应用',
+                showCancel: false,
+                success: function (res) {
+                    if (res.confirm) {
+                        // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                        updateManager.applyUpdate()
+                    }
+                }
+            })
+
+        })
+        updateManager.onUpdateFailed(function () {
+            wx.hideToast();
+            wx.showModal({
+                title: '更新提示',
+                content: '新版本下载失败，点击确定重试哦',
+                showCancel: false,
+                success: function (res) {
+                    updateManager.applyUpdate()
+                }
+            })
+        })
+    }
+
+    wx.setKeepScreenOn && wx.setKeepScreenOn({keepScreenOn:true});//屏幕常亮
 
 
 

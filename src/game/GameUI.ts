@@ -14,6 +14,7 @@ class GameUI extends game.BaseUI {
     public team1: TeamUI;
     private team2: TeamUI;
     private coinGroup: eui.Group;
+    private scrollGroup: eui.Group;
     public mainGroup: eui.Group;
     private coinText: eui.Label;
     private bottomGroup: eui.Group;
@@ -37,13 +38,14 @@ class GameUI extends game.BaseUI {
     private teamGroup: eui.Group;
     private stopCon: eui.Group;
     private stopBG: eui.Image;
+    private startBtn: eui.Image;
     private scroller: eui.Scroller;
     private mainScroller: eui.Scroller;
     private list: eui.List;
     public changeUser: ChangeUserUI;
 
 
-
+    private infoBtn:UserInfoBtn
 
 
     private pkMV
@@ -56,6 +58,8 @@ class GameUI extends game.BaseUI {
 
     private haveGetInfo = false;
     private haveLoadFinish = false;
+    private haveGetUser = false;
+    private needShowStartBtn = false;
 
     private firstShow = true;
     public showIndex = -1;
@@ -93,10 +97,64 @@ class GameUI extends game.BaseUI {
             return MainPKItem;
         }
 
+        this.infoBtn = new UserInfoBtn(this.startBtn, (res)=>{
+            //UserManager.getInstance().updateUserInfo(res,()=>{
+            this.renewInfo(res);
+            //});
+
+        }, this, Config.localResRoot + "wx_btn_info.png");
+        this.infoBtn.visible = false;
+        this.startBtn.visible = false;
+        //MyTool.removeMC(this.startBtn)
+        //this.startBtn.visible = false;
+
 
         this.stopCon.addChild(this.stopMV)
         this.stopMV.scaleX = this.stopMV.scaleY = 1.2
         this.addBtnEvent(this.stopCon,this.onStopClick)
+    }
+
+    private renewInfo(res?){
+        var wx = window['wx'];
+        if(!wx)
+        {
+            this.haveGetUser = true;
+            this.initData();
+            return;
+        }
+        if(res)
+        {
+            if(!res.userInfo)
+                return;
+            this.infoBtn.visible = false;
+            this.haveGetUser = true;
+            this.initData();
+            UM.renewInfo(res.userInfo)
+            return;
+        }
+        wx.getSetting({
+            success: (res) =>{
+                console.log(res.authSetting)
+                if(res.authSetting["scope.userInfo"])//已授权
+                {
+                    this.haveGetUser = true;
+                    this.initData()
+                    wx.getUserInfo({
+                        success: (res) =>{
+                            var userInfo = res.userInfo
+                            UM.renewInfo(userInfo)
+                            //UM.head = userInfo.avatarUrl
+                            //UM.gender = userInfo.gender || 1 //性别 0：未知、1：男、2：女
+                        }
+                    })
+                }
+                else
+                {
+                    this.needShowStartBtn = true;
+                    //this.infoBtn.visible = true;
+                }
+            }
+        })
     }
 
     public scrollToBottom(){
@@ -156,6 +214,12 @@ class GameUI extends game.BaseUI {
         PKManager.getInstance().loadLevelData(()=>{
         //PKManager.getInstance().loadLevelData(index,(data)=>{
             //PKManager.getInstance().initData(index,data);
+            if(this.needShowStartBtn)
+            {
+                this.haveLoadFinish = true;
+                this.initData();
+                return;
+            }
             setTimeout(()=>{
                 this.haveLoadFinish = true;
                 this.initData();
@@ -175,15 +239,16 @@ class GameUI extends game.BaseUI {
         this.stopingGroup.visible = false;
         this.coinText.text = '******'
 
-        this.changeUser.getAD()
+
         this.renewSound();
         //this.cdText.text = '.'
         this.loadingGroup.visible = true;
         egret.Tween.get(this.loadMC,{loop:true}).to({rotation:360},3000)
         self.loadText.text = '正在加载素材，请耐心等候..'
+
+        this.renewInfo();
         UserManager.getInstance().getUserInfo(()=>{
             this.haveGetInfo = true;
-            UM.drawSaveData();
             this.initData();
         });
         var wx =  window["wx"];
@@ -201,7 +266,7 @@ class GameUI extends game.BaseUI {
             })
 
             loadTask.onProgressUpdate(res => {
-                self.loadText.text = '正在加载素材，请耐心等候..\n' + res.progress + '%'
+                self.loadText.text = '正在加载素材，请耐心等候..' + res.progress + '%'
                 //console.log('下载进度', res.progress)
                 //console.log('已经下载的数据长度', res.totalBytesWritten)
                 //console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
@@ -217,18 +282,31 @@ class GameUI extends game.BaseUI {
     }
 
     private initData(){
-        if(!this.haveLoadFinish || !this.haveGetInfo)
+        if(this.haveLoadFinish && this.haveGetInfo && !this.haveGetUser && this.needShowStartBtn)
+        {
+            this.changeUser.getAD()
+            this.loadText.text = '点击屏幕受权进入游戏';
+            this.needShowStartBtn = false;
+            this.infoBtn.visible = true;
+            this.loadMC.visible = false;
+            egret.Tween.removeTweens(this.loadMC);
+            return;
+            //this.loadText.text = '用户授权后可进入游戏'
+        }
+        if(!this.haveLoadFinish || !this.haveGetInfo  || !this.haveGetUser)
             return;
         //JumpMC.getAD();
+        this.changeUser.getAD()
         GuideManager.getInstance().isGuiding = !UM.guideFinish;
         this.bottomGroup.visible = true;
         this.loadingGroup.visible = false;
-        egret.Tween.get(this.loadMC,{loop:true}).to({rotation:360},3000);
+        egret.Tween.removeTweens(this.loadMC);
         this.mainPKUI.visible = false;
         this.showIndex = -1;
         this.onTimer();
         this.onCoinChange();
         this.renewChapterRed();
+        this.scrollGroup.addChild(this.changeUser)
 
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)

@@ -84,7 +84,8 @@ class TeamUI extends game.BaseItem {
         for(var i=this.monsterArr.length-1;i>=0;i--)
         {
             var mc = this.monsterArr[i];
-            if(mc.currentMV.hitTestPoint(x,y,true))
+            //if(mc.currentMV.hitTestPoint(x,y,true)) //bug 3-26,去掉true
+            if(mc.clickMC.hitTestPoint(x,y)) //bug 3-26,去掉true
             {
                 if(GuideManager.getInstance().isGuiding && GuideManager.getInstance().guideKey2 == 'info')
                     GuideManager.getInstance().guideKey2 = ''
@@ -98,7 +99,6 @@ class TeamUI extends game.BaseItem {
                 break;
             }
         }
-
     }
 
     private onClick1() {
