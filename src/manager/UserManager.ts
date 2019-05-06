@@ -114,6 +114,8 @@ class UserManager {
     }
 
     public renewInfo(userInfo){
+        if(!userInfo)
+            return;
         this.isScope = true;
         this.nick = userInfo.nickName
         this.head = userInfo.avatarUrl
@@ -150,6 +152,13 @@ class UserManager {
                 wx.cloud.callFunction({      //取玩家openID,
                     name: 'getInfo',
                     complete: (res) => {
+                        if(!res.result)
+                        {
+                            MyWindow.Alert('请求用户数据失败，请重新启动',()=>{
+                                wx.exitMiniProgram({});
+                            })
+                            return;
+                        }
                         console.log(res)
                         this.gameid = res.result.openid
                         this.shareFail = res.result.shareFail

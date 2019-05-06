@@ -19,8 +19,8 @@ class M76 extends MBase {
         var PD = PKData.getInstance();
         var arr = PD.getMonsterByNoTeam(user.getOwner().teamData);
         var atkrage = user.getSkillValue(1);
-        var skillValue = user.getSkillValue(2,true)
-        var cd = 1000*user.getSkillValue(3);
+        //var skillValue = user.getSkillValue(2,true)
+        //var cd = 1000*user.getSkillValue(3);
         for(var i=0;i<arr.length;i++)
         {
             var targetX = arr[i];
@@ -31,25 +31,25 @@ class M76 extends MBase {
                 targetX.beAtkAction({hp:hp,atker:user})
                 user.addAtkHurt(hp)
 
-                if(targetX.beSkillAble())
-                {
-                    var buff = new PKBuffData()
-                    buff.id = 76;
-                    buff.value = skillValue
-                    buff.addValue('hpChange',-skillValue);
-                    buff.user = user;
-                    buff.endTime = PKData.getInstance().actionTime + cd;
-                    targetX.addBuff(buff)
-
-                    if(buff.ing)
-                    {
-                        PKData.getInstance().addVideo({
-                            type:PKConfig.VIDEO_MONSTER_ADD_STATE,
-                            user:targetX,
-                            keys:['hp-']
-                        })
-                    }
-                }
+                //if(targetX.beSkillAble())
+                //{
+                //    var buff = new PKBuffData()
+                //    buff.id = 76;
+                //    buff.value = skillValue
+                //    buff.addValue('hpChange',-skillValue);
+                //    buff.user = user;
+                //    buff.endTime = PKData.getInstance().actionTime + cd;
+                //    targetX.addBuff(buff)
+                //
+                //    if(buff.ing)
+                //    {
+                //        PKData.getInstance().addVideo({
+                //            type:PKConfig.VIDEO_MONSTER_ADD_STATE,
+                //            user:targetX,
+                //            keys:['hp-']
+                //        })
+                //    }
+                //}
             }
         }
         return true;

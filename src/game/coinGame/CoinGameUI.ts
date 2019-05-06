@@ -251,7 +251,7 @@ class CoinGameUI extends game.BaseUI {
             return;
         }
 
-        var cost = Math.min(2000,Math.ceil(this.level/20)*100)
+        var cost = Math.ceil(this.level/20)*100
         MyWindow.Confirm('确定花费'+cost+'金币得到提示答案吗？',(b)=>{
             if(b==1)
             {

@@ -256,7 +256,7 @@ class DebugManager {
             {
                 for(var i=0;i<this.levelArr.length;i++)
                 {
-                    this.levelArr[i] = JSON.stringify(this.levelArr[i])
+                    this.levelArr[i] = this.format(this.levelArr[i])
                 }
                 egret.localStorage.setItem('levelData_' + DateUtil.formatDate('MM-dd hh:mm:ss',new Date()), this.levelArr.join('\n'));
             }
@@ -267,9 +267,9 @@ class DebugManager {
     }
 
     private format(data){
-        var rd = Math.floor(Math.random() * 100000000000);
-        data.seed = rd;
-        return JSON.stringify(data);
+        if(!data.seed)
+            data.seed = Math.floor(Math.random() * 100000000000);
+        return data.list1+'|'+data.list2+'|' +data.seed
     }
 
     private testOne(list1,list2,seed?){
@@ -313,7 +313,7 @@ class DebugManager {
 
     //创建关卡数据，输入花费比例
     public levelArr = []
-    public createLevel(rate){
+    public createLevel(){
         this.levelArr = [];
        this.finishFun = (winArr)=>{
            var list1 = winArr[0]
@@ -356,10 +356,11 @@ class DebugManager {
 
         this.resetCost();
         this.testRound();
+        console.log('DM.stop = 3')
     }
 
     private resetCost(){
-        var num = Math.floor((this.levelArr.length + 2110)/10)
+        var num = Math.floor((this.levelArr.length)/3) // + 2110
         for(var cost=0;cost < 31;cost++)
         {
             num-=cost;
@@ -373,105 +374,105 @@ class DebugManager {
         this.callCost = cost + 30
     }
 
-    private loadArr = []
-    private resultArr = []
-    public m(){
-        for(var i=1;i<=61;i++)
-        {
-             this.loadArr.push('resource/levelX/chapter/chapter_'+i+'.txt')
-        }
-        this.m1();
-    }
-
-    private m1(){
-        var url = this.loadArr.shift();
-        if(!url)
-        {
-            console.log(this.resultArr.length);
-            console.log('finish');
-            egret.localStorage.setItem('result' + DateUtil.formatDate('MM-dd hh:mm:ss',new Date()), this.resultArr.join('\n'));
-            return;
-        }
-        console.log(this.resultArr.length)
-        var loader: egret.URLLoader = new egret.URLLoader();
-        loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
-        loader.once(egret.Event.COMPLETE,()=>{
-            var arr = loader.data.split('\n');
-            for(var i=0;i<arr.length;i++)
-            {
-                if(arr[i])
-                {
-                    var oo = JSON.parse(arr[i]);
-                    this.resultArr.push(oo.list1+'|'+oo.list2+'|' +oo.seed)
-                }
-            }
-            this.m1();
-        },this);
-        loader.load(new egret.URLRequest(url));
-    }
-
-    //重新生成关卡答案
-    public resetChapter(){
-        var PKM = PKManager.getInstance();
-        var newArr = [];
-        var myCost = 36;
-
-        PKM.loadChapterData(async ()=>{
-
-            var arr = PKM.chapterData;
-            for(var i=0;i<arr.length && i<100;i++)
-            {
-                var temp = arr[i].split('|')
-                var question = {
-                    list1:temp[0],
-                    list2:temp[1],
-                    cost:myCost,
-                    seed:parseInt(temp[2]),
-                }
-                this.testOne(question.list1,question.list2,question.seed)
-                if(PKData.getInstance().getPKResult() != 2) //原来默认的答案不对
-                {
-                    //调整后的答案是正确的
-                    if(PKM.chapterResetData[i+1])
-                    {
-                        this.testOne(question.list1,PKM.chapterResetData[i+1],question.seed)
-                        if(PKData.getInstance().getPKResult() == 2)
-                        {
-                            newArr.push((i+1)+'|'+PKM.chapterResetData[i+1]);
-                            continue;
-                        }
-                    }
-
-                    //重新找
-                    var chooseList =  PKManager.getInstance().getChapterChooseList(question);
-                    do{
-                        var list2 = this.randomList(myCost,chooseList);
-                        if(list2.split(',').length>Math.min(10,5+Math.floor(i/100)))
-                            continue;
-                        this.testOne(question.list1,list2,question.seed);
-                        if(PKData.getInstance().getPKResult() == 2)
-                        {
-                            console.log('error:',(i+1))
-                            newArr.push((i+1)+'|'+list2);
-                            break;
-                        }
-                    }while(true);
-                }
-                else
-                {
-                    console.log('1');
-                }
-                if(i%10 == 9) //防循环时间过长
-                {
-                    await this.delayCD(1);
-                }
-            }
-
-            console.log('finish',newArr.length);
-            if(newArr.length)
-                egret.localStorage.setItem('resetChapter' + DateUtil.formatDate('MM-dd hh:mm:ss',new Date()), newArr.join('\n'));
-        },true)
-    }
+    //private loadArr = []
+    //private resultArr = []
+    //public m(){
+    //    for(var i=1;i<=61;i++)
+    //    {
+    //         this.loadArr.push('resource/levelX/chapter/chapter_'+i+'.txt')
+    //    }
+    //    this.m1();
+    //}
+    //
+    //private m1(){
+    //    var url = this.loadArr.shift();
+    //    if(!url)
+    //    {
+    //        console.log(this.resultArr.length);
+    //        console.log('finish');
+    //        egret.localStorage.setItem('result' + DateUtil.formatDate('MM-dd hh:mm:ss',new Date()), this.resultArr.join('\n'));
+    //        return;
+    //    }
+    //    console.log(this.resultArr.length)
+    //    var loader: egret.URLLoader = new egret.URLLoader();
+    //    loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
+    //    loader.once(egret.Event.COMPLETE,()=>{
+    //        var arr = loader.data.split('\n');
+    //        for(var i=0;i<arr.length;i++)
+    //        {
+    //            if(arr[i])
+    //            {
+    //                var oo = JSON.parse(arr[i]);
+    //                this.resultArr.push(oo.list1+'|'+oo.list2+'|' +oo.seed)
+    //            }
+    //        }
+    //        this.m1();
+    //    },this);
+    //    loader.load(new egret.URLRequest(url));
+    //}
+    //
+    ////重新生成关卡答案
+    //public resetChapter(){
+    //    var PKM = PKManager.getInstance();
+    //    var newArr = [];
+    //    var myCost = 36;
+    //
+    //    PKM.loadChapterData(async ()=>{
+    //
+    //        var arr = PKM.chapterData;
+    //        for(var i=0;i<arr.length && i<100;i++)
+    //        {
+    //            var temp = arr[i].split('|')
+    //            var question = {
+    //                list1:temp[0],
+    //                list2:temp[1],
+    //                cost:myCost,
+    //                seed:parseInt(temp[2]),
+    //            }
+    //            this.testOne(question.list1,question.list2,question.seed)
+    //            if(PKData.getInstance().getPKResult() != 2) //原来默认的答案不对
+    //            {
+    //                //调整后的答案是正确的
+    //                if(PKM.chapterResetData[i+1])
+    //                {
+    //                    this.testOne(question.list1,PKM.chapterResetData[i+1],question.seed)
+    //                    if(PKData.getInstance().getPKResult() == 2)
+    //                    {
+    //                        newArr.push((i+1)+'|'+PKM.chapterResetData[i+1]);
+    //                        continue;
+    //                    }
+    //                }
+    //
+    //                //重新找
+    //                var chooseList =  PKManager.getInstance().getChapterChooseList(question);
+    //                do{
+    //                    var list2 = this.randomList(myCost,chooseList);
+    //                    if(list2.split(',').length>Math.min(10,5+Math.floor(i/100)))
+    //                        continue;
+    //                    this.testOne(question.list1,list2,question.seed);
+    //                    if(PKData.getInstance().getPKResult() == 2)
+    //                    {
+    //                        console.log('error:',(i+1))
+    //                        newArr.push((i+1)+'|'+list2);
+    //                        break;
+    //                    }
+    //                }while(true);
+    //            }
+    //            else
+    //            {
+    //                console.log('1');
+    //            }
+    //            if(i%10 == 9) //防循环时间过长
+    //            {
+    //                await this.delayCD(1);
+    //            }
+    //        }
+    //
+    //        console.log('finish',newArr.length);
+    //        if(newArr.length)
+    //            egret.localStorage.setItem('resetChapter' + DateUtil.formatDate('MM-dd hh:mm:ss',new Date()), newArr.join('\n'));
+    //    },true)
+    //}
 
 }
 

@@ -423,6 +423,8 @@ class MainPKUI extends game.BaseItem {
                     this.delayShowResult(this.failGroup);
                     this.failText.text = '失败'
                     this.backBtn.label = '重试'
+                    if(Math.random() < 0.2)
+                        PKResultUI.getInstance().show(false)
                 }
                 else if(result == 2)
                 {
@@ -434,6 +436,7 @@ class MainPKUI extends game.BaseItem {
                         this.desGroup['callVisible'] = true
                         this.des1.text = '恭喜获得'
                         this.des2.text = 'x' + NumberUtil.addNumSeparator(addCoin)
+                        PKResultUI.getInstance().show(true)
                     }
                     this.shareStr = '已成功通过第'+this.dataIn.level+'关，需要向我取经吗？'
                     this.backBtn.label = '下一关'

@@ -19,6 +19,8 @@ class M63 extends MBase {
         var PD = PKData.getInstance();
         var arr = PD.getMonsterByNoTeam(user.getOwner().teamData);
         var atkrage = user.getSkillValue(1);
+        var skillValue = user.getSkillValue(2,true)
+        //var cd = 1000*user.getSkillValue(3);
         for(var i=0;i<arr.length;i++)
         {
             var targetX = arr[i];
@@ -33,36 +35,23 @@ class M63 extends MBase {
                 {
                     var buff = new PKBuffData()
                     buff.id = 63;
-                    buff.isDebuff = true;
+                    buff.value = skillValue
+                    buff.addValue('hpChange',-skillValue);
                     buff.user = user;
-                    buff.addState(PKConfig.STATE_DIE);
-                    buff.addState(PKConfig.STATE_ILL);
-                    buff.endTime = PKData.getInstance().actionTime + 1000*user.getSkillValue(3);
-                    buff.value = user.getSkillValue(2,true)
+                    //buff.endTime = PKData.getInstance().actionTime + cd;
                     targetX.addBuff(buff)
+
+                    if(buff.ing)
+                    {
+                        PKData.getInstance().addVideo({
+                            type:PKConfig.VIDEO_MONSTER_ADD_STATE,
+                            user:targetX,
+                            keys:['hp-']
+                        })
+                    }
                 }
             }
         }
         return true;
-    }
-
-    public onBuff(buff:PKBuffData){
-
-        var PD = PKData.getInstance();
-        var user = buff.user
-        var target = buff.owner
-        var arr = PD.getMonsterByTeam(target.getOwner().teamData);
-        var atkrage = user.getSkillValue(1);
-        for(var i=0;i<arr.length;i++)
-        {
-            var targetX = arr[i];
-            var des = Math.abs(target.x - targetX.x);
-
-            if(des<=atkrage + targetX.getVO().width/2)
-            {
-                targetX.beAtkAction({hp:buff.value})
-                user.addAtkHurt(buff.value)
-            }
-        }
     }
 }

@@ -4,6 +4,8 @@ class M66 extends MBase {
     }
 
     public onKill(user:PKMonsterData,target:PKMonsterData){
+        if(target.dieTime)
+            return;
         var PD = PKData.getInstance();
         var mid = 65;
         var owner = PD.getPlayer(user.owner);
