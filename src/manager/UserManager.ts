@@ -144,7 +144,7 @@ class UserManager {
         if(!wx)
         {
             this.fill(this.orginUserData());
-            this.guideFinish = true;   //本地不进新手了
+            this.guideFinish = !!SharedObjectManager.getInstance().getMyValue('localSave');   //本地不进新手了
             fun && fun();
             return;
         }

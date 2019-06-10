@@ -322,7 +322,6 @@ class MyADManager {
                 this.bannerBG.height = Config.adHeight;
             }
             GameManager.container.addChild(this.bannerBG)
-            this.bannerBG.visible = true
             this.bannerBG.bottom = bottom;
             this.bannerAD.show()
             var scaley = screen.availHeight/GameManager.stage.stageHeight;
@@ -334,6 +333,6 @@ class MyADManager {
     public hideBanner(){
         if(this.bannerAD)
             this.bannerAD.hide();
-        this.bannerBG && (this.bannerBG.visible = false)
+        MyTool.removeMC(this.bannerBG)
     }
 }

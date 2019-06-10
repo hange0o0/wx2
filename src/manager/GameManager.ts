@@ -64,60 +64,60 @@ class GameManager {
     public init(){
         GameManager.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onTouchMove,this);
         GameManager.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onTouchBegin,this);
-        this.createAD();
+        //this.createAD();
     }
 
-    private createAD(){
-        //Config.adHeight = 200;
-        if(!window['wx'])
-            return;
-        if(GameManager.stage.stageHeight < 1080)
-            return;
-
-
-        var btnw = Math.min(Math.pow(GameManager.stage.stageHeight/1330,1.6)*640,640)
-
-        let scalex = screen.availWidth/640;
-        let scaley = screen.availHeight/GameManager.stage.stageHeight;
-        if(btnw * scalex < 300){ //微信限制广告宽度不能小于300
-            btnw = 300 / scalex;
-        }
-        Config.adHeight =  btnw/640 * 224;
-        var  btny = GameManager.uiHeight;//给广告留的高度
-        var  paddingTop = GameManager.paddingTop();
-        var btnx =  (640-btnw)/2;
-
-        let left = scalex * (btnx);
-        let top = scaley * (btny + paddingTop);
-        let width = scalex * btnw;
-
-        let bannerAd = wx.createBannerAd({
-            adUnitId: 'adunit-d406f443acb5f7d2',
-            style: {
-                left: left,
-                top: top,
-                width: width
-            }
-        })
-        bannerAd.onError(()=>{
-            Config.adHeight = 0
-            GameManager.stage.dispatchEventWith(egret.Event.RESIZE);
-        })
-        bannerAd.onLoad(()=>{
-
-        })
-        bannerAd.onResize((res)=>{
-            var hh = res.height/scalex*(640/btnw);
-            if(Math.abs(hh - 224)/224 > 0.02)
-            {
-                Config.adHeight =  btnw/640 * hh;
-                GameManager.stage.dispatchEventWith(egret.Event.RESIZE);
-                bannerAd.style.top = scaley * (GameManager.uiHeight + paddingTop);
-            }
-            //console.log(res,scalex,scaley,GameManager.stage.stageHeight)
-        })
-        bannerAd.show()
-    }
+    //private createAD(){
+    //    //Config.adHeight = 200;
+    //    if(!window['wx'])
+    //        return;
+    //    if(GameManager.stage.stageHeight < 1080)
+    //        return;
+    //
+    //
+    //    var btnw = Math.min(Math.pow(GameManager.stage.stageHeight/1330,1.6)*640,640)
+    //
+    //    let scalex = screen.availWidth/640;
+    //    let scaley = screen.availHeight/GameManager.stage.stageHeight;
+    //    if(btnw * scalex < 300){ //微信限制广告宽度不能小于300
+    //        btnw = 300 / scalex;
+    //    }
+    //    Config.adHeight =  btnw/640 * 224;
+    //    var  btny = GameManager.uiHeight;//给广告留的高度
+    //    var  paddingTop = GameManager.paddingTop();
+    //    var btnx =  (640-btnw)/2;
+    //
+    //    let left = scalex * (btnx);
+    //    let top = scaley * (btny + paddingTop);
+    //    let width = scalex * btnw;
+    //
+    //    let bannerAd = wx.createBannerAd({
+    //        adUnitId: 'adunit-d406f443acb5f7d2',
+    //        style: {
+    //            left: left,
+    //            top: top,
+    //            width: width
+    //        }
+    //    })
+    //    bannerAd.onError(()=>{
+    //        Config.adHeight = 0
+    //        GameManager.stage.dispatchEventWith(egret.Event.RESIZE);
+    //    })
+    //    bannerAd.onLoad(()=>{
+    //
+    //    })
+    //    bannerAd.onResize((res)=>{
+    //        var hh = res.height/scalex*(640/btnw);
+    //        if(Math.abs(hh - 224)/224 > 0.02)
+    //        {
+    //            Config.adHeight =  btnw/640 * hh;
+    //            GameManager.stage.dispatchEventWith(egret.Event.RESIZE);
+    //            bannerAd.style.top = scaley * (GameManager.uiHeight + paddingTop);
+    //        }
+    //        //console.log(res,scalex,scaley,GameManager.stage.stageHeight)
+    //    })
+    //    bannerAd.show()
+    //}
 
     public stopTimer(){
         this.timeID.stop();

@@ -208,7 +208,7 @@ class TeamUI extends game.BaseItem {
             item.currentMV.scaleX = Math.abs(item.currentMV.scaleX);
             if(this.teamID == 1)
                 item.currentMV.scaleX *= -1
-            item.bottom = 90+vo.height*1 - 10 + 20*Math.random()// + Math.random()*80
+            item.bottom = 90+vo.height*1.1 - 10 + 20*Math.random()// + Math.random()*80
             item['w'] = vo.width
             item.x = begin + i*des
             this.monsterArr.push(item);

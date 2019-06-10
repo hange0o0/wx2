@@ -27,7 +27,7 @@ class PKManager {
 
     private _needUpUser = false;
     public get needUpUser(){return this._needUpUser}
-    public set needUpUser(v){this._needUpUser = v;egret.callLater(this.localSave,this)}
+    public set needUpUser(v){this._needUpUser = v; v && egret.callLater(this.localSave,this)}
     public baseForce = 10000;
     //public cost1 = 0
     //public cost2 = 0;

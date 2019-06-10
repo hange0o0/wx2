@@ -164,7 +164,7 @@ class GuideUI extends game.BaseContainer{
         egret.callLater(function(){
             GameManager.container.addChild(this);
             this.y = 0//GameManager.paddingTop();
-            this.height = this.stage.stageHeight - Config.adHeight//GameManager.uiHeight + GameManager.paddingTop();
+            this.height = this.stage.stageHeight// - Config.adHeight//GameManager.uiHeight + GameManager.paddingTop();
             this.tipTxt.text = '';
             this.clickFun = fun;
 

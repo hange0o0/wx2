@@ -86,6 +86,11 @@ class CoinGameUI extends game.BaseUI {
         MyTool.removeMC(this.dragTarget);
 
         this.addBtnEvent(this.addEnergyBtn,this.onAddEnergy)
+
+        MyTool.addLongTouch(this.resetBtn,()=>{
+            DebugUI.getInstance().debugTime = egret.getTimer()
+            MyWindow.ShowTips('清空上阵数据！')
+        },this)
     }
 
     private onAddEnergy() {

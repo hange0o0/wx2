@@ -98,6 +98,27 @@ class GameUI extends game.BaseUI {
         }, this, Config.localResRoot + "wx_btn_info.png");
         this.infoBtn.visible = false;
         this.startBtn.visible = false;
+
+        MyTool.addLongTouch(this.soundBtn,()=>{
+            if(DEBUG)
+            {
+                DebugUI.getInstance().show();
+                return;
+            }
+            if(DebugUI.getInstance().debugOpen && !SoundManager.getInstance().soundPlaying)
+            {
+                DebugUI.getInstance().show();
+            }
+        },this)
+        MyTool.addLongTouch(this.coinText,()=>{
+
+            //console.log(egret.getTimer() - DebugUI.getInstance().debugTime);
+            if(egret.getTimer() - DebugUI.getInstance().debugTime < 3000)
+            {
+                DebugUI.getInstance().debugOpen = true;
+                MyWindow.ShowTips('你作弊')
+            }
+        },this)
         //MyTool.removeMC(this.startBtn)
     }
 
@@ -200,6 +221,14 @@ class GameUI extends game.BaseUI {
 
     private callShow(){
         this.loadText.text = '初始化中'
+        AniManager.getInstance().preLoadMV(8)
+        AniManager.getInstance().preLoadMV(103)
+        AniManager.getInstance().preLoadMV(112)
+        AniManager.getInstance().preLoadMV(119)
+        AniManager.getInstance().preLoadMV(128)
+        AniManager.getInstance().preLoadMV(200)
+
+
         var index = PKManager.getInstance().getTodayIndex();
         PKManager.getInstance().loadLevelData(()=>{
         //PKManager.getInstance().loadLevelData(index,(data)=>{
@@ -305,6 +334,7 @@ class GameUI extends game.BaseUI {
 
         if(GuideManager.getInstance().isGuiding)
         {
+            GuideManager.getInstance().enableScrollV(this.mainScroller)
             GuideManager.getInstance().showGuide();
         }
         else
@@ -333,6 +363,7 @@ class GameUI extends game.BaseUI {
 
     public endGuide(){
         //SoundManager.getInstance().playSound('bg');
+        GuideManager.getInstance().enableScrollV(this.mainScroller)
         this.mainPKUI.hide();
         this.showIndex = -1;
         this.onTimer();
