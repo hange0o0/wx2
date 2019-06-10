@@ -7,25 +7,30 @@ class CoinGameUI extends game.BaseUI {
         return this._instance;
     }
 
-    private topUI: TopUI;
-    private bottomUI: BottomUI;
+    private mainGroup: eui.Group;
     private con: eui.Group;
     private bg: eui.Image;
     private scroller: eui.Scroller;
     private list: eui.List;
     private chooseList: eui.List;
-    private btnGroup: eui.Group;
-    private tipsBtn: eui.Group;
-    private getTipsIcon: eui.Image;
-    private resetBtn: eui.Group;
-    private pkBtn: eui.Group;
-    private historyBtn: eui.Group;
-    private energyGroup: eui.Group;
     private costText: eui.Label;
+    private freeEnergyText: eui.Label;
+    private energyGroup: eui.Group;
     private energyText: eui.Label;
     private addEnergyBtn: eui.Image;
     private desText: eui.Label;
-    private freeEnergyText: eui.Label;
+    private topUI: TopUI;
+    private bottomUI: BottomUI;
+    private btnGroup: eui.Group;
+    private tipsBtn: eui.Group;
+    private getTipsIcon: eui.Image;
+    private videoGroup: eui.Group;
+    private videoMC: eui.Label;
+    private resetBtn: eui.Group;
+    private pkBtn: eui.Group;
+    private historyBtn: eui.Group;
+
+
 
 
 
@@ -43,6 +48,8 @@ class CoinGameUI extends game.BaseUI {
     public constructor() {
         super();
         this.skinName = "CoinGameUISkin";
+        this.adBottom = 100;
+        this.isShowAD = true;
     }
 
     public childrenCreated() {
@@ -251,21 +258,27 @@ class CoinGameUI extends game.BaseUI {
             return;
         }
 
-        var cost = Math.ceil(this.level/20)*100
-        MyWindow.Confirm('确定花费'+cost+'金币得到提示答案吗？',(b)=>{
-            if(b==1)
-            {
-               if(UM.coin < cost)
-               {
-                   MyWindow.Alert('金币不足！')
-                   return;
-               }
-                UM.addCoin(-cost);
-                UM.tipsLevel = this.level;
-                this.showTips()
+        ShareTool.openGDTV(()=>{
+            UM.tipsLevel = this.level;
+            this.showTips()
+        })
 
-            }
-        },['再想想','要提示']);
+    }
+
+    private renewTipsBtn(){
+        if(this.level <= 10)
+        {
+           MyTool.removeMC(this.videoMC)
+            return;
+        }
+
+        if(this.level % 5 == 0 && !UM.isTest)
+        {
+            MyTool.removeMC(this.videoMC)
+            return;
+        }
+
+        this.videoGroup.addChildAt(this.videoMC,0)
     }
 
     private getAnswer(){
@@ -283,6 +296,7 @@ class CoinGameUI extends game.BaseUI {
         this.dataProvider.refresh();
         this.onItemChange();
         this.getTipsIcon.visible = true;
+        this.renewTipsBtn();
     }
 
 
@@ -297,7 +311,14 @@ class CoinGameUI extends game.BaseUI {
         {
             if(UM.getEnergy()<1)
             {
-                MyWindow.ShowTips('体力不足')
+                MyWindow.Confirm('体力不足,是否需要观看广告并补满？',(b)=>{
+                    if(b==1)
+                    {
+                        ShareTool.openGDTV(()=>{
+                            UM.addEnergy(UM.maxEnergy);
+                        })
+                    }
+                },['取消', '补满']);
                 return;
             }
             UM.addEnergy(-1);
@@ -305,7 +326,7 @@ class CoinGameUI extends game.BaseUI {
 
         this.addChild(MainPKUI.instance);
         MainPKUI.instance.top = 60
-        MainPKUI.instance.bottom = 100
+        MainPKUI.instance.bottom = 100 + Config.adHeight;
         MainPKUI.instance.show({
             level:this.level,
             isPK:true,
@@ -431,6 +452,7 @@ class CoinGameUI extends game.BaseUI {
     public onShow(){
         this.renewSize();
         this.once(egret.Event.ENTER_FRAME,this.renewSize,this)
+        this.mainGroup.bottom = 100 + Config.adHeight;
 
         this.renew();
         this.addPanelOpenEvent(GameEvent.client.CHAPTER_CHANGE,()=>{
@@ -457,8 +479,8 @@ class CoinGameUI extends game.BaseUI {
             this.energyText.textColor = 0xFF0000
             if(UM.isTest)
                 MyTool.removeMC(this.addEnergyBtn)
-            else if(!this.addEnergyBtn.parent)
-                this.energyGroup.addChild(this.addEnergyBtn);
+            //else if(!this.addEnergyBtn.parent)
+            //    this.energyGroup.addChild(this.addEnergyBtn);
         }
     }
 
@@ -488,6 +510,8 @@ class CoinGameUI extends game.BaseUI {
         else
             this.topUI.setTitle('关卡解迷 - 第'+this.level+'关')
     }
+
+
 
     public renew(level?){
         this.level = level || UM.chapterLevel;

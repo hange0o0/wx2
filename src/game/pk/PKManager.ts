@@ -42,6 +42,7 @@ class PKManager {
     private beginTime = 1550073600;//2019-2-14 0:0:0
 
     public isPKing = false;
+    public roundTime = 2*60
 
     constructor(){
         //var todayData = SharedObjectManager.getInstance().getMyValue('today_data_1') || {};
@@ -141,10 +142,10 @@ class PKManager {
         //return -1;
         var t0 = DateUtil.getNextDateTimeByHours(0)  - 24*3600
         var t1 = TM.now()
-        var dec = (t1 - t0) - 3600*6;
-        if(dec < 0)
-            return -1;
-        return Math.floor(dec/10/60)
+        var dec = (t1 - t0)// - 3600*6;
+        //if(dec < 0)
+        //    return -1;
+        return Math.floor(dec/this.roundTime)
     }
 
     public getCurrentData(){
@@ -164,23 +165,23 @@ class PKManager {
         {
             if(GuideManager.getInstance().guideKey == 'count')
             {
-                var endTime = GuideManager.getInstance().temp + 10*60
-                if(endTime <= TM.now() - (10*60 - PKConfig.addCoinTime))
-                    endTime = TM.now() - (10*60 - PKConfig.addCoinTime)+1
+                var endTime = GuideManager.getInstance().temp + this.roundTime
+                if(endTime <= TM.now() - (this.roundTime - PKConfig.addCoinTime))
+                    endTime = TM.now() - (this.roundTime - PKConfig.addCoinTime)+1
                 return endTime;
             }
             else if(GuideManager.getInstance().guideKey == 'pk')
             {
-                var endTime = GuideManager.getInstance().temp + (10*60 - PKConfig.addCoinTime)
+                var endTime = GuideManager.getInstance().temp + (this.roundTime - PKConfig.addCoinTime)
                 if(TM.now() >= endTime)
                     endTime = TM.now()+1
                 return endTime;
             }
-            return TM.now() + 10*60;
+            return TM.now() + this.roundTime;
         }
         var t0 = DateUtil.getNextDateTimeByHours(0)  - 24*3600
         var index =  this.getCurrentIndex();
-        return t0 + 3600*6 + (index + 1)*10*60;
+        return t0 +(index + 1)*this.roundTime;
     }
 
     public randomSeed;
@@ -196,8 +197,8 @@ class PKManager {
     public getCost(seed,passTime){
         this.randomSeed = seed*2;
         var len = Math.min(passTime,PKConfig.addCoinTime);
-        var baseCost1 = 15 + 20*this.random()
-        var baseCost2 = 50 - baseCost1
+        var baseCost1 = 60 + 80*this.random()
+        var baseCost2 = 200 - baseCost1
         var oo = {
             cost1:0,
             cost2:0
@@ -497,7 +498,7 @@ class PKManager {
         var day = Math.floor(key/1000)
         var index = key%1000;
 
-        var time = this.beginTime + (day-1)*3600*24 + 3600*6 + (index + 1)*60*10
+        var time = this.beginTime + (day-1)*3600*24  + (index + 1)*this.roundTime
         return time;
     }
 

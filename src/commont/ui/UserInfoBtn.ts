@@ -51,7 +51,7 @@ class UserInfoBtn {
             // let left = scalex * ((640-this.width)/2 + btnx);
             // let top = scaley * ((GameManagerHitPeng.uiHeight-this.height)/2 + btny + (AppF.isIOS ? 52 : 0));
             let left = scalex * (btnx);
-            let top = scaley * (btny);
+            let top = scaley * (btny + GameManager.paddingTop());
             let width = scalex * btnw;
             let height = scalex * btnh;
             var button = window["wx"].createUserInfoButton({
@@ -94,7 +94,7 @@ class UserInfoBtn {
             this.okBtn = this.initBtn(btn.width, btn.height, btn.x, btn.y, this.isNew);
         }
         console.log(this.okBtn)
-        if(!this.okBtn) return;
+        //if(!this.okBtn) return;
 
 
         if(v){

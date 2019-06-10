@@ -137,6 +137,9 @@ module game {
 
         private panelEvents: any = {};
 
+        public isShowAD = false;
+        public adBottom = 0;
+
         public constructor(isWindow?:boolean) {
             super();
             this.isWindow = isWindow;

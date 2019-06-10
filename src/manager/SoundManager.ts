@@ -23,27 +23,16 @@ class SoundManager {
     private _isMessage: boolean = true;
 
     private currentChannel:egret.SoundChannel;
+    private wxChannel;
     private currentKey :string;
     private bgKey :string;
     private lastBGKey :string;
     private isLoad:boolean=false;
 
-    private bgTimer;
-    public pkKey = [];
-    public effectKey = [];
-    // private tween:egret.Tween
-    
     private init(){
-        //if(!App.isMobile){//pc上默认开音乐
-        //    this._soundPlaying = true;
-        //    this._bgPlaying = true;
-        //}
-        //
-        //if(Config.isDebug)
-        //{
+
             this._soundPlaying = true;
             this._bgPlaying = true;
-        //}
 
         var som = SharedObjectManager.getInstance();
         if(som.getValue("sound") != undefined)
@@ -62,11 +51,9 @@ class SoundManager {
     }
 
     public get soundPlaying(){
-        // if(!Config.isDebug && !Config.testSound) return false;
         return this._soundPlaying
     }
     public get bgPlaying(){
-        // if(!Config.isDebug && !Config.testSound) return false;
         return this._bgPlaying
     }
     public get openShake(){
@@ -83,7 +70,6 @@ class SoundManager {
         if(this._soundPlaying!=v)
             SharedObjectManager.getInstance().setValue("sound",v)
         this._soundPlaying = v;
-        //this.loadEffectSound();
     }
     public set bgPlaying(v){
         if(this._bgPlaying!=v){
@@ -130,12 +116,16 @@ class SoundManager {
     public stopBgSound(){
         this.lastBGKey = this.bgKey;
         this.bgKey = null;
-        try{
-            // if(this.tween){
-            //     this.tween.pause();
-            //     this.tween = null;
-            // }
+        if(window['wx'])
+        {
+            if(this.wxChannel) {
+                this.wxChannel.destroy()
+            }
+            this.currentKey = null;
+            return;
+        }
 
+        try{
             egret.clearTimeout(this.playTime);
             if(this.currentChannel){
                 egret.Tween.removeTweens(this.currentChannel);
@@ -149,50 +139,59 @@ class SoundManager {
         if(GuideManager.getInstance().isGuiding)
             return;
         if(!this.soundPlaying) return;
-        //console.log('call:',v)
+
+        if(window['wx'])
+        {
+            const innerAudioContext = window['wx'].createInnerAudioContext()
+            innerAudioContext.autoplay = true
+            innerAudioContext.src = "resource/sound/" + v +".mp3";
+            return;
+        }
+
+
         var url = "resource/sound/" + v +".mp3"
         var loader: egret.URLLoader = new egret.URLLoader();
         loader.dataFormat = egret.URLLoaderDataFormat.SOUND;
         loader.once(egret.Event.COMPLETE,()=>{
             var sound: egret.Sound = <egret.Sound>loader.data;
             var channel = sound.play(0,1);
-            //console.log(v)
             if(fun)
                 channel.once(egret.Event.SOUND_COMPLETE,fun,thisObj)
         },this);
         loader.load(new egret.URLRequest(url));
     }
 
-    public resumeSound(){
-        if(this.lastBGKey)
-            this.playSound(this.lastBGKey);
-    }
 
     private tempLoop:number;
     public playSound(key:string, loop:number = 9999){
 
         if(GuideManager.getInstance().isGuiding)
             return;
-        //console.log(key)
         if(!this.bgPlaying) return;
         if(this.bgKey == key) return;
 
-        this.bgKey = key;
+
 
         var url = "resource/sound/" + key +".mp3"
         if(this.currentKey == url) return;
+
+        this.stopBgSound()
+        this.bgKey = key;
         this.currentKey=url;
 
 
+        if(window['wx'])
+        {
+            const innerAudioContext = this.wxChannel = window['wx'].createInnerAudioContext()
+            innerAudioContext.autoplay = true
+            innerAudioContext.src =url;
+            innerAudioContext.loop =true;
+            return;
+        }
         
         try{
 
             this.tempLoop = loop;
-            /*if(this.currentChannel && this.currentKey == url){
-                return;
-            }
-
-            this.currentKey=url*/
 
             var loader: egret.URLLoader = new egret.URLLoader();
             loader.dataFormat = egret.URLLoaderDataFormat.SOUND;
@@ -217,28 +216,15 @@ class SoundManager {
             if((this.currentKey && loader.data.url != this.currentKey) || !this._bgPlaying)
                 return;
             if(this.currentChannel){
-                // if(self.tween){//正在开始播
-                //     egret.Tween.removeTweens(self.currentChannel);
-                //     self.currentChannel.stop();
-                //     self.tween = null;
-                // }
-                // self.tween = egret.Tween.get(this.currentChannel).to({volume:0},500).call(()=>{
-                //     try{
-                //         self.tween = null;
-                //         if(self.currentChannel)
+
                             self.currentChannel.stop();
                             self.currentChannel=null;
-                            //self.currentChannel.volume = 0.3 + Math.random()*0.7
+
 
                             if(!self._bgPlaying)return;
-                            //this.playTime = setTimeout(()=>{
-                            //
-                            //}, 150);
+
                              fun();
-                    // }
-                    // catch(e){
-                    // }
-                // })
+
             }
             else
                 fun();
@@ -249,14 +235,7 @@ class SoundManager {
         function fun(){
             var sound: egret.Sound = <egret.Sound>loader.data;
             var channel: egret.SoundChannel = sound.play(0,self.tempLoop);
-            // channel.volume =0;
             self.currentChannel = channel;
-            //self.currentChannel.volume = 0.3 + Math.random()*0.7
-            // self.tween = egret.Tween.get(channel).to({volume:1},500).call(
-            //     ()=>{
-            //         self.tween = null;
-            //     }
-            // )
             channel.addEventListener(egret.Event.SOUND_COMPLETE, self.onSoundComplete, self);
         }
 
@@ -265,12 +244,6 @@ class SoundManager {
     private onSoundComplete(event?:egret.Event):void {
         this.currentChannel = null;
         this.currentKey = null;
-
-        //this.playTime = setTimeout(()=>{
-        //    this.bgKey = null;
-        //    this.playSound('road')
-        //},Math.random()*3*1000)
-
     }
 
     private onLoadError(event: egret.Event): void {
@@ -279,92 +252,5 @@ class SoundManager {
         loader.removeEventListener(egret.IOErrorEvent.IO_ERROR,this.onLoadError,this);
     }
     
-    //public fillData(d:Array<any>):void{
-    //    if(d) {
-    //        for(var i:number = 0;i < d.length;i++) {
-    //            switch(d[i]["id"]) {
-    //                case 1:
-    //                    this.soundPlaying = d[i]["num"] == 1;
-    //                    break;
-    //                case 2:
-    //                    this.bgPlaying = d[i]["num"] == 1;
-    //                    break;
-    //                case 3:
-    //                    this.openShake = d[i]["num"] == 1;
-    //                    break;
-    //                case 4:
-    //                    this.isPlayMovie = d[i]["num"] == 1;
-    //                    break;
-    //                case 5:
-    //                    this.isMessage = d[i]["num"] == 1;
-    //                    break;
-    //            }
-    //        }
-    //    }
-    //}
-    /*public updateSetting(ids: Array<any>){
-        var o:Array<any> =[];
-        if(ids){
-            for(var i = 0 ; i < ids.length;i++){
-                switch(ids[i]){
-                    case 1:
-                        o.push({id:1,num:this.soundPlaying?1:0});
-                        break;
-                    case 2:
-                        o.push({id:2,num:this.bgPlaying?1:0});
-                        break;
-                    case 3:
-                        o.push({id:3,num:this.openShake?1:0});
-                        break;
-                    case 4:
-                        o.push({id:4,num:this.isPlayMovie?1:0});
-                        break;
-                    case 5:
-                        o.push({id:5,num:this.isMessage?1:0});
-                        break;
-                }
-            }
-        }
-        else{
-            o.push({id:1,num:this.soundPlaying?1:0});
-            o.push({id:2,num:this.bgPlaying?1:0});
-            o.push({id:3,num:this.openShake?1:0});
-            o.push({id:4,num:this.isPlayMovie?1:0});
-//            o.push({id:6,num:this.isLover?1:0});
-            o.push({id:5,num:this.isMessage?1:0});
-        }
-        Net.instance.sendData(ServerEvent.sys.setting,{ data: o },null,false);
-    }*/
+
 }
-//
-//class SoundConfig {
-//    public static bg: string = "bg";
-//    public static bg_pk: string = "bg_pk";
-//    public static bg_pk_view: string = "bg_pk_view";
-//    public static effect_buy: string = "effect_buy";
-//    public static effect_button: string = "effect_button";
-//    public static effect_join: string = "effect_join";
-//    public static effect_m_up: string = "effect_m_up";
-//    public static effect_u_up: string = "effect_u_up";
-//    public static pk_win: string = "pk_win";
-//    public static pk_loss: string = "pk_loss";
-//    public static pk_effect1: string = "pk_effect1";
-//    public static pk_effect2: string = "pk_effect2";
-//    public static pk_effect3: string = "pk_effect3";
-//    public static pk_effect4: string = "pk_effect4";
-//    public static pk_effect5: string = "pk_effect5";
-//    //public static pk_effect6: string = "pk_effect6";
-//    public static pk_effect7: string = "pk_effect7";
-//    public static pk_effect8: string = "pk_effect8";
-//    //public static pk_effect9: string = "pk_effect9";
-//    //public static pk_effect10: string = "pk_effect10";
-//    //public static pk_effect11: string = "pk_effect11";
-//    public static pk_effect12: string = "pk_effect12";
-//    //public static pk_effect13: string = "pk_effect13";
-//    public static pk_effect14: string = "pk_effect14";
-//    public static pk_effect15: string = "pk_effect15";
-//    public static pk_effect16: string = "pk_effect16";
-//    public static pk_jump: string = "pk_jump";
-//    public static pk_jump2: string = "pk_jump2";
-//    public static pk_run: string = "pk_run";
-//}

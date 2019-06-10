@@ -12,7 +12,6 @@ class GameManager {
     public lastTouchTime: number;
     public lastTouchMC;
 
-    public changeUserTime = 0
     public onShowFun
     public shareFailTime = 0
 	public constructor() {
@@ -36,9 +35,14 @@ class GameManager {
     public static paddingTop(){
         return GameManager.isLiuHai()?50:0
     }
+    public static paddingBottom(){
+        if(App.isIphoneX)
+            return 30;
+        return 0;
+    }
 
     public static get uiHeight(){
-        var h = this.stage.stageHeight - Config.adHeight;
+        var h = this.stage.stageHeight// - Config.adHeight;
 
         if(this.isLiuHai())
         {
@@ -271,8 +275,8 @@ if(window["wx"])
     window["PKCardInfoUI"] = PKCardInfoUI;
     window["BottomUI"] = BottomUI;
     window["TopUI"] = TopUI
-    window["JumpMC"] = JumpMC
     window["ChangeUserUI"] = ChangeUserUI
+    window["GameManager"] = GameManager;
 
 
     var wx =  window["wx"];
@@ -308,15 +312,8 @@ if(window["wx"])
         //GameUI.getInstance().cleanTouch();
         console.log('show')
 
-        if(GameManager.getInstance().changeUserTime)
-        {
-            if(TM.now() - GameManager.getInstance().changeUserTime > 30 && !UM.coinObj.shareNum) //停留超过30秒
-            {
-                UM.coinObj.shareNum ++;
-                PKManager.getInstance().needUpUser = true;;
-            }
-        }
-        GameManager.getInstance().changeUserTime = 0;
+        MyADManager.getInstance().onShow();
+
     });
     //wx.exitMiniProgram(function(res){
     //    if(!GameManager.stage)

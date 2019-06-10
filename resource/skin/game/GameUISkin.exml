@@ -51,7 +51,7 @@
 				</e:Group>
 	<ns1:MainPKUI id="mainPKUI" x="0" skinName="MainPKUISkin" top="75" bottom="105" visible="false"/>
 	<e:Image id="soundBtn" x="350.91" y="21.21" source="sound_btn2_png"/>
-	<e:Group id="loadingGroup" left="0" right="0" top="0" bottom="0">
+	<e:Group id="loadingGroup" left="0" right="0" top="0" bottom="0" visible="false">
 		<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" top="0" bottom="0"/>
 		<e:Image id="loadMC" source="ui_loading_png" horizontalCenter="0" verticalCenter="-150"/>
 		<e:Label id="loadText" text="加载中" horizontalCenter="0" verticalCenter="-80" size="24" textAlign="center" lineSpacing="20" textColor="0xffe493"/>
@@ -59,26 +59,5 @@
 		<e:Label text="抵制不良游戏，拒绝盗版游戏。注意自我保护，谨防受骗上当。\n适度游戏益脑，沉迷游戏伤身。合理安排时间，享受健康生活。" size="20" lineSpacing="5" textAlign="center" horizontalCenter="0" bottom="20" textColor="0xceb192"/>
 		<e:Image id="startBtn" source="wx_btn_info_png" width="640" height="800" x="0" bottom="420"/>
 		<ns1:ChangeUserUI id="changeUser" skinName="ChangeUserUISkin" horizontalCenter="0" bottom="120"/>
-	</e:Group>
-	<e:Group id="stopingGroup" left="0" right="0" top="75" bottom="105" visible="false">
-		<e:Group id="stopCon" x="0" width="640" height="512" y="0">
-			<e:Image id="stopBG" horizontalCenter="0" bottom="0"/>
-		</e:Group>
-		<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" bottom="0" top="500"/>
-		<e:Scroller id="scroller" width="640" x="0" top="505" bottom="5" bounces="false">
-			<e:Group>
-			<e:List id="list" x="67" y="43">
-				<e:layout>
-				<e:TileLayout requestedColumnCount="6" paddingTop="10" paddingLeft="10" paddingBottom="10" horizontalGap="10" verticalGap="10"/>
-				</e:layout>
-			</e:List>
-			<e:layout>
-				<e:HorizontalLayout horizontalAlign="center" gap="10" paddingTop="10" paddingBottom="10"/>
-			</e:layout>
-			</e:Group>
-		</e:Scroller>
-		<e:Image left="0" right="0" top="500" bottom="0" source="bg18_png" scale9Grid="34,32,3,6" touchEnabled="false"/>
-		<e:Image source="black_bg_png" y="23" horizontalCenter="0" scale9Grid="37,7,17,42" width="200"/>
-		<e:BitmapLabel y="30" font="font1_fnt" text="休战中" scaleX="1.2" scaleY="1.2" horizontalCenter="0"/>
 	</e:Group>
 </e:Skin>

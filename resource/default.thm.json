@@ -36,6 +36,7 @@
 		"resource/skin/game/AddCoinItemSkin.exml",
 		"resource/skin/game/pkRelate/PKCardInfoSkin.exml",
 		"resource/skin/game/card/CardInfoUISkin.exml",
+		"resource/skin/game/changeUser/ChangeJumpUISkin.exml",
 		"resource/skin/game/changeUser/ChangeUserItemSkin.exml",
 		"resource/skin/game/changeUser/ChangeUserUISkin.exml",
 		"resource/skin/game/changeUser/JumpMCSkin.exml",

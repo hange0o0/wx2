@@ -12,6 +12,8 @@ class RankUI extends game.BaseUI{
     private bottomUI: BottomUI;
     private tab: eui.TabBar;
     private desText: eui.Label;
+    private userBtn: eui.Image;
+
 
 
 
@@ -23,9 +25,10 @@ class RankUI extends game.BaseUI{
     private isLoadFile:boolean;
 
 
+
+    //private tips = ['世界榜中的数据存在一定的延时']
     private infoBtn:UserInfoBtn
 
-    private tips = ['世界榜中的数据存在一定的延时']
 
     private rankData = {}
     public constructor() {
@@ -45,6 +48,22 @@ class RankUI extends game.BaseUI{
         this.scroller.viewport  =this.list;
         this.list.itemRenderer = RankItem;
 
+        this.infoBtn = new UserInfoBtn(this.userBtn, (res)=>{
+            this.renewInfo(res);
+        }, this,  Config.localResRoot + "wx_btn_info.png");
+
+    }
+
+    private renewInfo(res?){
+        var wx = window['wx'];
+        if(!wx)
+            return;
+        if(res && res.userInfo)
+        {
+            this.infoBtn.visible = false;
+            UM.renewInfo(res.userInfo)
+            this.renew();
+        }
     }
 
     private onTab(){
@@ -76,7 +95,7 @@ class RankUI extends game.BaseUI{
         {
               this.showBitmapList()
         }
-        this.desText.text = this.tips[Math.floor(Math.random()*this.tips.length)];
+
     }
 
     private worldRank(type,myValue){
@@ -97,6 +116,8 @@ class RankUI extends game.BaseUI{
             this.showRank(type);
             return;
         }
+        MsgingUI.getInstance().show()
+        this.desText.text = '正在请求数据';
         wx.cloud.callFunction({      //取玩家openID,
             name: 'getRank',
             data: oo,
@@ -108,6 +129,7 @@ class RankUI extends game.BaseUI{
                         time:TM.now()
                     }
                     this.showRank(type);
+                    MsgingUI.getInstance().hide()
                 }
             },
             fail:()=>{
@@ -150,11 +172,27 @@ class RankUI extends game.BaseUI{
             })
         }
         ArrayUtil.sortByField(arr,['value'],[1])
+        var myRank = 0
         for(var i=0;i<arr.length;i++) //更新自己成绩
         {
             arr[i].index = i+1;
+            if(arr[i].openid == UM.gameid)
+                myRank = i+1;
         }
         this.list.dataProvider = new eui.ArrayCollection(arr)
+
+        if(UM.nick)
+        {
+            if(myRank)
+                this.desText.text = '你当前排名为：' + myRank;
+            else
+                this.desText.text = '你还没进入前50名';
+        }
+        else
+        {
+            this.desText.text = '点此授权后可在排行榜中显示你的名次';
+            this.infoBtn.visible = true;
+        }
     }
 
     private poseData(){
@@ -186,6 +224,7 @@ class RankUI extends game.BaseUI{
         //发送消息
         var platform = window['platform']
         platform.openDataContext.postMessage(param);
+        this.desText.text = '赶快邀请好友来一起比拼吧！';
     }
 
     //0 好友榜，2群排行
@@ -217,6 +256,8 @@ class RankUI extends game.BaseUI{
             }
         }
         this.scroller.visible = false;
+        this.infoBtn.visible = false;
+        this.desText.text = ''
     }
     public hide(){
         this.remove();

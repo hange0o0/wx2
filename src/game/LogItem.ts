@@ -4,7 +4,6 @@ class LogItem extends game.BaseItem {
         this.skinName = "LogItemSkin";
     }
 
-    private con: eui.Group;
     private timeText: eui.Label;
     private cost1: eui.Label;
     private force1: eui.Label;
@@ -17,10 +16,13 @@ class LogItem extends game.BaseItem {
     private desText: eui.Label;
     private coinText: eui.Label;
     private videoBtn: eui.Button;
+    private coinBtn: eui.Button;
 
 
 
 
+
+    private finalCoin;
 
 
 
@@ -30,6 +32,13 @@ class LogItem extends game.BaseItem {
     public childrenCreated() {
         super.childrenCreated();
         this.addBtnEvent(this.videoBtn,this.onClick)
+        this.addBtnEvent(this.coinBtn,()=>{
+            var coin = Math.ceil(-this.finalCoin/2)
+            UM.addCoin(coin);
+            this.data.coinBack = true;
+            MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil.addNumSeparator(coin,2),0xFFFF00),1000)
+            UM.saveHistory();
+        })
         //this.con.cacheAsBitmap = true;
     }
 
@@ -44,7 +53,7 @@ class LogItem extends game.BaseItem {
         var roundData = showData.roundData;
         var PKM = PKManager.getInstance();
         var addCoin = PKM.getAddCoin(showData,showData.result,roundData);
-        var finalCoin = addCoin - showData.cost1 - showData.cost2;
+        var finalCoin = this.finalCoin = addCoin - showData.cost1 - showData.cost2;
 
         var costData = PKM.getCost(roundData.seed,60*10)
         var cost1 = costData.cost1 + showData.teamCost1
@@ -100,11 +109,12 @@ class LogItem extends game.BaseItem {
         this.coinText.text = finalCoin>=0?('+' + finalCoin):('' + finalCoin);
         this.coinText.textColor = finalCoin>=0?green2:red;
         this.timeText.text = PKM.getDayStrByKey(showData.key)
+        this.coinBtn.visible = !this.data.coinBack && this.finalCoin < -100;
 
-        if(showData.result == 3)
-            this.desText.text = '双方平手，最终收益>'
-        else
-            this.desText.text = showData.result +  '队获胜，最终收益>'
+        //if(showData.result == 3)
+        //    this.desText.text = '双方平手，最终收益>'
+        //else
+        //    this.desText.text = showData.result +  '队获胜，最终收益>'
     }
 
 }

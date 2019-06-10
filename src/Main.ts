@@ -184,6 +184,8 @@ class Main extends eui.UILayer {
         //}
         //console.log('_12')
             GameUI.getInstance().show();
+        MyADManager.getInstance().getAD()
+        MyADManager.getInstance().createAD()
 
     }
 }

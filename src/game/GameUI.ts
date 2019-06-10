@@ -11,38 +11,37 @@ class GameUI extends game.BaseUI {
         this.skinName = "GameUISkin";
     }
 
-    public team1: TeamUI;
-    private team2: TeamUI;
-    private coinGroup: eui.Group;
+    private mainScroller: eui.Scroller;
     private scrollGroup: eui.Group;
-    public mainGroup: eui.Group;
+    private teamGroup: eui.Group;
+    public team1: TeamUI;
+    public team2: TeamUI;
+    private coinGroup: eui.Group;
     private coinText: eui.Label;
     private bottomGroup: eui.Group;
+    private rankBtn: eui.Group;
     private shopBtn: eui.Group;
     private shopRedMC: eui.Image;
-    private chapterRedMC: eui.Image;
-    private rankBtn: eui.Group;
+    public mainGroup: eui.Group;
     private wordGroup: eui.Group;
     private b1: eui.BitmapLabel;
     private b2: eui.BitmapLabel;
     private b3: eui.BitmapLabel;
     private cdText: eui.Label;
-    private mailBtn: eui.Group;
     public settingBtn: eui.Group;
-    private soundBtn: eui.Image;
+    private chapterRedMC: eui.Image;
+    private mailBtn: eui.Group;
     private mainPKUI: MainPKUI;
+    private soundBtn: eui.Image;
     public loadingGroup: eui.Group;
     private loadMC: eui.Image;
     private loadText: eui.Label;
-    private stopingGroup: eui.Group;
-    private teamGroup: eui.Group;
-    private stopCon: eui.Group;
-    private stopBG: eui.Image;
     private startBtn: eui.Image;
-    private scroller: eui.Scroller;
-    private mainScroller: eui.Scroller;
-    private list: eui.List;
-    public changeUser: ChangeUserUI;
+    private changeUser: ChangeUserUI;
+
+
+
+
 
 
     private infoBtn:UserInfoBtn
@@ -90,12 +89,6 @@ class GameUI extends game.BaseUI {
         this.mainPKUI.addEventListener('visible_change',this.onMainVisibleChange,this)
 
 
-        this.scroller.viewport = this.list
-        this.list.itemRendererFunction = function(data){
-            if(data.appid)
-                return ChangeUserItem;
-            return MainPKItem;
-        }
 
         this.infoBtn = new UserInfoBtn(this.startBtn, (res)=>{
             //UserManager.getInstance().updateUserInfo(res,()=>{
@@ -106,13 +99,8 @@ class GameUI extends game.BaseUI {
         this.infoBtn.visible = false;
         this.startBtn.visible = false;
         //MyTool.removeMC(this.startBtn)
-        //this.startBtn.visible = false;
-
-
-        this.stopCon.addChild(this.stopMV)
-        this.stopMV.scaleX = this.stopMV.scaleY = 1.2
-        this.addBtnEvent(this.stopCon,this.onStopClick)
     }
+
 
     private renewInfo(res?){
         var wx = window['wx'];
@@ -125,7 +113,12 @@ class GameUI extends game.BaseUI {
         if(res)
         {
             if(!res.userInfo)
+            {
+                this.infoBtn.visible = false;
+                this.haveGetUser = true;
+                this.initData();
                 return;
+            }
             this.infoBtn.visible = false;
             this.haveGetUser = true;
             this.initData();
@@ -159,12 +152,9 @@ class GameUI extends game.BaseUI {
 
     public scrollToBottom(){
         this.mainScroller.viewport.scrollV = this.mainScroller.viewport.contentHeight - this.mainScroller.height;
+        this.changeUser.renew()
     }
 
-    private onStopClick(e)
-    {
-        this.stopMV.talk()
-    }
 
     public resizeFun(){
         this.team1.height = this.team2.height = (this.height- 75 -105)/2
@@ -236,7 +226,6 @@ class GameUI extends game.BaseUI {
     public onShow(){
         var self = this;
         this.bottomGroup.visible = false;
-        this.stopingGroup.visible = false;
         this.coinText.text = '******'
 
 
@@ -284,7 +273,7 @@ class GameUI extends game.BaseUI {
     private initData(){
         if(this.haveLoadFinish && this.haveGetInfo && !this.haveGetUser && this.needShowStartBtn)
         {
-            this.changeUser.getAD()
+            this.changeUser.renew()
             this.loadText.text = '点击屏幕受权进入游戏';
             this.needShowStartBtn = false;
             this.infoBtn.visible = true;
@@ -296,7 +285,7 @@ class GameUI extends game.BaseUI {
         if(!this.haveLoadFinish || !this.haveGetInfo  || !this.haveGetUser)
             return;
         //JumpMC.getAD();
-        this.changeUser.getAD()
+        this.changeUser.renew()
         GuideManager.getInstance().isGuiding = !UM.guideFinish;
         this.bottomGroup.visible = true;
         this.loadingGroup.visible = false;
@@ -393,14 +382,7 @@ class GameUI extends game.BaseUI {
     }
 
     private onE(){
-        if(this.mvState == 'stop')
-        {
-            this.stopMV.x += (this.stopRote*this.stopVO.speed/10)*20/60
-            if(this.stopMV.x < -100 || this.stopMV.x > 640 +100)
-            {
-                this.randomStoping();
-            }
-        }
+
     }
 
     public onTimer(){
@@ -447,7 +429,7 @@ class GameUI extends game.BaseUI {
             return;
         }
 
-        var playCD = 10*60 - PKConfig.addCoinTime;
+        var playCD = PKM.roundTime - PKConfig.addCoinTime;
         var cd = PKM.getEndTime() - playCD - TM.now();
         if(cd <= 0)
         {
@@ -472,17 +454,16 @@ class GameUI extends game.BaseUI {
 
         setTimeout(()=>{ //10秒内随机一个时间写
             PKM.upDateUserData();
-            this.changeUser.getAD();
         },Math.random()*10*1000)
 
         //PKM.callSendCost(true);
-        var costData = PKM.getCost(this.showData.seed,60*10)
+        var costData = PKM.getCost(this.showData.seed,PKM.roundTime)
         this.teamGroup.addChild(MainPKUI.instance);
         MainPKUI.instance.top = 0
         MainPKUI.instance.bottom = 0
         //MainPKUI.instance.top = 75
         //MainPKUI.instance.bottom = 105
-        var playCD = 10*60 - PKConfig.addCoinTime;
+        var playCD = PKM.roundTime - PKConfig.addCoinTime;
         this.mainPKUI.show({
             isMain:true,
             noSpeed:true,
@@ -512,7 +493,6 @@ class GameUI extends game.BaseUI {
         if(this.mvState == stat)
             return;
 
-        this.stopingGroup.visible = false;
         this.stopMV.stop()
 
 
@@ -529,58 +509,6 @@ class GameUI extends game.BaseUI {
                 this.pkMV.visible = true
                 this.pkMV.play(-1);
                 break;
-            case 'stop':
-                this.wordGroup.visible = true;
-                this.stopingGroup.visible = true;
-                this.stopBG.source =  'map'+Math.ceil(Math.random()*7)+'_jpg'
-                this.randomStoping();
-
-                var cd = 400;
-                this.getWordTween(this.b1,'休').to({rotation:360},cd).wait(cd+cd + 2000)
-                this.getWordTween(this.b2,'战').wait(cd).to({rotation:360},cd).wait(cd + 2000)
-                this.getWordTween(this.b3,'中').wait(cd+cd).to({rotation:360},cd).wait(0 + 2000)
-
-                var layOut:eui.TileLayout = this.list.layout as eui.TileLayout;
-                if(this.changeUser.adList.length) //显示广告
-                {
-                    layOut.requestedColumnCount=5;
-                    layOut.paddingTop=20
-                    layOut.paddingLeft=30
-                    layOut.horizontalGap=20
-                    layOut.verticalGap=20
-
-
-
-                    this.list.dataProvider = new eui.ArrayCollection(this.changeUser.adList)
-                    return;
-
-                    var wx = window['wx'];
-                    wx.wladGetAds(20,function (res) { //第⼀一个参数为获取⼴广告条数，第⼆二个参数为获取成功后回调⽅方法;
-                        this.list.dataProvider = new eui.ArrayCollection(res.data);
-                    })
-                }
-                else  //显示人
-                {
-                    layOut.requestedColumnCount=6;
-                    layOut.paddingTop=10
-                    layOut.paddingLeft=10
-                    layOut.horizontalGap=10
-                    layOut.verticalGap=10
-
-                    var arr = ObjectUtil.objToArray(MonsterVO.data);
-                    ArrayUtil.sortByField(arr,['type','cost'],[0,0])
-                    var orginArr = []
-                    for(var i=0;i<arr.length;i++)
-                    {
-                        orginArr.push(arr[i].id)
-                        arr[i] = {id:arr[i].id,list:orginArr,index:i+1};
-                    }
-                    this.list.dataProvider = new eui.ArrayCollection(arr)
-                }
-
-
-
-                break;
             case 'addCoin':
                 this.wordGroup.visible = true;
                 var cd = 400;
@@ -591,26 +519,6 @@ class GameUI extends game.BaseUI {
         }
     }
 
-    private randomStoping(){
-        var arr = ObjectUtil.objToArray(MonsterVO.data)
-        var mvo = this.stopVO =  ArrayUtil.randomOne(arr);
-        this.stopMV.load(mvo.id);
-        this.stopMV.run()
-        this.stopRote = Math.random()>0.5?1:-1
-
-        if(this.stopRote > 0)
-        {
-            this.stopMV.x = -100
-            this.stopMV.currentMV.scaleX = -1
-        }
-        else
-        {
-            this.stopMV.x = 640 + 100;
-            this.stopMV.currentMV.scaleX = 1
-        }
-        this.stopMV.y = 350 + Math.random()*100
-
-    }
 
     private reInitWord(mc,index){
         egret.Tween.removeTweens(mc)

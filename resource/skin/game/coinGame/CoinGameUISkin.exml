@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="CoinGameUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="bg3_png" scale9Grid="16,15,7,7" x="0" y="0" width="100%" height="100%"/>
-	<e:Group x="0" top="55" bottom="100">
+	<e:Group id="mainGroup" x="0" top="55" bottom="100">
 		<e:Group id="con" x="0" width="640" height="450" y="0" scrollEnabled="true">
 		<e:Image id="bg" horizontalCenter="0" bottom="-10"/>
 		</e:Group>
@@ -51,8 +51,14 @@
 	<e:Group id="btnGroup" right="20" bottom="10">
 		<e:Group id="tipsBtn" x="0" y="2" width="100" height="80">
 		<e:Image source="icon_empty_png" y="0" horizontalCenter="0"/>
-		<e:Label text="提示" bottom="0" horizontalCenter="0" size="24" stroke="2" textColor="0xffe0c4"/>
 		<e:Image id="getTipsIcon" source="icon_right_png" bottom="0" right="0"/>
+			<e:Group id="videoGroup" horizontalCenter="0" bottom="0">
+				<e:Image id="videoMC" source="video_icon_png" x="0" y="0" scaleX="0.6" scaleY="0.6"/>
+				<e:Label text="提示" size="24" stroke="2" textColor="0xffe0c4" x="27" y="56"/>
+				<e:layout>
+					<e:HorizontalLayout verticalAlign="middle"/>
+				</e:layout>
+			</e:Group>
 		</e:Group>
 		<e:Group id="resetBtn" x="246" y="0" width="100" height="80">
 		<e:Image source="icon_atk3_png" y="0" horizontalCenter="0" scaleX="0.9" scaleY="0.9"/>

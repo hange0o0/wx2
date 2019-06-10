@@ -43,6 +43,8 @@ class ShootGameUI extends game.BaseUI {
     public constructor() {
         super();
         this.skinName = "ShootGameUISkin";
+        this.adBottom = 0;
+        this.isShowAD = true;
     }
 
     public childrenCreated() {
@@ -134,6 +136,8 @@ class ShootGameUI extends game.BaseUI {
         this.lastCreate = 0;
         this.gameStart = egret.getTimer();
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
+
+        this.cannonGroup.bottom = Config.adHeight;
     }
 
     private onE(){

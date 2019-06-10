@@ -14,7 +14,7 @@ class UserManager {
     public onLineAwardCD = [5*60,30*60,3600,2*3600,3*3600]
 
 
-    public testVersion = 320//与服务器相同则为测试版本
+    public testVersion = 20190610//与服务器相同则为测试版本
     public isTest;
     public shareFail;
 
@@ -106,7 +106,8 @@ class UserManager {
 
         this.initDataTime = TM.now();
 
-        this.history = SharedObjectManager.getInstance().getMyValue('history') || [];
+        SharedObjectManager.getInstance().removeMyValue('history');
+        this.history = SharedObjectManager.getInstance().getMyValue('history2') || [];
         if(this.history.length > 20)
             this.history.length = 20;
 
@@ -123,7 +124,7 @@ class UserManager {
     }
 
     public saveHistory(){
-        SharedObjectManager.getInstance().setMyValue('history',this.history)
+        SharedObjectManager.getInstance().setMyValue('history2',this.history)
         EM.dispatch(GameEvent.client.HISTORY_CHANGE)
     }
 
@@ -318,6 +319,7 @@ class UserManager {
             cost2:0,
             teamCost1:0,
             teamCost2:0,
+            drawCost:0,
         }
     }
 

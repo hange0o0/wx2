@@ -65,12 +65,13 @@
 		</e:layout>
 	</e:Group>
 	<e:Group height="40" x="20" y="345">
-		<e:Label id="desText" text="1队获胜，最终收益" textAlign="left" y="15" size="24" lineSpacing="5" anchorOffsetY="0" verticalAlign="middle" anchorOffsetX="0" height="24" x="10" bold="true" textColor="0x512200"/>
+		<e:Label id="desText" text="最终：" textAlign="left" y="15" size="24" lineSpacing="5" anchorOffsetY="0" verticalAlign="middle" anchorOffsetX="0" height="24" x="10" bold="true" textColor="0x512200"/>
 		<e:Image source="icon_coin_png" x="304" y="0" scaleX="0.8" scaleY="0.8"/>
 		<e:Label id="coinText" text="-10000" textAlign="left" y="5" size="26" lineSpacing="5" anchorOffsetY="0" verticalAlign="middle" anchorOffsetX="0" height="24" x="0" textColor="0xcc0000" bold="true"/>
 		<e:layout>
 		<e:HorizontalLayout verticalAlign="middle" gap="10"/>
 		</e:layout>
 	</e:Group>
-	<e:Button id="videoBtn" label="录像回放" skinName="Btn1Skin" width="180" bottom="10" right="20"/>
+	<e:Button id="videoBtn" label="录像回放" skinName="Btn1Skin" width="150" bottom="10" right="20"/>
+	<e:Button id="coinBtn" label=" 返回50%" width="160" bottom="10" right="185" skinName="Btn2Skin" icon="video_icon2_png"/>
 </e:Skin>

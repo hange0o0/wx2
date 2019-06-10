@@ -118,7 +118,7 @@ class GetCoinItem extends game.BaseItem {
                     this.canAward = true;
                 }
                 this.titleText.text = '每日登陆奖励'
-                this.addCoin = 1000;
+                this.addCoin = 2000;
                 break;
             case 2:   //{type:2,title:'X小时后可领'},
                 if(coinObj.onLineAwardNum >= 5)
@@ -131,7 +131,7 @@ class GetCoinItem extends game.BaseItem {
                 //   this.onTimer()
                 //}
                 this.titleText.text = '在线金币礼包'
-                this.addCoin = 100*Math.min(coinObj.onLineAwardNum + 1,5);
+                this.addCoin = 200*Math.min(coinObj.onLineAwardNum + 1,5);
                 break;
             case 3:   //{type:3,title:'告诉我的好友们'},
                 if(coinObj.shareAward)
@@ -156,7 +156,7 @@ class GetCoinItem extends game.BaseItem {
                     }
                 }
                 this.titleText.text = '体验任意小程序30秒'
-                this.addCoin = 800;
+                this.addCoin = 1000;
                 break;
             case 4: // {type:4,title:'邀请X位新的好友'},
                 min = ObjectUtil.objLength(UM.friendNew),
@@ -196,7 +196,7 @@ class GetCoinItem extends game.BaseItem {
                     }
                 }
                 this.titleText.text = '观看广告（'+coinObj.videoAwardNum+'/3）'
-                this.addCoin = 500;
+                this.addCoin = 1000;
                 break;
             case 6: // 射击游戏
                 if(coinObj.gameNum >= 3)

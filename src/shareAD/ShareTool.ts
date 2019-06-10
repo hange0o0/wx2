@@ -143,7 +143,7 @@ class ShareTool {
             }
             window["wx"].isPlayAD = false
         };
-        let adid = 'adunit-927ee662776f3dcc';//ADUI.getADID(adindex)// || ConfigQU.appData.wx_adtvCode;//'adunit-b0ef44339fa585f0';
+        let adid =Config.wx_video;//ADUI.getADID(adindex)// || ConfigQU.appData.wx_adtvCode;//'adunit-b0ef44339fa585f0';
         if(!this.videoAD)
         {
             this.videoAD = window["wx"].createRewardedVideoAd({ adUnitId: adid });
@@ -151,7 +151,7 @@ class ShareTool {
             this.videoAD.onError(errorFun);
         }
         this.videoAD.load().then(() =>this.videoAD.show()).catch(err => {
-            MyWindow.ShowTips('没有可观看的广告，请稍后再尝试')
+            ChangeJumpUI.getInstance().show('没有可观看的广告\n体验以上小程序'+MyTool.createHtml(30,0xFFFF00)+'秒也可获得',success)
             window["wx"].isPlayAD = false
         })
     }

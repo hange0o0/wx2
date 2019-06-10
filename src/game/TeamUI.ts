@@ -34,7 +34,7 @@ class TeamUI extends game.BaseItem {
 
     private monsterArr = []
     public teamID
-    private maxCost = 10000;
+    //private maxCost = 10000;
 
     public childrenCreated() {
         super.childrenCreated();
@@ -102,38 +102,34 @@ class TeamUI extends game.BaseItem {
     }
 
     private onClick1() {
-        this.addCost(1);
-    }
-    private onClick10() {
-        this.addCost(10);
-    }
-    private onClick100() {
         this.addCost(100);
     }
-    private onClick1000() {
+    private onClick10() {
         this.addCost(1000);
+    }
+    private onClick100() {
+        this.addCost(10000);
+    }
+    private onClick1000() {
+        this.addCost(UM.coin);
     }
 
     private addCost(v){
-        if(UM.coin  < v)
+        if(!v)
             return;
+        if(UM.coin  < v)
+        {
+            GetCoinUI.getInstance().show()
+            return;
+        }
+
         if(this.teamID == 1)
         {
-            if(UM.lastGuess.cost1 + v > this.maxCost)
-            {
-                MyWindow.ShowTips('本轮投注上限为' + this.maxCost)
-                return;
-            }
             UM.lastGuess.cost1 += v
             UM.lastGuess.teamCost1 += v
         }
         else
         {
-            if(UM.lastGuess.cost2 + v > this.maxCost)
-            {
-                MyWindow.ShowTips('本轮投注上限为' + this.maxCost)
-                return;
-            }
             UM.lastGuess.cost2 += v
             UM.lastGuess.teamCost2 += v
         }
@@ -212,7 +208,7 @@ class TeamUI extends game.BaseItem {
             item.currentMV.scaleX = Math.abs(item.currentMV.scaleX);
             if(this.teamID == 1)
                 item.currentMV.scaleX *= -1
-            item.bottom = 100+vo.height*0.55 - 3 + 6*Math.random()// + Math.random()*80
+            item.bottom = 90+vo.height*1 - 10 + 20*Math.random()// + Math.random()*80
             item['w'] = vo.width
             item.x = begin + i*des
             this.monsterArr.push(item);
@@ -260,10 +256,10 @@ class TeamUI extends game.BaseItem {
             var userCost =  UM.lastGuess.cost2;
         }
 
-        this.addBtn1.skinName = UM.coin >= 1 && userCost <= 9999 ?'Btn1Skin':'Btn3Skin'
-        this.addBtn10.skinName = UM.coin >= 10 && userCost <= 9990 ?'Btn1Skin':'Btn3Skin'
-        this.addBtn100.skinName = UM.coin >= 100 && userCost <= 9900 ?'Btn1Skin':'Btn3Skin'
-        this.addBtn1000.skinName = UM.coin >= 1000 && userCost <= 9000 ?'Btn1Skin':'Btn3Skin'
+        //this.addBtn1.skinName = UM.coin >= 1 && userCost <= 9999 ?'Btn1Skin':'Btn3Skin'
+        //this.addBtn10.skinName = UM.coin >= 10 && userCost <= 9990 ?'Btn1Skin':'Btn3Skin'
+        //this.addBtn100.skinName = UM.coin >= 100 && userCost <= 9900 ?'Btn1Skin':'Btn3Skin'
+        //this.addBtn1000.skinName = UM.coin >= 1000 && userCost <= 9000 ?'Btn1Skin':'Btn3Skin'
 
         this.setHtml(this.totalText,this.createHtml('总投注：',0xFFCC8C) +this.createHtml(NumberUtil.addNumSeparator(parseInt(myCost)),myCost>otherCost?0x00ff00:0xffffff));
         this.setHtml(this.myText,this.createHtml('我的：',0xFFCC8C) +this.createHtml(NumberUtil.addNumSeparator(userCost),userCost > 0?0x00ff00:0xffffff));
