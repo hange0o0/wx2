@@ -270,9 +270,6 @@ function sendClientError(str){
 if(window["wx"])
 {
     window['sendClientError'] =  sendClientError;
-    window["TeamUI"] = TeamUI;
-    window["MainPKUI"] = MainPKUI;
-    window["PKCardInfoUI"] = PKCardInfoUI;
     window["BottomUI"] = BottomUI;
     window["TopUI"] = TopUI
     window["ChangeUserUI"] = ChangeUserUI
@@ -282,7 +279,7 @@ if(window["wx"])
     var wx =  window["wx"];
 
     wx.onError(function(res){
-        PKManager.getInstance().upDateUserData();
+        UM.upDateUserData();
         try{
             var str = "onError:" + ("openid:" + UM.gameid + "--") + res.message + "--" + res.stack;
             sendClientError(str);
@@ -292,7 +289,7 @@ if(window["wx"])
     wx.onHide(function(res){
         if(!GameManager.stage)
             return;
-        PKManager.getInstance().upDateUserData();
+        UM.upDateUserData();
         SoundManager.getInstance().stopBgSound();
         GameManager.stage.dispatchEventWith(egret.Event.DEACTIVATE);
         console.log('hide')
@@ -302,9 +299,6 @@ if(window["wx"])
     wx.onShow(function(res){
         if(!GameManager.stage)
             return;
-        if(PKManager.getInstance().isPKing && !MainPKUI.instance.finish)
-            SoundManager.getInstance().playSound('pkbg');
-        else
             SoundManager.getInstance().playSound('bg');
         GameManager.stage.dispatchEventWith(egret.Event.ACTIVATE);
         GameManager.getInstance().onShowFun && GameManager.getInstance().onShowFun();

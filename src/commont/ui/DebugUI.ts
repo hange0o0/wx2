@@ -31,7 +31,7 @@ class DebugUI extends game.BaseUI {
             const db = wx.cloud.database();
             db.collection('user').doc(UM.dbid).remove({
                 success(res) {
-                    PKManager.getInstance().needUpUser = false;
+
                     wx.exitMiniProgram();
                 }
             })

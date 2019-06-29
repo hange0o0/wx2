@@ -1,51 +1,176 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+class LoadingUI extends game.BaseUI {
 
-class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
+    private static _instance:LoadingUI;
+
+    public static getInstance():LoadingUI {
+        if (!this._instance)
+            this._instance = new LoadingUI();
+        return this._instance;
+    }
+
+
+    private changeUser: ChangeUserUI;
+    private startBtn: eui.Image;
+    private loadText: eui.Label;
+
+
+    private infoBtn:UserInfoBtn
+    private haveGetInfo = false;
+    private haveLoadFinish = false;
+    private haveGetUser = false;
+    private needShowStartBtn = false;
 
     public constructor() {
         super();
-        this.createView();
+        this.skinName = "LoadingUISkin";
     }
 
-    private textField: egret.TextField;
+    public childrenCreated() {
+        super.childrenCreated();
 
-    private createView(): void {
-        this.textField = new egret.TextField();
-        this.addChild(this.textField);
-        this.textField.y = 300;
-        this.textField.width = 480;
-        this.textField.height = 100;
-        this.textField.textAlign = "center";
+        this.infoBtn = new UserInfoBtn(this.startBtn, (res)=>{
+            this.renewInfo(res);
+        }, this, Config.localResRoot + "wx_btn_info.png");
+        this.infoBtn.visible = false;
+        this.startBtn.visible = false;
     }
 
-    public onProgress(current: number, total: number): void {
-        this.textField.text = `Loading...${current}/${total}`;
+    private renewInfo(res?){
+        var wx = window['wx'];
+        if(!wx)
+        {
+            this.haveGetUser = true;
+            this.initData();
+            return;
+        }
+        if(res)
+        {
+            if(!res.userInfo)
+            {
+                //this.infoBtn.visible = false;
+                if(UM.helpUser)
+                {
+                    wx.showModal({
+                        title: '好友请求授权',
+                        showCancel:true,
+                        cancelText:'重新授权',
+                        confirmText:'进入游戏',
+                        content: '你是通过好友邀请进入的，不授权将无法完成该好友请求的帮助，是否继续？',
+                        success: (res)=> {
+                            if (res.confirm) {
+                                this.infoBtn.visible = false;
+                                this.haveGetUser = true;
+                                this.initData();
+                            }
+                        }
+                    })
+                    //MyWindow.Confirm('你是通过好友邀请进入的，不授权将无法完成该好友请求的帮助，是否继续？',(b)=>{
+                    //    if(b==1)
+                    //    {
+                    //        this.infoBtn.visible = false;
+                    //        this.haveGetUser = true;
+                    //        this.initData();
+                    //    }
+                    //    else
+                    //    {
+                    //        this.infoBtn.visible = true;
+                    //    }
+                    //},['重新授权','进入游戏']);
+                    return;
+                }
+                this.infoBtn.visible = false;
+                this.haveGetUser = true;
+                this.initData();
+                return;
+            }
+            this.infoBtn.visible = false;
+            UM.renewInfo(res.userInfo)
+            this.haveGetUser = true;
+            this.initData();
+            return;
+        }
+        wx.getSetting({
+            success: (res) =>{
+                console.log(res.authSetting)
+                if(res.authSetting["scope.userInfo"])//已授权
+                {
+                    this.haveGetUser = true;
+                    this.initData()
+                    wx.getUserInfo({
+                        success: (res) =>{
+                            var userInfo = res.userInfo
+                            UM.renewInfo(userInfo)
+                        }
+                    })
+                }
+                else
+                {
+                    this.needShowStartBtn = true;
+                }
+            }
+        })
+    }
+
+    private initData(){
+        if(this.haveLoadFinish && this.haveGetInfo && !this.haveGetUser && this.needShowStartBtn)
+        {
+            this.changeUser.renew()
+            this.loadText.text = '点击屏幕进入游戏';
+            this.needShowStartBtn = false;
+            this.infoBtn.visible = true;
+            return;
+        }
+        if(!this.haveLoadFinish || !this.haveGetInfo  || !this.haveGetUser)
+            return;
+        this.hide();
+        this.infoBtn.visible = false;
+        GameUI.getInstance().show();
+    }
+
+    public onShow(){
+        var self = this;
+        //ChangeUserUI.getAD();
+        self.loadText.text = '正在加载素材，请耐心等候..'
+        this.renewInfo();
+        UM.getUserInfo(()=>{
+            this.haveGetInfo = true;
+            this.initData();
+        });
+        var wx =  window["wx"];
+        if(wx)
+        {
+            const loadTask = wx.loadSubpackage({
+                name: 'assets2', // name 可以填 name 或者 root
+                success(res) {
+                    self.callShow();
+                    setTimeout(()=>{
+                        self.changeUser.renew()
+                    },5000)
+                },
+                fail(res) {
+                }
+            })
+
+            loadTask.onProgressUpdate(res => {
+                self.loadText.text = '正在加载素材..' + res.progress + '%'
+            })
+            return;
+        }
+        this.callShow();
+    }
+
+    private callShow(){
+        this.loadText.text = '正在请求用户数据'
+        if(this.needShowStartBtn)
+        {
+            this.haveLoadFinish = true;
+            this.initData();
+            return;
+        }
+        setTimeout(()=>{
+            this.haveLoadFinish = true;
+            this.initData();
+        },1000)
+
     }
 }

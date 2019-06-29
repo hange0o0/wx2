@@ -11,13 +11,17 @@ class UserManager {
         return UserManager._instance;
     }
 
-    public onLineAwardCD = [5*60,30*60,3600,2*3600,3*3600]
+    private _needUpUser = false;
+    public get needUpUser(){return this._needUpUser}
+    public set needUpUser(v){this._needUpUser = v;v && egret.callLater(this.localSave,this)}
 
 
     public testVersion = 20190610//与服务器相同则为测试版本
     public isTest;
     public shareFail;
 
+    public loginTime
+    public helpUser
 
     public gameid: string;
     public nick: string;
@@ -123,10 +127,7 @@ class UserManager {
         this.gender = userInfo.gender || 1 //性别 0：未知、1：男、2：女
     }
 
-    public saveHistory(){
-        SharedObjectManager.getInstance().setMyValue('history2',this.history)
-        EM.dispatch(GameEvent.client.HISTORY_CHANGE)
-    }
+   
 
     public addCoin(v){
         if(!v)
@@ -134,7 +135,6 @@ class UserManager {
         this.coin += v;
         if(this.coin < 0)
             this.coin = 0;
-        PKManager.getInstance().needUpUser = true
         EM.dispatch(GameEvent.client.COIN_CHANGE)
     }
 
@@ -306,7 +306,7 @@ class UserManager {
         this.coinObj.videoNum = 0;
         this.coinObj.videoAwardNum = 0;
         this.coinObj.gameNum = 0;
-        PKManager.getInstance().needUpUser = true;
+        this.needUpUser = true;
         return true;
     }
 
@@ -331,7 +331,7 @@ class UserManager {
             this.energy.t = TM.now();
         this.energy.v += v;
 
-        PKManager.getInstance().needUpUser = true;
+        this.needUpUser = true;
     }
 
     private resetEnergy(){
@@ -363,73 +363,29 @@ class UserManager {
         return  this.energy.t + v -  TM.now();
     }
 
+    private localSave(){
+        SharedObjectManager.getInstance().setMyValue('localSave',this.getUpdataData())
+    }
 
+    private getUpdataData(){
+        return {
+            loginTime:UM.loginTime,
+            coin:UM.coin,
+            saveTime:TM.now(),
+        };
+    }
 
-    //private isRuning = false;
-    //public drawSaveData():egret.Bitmap
-    //{
-    //    if(!window['wx'])
-    //        return;
-    //    if(this.isRuning) return null;
-    //    this.isRuning = true;
-    //
-    //    platform.openDataContext.postMessage({isDisplay:true, command:"drawSaveData", keys:["getInfo"], myopenid:this.gameid});
-    //
-    //    let bb = <egret.Bitmap>platform.openDataContext.createDisplayObject();
-    //    let bmp = new egret.Bitmap(bb.texture);
-    //    let tex = new egret.RenderTexture();
-    //    egret.Tween.get(this,{loop:true}).wait(100).call(this.test,this,[bmp,tex,bb]);
-    //    return bmp;
-    //}
-    //
-    //private test(bmp:egret.Bitmap,tex:egret.RenderTexture,bb)
-    //{
-    //    console.log(bmp,bb.texture)
-    //    tex.drawToTexture(bmp,new egret.Rectangle(0,0,3,3));
-    //    let a = "";
-    //    for(var k = 0;k<3;k++)
-    //    {
-    //        let arr = tex.getPixel32(k,2);
-    //        for(let j = 0;j<3;j++) a += Number(arr[j] > 127);
-    //    }
-    //    let str = String.fromCharCode(parseInt(a,2));
-    //    console.log(str);
-    //    if(str == "{")
-    //    {
-    //        tex.drawToTexture(bmp,new egret.Rectangle(0,0,bmp.width,bmp.height));
-    //        let i = 0;
-    //        let codeStr = "";
-    //        let _s = "";
-    //        while(true)
-    //        {
-    //            let a = "";
-    //            for(var k = 0;k<3;k++)
-    //            {
-    //                let i1 = i*3+k;
-    //                let x = (i1%bmp.width);
-    //                let y = Math.floor(i1/bmp.width);
-    //                let arr = tex.getPixel32(x,tex.textureHeight-y-1);
-    //                for(let j = 0;j<3;j++) a += Number(arr[j] > 127);
-    //            }
-    //            let s = String.fromCharCode(parseInt(a,2));
-    //            if(s == ":" && _s == "}") break;
-    //            codeStr += s;
-    //            _s = s;
-    //            i++;
-    //        }
-    //        tex.dispose();
-    //        egret.Tween.removeTweens(this);
-    //        platform.openDataContext.postMessage({type:"clear"});
-    //        this.isRuning = false;
-    //
-    //        let obj = JSON.parse(codeStr); //{isOK:true, data:[]}
-    //        if(obj.isOK)
-    //        {
-    //            this.nick = decodeURIComponent(obj.data.nick);
-    //            this.head = obj.data.head;
-    //            console.log(this.nick,this.head)
-    //        }
-    //    }
-    //}
+    public upDateUserData(){
+        if(!this.needUpUser)
+            return;
+        var wx = window['wx'];
+        if(wx)
+        {
+            var updateData:any = this.getUpdataData();
+            WXDB.updata('user',updateData)
+        }
+        this.needUpUser = false;
+        this.localSave();
+    }
 
 }
