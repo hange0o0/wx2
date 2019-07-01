@@ -1,7 +1,7 @@
 {
 	"groups":[
 		{
-			"keys":"data_json,rank_btn_png,sound_btn1_png,sound_btn2_png,btn3_png,btn2_png,ui_loading_png,logo_png,main_shop_png,icon_right_png,coin_mc_png,friend_btn_png,item_empty_png,common_head_bg_jpg,reborn_bg_png,window_bg_png,border_png,video_icon_png,lock_icon_png,using_png,arrow_btn_png,close_btn_png,btn_png,item_png,arrow3_png,black_bg_png,black_bg_alpha_png,red_bg_png,white_bg_png,yellor_bg_png,wx_btn_info_png",
+			"keys":"data_json,rank_btn_png,sound_btn1_png,sound_btn2_png,btn3_png,btn2_png,ui_loading_png,logo_png,main_shop_png,icon_right_png,coin_mc_png,friend_btn_png,item_empty_png,common_head_bg_jpg,reborn_bg_png,window_bg_png,border_png,video_icon_png,lock_icon_png,using_png,arrow_btn_png,close_btn_png,btn_png,item_png,arrow3_png,black_bg_png,black_bg_alpha_png,red_bg_png,white_bg_png,yellor_bg_png,wx_btn_info_png,house1_png,house2_png,main_icon2_png,main_icon7_png,main_icon6_png,main_icon4_png,main_icon1_png,main_icon5_png,main_icon8_png,wood_mc_png,main_icon3_png,food_mc_png,glass_mc_png,blood_mc_png,diamond_mc_png,btn1_png",
 			"name":"preload_png"
 		},
 		{
@@ -166,6 +166,86 @@
 			"name":"yellor_bg_png",
 			"type":"image",
 			"url":"game_assets/yellor_bg.png"
+		},
+		{
+			"name":"house1_png",
+			"type":"image",
+			"url":"game_assets/house1.png"
+		},
+		{
+			"name":"house2_png",
+			"type":"image",
+			"url":"game_assets/house2.png"
+		},
+		{
+			"name":"main_icon2_png",
+			"type":"image",
+			"url":"game_assets/main_icon2.png"
+		},
+		{
+			"name":"main_icon7_png",
+			"type":"image",
+			"url":"game_assets/main_icon7.png"
+		},
+		{
+			"name":"main_icon6_png",
+			"type":"image",
+			"url":"game_assets/main_icon6.png"
+		},
+		{
+			"name":"main_icon4_png",
+			"type":"image",
+			"url":"game_assets/main_icon4.png"
+		},
+		{
+			"name":"main_icon1_png",
+			"type":"image",
+			"url":"game_assets/main_icon1.png"
+		},
+		{
+			"name":"main_icon5_png",
+			"type":"image",
+			"url":"game_assets/main_icon5.png"
+		},
+		{
+			"name":"main_icon8_png",
+			"type":"image",
+			"url":"game_assets/main_icon8.png"
+		},
+		{
+			"name":"wood_mc_png",
+			"type":"image",
+			"url":"game_assets/wood_mc.png"
+		},
+		{
+			"name":"main_icon3_png",
+			"type":"image",
+			"url":"game_assets/main_icon3.png"
+		},
+		{
+			"name":"food_mc_png",
+			"type":"image",
+			"url":"game_assets/food_mc.png"
+		},
+		{
+			"name":"glass_mc_png",
+			"type":"image",
+			"url":"game_assets/glass_mc.png"
+		},
+		{
+			"name":"blood_mc_png",
+			"type":"image",
+			"url":"game_assets/blood_mc.png"
+		},
+		{
+			"name":"diamond_mc_png",
+			"type":"image",
+			"url":"game_assets/diamond_mc.png"
+		},
+		{
+			"name":"btn1_png",
+			"type":"image",
+			"url":"game_assets/btn1.png"
 		}
 	]
 }

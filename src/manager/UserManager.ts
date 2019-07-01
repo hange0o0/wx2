@@ -27,38 +27,20 @@ class UserManager {
     public nick: string;
     public head: string;
     public dbid: string;
-    //public writeKey: string;
-    public gender: number;
+
+
     public coin: number = 999;
-    public coinwin: number = 0;
-    public total: number = 0;
-    public win: number = 0;
-    public tipsLevel: number = 0;
+    public wood: number = 0;
+    public food: number = 0;
+    public blood: number = 0;
+    public diamond: number = 0;
+    public grass: number = 0;
+
     public chapterLevel: number = 0;
-    public history = [];
-    public lastGuess: any = {};
-    public friendNew: any = {};
-    public energy: any;
-    public coinObj:{
-        loginTime,
-        loginDays,
-        loginDayAward,
-        onLineAwardTime,
-        onLineAwardNum,
-        shareNum,
-        newAward,
-        videoNum,
-        videoAwardNum,
-        gameNum,
-        shareAward
-    }
+
     public guideFinish: boolean = false;
-
-
     public initDataTime;
 
-    public isScope
-    public maxEnergy = 20;
 
 
     public fill(data:any):void{
@@ -75,45 +57,20 @@ class UserManager {
 
         this.dbid = data._id;
         this.coin = data.coin || 0;
-        this.coinwin = data.coinwin || 0;
-        this.total = data.total || 0;
-        this.win = data.win || 0;
-        this.energy = data.energy || {v:0,t:0};
-        this.tipsLevel = data.tipsLevel || 0;
+        this.wood = data.wood || 0;
+        this.food = data.food || 0;
+        this.blood = data.blood || 0;
+        this.diamond = data.diamond || 0;
+        this.grass = data.grass || 0;
         this.chapterLevel = data.chapterLevel || 1;
-        this.lastGuess = data.lastGuess;
         this.guideFinish = data.guideFinish;
-        this.coinObj = data.coinObj || {
-                loginTime:TM.now(),   //登陆时间
-                loginDays:1,   //登陆天数
-                loginDayAward:0,   //领取登陆礼包
-                onLineAwardTime:TM.now(),   //在线礼包领取时间
-                onLineAwardNum:0,   //在线礼包领取数量
-                shareNum:0,   //分享金币次数
-                shareAward:0,   //分享金币次数
-                newAward:0,   //分享金币次数
-                videoNum:0,
-                videoAwardNum:0,
-                gameNum:0,
-            };
 
-
-        //容错
-        this.coinObj.videoNum = this.coinObj.videoNum || 0
-        this.coinObj.videoAwardNum = this.coinObj.videoAwardNum || 0
-        this.coinObj.gameNum = this.coinObj.gameNum || 0
-
-
-
-        this.friendNew = data.friendNew;
-        //this.writeKey = data.writeKey;
+        CollectManager.getInstance().initData(data.collect);
+        WorkManager.getInstance().initData(data.work);
+        FeedManager.getInstance().initData(data.feed);
+        HeroManager.getInstance().initData(data.hero);
 
         this.initDataTime = TM.now();
-
-        SharedObjectManager.getInstance().removeMyValue('history');
-        this.history = SharedObjectManager.getInstance().getMyValue('history2') || [];
-        if(this.history.length > 20)
-            this.history.length = 20;
 
         this.testPassDay();
     }
@@ -121,10 +78,8 @@ class UserManager {
     public renewInfo(userInfo){
         if(!userInfo)
             return;
-        this.isScope = true;
         this.nick = userInfo.nickName
         this.head = userInfo.avatarUrl
-        this.gender = userInfo.gender || 1 //性别 0：未知、1：男、2：女
     }
 
    
@@ -137,6 +92,61 @@ class UserManager {
             this.coin = 0;
         EM.dispatch(GameEvent.client.COIN_CHANGE)
     }
+
+    public addFood(v){
+        if(!v)
+            return;
+        this.food += v;
+        if(this.food < 0)
+            this.food = 0;
+        if(this.food > WorkManager.getInstance().foodMax)
+            this.food = WorkManager.getInstance().foodMax;
+        EM.dispatch(GameEvent.client.COIN_CHANGE)
+    }
+
+    public addWood(v){
+        if(!v)
+            return;
+        this.wood += v;
+        if(this.wood < 0)
+            this.wood = 0;
+        if(this.wood > WorkManager.getInstance().woodMax)
+            this.wood = WorkManager.getInstance().woodMax;
+        EM.dispatch(GameEvent.client.COIN_CHANGE)
+    }
+
+    public addDiamond(v){
+        if(!v)
+            return;
+        this.diamond += v;
+        if(this.diamond < 0)
+            this.diamond = 0;
+        if(this.diamond > WorkManager.getInstance().diamondMax)
+            this.diamond = WorkManager.getInstance().diamondMax;
+        EM.dispatch(GameEvent.client.COIN_CHANGE)
+    }
+
+    public addGrass(v){
+        if(!v)
+            return;
+        this.grass += v;
+        if(this.grass < 0)
+            this.grass = 0;
+        if(this.grass > WorkManager.getInstance().grassMax)
+            this.grass = WorkManager.getInstance().grassMax;
+        EM.dispatch(GameEvent.client.COIN_CHANGE)
+    }
+
+    public addBlood(v){
+        if(!v)
+            return;
+        this.blood += v;
+        if(this.blood < 0)
+            this.blood = 0;
+        EM.dispatch(GameEvent.client.COIN_CHANGE)
+    }
+
+
 
 
     public getUserInfo(fun){
@@ -221,7 +231,7 @@ class UserManager {
         }).get({
             success: (res)=>{
                 var data = res.data[0];
-                this.friendNew = data.friendNew;
+                this.helpUser = data.helpUser;
                 fun && fun();
             }
         })
@@ -265,103 +275,28 @@ class UserManager {
     private orginUserData(){
          return {
              coin:300,   //$
-             coinwin:0,   //$
-             win:0,   //$
-             total:0,   //$
+             wood:0,   //$
+             food:0,   //$
+             blood:0,   //$
+             diamond:0,   //$
+             grass:0,   //$
+
              guideFinish:false,
              chapterLevel:1,
-             tipsLevel:0,
              saveTime:0,
-             lastGuess:this.getGuessInitData(0),
-             coinObj:{
-                 loginTime:TM.now(),   //登陆时间
-                 loginDays:1,   //登陆天数
-                 loginDayAward:0,   //领取登陆礼包
-                 onLineAwardTime:TM.now(),   //在线礼包领取时间
-                 onLineAwardNum:0,   //在线礼包领取数量
-                 shareNum:0,   //分享金币次数
-                 shareAward:0,   //分享金币次数
-                 newAward:0,   //拉新领奖次数
-                 videoNum:0,
-                 videoAwardNum:0,
-                 gameNum:0,
-             },
-             friendNew:{}//拉新
+             helpUser:{}//拉新
          };
     }
 
     //跨天处理
     public testPassDay(){
-        if(!this.coinObj)
+        if(DateUtil.isSameDay(this.loginTime))
             return false;
-        if(DateUtil.isSameDay(this.coinObj.loginTime))
-            return false;
-        this.coinObj.loginTime = TM.now();
-        this.coinObj.loginDays ++;
-        this.coinObj.loginDayAward = 0;
-        this.coinObj.onLineAwardTime = this.coinObj.loginTime;
-        this.coinObj.onLineAwardNum = 0;
-        this.coinObj.shareNum = 0;
-        this.coinObj.shareAward = 0;
-        this.coinObj.videoNum = 0;
-        this.coinObj.videoAwardNum = 0;
-        this.coinObj.gameNum = 0;
         this.needUpUser = true;
         return true;
     }
 
 
-    public getGuessInitData(key){
-        return {
-            isDeal:0,   //0:未处理，1：处理中，2：处理完
-            key:key,
-            cost1:0,
-            cost2:0,
-            teamCost1:0,
-            teamCost2:0,
-            drawCost:0,
-        }
-    }
-
-    public addEnergy(v){
-        if(!v)
-            return;
-        this.resetEnergy();
-        if(this.energy.v >= this.maxEnergy)
-            this.energy.t = TM.now();
-        this.energy.v += v;
-
-        this.needUpUser = true;
-    }
-
-    private resetEnergy(){
-        var v = this.getEnergyStep();
-        var t = TM.now();
-        var add =  Math.floor((t - this.energy.t)/v)
-        if(add > 0)
-        {
-            this.energy.v = Math.min(this.maxEnergy,this.energy.v + add);
-            this.energy.t = this.energy.t + add*v;
-            EM.dispatchEventWith(GameEvent.client.energy_change)
-        }
-    }
-
-    public getEnergy(){
-        this.resetEnergy();
-        return this.energy.v;
-    }
-
-    public getEnergyStep(){
-        return 30*60;
-    }
-
-    public getNextEnergyCD(){
-        var v = this.getEnergyStep();
-        this.getEnergy();
-        //if(this.energy.t == TM.now())
-        //    return 0;
-        return  this.energy.t + v -  TM.now();
-    }
 
     private localSave(){
         SharedObjectManager.getInstance().setMyValue('localSave',this.getUpdataData())
@@ -371,6 +306,16 @@ class UserManager {
         return {
             loginTime:UM.loginTime,
             coin:UM.coin,
+            wood:UM.wood,   //$
+            food:UM.food,   //$
+            blood:UM.blood,   //$
+            diamond:UM.diamond,   //$
+            grass:UM.grass,   //$
+
+            collect:CollectManager.getInstance().getSave(),
+            work:WorkManager.getInstance().getSave(),
+            feed:FeedManager.getInstance().getSave(),
+            hero:HeroManager.getInstance().getSave(),
             saveTime:TM.now(),
         };
     }

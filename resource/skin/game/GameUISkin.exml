@@ -1,63 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="GameUISkin" width="640" height="960" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="bg3_png" scale9Grid="16,15,7,7" left="0" right="0" top="0" bottom="0"/>
-	<e:Image source="title_bg4_png" x="0" width="640" fillMode="repeat" scaleY="-1" y="77"/>
-	<e:Scroller id="mainScroller" width="640" x="0" top="75" bottom="105" bounces="false">
-		<e:Group id="scrollGroup">
-			<e:Group id="teamGroup" x="0" y="0">
-				<ns1:TeamUI id="team1" x="0" y="0" skinName="TeamUISkin" scaleX="1" scaleY="1" height="400"/>
-				<ns1:TeamUI id="team2" x="0" y="400" skinName="TeamUISkin" scaleX="1" scaleY="1" height="400"/>
-			</e:Group>
-			<e:layout>
-				<e:VerticalLayout gap="0"/>
-			</e:layout>
+<e:Skin class="GameUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0" locked="true"/>
+	<e:Image source="sound_btn1_png" x="20" y="25"/>
+	<e:Image source="rank_btn_png" x="90" y="17"/>
+	<e:Group horizontalCenter="0" bottom="20">
+		<e:Group id="btn0" x="0" y="0" width="110" height="150">
+			<e:Image source="main_icon1_png" y="0" horizontalCenter="0"/>
+			<e:Label text="养蛊" size="24" horizontalCenter="0" bottom="0"/>
 		</e:Group>
-	</e:Scroller>
-    <e:Group id="coinGroup" x="10" y="15">
-			<e:Image source="border1_png" scale9Grid="28,20,26,2" x="0" y="0" width="300" scaleX="1.1" scaleY="1.1"/>
-			<e:Label id="coinText" text="1234567890" x="50" size="24" verticalCenter="-5" textColor="0xffe3b7"/>
-			<e:Image x="2.02" source="icon_coin_png" y="-1.33"/>
+		<e:Group x="0" y="0" width="110" height="150" id="btn1">
+			<e:Image y="0" horizontalCenter="0" source="main_icon2_png"/>
+			<e:Label text="仆从" size="24" horizontalCenter="0" bottom="0"/>
 		</e:Group>
-	<e:Image source="title_bg4_png" x="-1.52" width="640" fillMode="repeat" bottom="-20"/>
-    <e:Group id="bottomGroup" height="100" bottom="2" horizontalCenter="0">
-			<e:Group id="rankBtn" x="100" y="0" height="90" width="90">
-				<e:Image source="rank_btn_png" horizontalCenter="0" verticalCenter="0"/>
-			</e:Group>
-					<e:Group id="shopBtn" x="100" y="0" height="90" width="90">
-						<e:Image source="coin_btn_png" horizontalCenter="0" verticalCenter="0"/>
-						<e:Image id="shopRedMC" source="red_mc_png" right="-10" top="-5"/>
-					</e:Group>
-			<e:Group id="mainGroup" x="220" y="18" width="120" height="71">
-				<e:Group id="wordGroup" x="0" y="0" height="31" width="100">
-					<e:BitmapLabel id="b1" x="18" y="15" font="font1_fnt" text="休" anchorOffsetX="18" anchorOffsetY="18"/>
-					<e:BitmapLabel id="b2" x="53" y="15" font="font1_fnt" text="战" anchorOffsetX="18" anchorOffsetY="18"/>
-					<e:BitmapLabel id="b3" x="88" y="15" font="font1_fnt" text="中" anchorOffsetX="18" anchorOffsetY="18"/>
-				</e:Group>
-				<e:Label id="cdText" text="Label" x="0" y="0" size="30"/>
-				<e:layout>
-					<e:VerticalLayout horizontalAlign="center" gap="10"/>
-				</e:layout>
-			</e:Group>
-			<e:Group id="settingBtn" x="100" y="0" width="90" height="90">
-				<e:Image source="chapter_btn_png" verticalCenter="0" horizontalCenter="0"/>
-				<e:Image id="chapterRedMC" source="red_mc_png" right="-10" top="-5"/>
-			</e:Group>
-					<e:Group id="mailBtn" x="10" y="0" width="90" height="90">
-						<e:Image verticalCenter="0" horizontalCenter="0" source="log_btn_png"/>
-					</e:Group>
-					<e:layout>
-					<e:HorizontalLayout horizontalAlign="right" paddingLeft="0" paddingRight="0" gap="30" verticalAlign="middle"/>
-					</e:layout>
-				</e:Group>
-	<ns1:MainPKUI id="mainPKUI" x="0" skinName="MainPKUISkin" top="75" bottom="105" visible="false"/>
-	<e:Image id="soundBtn" x="350.91" y="21.21" source="sound_btn2_png"/>
-	<e:Group id="loadingGroup" left="0" right="0" top="0" bottom="0" visible="false">
-		<e:Image source="bg14_png" scale9Grid="32,32,3,6" left="0" right="0" top="0" bottom="0"/>
-		<e:Image id="loadMC" source="ui_loading_png" horizontalCenter="0" verticalCenter="-150"/>
-		<e:Label id="loadText" text="加载中" horizontalCenter="0" verticalCenter="-80" size="24" textAlign="center" lineSpacing="20" textColor="0xffe493"/>
-		<e:Label text="《健康游戏忠告》" horizontalCenter="0" bottom="80" size="24" textColor="0xceb192"/>
-		<e:Label text="抵制不良游戏，拒绝盗版游戏。注意自我保护，谨防受骗上当。\n适度游戏益脑，沉迷游戏伤身。合理安排时间，享受健康生活。" size="20" lineSpacing="5" textAlign="center" horizontalCenter="0" bottom="20" textColor="0xceb192"/>
-		<e:Image id="startBtn" source="wx_btn_info_png" width="640" height="800" x="0" bottom="420"/>
-		<ns1:ChangeUserUI id="changeUser" skinName="ChangeUserUISkin" horizontalCenter="0" bottom="120"/>
+		<e:Group x="20" y="20" width="110" height="150" id="btn3">
+			<e:Image y="0" horizontalCenter="0" source="main_icon4_png"/>
+			<e:Label text="蛊巢" size="24" horizontalCenter="0" bottom="0"/>
+		</e:Group>
+		<e:Group x="30" y="30" width="110" height="150" id="btn4">
+			<e:Image y="0" horizontalCenter="0" source="main_icon5_png"/>
+			<e:Label text="虫洞" size="24" horizontalCenter="0" bottom="0"/>
+		</e:Group>
+		<e:Group x="40" y="40" width="110" height="150" id="btn5">
+			<e:Image y="0" horizontalCenter="0" source="main_icon6_png"/>
+			<e:Label text="建设" size="24" horizontalCenter="0" bottom="0"/>
+		</e:Group>
+		<e:Group x="50" y="50" width="110" height="150" id="btn6">
+			<e:Image y="5" horizontalCenter="0" source="main_icon3_png"/>
+			<e:Label text="探索" size="24" horizontalCenter="0" bottom="0"/>
+		</e:Group>
+		<e:Group x="60" y="60" width="110" height="150" id="btn7">
+			<e:Image y="5" horizontalCenter="0" source="main_icon8_png"/>
+			<e:Label text="掠夺" size="24" horizontalCenter="0" bottom="0"/>
+		</e:Group>
+		<e:Group x="10" y="10" width="110" height="150" id="btn2">
+			<e:Image y="0" horizontalCenter="0" source="main_icon7_png"/>
+			<e:Label text="商城" size="24" horizontalCenter="0" bottom="0"/>
+		</e:Group>
+		<e:layout>
+			<e:TileLayout requestedColumnCount="4" verticalGap="20" horizontalGap="40"/>
+		</e:layout>
 	</e:Group>
+	<e:Group horizontalCenter="0" bottom="360">
+		<e:Group x="0" y="0">
+			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
+			<e:Image source="food_mc_png" x="0" verticalCenter="0"/>
+			<e:Label id="foodText" text="Label" x="55" size="24" verticalCenter="0"/>
+		</e:Group>
+		<e:Group x="10" y="10">
+			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
+			<e:Image x="-2" verticalCenter="0" source="wood_mc_png" scaleX="0.8" scaleY="0.8"/>
+			<e:Label id="woodText" text="Label" x="55" size="24" verticalCenter="0"/>
+		</e:Group>
+		<e:Group x="20" y="20">
+			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
+			<e:Image x="7" verticalCenter="2" source="coin_mc_png"/>
+			<e:Label id="coinText" text="Label" x="55" size="24" verticalCenter="0"/>
+		</e:Group>
+		<e:Group x="30" y="30">
+			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
+			<e:Image x="5" verticalCenter="0" source="diamond_mc_png" scaleX="0.5" scaleY="0.5"/>
+			<e:Label id="diamondText" text="Label" x="55" size="24" verticalCenter="0"/>
+		</e:Group>
+		<e:Group x="40" y="40">
+			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
+			<e:Image x="0" verticalCenter="0" source="glass_mc_png" scaleX="0.55" scaleY="0.55"/>
+			<e:Label id="grassText" text="Label" x="55" size="24" verticalCenter="0"/>
+		</e:Group>
+		<e:Group x="50" y="50">
+			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
+			<e:Image id="bloodText" x="6" verticalCenter="0.5" source="blood_mc_png" scaleX="0.55" scaleY="0.55"/>
+			<e:Label text="Label" x="55" size="24" verticalCenter="0"/>
+		</e:Group>
+		<e:layout>
+			<e:TileLayout requestedColumnCount="3"/>
+		</e:layout>
+	</e:Group>
+	<e:Button id="defBtn" label="配置防守蛊虫" skinName="Btn1Skin" horizontalCenter="0" bottom="510"/>
+	
 </e:Skin>

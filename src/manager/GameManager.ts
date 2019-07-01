@@ -160,6 +160,7 @@ class GameManager {
         EM.dispatch(GameEvent.client.timer);
 
 
+        WorkManager.getInstance().onTimer();
 
         //if(UM.friendtime == 0){  //拿过日志了
         //    if(now%30 == 0) //5分钟请求一次
