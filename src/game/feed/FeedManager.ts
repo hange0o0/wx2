@@ -1,6 +1,5 @@
 class FeedManager {
     private static _instance:FeedManager;
-    private static cd = 0
     public static getInstance():FeedManager {
         if (!this._instance)
             this._instance = new FeedManager();
@@ -18,8 +17,9 @@ class FeedManager {
     public goldNum
 
     public initData(data){
-        this.goldHelper = data.goldHelper
-        this.data = data.data
+        data = data || {};
+        this.goldHelper = data.goldHelper || []
+        this.data = data.data || {};
 
         for(var i=1;i<=4;i++)
         {
@@ -87,10 +87,12 @@ class FeedManager {
     //{id,exp,isHero,data}
     public startFeed(index,list){
         var exp = 0;
+        var maxExp = 0;
         for(var i=0;i<list.length;i++)
         {
             list[i].rate = Math.random()*Math.pow(list[i].exp,0.3);
             exp += list[i].exp;
+            maxExp = Math.max(list[i].exp,maxExp);
 
             if(list[i].isHero)
             {
@@ -113,16 +115,18 @@ class FeedManager {
             }
         }
 
+        var rate = 2.32//刚好够1升2
         if(index <= 4)//加成
         {
-            exp += Math.floor((exp-win.exp)*0.1);
+            rate = 2.1
         }
+        exp = maxExp + Math.floor((exp-maxExp)/rate);
 
 
         var skill = win.skill || Math.ceil(Math.random()*10);
         if(win.data.key)
         {
-            var key = win.data.key;
+            var key = Number(win.data.key);
         }
         else
         {

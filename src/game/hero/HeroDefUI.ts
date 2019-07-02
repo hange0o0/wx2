@@ -1,14 +1,14 @@
-class HeroUI extends game.BaseUI {
+class HeroDefUI extends game.BaseUI {
 
-    private static _instance:HeroUI;
+    private static _instance:HeroDefUI;
     public static getInstance() {
-        if (!this._instance) this._instance = new HeroUI();
+        if (!this._instance) this._instance = new HeroDefUI();
         return this._instance;
     }
 
     public constructor() {
         super();
-        this.skinName = "HeroUISkin";
+        this.skinName = "HeroDefUISkin";
     }
 
     private woodText: eui.Label;

@@ -24,7 +24,6 @@ class MyADManager {
                     this.changeUserFun();
 
                 ChangeJumpUI.getInstance().hide();
-                UM.coinObj.shareNum ++;
                 UM.needUpUser = true;;
             }
             this.changeUserTime = 0;

@@ -1,6 +1,5 @@
 class CollectManager {
     private static _instance:CollectManager;
-    private static cd = 0
     public static getInstance():CollectManager {
         if (!this._instance)
             this._instance = new CollectManager();
@@ -78,17 +77,26 @@ class CollectManager {
         this.resetLevel();
     }
 
+    public split(data){
+        UM.addBlood(this.getSplitAward(data.id))
+        this.removeItem(data);
+    }
+
+    public getSplitAward(id){
+        return Math.floor(HeroManager.getInstance().getExpByLevel(MonsterVO.getObject(id).level)/10)
+    }
+
     //打开界面才进入onTimer
     public onTimer(){
         var b = false
         var t = TM.now();
         var maxCD = 3600*(2+this.maxNum/300*4)
         var cd = Math.floor(maxCD/this.maxNum/3)
-        var startLevel = 10 - 5
+        var startLevel = (1+this.level)*2 - 20
         var monsterList = [];
         for(var s in MonsterVO.data)
         {
-             if(MonsterVO.data[s].level>= startLevel && MonsterVO.data[s].level <= startLevel + 50)
+             if(MonsterVO.data[s].level>= startLevel && MonsterVO.data[s].level <= startLevel + 20)
              {
                  monsterList.push(s);
              }
@@ -98,7 +106,7 @@ class CollectManager {
         {
             this.lastTime += cd + Math.floor(Math.random()*2*cd)
             this.list.push({
-                id:ArrayUtil.random(monsterList),
+                id:ArrayUtil.randomOne(monsterList),
                 isLock:false
             })
             b = true;
@@ -107,6 +115,11 @@ class CollectManager {
         if(this.lastTime < t)
         {
             this.lastTime = t + Math.floor(Math.random()*2*cd)
+        }
+
+        if(b)
+        {
+            UM.needUpUser = true;
         }
         return b;
     }

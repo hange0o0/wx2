@@ -83,124 +83,17 @@ class RankUI extends game.BaseUI{
         if(!window['wx'])
             return;
         this.remove();
-        if(this.tab.selectedIndex == 0)
-        {
-            this.worldRank('coin',UM.coinwin);
-        }
-        else if(this.tab.selectedIndex == 1)
-        {
-            this.worldRank('level',UM.chapterLevel);
-        }
-        else
-        {
-              this.showBitmapList()
-        }
 
+        this.showBitmapList()
     }
 
-    private worldRank(type,myValue){
-        var wx = window['wx'];
-        if(!wx)
-        {
-            return;
-        }
-        var oo = {
-            type:type,
-            openid:UM.gameid,
-            nick:UM.nick,
-            head:UM.head,
-            value:myValue,
-        }
-        if(this.rankData[oo.type])
-        {
-            this.showRank(type);
-            return;
-        }
-        MsgingUI.getInstance().show()
-        this.desText.text = '正在请求数据';
-        wx.cloud.callFunction({      //取玩家openID,
-            name: 'getRank',
-            data: oo,
-            complete: (res) => {
-                if(res.result)
-                {
-                    this.rankData[oo.type] = {
-                        list:res.result,
-                        time:TM.now()
-                    }
-                    this.showRank(type);
-                    MsgingUI.getInstance().hide()
-                }
-            },
-            fail:()=>{
 
-            }
-        })
-        //    }
-        //})
-    }
-
-    public showRank(type){
-        if(!this.rankData[type])
-            return;
-        this.scroller.visible = true;
-        var arr = this.rankData[type].list;
-        var b = false;
-        var myScore = type=='coin'?UM.coinwin:UM.chapterLevel;
-        for(var i=0;i<arr.length;i++) //更新自己成绩
-        {
-            arr[i].type = type;
-            if(arr[i].openid == UM.gameid)
-            {
-                arr[i].value = myScore;
-                arr[i].nick = UM.nick;
-                arr[i].head = UM.head;
-                b = true;
-            }
-            if(arr[i].value <= 1)
-            {
-                arr.splice(i,1);
-                i--;
-            }
-        }
-        if(!b && UM.nick && arr.length<50 && myScore > 1)
-        {
-            arr.push({
-                nick:UM.nick,
-                value:myScore,
-                head:UM.head,
-            })
-        }
-        ArrayUtil.sortByField(arr,['value'],[1])
-        var myRank = 0
-        for(var i=0;i<arr.length;i++) //更新自己成绩
-        {
-            arr[i].index = i+1;
-            if(arr[i].openid == UM.gameid)
-                myRank = i+1;
-        }
-        this.list.dataProvider = new eui.ArrayCollection(arr)
-
-        if(UM.nick)
-        {
-            if(myRank)
-                this.desText.text = '你当前排名为：' + myRank;
-            else
-                this.desText.text = '你还没进入前50名';
-        }
-        else
-        {
-            this.desText.text = '点此授权后可在排行榜中显示你的名次';
-            this.infoBtn.visible = true;
-        }
-    }
 
     private poseData(){
         if(this.tab.selectedIndex == 2)
         {
             var key = 'coin'
             var oldKey = 'coinwin'
-            var value = UM.coinwin;
         }
         else if(this.tab.selectedIndex == 3)
         {

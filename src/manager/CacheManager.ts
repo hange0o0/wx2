@@ -22,22 +22,28 @@ class CacheManager{
     }
 
     //初始化数据
-    public initData(data){
-        for(var s in data)
-        {
-            if(!this.table[s])
-                this.table[s] = {};
-            if(this.registerData[s])
-            {
-                var cls = this.registerData[s];
-                var key = cls.key;
-                var oo = data[s];
-                for(var ss in oo)
-                {
-                    var vo:any = new cls();
-                    vo.fill(oo[ss]);
-                    this.table[s][vo[key]] = vo;
+    public initData(data,key){
+        if(!this.table[key])
+            this.table[key] = {};
+        data = data.replace(/\r/g,'')
+        var rows = data.split('\n')
+        var fieldDelim = '\t';
+        var fields: Array<string> = String(rows[0]).split(fieldDelim);
+        for(var i: number = 1;i < rows.length;i++) {
+            var s: string = rows[i];
+            if(s != null && s != "") {
+                var cols: Array<any> = s.split(fieldDelim);
+                var cls = this.registerData[key];
+                var vo:any = new cls();
+                for(var j: number = 0;j < fields.length;j++) {
+                    var value = cols[j];
+                    if(!fields[j])
+                        continue;
+                    vo[fields[j]] = value && !isNaN(value) ? Number(value) : value;
                 }
+                vo.reInit();
+                if(vo[cls.key])
+                    this.table[key][vo[cls.key]] = vo;
             }
         }
     }
@@ -46,41 +52,5 @@ class CacheManager{
     public initFinish(){
     }
 
-    public getCardVO(id):MonsterVO{
-        return MonsterVO.getObject(id);
-    }
 
-    public loadCache(url,fun){
-        if(this.cacheLoad[url])
-        {
-            if(fun)
-                fun();
-            return;
-        }
-        GameManager.container.touchChildren = GameManager.container.touchEnabled = false;
-        RES.getResAsync(url,function(){
-            GameManager.container.touchChildren = GameManager.container.touchEnabled = true;
-            this.cacheLoad[url] = true;
-            this.initData(RES.getRes(url));
-            if(fun)
-                fun();
-        },this)
-    }
 }
-
-
-//var a;
-//var arr1 = [];
-//for(var s in a)
-//{
-//    if(typeof a[s] == 'number')
-//        arr1.push('public ' + s + ': number;')
-//    else
-//        arr1.push('public ' + s + ': string;')
-//
-//}
-//for(var s in a)
-//{
-//    arr1.push('this.' + s + ' = data.' + s)
-//}
-//console.log(arr1.join('\n'))

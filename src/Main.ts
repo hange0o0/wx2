@@ -164,7 +164,7 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected startCreateScene(): void {
-        CM.initData(RES.getRes("data_json"));
+        CM.initData(RES.getRes("monster_txt"),'monster_base');
         GameManager.stage = this.stage;
         GameManager.container = this;
         if(App.isIOS){
@@ -183,7 +183,7 @@ class Main extends eui.UILayer {
         //    return;
         //}
         //console.log('_12')
-            GameUI.getInstance().show();
+        LoadingUI.getInstance().show();
         MyADManager.getInstance().getAD()
         MyADManager.getInstance().createAD()
 

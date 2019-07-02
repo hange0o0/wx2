@@ -12,8 +12,17 @@ class UserManager {
     }
 
     private _needUpUser = false;
+    private callLocalSave = false;//防止重复多次
     public get needUpUser(){return this._needUpUser}
-    public set needUpUser(v){this._needUpUser = v;v && egret.callLater(this.localSave,this)}
+    public set needUpUser(v){
+        this._needUpUser = v
+        if(v && !this.callLocalSave)
+        {
+            this.callLocalSave = true;
+            egret.callLater(this.localSave,this)
+        }
+
+    }
 
 
     public testVersion = 20190610//与服务器相同则为测试版本
@@ -153,6 +162,7 @@ class UserManager {
         var wx = window['wx'];
         if(!wx)
         {
+            this.gameid = _get['openid']
             this.fill(this.orginUserData());
             this.guideFinish = !!SharedObjectManager.getInstance().getMyValue('localSave');   //本地不进新手了
             fun && fun();
@@ -298,7 +308,9 @@ class UserManager {
 
 
 
+
     private localSave(){
+        this.callLocalSave = false
         SharedObjectManager.getInstance().setMyValue('localSave',this.getUpdataData())
     }
 

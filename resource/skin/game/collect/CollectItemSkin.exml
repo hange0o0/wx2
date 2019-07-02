@@ -1,3 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="CollectItemSkin" width="400" height="300" xmlns:e="http://ns.egret.com/eui">
+<e:Skin class="CollectItemSkin" width="130" height="160" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="border1_png" x="0" y="0" width="130" height="130"/>
+	<e:Image id="mc" source="border1_png" width="110" height="110" y="10" horizontalCenter="0"/>
+	<e:Group id="txtGroup" horizontalCenter="0" bottom="0">
+		<e:Image id="lockMC" source="lock_icon_png" y="0" x="98" scaleX="0.8" scaleY="0.8"/>
+		<e:Label id="txt" text="Label" y="30" x="0" size="24"/>
+		<e:layout>
+			<e:HorizontalLayout verticalAlign="bottom"/>
+		</e:layout>
+	</e:Group>
+	<e:Label id="lvText" text="Label" size="20" italic="true" textColor="0xfff7c1" horizontalCenter="0" bottom="30" stroke="3"/>
 </e:Skin>

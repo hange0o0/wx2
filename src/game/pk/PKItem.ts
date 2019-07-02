@@ -1,10 +1,10 @@
-class FeedItem extends game.BaseItem{
+class PKItem extends game.BaseItem{
 
 
 
     public constructor() {
         super();
-        this.skinName = "FeedItemSkin";
+        this.skinName = "PKItemSkin";
     }
 
     public childrenCreated() {

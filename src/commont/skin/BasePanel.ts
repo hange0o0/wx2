@@ -6,6 +6,16 @@ class BasePanel extends game.BaseContainer {
 
     private bottomGroup: eui.Group;
     private nameText: eui.Label;
+    private closeBtn: eui.Image;
+
+
+    public relateMC
+    public childrenCreated() {
+        super.childrenCreated();
+        this.addBtnEvent(this.closeBtn,()=>{
+            this.relateMC && this.relateMC.hide();
+        })
+    }
 
 
     public setTitle(title){

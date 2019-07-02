@@ -1,6 +1,5 @@
 class HeroManager {
     private static _instance:HeroManager;
-    private static cd = 0
     public static getInstance():HeroManager {
         if (!this._instance)
             this._instance = new HeroManager();
@@ -37,12 +36,11 @@ class HeroManager {
     }
 
     public getExpByLevel(lv){
-        return Math.round(Math.pow(lv,2.35))*100
+        return Math.round(Math.exp(lv-1))*100
     }
 
-
     public getLevelByExp(exp){
-        var level =  Math.max(1,Math.ceil(Math.pow(exp/100,1/2.35)-2))
+        var level =  Math.max(1,Math.ceil(Math.log(exp/100)-2))
         while(true)
         {
             var newExp = this.getExpByLevel(level)

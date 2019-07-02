@@ -1,6 +1,5 @@
 class WorkManager {
     private static _instance:WorkManager;
-    private static cd = 0
     public static getInstance():WorkManager {
         if (!this._instance)
             this._instance = new WorkManager();
@@ -42,32 +41,33 @@ class WorkManager {
 
     public initData(data){
         data = data || {}
-        this.maxNum = data.maxNum
-        this.woodNum = data.woodNum
-        this.foodNum = data.foodNum
-        this.diamondNum = data.diamondNum
-        this.grassNum = data.grassNum
-        this.lastTime = data.lastTime
+        this.maxNum = data.maxNum || 0
+        this.woodNum = data.woodNum || 0
+        this.foodNum = data.foodNum || 0
+        this.diamondNum = data.diamondNum || 0
+        this.grassNum = data.grassNum || 0
+        this.lastTime = data.lastTime || 0
 
 
-        this.woodLevel = data.woodLevel
-        this.foodLevel = data.foodLevel
-        this.diamondLevel = data.diamondLevel
-        this.grassLevel = data.grassLevel
+        this.woodLevel = data.woodLevel || 0
+        this.foodLevel = data.foodLevel || 0
+        this.diamondLevel = data.diamondLevel || 0
+        this.grassLevel = data.grassLevel || 0
 
         this.resetLevel();
     }
 
     private resetLevel(){
-        this.foodMax = this.foodLevel * 5000
-        this.woodMax = this.woodLevel * 5000
-        this.diamondMax = this.diamondLevel * 1000
-        this.grassMax = this.grassLevel * 1000
 
-        this.foodNumMax = this.foodLevel * 15
+        this.foodNumMax = this.foodLevel * 10 + 5
         this.woodNumMax = this.woodLevel * 5
         this.diamondNumMax = this.diamondLevel * 5
         this.grassNumMax = this.grassLevel * 5
+
+        this.foodMax = this.foodLevel * 5000 + 1000
+        this.woodMax = this.woodLevel * 5000 + 1000
+        this.diamondMax = this.diamondLevel * 1000 + 200
+        this.grassMax = this.grassLevel * 1000 + 200
     }
 
     //升级需要的花费(木头)
@@ -158,6 +158,7 @@ class WorkManager {
             UM.addGrass(addGlass);
 
             this.lastTime += 30*num;
+            EM.dispatch(GameEvent.client.COIN_CHANGE)
         }
     }
 
