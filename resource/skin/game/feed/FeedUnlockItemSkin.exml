@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="FeedUnlockItemSkin" width="100" height="100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="item_empty_png" x="0" y="0" width="100" height="100"/>
+	<e:Image id="headMC" width="80" height="80" verticalCenter="0" horizontalCenter="0"/>
+	<e:Rect id="headMask" width="80" height="80" ellipseWidth="80" horizontalCenter="0" verticalCenter="0"/>
+</e:Skin>

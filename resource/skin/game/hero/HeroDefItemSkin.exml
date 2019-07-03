@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="HeroDefItemSkin" width="110" height="120" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="skillBG" source="border1_png" x="0" y="0" width="110" height="110"/>
+	<e:Image id="mc" source="border1_png" width="90" height="90" y="10" horizontalCenter="0"/>
+	<e:Label id="lvText" text="Label" size="20" italic="true" textColor="0xfff7c1" horizontalCenter="0" bottom="0" stroke="3"/>
+</e:Skin>

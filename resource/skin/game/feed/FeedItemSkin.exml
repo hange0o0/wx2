@@ -1,3 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="FeedItemSkin" width="400" height="300" xmlns:e="http://ns.egret.com/eui">
+<e:Skin class="FeedItemSkin" width="200" height="180" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="lock,free,working,award,unlock" >
+	<e:Image source="tudui_png" x="37" y="37" includeIn="working,award"/>
+	<e:Image id="boxMC" source="house1_png" x="47" y="8" includeIn="lock,free,unlock"/>
+	<e:Group y="125" scaleX="0.6" scaleY="0.6" horizontalCenter="0.5" includeIn="working">
+		<e:Image source="bar_bg_png" x="0" y="0"/>
+		<e:Image id="barMC" source="bar1_png" x="2" y="2" fillMode="clip"/>
+		<e:Label text="Label" horizontalCenter="0" verticalCenter="0" stroke="2" size="24"/>
+	</e:Group>
+	<e:Button id="btn" label="Button" y="112" skinName="Btn2Skin" scaleX="0.5" scaleY="0.5" horizontalCenter="0" includeIn="free,award,unlock" label.free="制蛊" skinName.award="Btn3Skin" label.award="挖出" label.unlock="解锁"/>
+	<e:Group horizontalCenter="0.5" y="121" includeIn="lock">
+		<e:Image source="lock_icon_png" y="0" x="98" scaleX="0.8" scaleY="0.8"/>
+		<e:Label id="lockText" text="Label" y="30" x="0" size="24"/>
+		<e:layout>
+		<e:HorizontalLayout verticalAlign="bottom"/>
+		</e:layout>
+	</e:Group>
 </e:Skin>

@@ -11,7 +11,7 @@ class CollectInfoUI extends game.BaseWindow {
         this.skinName = "CollectInfoUISkin";
     }
 
-    private bloodText: eui.Label;
+    private bloodItem: ResourceItem;
     private mc: eui.Image;
     private lvText: eui.Label;
     private lockBtn: eui.Button;
@@ -56,7 +56,7 @@ class CollectInfoUI extends game.BaseWindow {
         this.mc.source = vo.getThumb()
         this.setTitle(vo.name)
         this.lvText.text = 'LV.' + vo.level
-        this.bloodText.text = NumberUtil.addNumSeparator(CollectManager.getInstance().getSplitAward(this.data.id));
+        this.bloodItem.setText(NumberUtil.addNumSeparator(CollectManager.getInstance().getSplitAward(this.data.id)));
     }
 
     private renewLock(){

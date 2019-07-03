@@ -41,36 +41,12 @@
 		</e:layout>
 	</e:Group>
 	<e:Group horizontalCenter="0" bottom="360">
-		<e:Group x="0" y="0">
-			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
-			<e:Image source="food_mc_png" x="-4" verticalCenter="0.5"/>
-			<e:Label id="foodText" text="Label" x="55" size="24" verticalCenter="0"/>
-		</e:Group>
-		<e:Group x="10" y="10">
-			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
-			<e:Image x="-5" verticalCenter="0" source="wood_mc_png" scaleX="0.75" scaleY="0.75"/>
-			<e:Label id="woodText" text="Label" x="55" size="24" verticalCenter="0"/>
-		</e:Group>
-		<e:Group x="20" y="20">
-			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
-			<e:Image x="7" verticalCenter="2" source="coin_mc_png"/>
-			<e:Label id="coinText" text="Label" x="55" size="24" verticalCenter="0"/>
-		</e:Group>
-		<e:Group x="30" y="30">
-			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
-			<e:Image x="5" verticalCenter="0" source="diamond_mc_png" scaleX="0.5" scaleY="0.5"/>
-			<e:Label id="diamondText" text="Label" x="55" size="24" verticalCenter="0"/>
-		</e:Group>
-		<e:Group x="40" y="40">
-			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
-			<e:Image x="0" verticalCenter="0" source="glass_mc_png" scaleX="0.55" scaleY="0.55"/>
-			<e:Label id="grassText" text="Label" x="55" size="24" verticalCenter="0"/>
-		</e:Group>
-		<e:Group x="50" y="50">
-			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
-			<e:Image x="6" verticalCenter="0.5" source="blood_mc_png" scaleX="0.55" scaleY="0.55"/>
-			<e:Label id="bloodText" text="111" x="55" size="24" verticalCenter="0"/>
-		</e:Group>
+		<ns1:ResourceItem id="foodItem" x="-149" y="-150" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="food"/>
+		<ns1:ResourceItem id="woodItem" x="-139" y="-140" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
+		<ns1:ResourceItem id="coinItem" x="-129" y="-130" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="coin"/>
+		<ns1:ResourceItem id="diamondItem" x="-119" y="-120" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="diamond"/>
+		<ns1:ResourceItem id="grassItem" x="-109" y="-110" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="grass"/>
+		<ns1:ResourceItem id="bloodItem" x="-99" y="-100" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="blood"/>
 		<e:layout>
 			<e:TileLayout requestedColumnCount="3"/>
 		</e:layout>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="WorkIconSkin" width="100" height="100" xmlns:e="http://ns.egret.com/eui">
+	<e:Image source="border1_png" x="0" y="0" width="100" height="100"/>
+	<e:Image source="food_mc_png" horizontalCenter="0" verticalCenter="0" x="25" y="25"/>
+</e:Skin>

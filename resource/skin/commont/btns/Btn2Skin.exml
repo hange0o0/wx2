@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <e:Skin class="Btn2Skin" states="up,down,disabled" minHeight="50" minWidth="100" xmlns:e="http://ns.egret.com/eui">
-	<e:Image source="btn2_png" scale9Grid="16,15,18,18" x="0" y="0" width="100%" height="100%"/>
+	<e:Image source="btn2_png" x="0" y="0" width="100%" height="100%" scale9Grid="28,15,149,55"/>
 
 	
 	<e:Group left="0" right="0" top="0" bottom="0">
@@ -8,6 +8,6 @@
 			<e:HorizontalLayout gap="0" verticalAlign="middle" horizontalAlign="center"/>
 		</e:layout>
 		<e:Image id="iconDisplay"/>
-		<e:Label id="labelDisplay" size="30" text="而" bold="true" textColor="0x1d440b"/>
+		<e:Label id="labelDisplay" size="36" text="而" bold="true" textColor="0x0d2303"/>
 	</e:Group>
 </e:Skin>

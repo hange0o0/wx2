@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="FeedInfoUISkin" width="600" height="880" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:Group horizontalCenter="0" bottom="30" scaleX="0.7" scaleY="0.7">
+		<e:Button id="upBtn" label="升级蛊盒" x="0" y="0" skinName="Btn2Skin" width="240"/>
+		<e:Button id="startBtn" label="开始制蛊" x="200" y="4.8" skinName="Btn3Skin" width="240"/>
+		<e:layout>
+		<e:HorizontalLayout gap="80"/>
+		</e:layout>
+	</e:Group>
+	<e:Scroller id="scroller" width="600" x="0" top="75" bottom="220" bounces="false">
+		<e:Group>
+		<e:List id="list" width="200" height="200" x="236" y="144">
+			<e:layout>
+			<e:TileLayout requestedColumnCount="4" horizontalGap="24" verticalGap="24" paddingLeft="24" paddingTop="24" paddingBottom="24"/>
+			</e:layout>
+		</e:List>
+		</e:Group>
+	</e:Scroller>
+	<e:Group horizontalCenter="0" bottom="115">
+		<e:Label text="升级需求：" x="1032" y="1316" size="24"/>
+		<ns1:ResourceItem id="woodItem" x="-679" y="-690" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
+		<ns1:ResourceItem id="diamondItem" x="-669" y="-680" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="diamond"/>
+		<e:layout>
+		<e:HorizontalLayout gap="10" verticalAlign="middle"/>
+		</e:layout>
+	</e:Group>
+	<e:Label id="desText" text="Label" bottom="180" horizontalCenter="0" size="24"/>
+</e:Skin>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="FeedInfoUISkin" width="500" height="540" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing" states="s1,s2"  width.s1="420" height.s1="420">
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:List id="list" height="100" horizontalCenter="0" bottom="110" includeIn="s2">
+		<e:layout>
+			<e:HorizontalLayout horizontalAlign="center" gap="10"/>
+		</e:layout>
+	</e:List>
+	<e:Button id="unlockBtn" label="开始制蛊" skinName="Btn3Skin" width="240" horizontalCenter="0" bottom="35" scaleX="0.6" scaleY="0.6"/>
+	<e:Label id="desText" text="Label" bottom="230" horizontalCenter="0.5" size="24" text.s2="黄金蛊盒成蛊质量更高\n邀请3位好友即可获得" textColor.s2="0xffe2aa" textAlign.s2="center" lineSpacing.s2="10" horizontalCenter.s2="1" bottom.s2="230" includeIn="s2"/>
+	<e:Image source="house1_png" y="90" scaleX="1.5" scaleY="1.5" horizontalCenter="0" source.s2="house2_png"/>
+	<ns1:ResourceItem id="woodItem" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood" horizontalCenter="0" bottom="110" includeIn="s1"/>
+</e:Skin>

@@ -11,24 +11,21 @@ class HeroInfoUI extends game.BaseUI {
         this.skinName = "CollectUISkin";
     }
 
-    private woodText: eui.Label;
-    private grassText: eui.Label;
-    private bloodText: eui.Image;
-    private needWoodText: eui.Label;
-    private needGrassText: eui.Label;
-    private closeBtn: eui.Image;
-    private scroller: eui.Scroller;
-    private list: eui.List;
-    private upBtn: eui.Button;
+    private bloodItem: ResourceItem;
+    private bloodItem2: ResourceItem;
+    private mc: eui.Image;
+    private lockBtn: eui.Button;
     private splitBtn: eui.Button;
-    private desText: eui.Label;
+    private barMC: eui.Image;
+    private skillText: eui.Label;
+
 
 
 
 
     public childrenCreated() {
         super.childrenCreated();
-        this.addBtnEvent(this.closeBtn,this.hide)
+        //this.addBtnEvent(this.closeBtn,this.hide)
 
     }
 }

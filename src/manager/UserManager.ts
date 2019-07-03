@@ -345,4 +345,63 @@ class UserManager {
         this.localSave();
     }
 
+    public checkResource(oo){
+        for(var s in oo)
+        {
+            var value = oo[s];
+            switch(s)
+            {
+                case 'coin':
+                    if(UM.coin < value)
+                    {
+                        ShopUI.getInstance().show();
+                        MyWindow.ShowTips('金币不足！')
+                        return false;
+                    }
+                    break
+                case 'diamond':
+                    if(UM.diamond < value)
+                    {
+                        ShopUI.getInstance().show();
+                        MyWindow.ShowTips('晶石不足！')
+                        return false;
+                    }
+                    break
+                case 'wood':
+                    if(UM.wood < value)
+                    {
+                        ShopUI.getInstance().show();
+                        MyWindow.ShowTips('木材不足！')
+                        return false;
+                    }
+                    break
+                case 'food':
+                    if(UM.food < value)
+                    {
+                        ShopUI.getInstance().show();
+                        MyWindow.ShowTips('食物不足！')
+                        return false;
+                    }
+                    break
+                case 'grass':
+                    if(UM.grass < value)
+                    {
+                        ShopUI.getInstance().show();
+                        MyWindow.ShowTips('灵草不足！')
+                        return false;
+                    }
+                    break
+                case 'blood':
+                    if(UM.blood < value)
+                    {
+                        ShopUI.getInstance().show();
+                        MyWindow.ShowTips('血食不足！')
+                        return false;
+                    }
+                    break
+            }
+        }
+        return true;
+    }
+
 }

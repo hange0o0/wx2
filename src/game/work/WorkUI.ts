@@ -11,17 +11,13 @@ class WorkUI extends game.BaseUI {
         this.skinName = "WorkUISkin";
     }
 
-    private woodText: eui.Label;
-    private grassText: eui.Label;
-    private bloodText: eui.Image;
-    private needWoodText: eui.Label;
-    private needGrassText: eui.Label;
     private closeBtn: eui.Image;
     private scroller: eui.Scroller;
     private list: eui.List;
+    private foodNeedItem: ResourceItem;
     private upBtn: eui.Button;
-    private splitBtn: eui.Button;
-    private desText: eui.Label;
+    private peopleItem: ResourceItem;
+
 
 
 

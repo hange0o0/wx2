@@ -21,13 +21,14 @@ class GameUI extends game.BaseUI {
     private chapterBtn: eui.Group;
     private fightBtn: eui.Group;
     private shopBtn: eui.Group;
-    private foodText: eui.Label;
-    private woodText: eui.Label;
-    private coinText: eui.Label;
-    private diamondText: eui.Label;
-    private grassText: eui.Label;
-    private bloodText: eui.Label;
+    private foodItem: ResourceItem;
+    private woodItem: ResourceItem;
+    private coinItem: ResourceItem;
+    private diamondItem: ResourceItem;
+    private grassItem: ResourceItem;
+    private bloodItem: ResourceItem;
     private defBtn: eui.Button;
+
 
 
 
@@ -93,18 +94,12 @@ class GameUI extends game.BaseUI {
     }
 
     public renewCoin(){
-        this.foodText.text = NumberUtil.addNumSeparator(UM.food)
-        this.woodText.text = NumberUtil.addNumSeparator(UM.wood)
-        this.diamondText.text = NumberUtil.addNumSeparator(UM.diamond)
-        this.grassText.text = NumberUtil.addNumSeparator(UM.grass)
-        this.coinText.text = NumberUtil.addNumSeparator(UM.coin)
-        this.bloodText.text = NumberUtil.addNumSeparator(UM.blood)
-
-        var WM = WorkManager.getInstance();
-        this.foodText.textColor = UM.food< WM.foodMax?0xFFFFFF:0x00ff00;
-        this.woodText.textColor = UM.wood< WM.woodMax?0xFFFFFF:0x00ff00;
-        this.diamondText.textColor = UM.diamond< WM.diamondMax?0xFFFFFF:0x00ff00;
-        this.grassText.textColor = UM.grass< WM.grassMax?0xFFFFFF:0x00ff00;
+        this.foodItem.renew()
+        this.woodItem.renew()
+        this.diamondItem.renew()
+        this.grassItem.renew()
+        this.coinItem.renew()
+        this.bloodItem.renew()
     }
 
     public renewDef(){

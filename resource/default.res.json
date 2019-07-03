@@ -1,7 +1,7 @@
 {
 	"groups":[
 		{
-			"keys":"rank_btn_png,sound_btn1_png,sound_btn2_png,btn3_png,btn2_png,ui_loading_png,logo_png,main_shop_png,icon_right_png,coin_mc_png,friend_btn_png,item_empty_png,common_head_bg_jpg,reborn_bg_png,window_bg_png,border_png,video_icon_png,lock_icon_png,using_png,arrow_btn_png,close_btn_png,btn_png,item_png,arrow3_png,black_bg_png,black_bg_alpha_png,red_bg_png,white_bg_png,yellor_bg_png,wx_btn_info_png,house1_png,house2_png,main_icon2_png,main_icon7_png,main_icon6_png,main_icon4_png,main_icon1_png,main_icon5_png,main_icon8_png,wood_mc_png,main_icon3_png,food_mc_png,glass_mc_png,blood_mc_png,diamond_mc_png,btn1_png,monster_txt",
+			"keys":"rank_btn_png,sound_btn1_png,sound_btn2_png,btn3_png,btn2_png,ui_loading_png,logo_png,main_shop_png,icon_right_png,coin_mc_png,friend_btn_png,item_empty_png,common_head_bg_jpg,reborn_bg_png,window_bg_png,border_png,video_icon_png,lock_icon_png,using_png,arrow_btn_png,close_btn_png,btn_png,item_png,arrow3_png,black_bg_png,black_bg_alpha_png,red_bg_png,white_bg_png,yellor_bg_png,wx_btn_info_png,house1_png,house2_png,main_icon2_png,main_icon7_png,main_icon6_png,main_icon4_png,main_icon1_png,main_icon5_png,main_icon8_png,wood_mc_png,main_icon3_png,food_mc_png,glass_mc_png,blood_mc_png,diamond_mc_png,btn1_png,monster_txt,worm_icon_png",
 			"name":"preload_png"
 		},
 		{
@@ -256,6 +256,56 @@
 			"name":"monster_txt",
 			"type":"text",
 			"url":"data/monster.txt"
+		},
+		{
+			"name":"tudui_png",
+			"type":"image",
+			"url":"game_assets/tudui.png"
+		},
+		{
+			"name":"bar_bg_png",
+			"type":"image",
+			"url":"game_assets/bar_bg.png"
+		},
+		{
+			"name":"bar1_png",
+			"type":"image",
+			"url":"game_assets/bar1.png"
+		},
+		{
+			"name":"bar2_png",
+			"type":"image",
+			"url":"game_assets/bar2.png"
+		},
+		{
+			"name":"worm_icon_png",
+			"type":"image",
+			"url":"game_assets/worm_icon.png"
+		},
+		{
+			"name":"border_bar2_png",
+			"type":"image",
+			"url":"game_assets/border_bar2.png"
+		},
+		{
+			"name":"border_bar1_png",
+			"type":"image",
+			"url":"game_assets/border_bar1.png"
+		},
+		{
+			"name":"people_mc_png",
+			"type":"image",
+			"url":"game_assets/people_mc.png"
+		},
+		{
+			"name":"icon_dec_png",
+			"type":"image",
+			"url":"game_assets/icon_dec.png"
+		},
+		{
+			"name":"icon_add4_png",
+			"type":"image",
+			"url":"game_assets/icon_add4.png"
 		}
 	]
 }

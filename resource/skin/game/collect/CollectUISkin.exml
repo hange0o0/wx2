@@ -1,45 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="CollectUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="CollectUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
 	<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0"/>
 	<e:Group horizontalCenter="0" y="100">
-		<e:Group x="0" y="0">
-			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
-			<e:Image x="-2" verticalCenter="0" source="wood_mc_png" scaleX="0.8" scaleY="0.8"/>
-			<e:Label id="woodText" text="Label" x="55" size="24" verticalCenter="0"/>
-		</e:Group>
-		<e:Group x="30" y="30">
-			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
-			<e:Image x="0" verticalCenter="0" source="glass_mc_png" scaleX="0.55" scaleY="0.55"/>
-			<e:Label id="grassText" text="Label" x="55" size="24" verticalCenter="0"/>
-		</e:Group>
-		<e:Group x="50" y="50">
-			<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
-			<e:Image x="6" verticalCenter="0.5" source="blood_mc_png" scaleX="0.55" scaleY="0.55"/>
-			<e:Label id="bloodText" text="Label" x="55" size="24" verticalCenter="0"/>
-		</e:Group>
+		<ns1:ResourceItem id="woodItem" x="-459" y="-240" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
+		<ns1:ResourceItem id="grassItem" x="-429" y="-210" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="grass"/>
+		<ns1:ResourceItem id="bloodItem" x="-419" y="-200" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="blood"/>
 		<e:layout>
 			<e:HorizontalLayout gap="6"/>
 		</e:layout>
 	</e:Group>
 	<e:Group horizontalCenter="0" bottom="115">
 		<e:Label text="升级需求：" x="1032" y="1316" size="24"/>
-		<e:Group x="0" y="0">
-		<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
-		<e:Image x="-2" verticalCenter="0" source="wood_mc_png" scaleX="0.8" scaleY="0.8"/>
-		<e:Label id="needWoodText" text="Label" x="55" size="24" verticalCenter="0"/>
-		</e:Group>
-		<e:Group x="30" y="30">
-		<e:Image source="border_png" x="0" y="0" scale9Grid="38,6,26,42" width="200"/>
-		<e:Image x="0" verticalCenter="0" source="glass_mc_png" scaleX="0.55" scaleY="0.55"/>
-		<e:Label id="needGrassText" text="Label" x="55" size="24" verticalCenter="0"/>
-		</e:Group>
+		<ns1:ResourceItem id="woodNeedItem" x="-459" y="-240" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
+		<ns1:ResourceItem id="grassNeedItem" x="-429" y="-210" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="grass"/>
 		<e:layout>
 		<e:HorizontalLayout gap="10" verticalAlign="middle"/>
 		</e:layout>
 	</e:Group>
 	<e:Image id="closeBtn" source="close_btn2_png" y="10" x="15"/>
 	<e:Label text="虫洞" y="30" horizontalCenter="0" bold="true" size="40" stroke="4" strokeColor="0x686868"/>
-	<e:Scroller id="scroller" width="640" x="0" top="160" bottom="220" bounces="false">
+	<e:Scroller id="scroller" width="640" x="0" top="160" bottom="230" bounces="false">
 		<e:Group>
 			<e:List id="list" width="200" height="200" x="236" y="144">
 				<e:layout>
@@ -55,5 +35,5 @@
 			<e:HorizontalLayout gap="50"/>
 		</e:layout>
 	</e:Group>
-	<e:Label id="desText" text="Label" bottom="180" horizontalCenter="0" size="24"/>
+	<e:Label id="desText" text="Label" bottom="185" horizontalCenter="0" size="24"/>
 </e:Skin>

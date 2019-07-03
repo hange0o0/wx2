@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="FeedChooseItemSkin" width="120" height="130" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="skillBG" source="border1_png" x="0" y="0" width="120" height="120"/>
+	<e:Image id="mc" source="border1_png" width="100" height="100" y="10" horizontalCenter="0"/>
+	<e:Label id="lvText" text="Label" size="20" italic="true" textColor="0xfff7c1" horizontalCenter="0" bottom="0" stroke="3"/>
+	<e:Image id="heroMC" source="worm_icon_png" x="0" y="0"/>
+</e:Skin>

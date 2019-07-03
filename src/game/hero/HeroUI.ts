@@ -11,17 +11,19 @@ class HeroUI extends game.BaseUI {
         this.skinName = "HeroUISkin";
     }
 
-    private woodText: eui.Label;
-    private grassText: eui.Label;
-    private bloodText: eui.Image;
-    private needWoodText: eui.Label;
-    private needGrassText: eui.Label;
+    private woodItem: ResourceItem;
+    private diamondItem: ResourceItem;
+    private bloodItem: ResourceItem;
+    private woodNeedItem: ResourceItem;
+    private diamondNeedItem: ResourceItem;
     private closeBtn: eui.Image;
     private scroller: eui.Scroller;
     private list: eui.List;
     private upBtn: eui.Button;
     private splitBtn: eui.Button;
     private desText: eui.Label;
+
+
 
 
 

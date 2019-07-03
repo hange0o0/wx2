@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="HeroDefUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0"/>
+	<e:Image id="closeBtn" source="close_btn2_png" y="10" x="15"/>
+	<e:Label id="titleText" text="养蛊" y="30" horizontalCenter="0" bold="true" size="40" stroke="4" strokeColor="0x686868"/>
+	<e:Scroller id="scrollerUp" width="640" x="0" bounces="false" anchorOffsetY="0" height="380" y="100">
+		<e:Group>
+			<e:List id="listUp" width="200" height="200" x="236" y="144">
+				<e:layout>
+					<e:TileLayout requestedColumnCount="3" horizontalGap="0" verticalGap="10" paddingLeft="20" paddingTop="20" paddingBottom="20"/>
+				</e:layout>
+			</e:List>
+		</e:Group>
+	</e:Scroller>
+	<e:Scroller id="scrollerDown" width="640" x="0" top="520" bottom="120" bounces="false" anchorOffsetY="0">
+		<e:Group>
+		<e:List id="listDown" width="200" height="200" x="236" y="144">
+			<e:layout>
+			<e:TileLayout requestedColumnCount="3" horizontalGap="0" verticalGap="10" paddingLeft="20" paddingTop="20" paddingBottom="20"/>
+			</e:layout>
+		</e:List>
+		</e:Group>
+	</e:Scroller>
+	<e:Group horizontalCenter="0" bottom="30" scaleX="0.8" scaleY="0.8">
+		<e:Button id="autoBtn" label="一键上阵" x="0" y="0" skinName="Btn2Skin" width="220"/>
+		<e:Button id="pkBtn" label="出战" x="200" y="4.8" skinName="Btn3Skin" width="220"/>
+		<e:layout>
+		<e:HorizontalLayout gap="50"/>
+		</e:layout>
+	</e:Group>
+	<e:Label id="desText" text="Label" y="490" horizontalCenter="0" size="24"/>
+</e:Skin>

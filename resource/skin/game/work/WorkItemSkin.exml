@@ -1,3 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="WorkItemSkin" width="400" height="300" xmlns:e="http://ns.egret.com/eui">
+<e:Skin class="WorkItemSkin" width="580" height="220" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
+	<e:Image source="window_bg_png" scale9Grid="37,32,42,45" left="0" right="0" top="0" bottom="0"/>
+	<ns1:ResourceItem id="woodNeedItem" x="25" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="food" width="300" bottom="15" visible="false"/>
+	<e:Button id="upBtn" label="升级" skinName="Btn2Skin" scaleX="0.7" scaleY="0.7" right="25" y="45" width="180"/>
+	<ns1:WorkIcon skinName="WorkIconSkin" y="25" id="icon" x="25"/>
+	<e:Rect height="2" y="138.26" fillColor="0x4f4f4f" left="25" right="25"/>
+	<e:Label id="nameText" text="Label" x="140" y="20" bold="true"/>
+	<e:Label id="desText" text="LabelLabelLab\nelLabelLabel" x="140" y="63.95" bold="false" size="24" lineSpacing="10"/>
+	<e:Group width="240" right="25" bottom="15">
+		<e:Image source="border_png" scale9Grid="38,6,33,42" left="0" right="0" top="0" bottom="0"/>
+		<e:Image source="icon_add4_png" right="20" verticalCenter="0"/>
+		<e:Image source="icon_dec_png" left="20" verticalCenter="0"/>
+		<e:Label text="100/100" horizontalCenter="0" size="24" verticalCenter="0"/>
+		<e:Image id="decBtn" source="black_bg_png" x="0" verticalCenter="0" width="100" alpha="0"/>
+		<e:Image id="addBtn" source="black_bg_png" verticalCenter="0" width="100" right="0" alpha="0"/>
+	</e:Group>
 </e:Skin>

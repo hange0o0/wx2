@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="WorkUpUISkin" width="400" height="460" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:Label id="desText" text="La\n444\nbel" x="170.5" size="24" textColor="0xFFF7C1" textAlign="center" lineSpacing="6" y="250"/>
+	<e:Group horizontalCenter="0" bottom="30">
+		<ns1:ResourceItem id="woodItem" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood" x="0" y="0"/>
+		<e:Button id="upBtn" label="升级" skinName="Btn2Skin" scaleX="0.7" scaleY="0.7" x="30" y="64"/>
+		<e:layout>
+			<e:HorizontalLayout verticalAlign="middle" gap="20"/>
+		</e:layout>
+	</e:Group>
+	<ns1:WorkIcon id="icon" skinName="WorkIconSkin" horizontalCenter="0" y="80" scaleX="1.5" scaleY="1.5"/>
+</e:Skin>

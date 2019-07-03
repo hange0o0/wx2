@@ -11,17 +11,18 @@ class CollectUI extends game.BaseUI {
         this.skinName = "CollectUISkin";
     }
 
-    private woodText: eui.Label;
-    private grassText: eui.Label;
-    private bloodText: eui.Label;
-    private needWoodText: eui.Label;
-    private needGrassText: eui.Label;
+    private woodItem: ResourceItem;
+    private grassItem: ResourceItem;
+    private bloodItem: ResourceItem;
+    private woodNeedItem: ResourceItem;
+    private grassNeedItem: ResourceItem;
     private closeBtn: eui.Image;
     private scroller: eui.Scroller;
     private list: eui.List;
     private upBtn: eui.Button;
     private splitBtn: eui.Button;
     private desText: eui.Label;
+
 
 
 
@@ -35,7 +36,8 @@ class CollectUI extends game.BaseUI {
         this.list.itemRenderer = CollectItem;
 
         this.addBtnEvent(this.upBtn,()=>{
-
+            if(UM.ch)
+            CollectManager.getInstance().levelUp()
         })
 
         this.addBtnEvent(this.splitBtn,()=>{
@@ -47,24 +49,21 @@ class CollectUI extends game.BaseUI {
 
     public onShow(){
         this.renew();
-        this.onCoinChange();
+
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.onCoinChange)
     }
 
     private onCoinChange(){
         var CLM = CollectManager.getInstance();
-        var WM = WorkManager.getInstance();
-        this.woodText.text = NumberUtil.addNumSeparator(UM.wood)
-        this.grassText.text = NumberUtil.addNumSeparator(UM.grass)
-        this.bloodText.text = NumberUtil.addNumSeparator(UM.blood)
 
-        this.woodText.textColor = UM.wood< WM.woodMax?0xFFFFFF:0x00ff00;
-        this.grassText.textColor = UM.grass< WM.grassMax?0xFFFFFF:0x00ff00;
+       this.woodItem.renew()
+       this.grassItem.renew()
+       this.bloodItem.renew()
 
 
         var need = CLM.getUpCost();
-        this.needWoodText.textColor = UM.wood < need.wood?0xFF0000:0xFFFFFF
-        this.needGrassText.textColor = UM.grass < need.grass?0xFF0000:0xFFFFFF
+        this.woodNeedItem.data =  need.wood
+        this.grassNeedItem.data =  need.grass
     }
 
     public resetList(){
@@ -80,11 +79,9 @@ class CollectUI extends game.BaseUI {
     public renew(){
         var CLM = CollectManager.getInstance();
         CLM.onTimer();
-        this.setHtml(this.desText,'当前虫洞等级：'+ this.createHtml('LV.' + CLM.level,0xFFFF00) + '，可容纳' +
+        this.setHtml(this.desText,'当前虫洞等级：'+ this.createHtml('LV.' + CLM.level,0xFFFF00) + '，可容纳：' +
             this.createHtml(CLM.list.length + '/' + CLM.maxNum,CLM.list.length < CLM.maxNum?0xFFFF00:0x00ff00))
         this.list.dataProvider = new eui.ArrayCollection(CLM.list);
-        var need = CLM.getUpCost();
-        this.needWoodText.text = NumberUtil.addNumSeparator(need.wood)
-        this.needGrassText.text = NumberUtil.addNumSeparator(need.grass)
+        this.onCoinChange();
     }
 }
