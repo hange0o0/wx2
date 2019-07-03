@@ -18,7 +18,7 @@
 		</e:layout>
 	</e:Group>
 	<e:Image id="closeBtn" source="close_btn2_png" y="10" x="15"/>
-	<e:Label text="蛊巢" y="30" horizontalCenter="0" bold="true" size="40" stroke="4" strokeColor="0x686868"/>
+	<e:Label text="蛊巢" y="35" bold="true" size="40" stroke="4" strokeColor="0x686868" x="130"/>
 	<e:Scroller id="scroller" width="640" x="0" top="160" bottom="220" bounces="false">
 		<e:Group>
 			<e:List id="list" width="200" height="200" x="236" y="144">

@@ -36,7 +36,8 @@ class CollectUI extends game.BaseUI {
         this.list.itemRenderer = CollectItem;
 
         this.addBtnEvent(this.upBtn,()=>{
-            if(UM.ch)
+            if(!UM.checkResource(CollectManager.getInstance().getUpCost()))
+                return;
             CollectManager.getInstance().levelUp()
         })
 
@@ -79,9 +80,14 @@ class CollectUI extends game.BaseUI {
     public renew(){
         var CLM = CollectManager.getInstance();
         CLM.onTimer();
-        this.setHtml(this.desText,'当前虫洞等级：'+ this.createHtml('LV.' + CLM.level,0xFFFF00) + '，可容纳：' +
-            this.createHtml(CLM.list.length + '/' + CLM.maxNum,CLM.list.length < CLM.maxNum?0xFFFF00:0x00ff00))
+        this.renewInfo();
         this.list.dataProvider = new eui.ArrayCollection(CLM.list);
         this.onCoinChange();
+    }
+
+    public renewInfo(){
+        var CLM = CollectManager.getInstance();
+        this.setHtml(this.desText,'当前虫洞等级：'+ this.createHtml('LV.' + CLM.level,0xFFFF00) + '，可容纳：' +
+            this.createHtml(CLM.list.length + '/' + CLM.maxNum,CLM.list.length < CLM.maxNum?0xFFFF00:0x00ff00))
     }
 }

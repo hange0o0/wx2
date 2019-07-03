@@ -66,13 +66,14 @@ class ResourceItem extends game.BaseItem{
         if(showValue == -1)//显示玩家资源
         {
             this.showBar(currentValue,maxValue)
+            this.barBG.source = 'border_bar2_png'
             this.txt.textColor = (!maxValue || currentValue< maxValue)?0xFFFFFF:0x00ff00;
             this.txt.text = NumberUtil.addNumSeparator(currentValue)
         }
         else //显示需求
         {
-            this.txt.textColor = 0xFFFFFF
-            this.showBar(showValue,currentValue)
+            this.txt.textColor = showValue<=currentValue?0x00ff00:0xFF0000;
+            this.showBar(currentValue,showValue)
             this.txt.text = NumberUtil.addNumSeparator(showValue)
         }
 
@@ -80,7 +81,7 @@ class ResourceItem extends game.BaseItem{
     }
 
     public showBar(current,total){
-        if(current == 0){
+        if(current == 0 || total == 0){
             this.barBG.visible = false;
             return;
         }

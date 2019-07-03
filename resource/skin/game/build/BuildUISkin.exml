@@ -1,3 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="BuildUISkin" width="400" height="300" xmlns:e="http://ns.egret.com/eui">
+<e:Skin class="BuildUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
+	<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0"/>
+	<e:Group horizontalCenter="0" y="100">
+		<ns1:ResourceItem id="woodItem" x="-459" y="-240" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
+		<ns1:ResourceItem id="wormItem" x="-449" y="-230" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="worm"/>
+		<ns1:ResourceItem id="coinItem" x="-449" y="-230" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="coin"/>
+		<e:layout>
+			<e:HorizontalLayout gap="6"/>
+		</e:layout>
+	</e:Group>
+	<e:Image id="closeBtn" source="close_btn2_png" y="10" x="15"/>
+	<e:Label text="养蛊" y="35" bold="true" size="40" stroke="4" strokeColor="0x686868" x="130"/>
+	<e:Scroller id="scroller" width="640" x="0" top="160" bottom="0" bounces="false">
+		<e:Group>
+			<e:List id="list" width="200" height="200" x="236" y="144">
+				<e:layout>
+					<e:TileLayout requestedColumnCount="3" horizontalGap="0" verticalGap="10" paddingLeft="20" paddingTop="20" paddingBottom="20"/>
+				</e:layout>
+			</e:List>
+		</e:Group>
+	</e:Scroller>
 </e:Skin>

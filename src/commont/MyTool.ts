@@ -77,7 +77,8 @@ class MyTool {
     public static runListFun(list,funName){
         for(var i=0;i<list.numChildren;i++)
         {
-            list.getChildAt(i)[funName]();
+            var fun = list.getChildAt(i)[funName]
+            fun && fun();
         }
     }
 

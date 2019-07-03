@@ -23,9 +23,15 @@ class HeroInfoUI extends game.BaseUI {
 
 
 
+    private data;
     public childrenCreated() {
         super.childrenCreated();
         //this.addBtnEvent(this.closeBtn,this.hide)
 
+    }
+
+    public show(data?){
+        this.data = data;
+        super.show();
     }
 }

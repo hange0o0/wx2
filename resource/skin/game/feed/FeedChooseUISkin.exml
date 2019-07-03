@@ -8,7 +8,7 @@
 		<e:HorizontalLayout gap="80"/>
 		</e:layout>
 	</e:Group>
-	<e:Scroller id="scroller" width="600" x="0" top="75" bottom="120" bounces="false">
+	<e:Scroller id="scroller" width="600" x="0" top="75" bottom="130" bounces="false">
 		<e:Group>
 		<e:List id="list" width="200" height="200" x="236" y="144">
 			<e:layout>
@@ -17,4 +17,5 @@
 		</e:List>
 		</e:Group>
 	</e:Scroller>
+	<e:Label id="desText" text="Label" horizontalCenter="0" bottom="100" size="22"/>
 </e:Skin>

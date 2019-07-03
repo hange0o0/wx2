@@ -6,8 +6,12 @@ class HeroManager {
         return this._instance;
     }
 
+    public level
     public list;
     public key = 1;
+
+    public heroNum
+    public pkNum
 
     public constructor() {
     }
@@ -16,6 +20,7 @@ class HeroManager {
         data = data || {}
         this.list = data.list?data.list.split(','):[];
         this.key = data.key || 1;
+        this.level = data.level || 1;
 
         for(var i=0;i<this.list.length;i++)
         {
@@ -27,7 +32,34 @@ class HeroManager {
                 key:temp[3],
             }
         }
+        this.resetLevel();
     }
+
+    public resetLevel(){
+        this.heroNum = 14 + this.level;
+        this.pkNum =  Math.floor(this.heroNum/3)
+    }
+
+    //升级需要的花费(木头,草)
+    public getUpCost(){
+        var wood = Math.floor(Math.pow(this.level + 1,2.5))*50
+        var diamond = 0;
+        if(this.level > 5)
+            diamond = Math.floor(Math.pow(this.level - 5,2.5))*30
+        return {
+            wood:wood,
+            diamond:diamond,
+        }
+    }
+
+    public levelUp(){
+        var oo = this.getUpCost();
+        UM.addWood(-oo.wood)
+        UM.addDiamond(-oo.diamond)
+        this.level ++;
+        this.resetLevel();
+    }
+
 
     //移除
     public removeItem(data){

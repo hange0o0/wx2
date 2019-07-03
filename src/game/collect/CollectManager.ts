@@ -41,6 +41,7 @@ class CollectManager {
             }
             this.list[i] = {
                 id:id,
+                lv:MonsterVO.getObject(id).level,
                 isLock:isLock
             }
         }
@@ -105,8 +106,10 @@ class CollectManager {
         while(this.lastTime < t && this.list.length < this.maxNum)
         {
             this.lastTime += cd + Math.floor(Math.random()*2*cd)
+            var id = ArrayUtil.randomOne(monsterList);
             this.list.push({
-                id:ArrayUtil.randomOne(monsterList),
+                id:id,
+                lv:MonsterVO.getObject(id).level,
                 isLock:false
             })
             b = true;
@@ -120,6 +123,7 @@ class CollectManager {
         if(b)
         {
             UM.needUpUser = true;
+            EM.dispatch(GameEvent.client.COLLECT_CHANGE)
         }
         return b;
     }

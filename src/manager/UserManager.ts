@@ -284,12 +284,12 @@ class UserManager {
 
     private orginUserData(){
          return {
-             coin:300,   //$
-             wood:0,   //$
-             food:0,   //$
+             coin:100,   //$
+             wood:3000,   //$
+             food:3000,   //$
              blood:0,   //$
-             diamond:0,   //$
-             grass:0,   //$
+             diamond:500,   //$
+             grass:500,   //$
 
              guideFinish:false,
              chapterLevel:1,

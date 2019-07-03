@@ -17,7 +17,6 @@ class FeedUI extends game.BaseUI {
     private closeBtn: eui.Image;
     private scroller: eui.Scroller;
     private list: eui.List;
-    private desText: eui.Label;
 
 
 
@@ -26,7 +25,34 @@ class FeedUI extends game.BaseUI {
 
     public childrenCreated() {
         super.childrenCreated();
+        this.scroller.viewport = this.list;
+        this.list.itemRenderer = FeedItem
+        this.list.dataProvider = new eui.ArrayCollection([1,2,3,4,5,6,7,8,9,10,11,12])
+
         this.addBtnEvent(this.closeBtn,this.hide)
 
+    }
+
+    public onShow(){
+        CollectManager.getInstance().onTimer();
+        this.renewList();
+        this.renewCoin();
+        this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.renewCoin)
+        this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
+    }
+
+
+    private onTimer(){
+        MyTool.runListFun(this.list,'onTimer')
+    }
+
+    private renewList(){
+        MyTool.renewList(this.list)
+    }
+
+    private renewCoin(){
+        this.woodItem.renew()
+        this.wormItem.renew()
+        this.coinItem.renew()
     }
 }

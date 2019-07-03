@@ -9,6 +9,13 @@ class WorkManager {
     public constructor() {
     }
 
+    public title = {
+        food:'食物',
+        wood:'木材',
+        diamond:'晶石',
+        grass:'灵草',
+    }
+
 
     public maxNum  //人数上限
 
@@ -41,7 +48,7 @@ class WorkManager {
 
     public initData(data){
         data = data || {}
-        this.maxNum = data.maxNum || 0
+        this.maxNum = data.maxNum || 5
         this.woodNum = data.woodNum || 0
         this.foodNum = data.foodNum || 0
         this.diamondNum = data.diamondNum || 0
@@ -49,10 +56,10 @@ class WorkManager {
         this.lastTime = data.lastTime || 0
 
 
-        this.woodLevel = data.woodLevel || 0
-        this.foodLevel = data.foodLevel || 0
-        this.diamondLevel = data.diamondLevel || 0
-        this.grassLevel = data.grassLevel || 0
+        this.woodLevel = data.woodLevel || 1
+        this.foodLevel = data.foodLevel || 1
+        this.diamondLevel = data.diamondLevel || 1
+        this.grassLevel = data.grassLevel || 1
 
         this.resetLevel();
     }
@@ -64,43 +71,101 @@ class WorkManager {
         this.diamondNumMax = this.diamondLevel * 5
         this.grassNumMax = this.grassLevel * 5
 
-        this.foodMax = this.foodLevel * 5000 + 1000
-        this.woodMax = this.woodLevel * 5000 + 1000
-        this.diamondMax = this.diamondLevel * 1000 + 200
-        this.grassMax = this.grassLevel * 1000 + 200
+        this.foodMax = this.foodLevel * 4000
+        this.woodMax = this.woodLevel * 4000
+        this.diamondMax = this.diamondLevel * 1000
+        this.grassMax = this.grassLevel * 1000
+    }
+
+    public getNextLevelValue(){
+        return {
+            foodNumMax:(this.foodLevel + 1) * 10 + 5,
+            woodNumMax:(this.woodLevel+1) * 5,
+            diamondNumMax:(this.diamondLevel+1) * 5 ,
+            grassNumMax:(this.grassLevel+1) * 5,
+            foodMax:(this.foodLevel + 1) * 5000 + 1000 ,
+            woodMax:(this.woodLevel+1) * 5000 + 1000 ,
+            diamondMax:(this.diamondLevel+1) * 1000 + 200,
+            grassMax:(this.grassLevel+1) * 1000 + 200,
+        }
     }
 
     //升级需要的花费(木头)
-    public getUpCost(level){
-        return Math.floor(Math.pow(level,2.5))*100
+    public getUpCost(type){
+        switch(type)
+        {
+            case 'food':
+                var level = this.foodLevel
+                break;
+            case 'wood':
+                var level = this.woodLevel
+                break;
+            case 'diamond':
+                var level = this.diamondLevel
+                break;
+            case 'grass':
+                var level = this.grassLevel
+                break;
+        }
+        return Math.floor(Math.pow(level+1,2.5))*100
     }
+
 
     //升级指定项
     public levelUpType(type){
         switch(type)
         {
             case 'food':
-                this.foodLevel ++;
                 UM.addWood(-this.getUpCost(this.foodLevel))
+                this.foodLevel ++;
                 break;
             case 'wood':
-                this.woodLevel ++;
                 UM.addWood(-this.getUpCost(this.woodLevel))
+                this.woodLevel ++;
                 break;
             case 'diamond':
-                this.diamondLevel ++;
                 UM.addWood(-this.getUpCost(this.diamondLevel))
+                this.diamondLevel ++;
                 break;
             case 'grass':
-                this.grassLevel ++;
                 UM.addWood(-this.getUpCost(this.grassLevel))
+                this.grassLevel ++;
                 break;
         }
         this.resetLevel();
+        UM.needUpUser = true;
+        EM.dispatch(GameEvent.client.WORK_CHANGE)
+    }
+
+    public getFreePeople(){
+        return this.maxNum - this.foodNum - this.woodNum - this.diamondNum - this.grassNum
+    }
+
+    //加工作的人
+    public addWorkPeople(type,value){
+        if(value > 0 && this.getFreePeople() <= 0) //没空闲的人
+            return;
+        switch(type)
+        {
+            case 'food':
+                this.foodNum = Math.min(this.foodNumMax,Math.max(0,this.foodNum + value));
+                break;
+            case 'wood':
+                this.woodNum = Math.min(this.woodNumMax,Math.max(0,this.woodNum + value));
+                break;
+            case 'diamond':
+                this.diamondNum = Math.min(this.diamondNumMax,Math.max(0,this.diamondNum + value));
+                break;
+            case 'grass':
+                this.grassNum = Math.min(this.grassNumMax,Math.max(0,this.grassNum + value));
+                break;
+        }
+        UM.needUpUser = true;
+        EM.dispatch(GameEvent.client.WORK_CHANGE)
     }
 
     public onTimer(){
-        var num = (TM.now() - this.lastTime)/30
+        var num = Math.floor((TM.now() - this.lastTime)/30)
         if(num)  //自动收获资源
         {
             var addWood = this.woodNum * num
@@ -171,6 +236,17 @@ class WorkManager {
              grassNum:this.grassNum,
              lastTime:this.lastTime,
          }
+    }
+
+    //加人口花费肉
+    public getPeopleCost(){
+        return Math.floor(Math.pow(this.maxNum,1.5))*50
+    }
+
+    public addPeople(){
+        UM.addFood(-this.getPeopleCost())
+        this.maxNum += 5;
+        UM.needUpUser = true;
     }
 
 }

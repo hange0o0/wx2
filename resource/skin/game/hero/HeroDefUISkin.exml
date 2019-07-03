@@ -2,7 +2,7 @@
 <e:Skin class="HeroDefUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0"/>
 	<e:Image id="closeBtn" source="close_btn2_png" y="10" x="15"/>
-	<e:Label id="titleText" text="养蛊" y="30" horizontalCenter="0" bold="true" size="40" stroke="4" strokeColor="0x686868"/>
+	<e:Label id="titleText" text="养蛊" y="35" bold="true" size="40" stroke="4" strokeColor="0x686868" x="130"/>
 	<e:Scroller id="scrollerUp" width="640" x="0" bounces="false" anchorOffsetY="0" height="380" y="100">
 		<e:Group>
 			<e:List id="listUp" width="200" height="200" x="236" y="144">
