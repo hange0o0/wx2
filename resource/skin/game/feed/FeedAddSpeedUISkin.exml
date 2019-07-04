@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="FeedAddSpeedUISkin" width="460" height="460" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:Image id="boxMC" y="110" horizontalCenter="0.5" source="tudui_png"/>
+	<e:Group y="240" horizontalCenter="0" >
+		<e:Image source="bar_bg_png" x="0" y="0"/>
+		<e:Image id="barMC" source="bar1_png" x="2" y="2" fillMode="clip"/>
+		<e:Label id="timeText" text="Label" horizontalCenter="0" verticalCenter="0" stroke="2" size="24"/>
+	</e:Group>
+	<e:Group horizontalCenter="0" bottom="30">
+		<ns1:ResourceItem id="coinItem" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="coin" x="0" y="0"/>
+		<e:Button id="speedBtn" label="一键加速" skinName="Btn3Skin" width="220" scaleX="0.7" scaleY="0.7" x="28" y="69"/>
+		<e:layout>
+			<e:HorizontalLayout gap="20" verticalAlign="bottom"/>
+		</e:layout>
+	</e:Group>
+	<e:Label text="可点击土堆进行加速" y="331.39" size="22" horizontalCenter="0"/>
+</e:Skin>

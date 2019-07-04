@@ -5,7 +5,7 @@
 	
 	<e:Group left="0" right="0" top="0" bottom="0">
 		<e:layout>
-			<e:HorizontalLayout gap="0" verticalAlign="middle" horizontalAlign="center"/>
+			<e:HorizontalLayout verticalAlign="middle" horizontalAlign="center" gap="0"/>
 		</e:layout>
 		<e:Image id="iconDisplay"/>
 		<e:Label id="labelDisplay" size="36" text="而" bold="true" textColor="0x0d2303"/>

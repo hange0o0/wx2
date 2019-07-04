@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="HeroInfoUISkin" width="520" height="600" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="HeroInfoUISkin" width="520" height="620" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing" states="normal,die" >
 	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
-	<e:Group horizontalCenter="0" bottom="110">
+	<e:Group horizontalCenter="0" bottom="115">
 		<ns1:ResourceItem id="bloodItem" x="-679" y="-690" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="blood"/>
 		<ns1:ResourceItem id="bloodItem2" x="-669" y="-680" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="blood"/>
 		<e:layout>
@@ -11,10 +11,11 @@
 	<e:Group horizontalCenter="0" y="80">
 		<e:Image id="skillBG" source="border1_png" y="0" x="0"/>
 		<e:Image id="mc" source="border1_png" width="160" height="160" verticalCenter="0" horizontalCenter="0"/>
+		<e:Image source="icon_die_png" x="0" y="0" id="icon" includeIn="die" scaleX="1.2" scaleY="1.2"/>
 	</e:Group>
 	<e:Group horizontalCenter="0" bottom="30" scaleX="0.8" scaleY="0.8">
-		<e:Button id="lockBtn" label="喂食" x="0" y="0" skinName="Btn2Skin"/>
-		<e:Button id="splitBtn" label="炼化" x="200" y="4.8" skinName="Btn3Skin"/>
+		<e:Button id="feedBtn" label="喂食" x="0" y="0" skinName="Btn2Skin" label.die="复活"/>
+		<e:Button id="splitBtn" label="炼化" x="200" y="4.8" skinName="Btn3Skin" label.die="炼化尸体"/>
 		<e:layout>
 		<e:HorizontalLayout gap="60"/>
 		</e:layout>
@@ -24,5 +25,5 @@
 		<e:Image id="barMC" source="bar1_png" x="2" y="2" fillMode="clip"/>
 		<e:Label text="lvText" horizontalCenter="0" verticalCenter="0" stroke="3" size="24"/>
 	</e:Group>
-	<e:Label id="skillText" text="Label" y="318" width="360" horizontalCenter="0" size="24"/>
+	<e:Label id="skillText" text="Label" y="320" width="360" horizontalCenter="0" size="24"/>
 </e:Skin>

@@ -62,6 +62,7 @@ class WorkManager {
         this.grassLevel = data.grassLevel || 1
 
         this.resetLevel();
+        this.onTimer();
     }
 
     private resetLevel(){

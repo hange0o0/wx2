@@ -9,17 +9,9 @@
 			<e:HorizontalLayout gap="6"/>
 		</e:layout>
 	</e:Group>
-	<e:Group horizontalCenter="0" bottom="115">
-		<e:Label text="升级需求：" x="1032" y="1316" size="24"/>
-		<ns1:ResourceItem id="woodNeedItem" x="-459" y="-240" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
-		<ns1:ResourceItem id="grassNeedItem" x="-429" y="-210" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="grass"/>
-		<e:layout>
-		<e:HorizontalLayout gap="10" verticalAlign="middle"/>
-		</e:layout>
-	</e:Group>
 	<e:Image id="closeBtn" source="close_btn2_png" y="10" x="15"/>
 	<e:Label text="虫洞" y="35" bold="true" size="40" stroke="4" strokeColor="0x686868" x="130"/>
-	<e:Scroller id="scroller" width="640" x="0" top="160" bottom="230" bounces="false">
+	<e:Scroller id="scroller" width="640" x="0" top="220" bottom="130" bounces="false">
 		<e:Group>
 			<e:List id="list" width="200" height="200" x="236" y="144">
 				<e:layout>
@@ -28,12 +20,12 @@
 			</e:List>
 		</e:Group>
 	</e:Scroller>
-	<e:Group horizontalCenter="0" bottom="30" scaleX="0.8" scaleY="0.8">
+	<e:Group horizontalCenter="0" bottom="30" scaleX="0.9" scaleY="0.9">
 		<e:Button id="upBtn" label="升级虫洞" x="0" y="0" skinName="Btn2Skin"/>
 		<e:Button id="splitBtn" label="一键炼化" x="200" y="4.8" skinName="Btn3Skin"/>
 		<e:layout>
-			<e:HorizontalLayout gap="50"/>
+			<e:HorizontalLayout gap="80"/>
 		</e:layout>
 	</e:Group>
-	<e:Label id="desText" text="Label" bottom="185" horizontalCenter="0" size="24"/>
+	<e:Label id="desText" text="Label" horizontalCenter="0" size="24" y="180"/>
 </e:Skin>

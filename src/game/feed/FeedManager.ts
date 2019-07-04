@@ -13,29 +13,29 @@ class FeedManager {
     public goldHelper
     public data //金：1-3，其它4-12
 
-    public openNum
-    public goldNum
+    //public openNum
+    //public goldNum
 
     public initData(data){
         data = data || {};
         this.goldHelper = data.goldHelper || {}
         this.data = data.data || {};
-        if(!data.data[4])
-            data.data[4] = {level:1}
-        if(!data.data[5])
-            data.data[5] = {level:1}
-        this.goldNum = 0
-        this.openNum = 0
-        for(var i=1;i<=3;i++)
-        {
-            if(this.data[i])
-                this.goldNum = i;
-        }
-        for(var i=4;i<=12;i++)
-        {
-            if(this.data[i])
-                this.openNum = i-3;
-        }
+        if(!this.data[4])
+            this.data[4] = {level:1}
+        if(!this.data[5])
+            this.data[5] = {level:1}
+        //this.goldNum = 0
+        //this.openNum = 0
+        //for(var i=1;i<=3;i++)
+        //{
+        //    if(this.data[i])
+        //        this.goldNum = i;
+        //}
+        //for(var i=4;i<=12;i++)
+        //{
+        //    if(this.data[i])
+        //        this.openNum = i-3;
+        //}
     }
 
     //解锁花费
@@ -43,6 +43,14 @@ class FeedManager {
         if(index <= 5)
             return 0;
         return  Math.floor(Math.pow(index-4,4.75))*100
+    }
+
+    //解锁花费
+    public getSpeedCost(index){
+        var cd = this.data[index].endTime - TM.now();
+        if(cd < 0)
+            return false;
+        return  Math.ceil(cd/600)
     }
 
     //升级花费
@@ -56,6 +64,13 @@ class FeedManager {
             wood:wood,
             diamond:diamond,
         }
+    }
+
+    public speed(index){
+        UM.addCoin(-this.getSpeedCost(index))
+        this.data[index].endTime = 1;
+        EM.dispatch(GameEvent.client.FEED_CHANGE)
+        UM.needUpUser = true
     }
 
     public levelUp(index){
@@ -132,7 +147,7 @@ class FeedManager {
         exp = maxExp + Math.floor((exp-maxExp)/rate);
 
 
-        var skill = win.skill || Math.ceil(Math.random()*10);
+        var skill = win.data.skill || Math.ceil(Math.random()*10);
         if(win.data.key)
         {
             var key = Number(win.data.key);
@@ -147,7 +162,7 @@ class FeedManager {
         this.data[index].total = this.getTimeByIndex(index);
         this.data[index].endTime = TM.now() + this.data[index].total;
         this.data[index].win = {
-            id:win.id,
+            id:win.data.id,
             exp:exp,
             key:key,
             skill:skill,

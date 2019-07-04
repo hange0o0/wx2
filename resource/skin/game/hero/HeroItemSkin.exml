@@ -4,4 +4,5 @@
 	<e:Image id="mc" source="border1_png" width="110" height="110" y="10" horizontalCenter="0"/>
 	<e:Label id="txt" text="Label" y="136" size="24" horizontalCenter="0"/>
 	<e:Label id="lvText" text="Label" size="20" italic="true" textColor="0xfff7c1" horizontalCenter="0" bottom="30" stroke="3"/>
+	<e:Image id="icon" source="icon_die_png" x="0" y="0"/>
 </e:Skin>

@@ -34,18 +34,30 @@ class FeedUnlockUI extends game.BaseWindow {
             }
             else if(this.unlockBtn.label == '邀请好友')
             {
-                ShareTool.share('加入我们，让我们一起割草无双','',{type:1,from:UM.gameid,index:this.index},()=>{
-                    MyWindow.ShowTips('等待好友加入')
-                },true)
+                this.onInvite();
                 return
             }
             FeedManager.getInstance().unlock(this.index)
+            this.hide();
         })
 
     }
 
+    public onInvite(){
+        ShareTool.share('加入我们，让我们一起割草无双','',{type:1,from:UM.gameid,index:this.index},()=>{
+            MyWindow.ShowTips('等待好友加入')
+        },true)
+    }
+
     public show(index?){
          this.index = index;
+        if(this.index < 4)
+        {
+            UM.renewFriendNew(()=>{
+                super.show()
+            })
+            return;
+        }
         super.show();
     }
 

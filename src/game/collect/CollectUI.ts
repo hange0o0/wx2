@@ -14,14 +14,13 @@ class CollectUI extends game.BaseUI {
     private woodItem: ResourceItem;
     private grassItem: ResourceItem;
     private bloodItem: ResourceItem;
-    private woodNeedItem: ResourceItem;
-    private grassNeedItem: ResourceItem;
     private closeBtn: eui.Image;
     private scroller: eui.Scroller;
     private list: eui.List;
     private upBtn: eui.Button;
     private splitBtn: eui.Button;
     private desText: eui.Label;
+
 
 
 
@@ -36,16 +35,44 @@ class CollectUI extends game.BaseUI {
         this.list.itemRenderer = CollectItem;
 
         this.addBtnEvent(this.upBtn,()=>{
-            if(!UM.checkResource(CollectManager.getInstance().getUpCost()))
-                return;
-            CollectManager.getInstance().levelUp()
+            UseResourceUI.getInstance().show('升级虫洞','升级虫洞，吸引虫蛊的数量和质量会得到提高','升级',
+                CollectManager.getInstance().getUpCost(),
+                ()=>{
+                    CollectManager.getInstance().levelUp()
+                    this.renew();
+                })
         })
 
         this.addBtnEvent(this.splitBtn,()=>{
-
+            var CM = CollectManager.getInstance()
+            var list = CM.list
+            var arr = []
+            var cost = 0
+            for(var i=0;i<list.length;i++)
+            {
+                var oo = list[i];
+                if(!oo.isLock)
+                {
+                    arr.push(oo)
+                    cost += CM.getSplitAward(oo.id);
+                }
+            }
+            if(arr.length == 0)
+            {
+                MyWindow.ShowTips('没有未锁定的昆虫');
+                return;
+            }
+            MyWindow.Confirm('当前可炼化昆虫数量：'+arr.length+'\n可获得血食：'+NumberUtil.addNumSeparator(cost)+'\n是否继续？',(b)=>{
+                if(b==1)
+                {
+                    for(var i=0;i<arr.length;i++)
+                    {
+                        CM.split(arr[i]);
+                    }
+                    this.renew();
+                }
+            },['取消','炼化']);
         })
-
-
     }
 
     public onShow(){
@@ -60,11 +87,6 @@ class CollectUI extends game.BaseUI {
        this.woodItem.renew()
        this.grassItem.renew()
        this.bloodItem.renew()
-
-
-        var need = CLM.getUpCost();
-        this.woodNeedItem.data =  need.wood
-        this.grassNeedItem.data =  need.grass
     }
 
     public resetList(){

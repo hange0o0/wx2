@@ -1,4 +1,4 @@
-class HeroInfoUI extends game.BaseUI {
+class HeroInfoUI extends game.BaseWindow {
 
     private static _instance:HeroInfoUI;
     public static getInstance() {
@@ -8,13 +8,15 @@ class HeroInfoUI extends game.BaseUI {
 
     public constructor() {
         super();
-        this.skinName = "CollectUISkin";
+        this.skinName = "HeroInfoUISkin";
     }
 
     private bloodItem: ResourceItem;
     private bloodItem2: ResourceItem;
+    private skillBG: eui.Image;
     private mc: eui.Image;
-    private lockBtn: eui.Button;
+    private icon: eui.Image;
+    private feedBtn: eui.Button;
     private splitBtn: eui.Button;
     private barMC: eui.Image;
     private skillText: eui.Label;
@@ -23,10 +25,18 @@ class HeroInfoUI extends game.BaseUI {
 
 
 
+
+
+
     private data;
     public childrenCreated() {
         super.childrenCreated();
-        //this.addBtnEvent(this.closeBtn,this.hide)
+        this.addBtnEvent(this.feedBtn,()=>{
+
+        })
+        this.addBtnEvent(this.splitBtn,()=>{
+
+        })
 
     }
 

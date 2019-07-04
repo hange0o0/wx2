@@ -8,8 +8,7 @@ class ChangeJumpUI extends game.BaseWindow{
 
     private list: eui.List;
     private destText: eui.Label;
-    private titleText: eui.Label;
-    private closeBtn: eui.Image;
+
 
 
     public fun;
@@ -22,8 +21,7 @@ class ChangeJumpUI extends game.BaseWindow{
     public childrenCreated() {
         super.childrenCreated();
         this.list.itemRenderer = ChangeUserItem
-        this.titleText.text = ('体验更多小程序')
-        this.addBtnEvent(this.closeBtn,this.hide)
+        this.setTitle('体验更多小程序')
     }
 
     public show(str?,fun?){

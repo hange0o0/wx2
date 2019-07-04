@@ -38,6 +38,7 @@ class FeedUI extends game.BaseUI {
         this.renewList();
         this.renewCoin();
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.renewCoin)
+        this.addPanelOpenEvent(GameEvent.client.FEED_CHANGE,this.renewList)
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
     }
 

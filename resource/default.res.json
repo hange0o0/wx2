@@ -306,6 +306,21 @@
 			"name":"icon_add4_png",
 			"type":"image",
 			"url":"game_assets/icon_add4.png"
+		},
+		{
+			"name":"icon_die_png",
+			"type":"image",
+			"url":"game_assets/icon_die.png"
+		},
+		{
+			"name":"icon_atk_png",
+			"type":"image",
+			"url":"game_assets/icon_atk.png"
+		},
+		{
+			"name":"icon_def_png",
+			"type":"image",
+			"url":"game_assets/icon_def.png"
 		}
 	]
 }

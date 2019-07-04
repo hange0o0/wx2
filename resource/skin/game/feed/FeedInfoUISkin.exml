@@ -8,7 +8,7 @@
 		<e:HorizontalLayout gap="80"/>
 		</e:layout>
 	</e:Group>
-	<e:Scroller id="scroller" width="600" x="0" top="75" bottom="220" bounces="false">
+	<e:Scroller id="scroller" width="600" x="0" top="120" bottom="120" bounces="false">
 		<e:Group>
 		<e:List id="list" width="200" height="200" x="236" y="144">
 			<e:layout>
@@ -17,13 +17,10 @@
 		</e:List>
 		</e:Group>
 	</e:Scroller>
-	<e:Group horizontalCenter="0" bottom="115">
-		<e:Label text="升级需求：" x="1032" y="1316" size="24"/>
-		<ns1:ResourceItem id="woodItem" x="-679" y="-690" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
-		<ns1:ResourceItem id="diamondItem" x="-669" y="-680" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="diamond"/>
-		<e:layout>
-		<e:HorizontalLayout gap="10" verticalAlign="middle"/>
-		</e:layout>
+	<e:Label id="desText" text="Label" horizontalCenter="0.5" size="24" lineSpacing="10" textAlign="center" y="80"/>
+	<e:Group id="emptyGroup" width="360" height="180" horizontalCenter="0" verticalCenter="-88">
+		<e:Image source="window_bg_png" scaleX="1" scaleY="1" left="0" right="0" top="0" bottom="0" scale9Grid="31,42,50,34"/>
+		<e:Label text="放入虫蛊开始制蛊" y="30" horizontalCenter="0"/>
+		<e:Button id="inputBtn" label="放入虫蛊" y="82" skinName="Btn3Skin" width="240" scaleX="0.8" scaleY="0.8" horizontalCenter="0"/>
 	</e:Group>
-	<e:Label id="desText" text="Label" bottom="180" horizontalCenter="0" size="24"/>
 </e:Skin>

@@ -13,6 +13,12 @@ class FeedUnlockItem extends game.BaseItem{
     public childrenCreated() {
         super.childrenCreated();
         this.headMC.mask = this.headMask
+        this.addBtnEvent(this,()=>{
+            if(!this.data)
+            {
+                FeedUnlockUI.getInstance().onInvite();
+            }
+        })
     }
 
     public dataChanged():void {

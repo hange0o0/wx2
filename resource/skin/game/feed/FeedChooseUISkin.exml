@@ -8,14 +8,14 @@
 		<e:HorizontalLayout gap="80"/>
 		</e:layout>
 	</e:Group>
-	<e:Scroller id="scroller" width="600" x="0" top="75" bottom="130" bounces="false">
+	<e:Scroller id="scroller" width="600" x="0" top="75" bottom="120" bounces="false">
 		<e:Group>
 		<e:List id="list" width="200" height="200" x="236" y="144">
 			<e:layout>
-			<e:TileLayout requestedColumnCount="4" horizontalGap="24" verticalGap="24" paddingLeft="24" paddingTop="24" paddingBottom="24"/>
+			<e:TileLayout requestedColumnCount="4" horizontalGap="24" verticalGap="24" paddingLeft="24" paddingBottom="24" paddingTop="0"/>
 			</e:layout>
 		</e:List>
 		</e:Group>
 	</e:Scroller>
-	<e:Label id="desText" text="Label" horizontalCenter="0" bottom="100" size="22"/>
+	<e:Label id="emptyText" text="Label" y="300" size="24" horizontalCenter="0"/>
 </e:Skin>

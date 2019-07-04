@@ -41,7 +41,7 @@ class CollectManager {
             }
             this.list[i] = {
                 id:id,
-                lv:MonsterVO.getObject(id).level,
+                level:MonsterVO.getObject(id).level,
                 isLock:isLock
             }
         }
@@ -109,7 +109,7 @@ class CollectManager {
             var id = ArrayUtil.randomOne(monsterList);
             this.list.push({
                 id:id,
-                lv:MonsterVO.getObject(id).level,
+                level:MonsterVO.getObject(id).level,
                 isLock:false
             })
             b = true;

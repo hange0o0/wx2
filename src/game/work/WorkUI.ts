@@ -14,9 +14,9 @@ class WorkUI extends game.BaseUI {
     private closeBtn: eui.Image;
     private scroller: eui.Scroller;
     private list: eui.List;
-    private foodNeedItem: ResourceItem;
     private upBtn: eui.Button;
     private peopleItem: ResourceItem;
+
 
 
 
@@ -29,10 +29,12 @@ class WorkUI extends game.BaseUI {
         this.list.dataProvider = new eui.ArrayCollection(['food','wood','diamond','grass'])
         this.addBtnEvent(this.closeBtn,this.hide)
         this.addBtnEvent(this.upBtn,()=>{
-             if(!UM.checkResource({food:WorkManager.getInstance().getPeopleCost()}))
-                return;
-            WorkManager.getInstance().addPeople();
-            this.renew();
+            UseResourceUI.getInstance().show('雇佣仆从','每次可雇佣5位仆从','雇佣',
+                {food:WorkManager.getInstance().getPeopleCost()},
+                ()=>{
+                    WorkManager.getInstance().addPeople();
+                    this.renew();
+                })
         })
 
     }
@@ -49,7 +51,6 @@ class WorkUI extends game.BaseUI {
 
     private renew(){
         var WM = WorkManager.getInstance();
-        this.foodNeedItem.data = WM.getPeopleCost();
         var num = WM.maxNum - WM.foodNum - WM.woodNum - WM.diamondNum - WM.grassNum
         this.peopleItem.setText('空闲：' + num)
         this.renewList();

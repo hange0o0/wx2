@@ -18,7 +18,7 @@ class FeedItem extends game.BaseItem{
     public childrenCreated() {
         super.childrenCreated();
 
-        this.addBtnEvent(this.btn,()=>{
+        this.addBtnEvent(this,()=>{
             if(this.currentState == 'unlock')
             {
                 FeedUnlockUI.getInstance().show(this.data)
@@ -31,33 +31,35 @@ class FeedItem extends game.BaseItem{
             {
                 FeedInfoUI.getInstance().show(this.data)
             }
+            else if(this.currentState == 'working')
+            {
+                FeedAddSpeedUI.getInstance().show(this.data)
+            }
         })
     }
 
     public dataChanged():void {
         var FM = FeedManager.getInstance();
-        var isUnlock = false
-        var isLock = false
+        var isUnlock = this.data == 1 || (!FM.data[this.data] && FM.data[this.data-1])
+        var isLock = !isUnlock && !FM.data[this.data] && !FM.data[this.data-1]
         if(this.data<4)
         {
             this.boxMC.source = 'house2_png'
-            isUnlock = FM.goldNum +1 == this.data
-            isLock = FM.goldNum + 1 < this.data
         }
         else
         {
             this.boxMC.source = 'house1_png'
-            isUnlock = FM.openNum +1 == this.data - 3
-            isLock = FM.openNum + 1 < this.data - 3
         }
         if(isLock)
             this.currentState = 'lock'
         else if(isUnlock)
+        {
             this.currentState = 'unlock'
+        }
         else
         {
             var data = FM.data[this.data];
-            this.levelText.text = data.level;
+            this.levelText.text = 'LV.'+data.level;
             if(!data.endTime)//free
             {
                 this.currentState = 'free'
