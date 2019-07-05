@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="UseResourceUISkin" width="400" height="420" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
 	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
-	<e:Group horizontalCenter="0" y="183">
+	<e:Group horizontalCenter="0" y="90">
 		<ns1:ResourceItem id="r0" x="0" y="0" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
 		<ns1:ResourceItem id="r1" x="10" y="10" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
 		<e:layout>
@@ -9,5 +9,5 @@
 		</e:layout>
 	</e:Group>
 	<e:Button id="okBtn" label="加速" skinName="Btn3Skin" width="240" scaleX="0.6" scaleY="0.6" horizontalCenter="0" bottom="30"/>
-	<e:Label id="desText" text="Label" y="75" horizontalCenter="0" size="24" maxWidth="260"/>
+	<e:Label id="desText" text="Label" horizontalCenter="0.5" size="24" maxWidth="280" bottom="100" lineSpacing="10"/>
 </e:Skin>

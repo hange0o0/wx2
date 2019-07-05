@@ -14,8 +14,12 @@ class WorkUI extends game.BaseUI {
     private closeBtn: eui.Image;
     private scroller: eui.Scroller;
     private list: eui.List;
-    private upBtn: eui.Button;
     private peopleItem: ResourceItem;
+    private barBG: eui.Image;
+    private maskMC: eui.Rect;
+    private cdText: eui.Label;
+    private upBtn: eui.Button;
+
 
 
 
@@ -37,12 +41,19 @@ class WorkUI extends game.BaseUI {
                 })
         })
 
+        this.barBG.mask = this.maskMC
+
     }
 
     public onShow(){
         this.renew();
         this.addPanelOpenEvent(GameEvent.client.WORK_CHANGE,this.renew)
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.renewList)
+        this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
+    }
+
+    private onTimer(){
+
     }
 
     private renewList(){

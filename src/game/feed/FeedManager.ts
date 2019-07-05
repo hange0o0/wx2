@@ -181,7 +181,7 @@ class FeedManager {
         var data = this.data[index];
         HM.list.push(data.win)
         data.endTime = 0;
-        HeroInfoUI.getInstance().show(data)
+        HeroInfoUI.getInstance().show(data.win)
         UM.needUpUser = true;
         EM.dispatch(GameEvent.client.FEED_CHANGE)
     }

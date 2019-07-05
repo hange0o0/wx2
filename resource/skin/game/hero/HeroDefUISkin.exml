@@ -12,7 +12,7 @@
 			</e:List>
 		</e:Group>
 	</e:Scroller>
-	<e:Scroller id="scrollerDown" width="640" x="0" top="530" bottom="130" bounces="false" anchorOffsetY="0">
+	<e:Scroller id="scrollerDown" width="640" x="0" top="530" bottom="125" bounces="false" anchorOffsetY="0">
 		<e:Group>
 		<e:List id="listDown" width="200" height="200" x="236" y="144">
 			<e:layout>
@@ -21,11 +21,12 @@
 		</e:List>
 		</e:Group>
 	</e:Scroller>
-	<e:Group horizontalCenter="0" bottom="30" scaleX="0.9" scaleY="0.9">
-		<e:Button id="autoBtn" label="一键上阵" x="0" y="0" skinName="Btn2Skin" width="220"/>
-		<e:Button id="pkBtn" label="出战" x="200" y="4.8" skinName="Btn3Skin" width="220"/>
+	<e:Group id="btnGroup" horizontalCenter="0" bottom="30" scaleX="0.85" scaleY="0.85">
+		<e:Button id="rebornBtn" label="一键复活" x="10" y="10" skinName="Btn2Skin"/>
+		<e:Button id="pkBtn" label="出战" x="200" y="4.8" skinName="Btn3Skin"/>
+		<e:Button id="autoBtn" label="一键上阵" x="0" y="0" skinName="Btn2Skin"/>
 		<e:layout>
-		<e:HorizontalLayout gap="50"/>
+		<e:HorizontalLayout gap="40"/>
 		</e:layout>
 	</e:Group>
 	<e:Label id="desText" text="Label" y="495" horizontalCenter="0" size="24"/>

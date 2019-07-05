@@ -44,6 +44,10 @@ class FeedChooseUI extends game.BaseWindow {
                 this.chooseList.push(this.dataList.shift())
             }
             this.testFull();
+            if(num > 0)
+            {
+                this.renewList();
+            }
         })
     }
 
@@ -69,9 +73,9 @@ class FeedChooseUI extends game.BaseWindow {
         this.needNum = needNum;
         CollectManager.getInstance().onTimer();
 
-        this.type = 1
-        if(HeroManager.getInstance().list.length == 0)
-            this.type = 2;
+        this.type = 2
+        if(CollectManager.getInstance().list.length == 0)
+            this.type = 1;
 
         super.show();
     }

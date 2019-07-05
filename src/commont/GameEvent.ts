@@ -7,6 +7,8 @@ class GameEvent {
         WORK_CHANGE:'WORK_CHANGE',
         FEED_CHANGE:'FEED_CHANGE',
         COLLECT_CHANGE:'COLLECT_CHANGE',
+        HERO_CHANGE:'HERO_CHANGE',
+        HERO_NUM_CHANGE:'HERO_NUM_CHANGE',
 
         red_change:'red_change',
         energy_change:'energy_change',

@@ -135,6 +135,7 @@ class WorkManager {
         }
         this.resetLevel();
         UM.needUpUser = true;
+        EM.dispatch(GameEvent.client.COIN_CHANGE)
         EM.dispatch(GameEvent.client.WORK_CHANGE)
     }
 
@@ -235,6 +236,10 @@ class WorkManager {
              foodNum:this.foodNum,
              diamondNum:this.diamondNum,
              grassNum:this.grassNum,
+             foodLevel:this.foodLevel,
+             woodLevel:this.woodLevel,
+             grassLevel:this.grassLevel,
+             diamondLevel:this.diamondLevel,
              lastTime:this.lastTime,
          }
     }

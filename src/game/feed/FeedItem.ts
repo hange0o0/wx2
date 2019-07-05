@@ -93,7 +93,7 @@ class FeedItem extends game.BaseItem{
              }
              else
              {
-                 this.barMC.width = 204*(data.total - cd)/data.total;
+                 this.barMC.width = Math.max(2,204*(data.total - cd)/data.total);
                  this.timeText.text = DateUtil.getStringBySecond(cd);
              }
          }

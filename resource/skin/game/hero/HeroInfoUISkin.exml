@@ -11,7 +11,7 @@
 	<e:Group horizontalCenter="0" y="80">
 		<e:Image id="skillBG" source="border1_png" y="0" x="0"/>
 		<e:Image id="mc" source="border1_png" width="160" height="160" verticalCenter="0" horizontalCenter="0"/>
-		<e:Image source="icon_die_png" x="0" y="0" id="icon" includeIn="die" scaleX="1.2" scaleY="1.2"/>
+		<e:Image source="icon_die_png" x="0" y="0" id="icon" scaleX="1.2" scaleY="1.2"/>
 	</e:Group>
 	<e:Group horizontalCenter="0" bottom="30" scaleX="0.8" scaleY="0.8">
 		<e:Button id="feedBtn" label="喂食" x="0" y="0" skinName="Btn2Skin" label.die="复活"/>
@@ -23,7 +23,8 @@
 	<e:Group y="270" horizontalCenter="1">
 		<e:Image source="bar_bg_png" x="0" y="0"/>
 		<e:Image id="barMC" source="bar1_png" x="2" y="2" fillMode="clip"/>
-		<e:Label text="lvText" horizontalCenter="0" verticalCenter="0" stroke="3" size="24"/>
+		<e:Label id="lvText" text="lvText" horizontalCenter="0" verticalCenter="0" stroke="3" size="24" text.normal=""/>
 	</e:Group>
-	<e:Label id="skillText" text="Label" y="320" width="360" horizontalCenter="0" size="24"/>
+	<e:Label id="skillTitleText" text="Label" y="320" width="360" horizontalCenter="0" size="24" textAlign="center" textColor="0xffff00"/>
+	<e:Label id="skillText" text="Label" y="355" horizontalCenter="0" size="24" maxWidth="360"/>
 </e:Skin>

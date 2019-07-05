@@ -8,10 +8,14 @@ class HeroManager {
 
     public level
     public list;
+    public defList;
     public key = 1;
 
     public heroNum
     public pkNum
+
+    private adType
+    private adValue
 
     public skillBase = {
         1:{name:'攻击强化',des:'提高蛊虫的基础攻击力'},
@@ -27,6 +31,7 @@ class HeroManager {
     }
 
     public constructor() {
+        this.resetAD();
     }
 
     public initData(data){
@@ -34,23 +39,132 @@ class HeroManager {
         this.list = data.list?data.list.split(','):[];
         this.key = data.key || 1;
         this.level = data.level || 1;
+        this.defList = data.def ?data.def.split(','):[];
 
+        var dieList = data.die || []
+
+        var keyObj = {}
         for(var i=0;i<this.list.length;i++)
         {
             var temp = this.list[i].split('|')
+
+
+            if(keyObj[temp[3]])//查错
+            {
+                throw new Error('1111')
+            }
+            keyObj[temp[3]] = true
+
+
             this.list[i] = {
                 id:parseInt(temp[0]),
                 exp:parseInt(temp[1]),
                 skill:parseInt(temp[2]),
                 key:temp[3],
+                isDie:dieList.indexOf(temp[3]) != -1,
             }
         }
         this.resetLevel();
     }
 
+    public editDef(){
+        HeroDefUI.getInstance().show({
+            pkType:'def',
+            title:'防守阵容',
+            upList:this.defList.join(','),
+            fun:(data)=>{
+                this.defList = data?data.split(','):[]
+                HeroDefUI.getInstance().hide();
+                UM.needUpUser = true;
+            }
+        })
+    }
+
+    public getMonster(key){
+         for(var i=0;i<this.list.length;i++)
+         {
+              if(this.list[i].key == key)
+              {
+                  return this.list[i];
+              }
+         }
+        return;
+    }
+
     public resetLevel(){
         this.heroNum = 14 + this.level;
         this.pkNum =  Math.floor(this.heroNum/3)
+    }
+
+    public isDef(key){
+          return this.defList.indexOf(key+'') != -1;
+    }
+
+    public isAtk(key){
+          return false
+    }
+
+    public getSkillBG(skill){
+        return 'border1_png'
+    }
+
+    public getDieArr(){
+        var arr = []
+        for(var i=0;i<this.list.length;i++)
+        {
+            if(this.list[i].isDie)
+            {
+                arr.push(this.list[i])
+            }
+        }
+        return arr;
+    }
+
+
+
+    public rebornAll(){
+        var level = Math.min(this.getDieArr().length,12);
+        if(level == 0)
+        {
+            MyWindow.ShowTips('没有需要复活的蛊虫')
+            return;
+        }
+        this.adValue = 30 + level*5;
+        if(this.adType == 'score')
+            this.adValue *= 30;
+
+        var str = this.adType == 'cd'?"在《别碰小广告》游戏中坚持"+this.adValue+"秒，即可复活所有蛊虫":"在《别碰小广告》游戏中获得"+this.adValue+"分，即可获得20%即可复活所有蛊虫"
+        MyWindow.Alert(str,()=>{
+            MyADManager.getInstance().openWX5({
+                key:this.adType,
+                value:this.adValue,
+                callBack:'addForce',
+            })
+        },'开始挑战')
+    }
+
+    public resetAD(){
+        this.adType = Math.random()>0.5?'cd':'score'
+    }
+
+    public rebornAllFun(){
+        for(var i=0;i<this.list.length;i++)
+        {
+            this.list[i].isDie = false;
+        }
+        this.resetAD();
+        EM.dispatch(GameEvent.client.HERO_CHANGE);
+    }
+
+    public split(data){
+        UM.addBlood(this.getSplitAward(data))
+        this.removeItem(data);
+        UM.needUpUser = true;
+        EM.dispatch(GameEvent.client.HERO_NUM_CHANGE);
+    }
+
+    public getSplitAward(data){
+        return Math.floor(data.exp/10)
     }
 
     //升级需要的花费(木头,草)
@@ -79,6 +193,13 @@ class HeroManager {
         return Math.floor((Math.pow(lv,2)*10+Math.floor(exp/500))/2)
     }
 
+    public rebornOne(data){
+        var level = this.getLevelByExp(data.exp)
+        UM.addBlood(-this.getRebornCost(level));
+        data.isDif = false;
+        EM.dispatch(GameEvent.client.HERO_CHANGE);
+    }
+
 
     //移除
     public removeItem(data){
@@ -87,6 +208,8 @@ class HeroManager {
     }
 
     public getExpByLevel(lv){
+        if(lv <= 0)
+            return 0;
         return Math.round(Math.exp(lv-1))*100
     }
 
@@ -103,16 +226,27 @@ class HeroManager {
         }
     }
 
+    public feed(data,value){
+        UM.addBlood(-value);
+        data.exp += value;
+        EM.dispatch(GameEvent.client.HERO_CHANGE);
+    }
+
     public getSave(){
         var list = [];
+        var dieList = [];
         for(var i=0;i<this.list.length;i++)
         {
             var oo = this.list[i];
+            if(oo.isDie)
+                dieList.push(oo.key);
             list.push(oo.id + '|' +oo.exp + '|' +oo.skill + '|' +oo.key)
         }
         return {
             list:list.join(','),
-            key:this.key
+            key:this.key ,
+            die:dieList.join(',') ,
+            def:this.defList.join(','),
         }
 
     }

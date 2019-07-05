@@ -36,7 +36,7 @@ class HeroUI extends game.BaseUI {
         this.addBtnEvent(this.closeBtn,this.hide)
 
         this.scroller.viewport = this.list;
-        this.list.itemRenderer = CollectItem;
+        this.list.itemRenderer = HeroItem;
 
         this.addBtnEvent(this.upBtn,()=>{
             UseResourceUI.getInstance().show('升级蛊巢','升级蛊巢，可提高蛊巢容量，增加出战蛊虫数量','升级',
@@ -48,7 +48,7 @@ class HeroUI extends game.BaseUI {
         })
 
         this.addBtnEvent(this.rebornBtn,()=>{
-            //FeedUI.getInstance().show();
+           HeroManager.getInstance().rebornAll();
         })
     }
 
@@ -56,6 +56,8 @@ class HeroUI extends game.BaseUI {
         this.renew();
 
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.onCoinChange)
+        this.addPanelOpenEvent(GameEvent.client.HERO_CHANGE,this.renewList)
+        this.addPanelOpenEvent(GameEvent.client.HERO_NUM_CHANGE,this.resetList)
     }
 
     private onCoinChange(){
@@ -77,6 +79,7 @@ class HeroUI extends game.BaseUI {
     public renew(){
         var HM = HeroManager.getInstance();
         this.renewInfo();
+        ArrayUtil.sortByField(HM.list,['exp'],[1])
         this.list.dataProvider = new eui.ArrayCollection(HM.list);
         this.onCoinChange();
     }

@@ -28,6 +28,7 @@ class Config {
 
     public static wx_ad = 'adunit-d406f443acb5f7d2';
     public static wx_video =  'adunit-927ee662776f3dcc';
+    public static myAppID =  'adunit-927ee662776f3dcc';
 
 
     //public static friendLevel = 3;

@@ -26,7 +26,8 @@ class FeedAddSpeedUI extends game.BaseWindow {
             if(!UM.checkResource({coin:FeedManager.getInstance().getSpeedCost(this.data)}))
                 return;
             FeedManager.getInstance().speed(this.data)
-            this.onTimer();
+            FeedManager.getInstance().getAward(this.data)
+            this.hide()
         })
 
         this.addBtnEvent(this.boxMC,()=>{
@@ -39,7 +40,7 @@ class FeedAddSpeedUI extends game.BaseWindow {
 
     private shake(){
          egret.Tween.removeTweens(this.boxMC)
-         egret.Tween.get(this.boxMC).to({y:110-10 + 20*Math.random(),horizontalCenter:-10+20*Math.random()},100).to({y:110,horizontalCenter:0},100)
+         egret.Tween.get(this.boxMC).to({y:110-10 + 20*Math.random(),horizontalCenter:-10+20*Math.random()},50).to({y:110,horizontalCenter:0},50)
     }
 
     public show(data?){
@@ -65,7 +66,7 @@ class FeedAddSpeedUI extends game.BaseWindow {
         }
         else
         {
-            this.barMC.width = 204*(data.total - cd)/data.total;
+            this.barMC.width =  Math.max(2,204*(data.total - cd)/data.total);
             this.timeText.text = DateUtil.getStringBySecond(cd);
         }
     }

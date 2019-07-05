@@ -2,10 +2,10 @@
 <e:Skin class="FeedItemSkin" width="200" height="180" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="lock,free,working,award,unlock" >
 	<e:Image source="tudui_png" y="25" includeIn="working,award" horizontalCenter="0" scaleX="0.8" scaleY="0.8"/>
 	<e:Image id="boxMC" source="house1_png" y="-2" includeIn="lock,free,unlock" scaleX="1.2" scaleY="1.2" horizontalCenter="0"/>
-	<e:Group y="127" scaleX="0.7" scaleY="0.7" horizontalCenter="1" includeIn="working">
+	<e:Group y="127" scaleX="0.7" scaleY="0.9" horizontalCenter="1" includeIn="working">
 		<e:Image source="bar_bg_png" x="0" y="0"/>
-		<e:Image id="barMC" source="bar1_png" x="2" y="2" fillMode="clip"/>
-		<e:Label id="timeText" text="Label" horizontalCenter="0" verticalCenter="0" stroke="2" size="24"/>
+		<e:Image id="barMC" x="2" y="2" fillMode="clip" source="bar2_png"/>
+		<e:Label id="timeText" text="Label" horizontalCenter="0" verticalCenter="0" stroke="2" size="28" scaleY="0.78"/>
 	</e:Group>
 	<e:Button id="btn" label="Button" y="120" skinName="Btn2Skin" scaleX="0.6" scaleY="0.6" horizontalCenter="0" includeIn="free,award,unlock" label.free="制蛊" skinName.award="Btn3Skin" label.award="挖出" label.unlock="  解锁" horizontalCenter.working="0" label.working="加速" icon.unlock="lock_icon_png" y.working="124" skinName.unlock="Btn3Skin"/>
 	<e:Group horizontalCenter="1" y="126" includeIn="lock">

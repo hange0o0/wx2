@@ -11,8 +11,10 @@ class MyADManager {
     public changeUserFun;
     
     public cloudPath = 'cloud://hange0o0-16b7c5.6861-hange0o0-16b7c5/'
-    public myAppID = 'wxf9c8e218c23e2eb7'
     private adList;
+
+    public extraData
+    public finishExtraUin = -1;
     
     public onShow(){
         if(this.changeUserTime)
@@ -162,7 +164,7 @@ class MyADManager {
         for(var i=0;i<arr.length;i++)
         {
             var oo = arr[i];
-            if(oo.appid == this.myAppID)
+            if(oo.appid ==  Config.myAppID)
             {
                 arr.splice(i,1);
                 i--;
@@ -333,5 +335,51 @@ class MyADManager {
         if(this.bannerAD)
             this.bannerAD.hide();
         MyTool.removeMC(this.bannerBG)
+    }
+
+
+
+    public initExtra(data){
+        this.extraData = null;
+        if(!data || !data.referrerInfo || !data.referrerInfo.extraData || !data.referrerInfo.extraData.appid)
+        {
+            return;
+        }
+        if(this.finishExtraUin != data.referrerInfo.extraData.uin)
+            this.extraData = data.referrerInfo.extraData
+    }
+
+    //前往WX5
+    public openWX5(data){
+        var wx = window['wx'];
+        data.appid = Config.myAppID//我的APPID
+        data.uin = Math.floor(Math.random()*1000000000000000);//唯一Key
+        if(!wx || DebugUI.getInstance().debugOpen)
+        {
+            this.extraData = data
+            this.testWX5Back()
+            return;
+        }
+
+        wx.navigateToMiniProgram({
+            appId: 'wxe2875716299fa092',//别点小广告
+            envVersion:'trial',
+            extraData:data,
+            complete(res) {
+            }
+        })
+    }
+
+    //WX5回调
+    public testWX5Back(){
+        if(!this.extraData)
+            return
+        this.finishExtraUin = this.extraData.uin;
+        switch(this.extraData.callBack)
+        {
+            case 'reborn':
+                HeroManager.getInstance().rebornAllFun()
+                break;
+        }
     }
 }

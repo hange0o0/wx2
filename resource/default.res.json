@@ -321,6 +321,11 @@
 			"name":"icon_def_png",
 			"type":"image",
 			"url":"game_assets/icon_def.png"
+		},
+		{
+			"name":"icon_clock_png",
+			"type":"image",
+			"url":"game_assets/icon_clock.png"
 		}
 	]
 }

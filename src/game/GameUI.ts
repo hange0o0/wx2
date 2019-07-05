@@ -33,11 +33,12 @@ class GameUI extends game.BaseUI {
 
 
 
+    private defItem = [];
 
     public childrenCreated() {
         super.childrenCreated();
         this.addBtnEvent(this.defBtn,()=>{
-             HeroDefUI.getInstance().show();
+             HeroManager.getInstance().editDef();
         })
 
         this.addBtnEvent(this.rankBtn,()=>{
@@ -103,7 +104,23 @@ class GameUI extends game.BaseUI {
     }
 
     public renewDef(){
+        var HM = HeroManager.getInstance();
+         var def = HM.defList;
+        var arr = []
+        for(var i=0;i<def.length;i++)
+        {
+            var oo = HM.getMonster(def[i]);
+            oo.level = HM.getLevelByExp(oo.exp)
+            arr.push(oo)
+        }
+        ArrayUtil.sortByField(arr,['level'],[0])
+        //var maxLevel = arr[arr.length - 1]
+        //var min = arr[0]
 
+        for(var i=0;i<arr.length;i++)
+        {
+            arr[i].
+        }
     }
 
     public renewSoundBtn(){

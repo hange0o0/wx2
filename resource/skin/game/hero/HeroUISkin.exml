@@ -22,8 +22,8 @@
 	</e:Scroller>
 	<e:Label id="desText" text="Label" horizontalCenter="0" size="24" y="180"/>
 	<e:Group horizontalCenter="0" bottom="30" scaleX="0.9" scaleY="0.9">
-		<e:Button id="upBtn" label="升级蛊巢" x="0" y="0" skinName="Btn2Skin"/>
-		<e:Button id="rebornBtn" label="一键复活" x="200" y="4.8" skinName="Btn3Skin"/>
+		<e:Button id="upBtn" label="升级蛊巢" x="0" y="0" skinName="Btn2Skin" width="220"/>
+		<e:Button id="rebornBtn" label="一键复活" x="200" y="4.8" skinName="Btn3Skin" width="220"/>
 		<e:layout>
 		<e:HorizontalLayout gap="80"/>
 		</e:layout>
