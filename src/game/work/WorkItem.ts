@@ -1,6 +1,6 @@
 class WorkItem extends game.BaseItem{
 
-    private woodNeedItem: ResourceItem;
+    private timeText: eui.Label;
     private upBtn: eui.Button;
     private icon: WorkIcon;
     private nameText: eui.Label;
@@ -11,9 +11,13 @@ class WorkItem extends game.BaseItem{
 
 
 
+
     private startTime:number
     private timer:any;
     private addNum = 1;
+    private addValue = 1;
+    private maxValue = 1;
+    private nowValue = 1;
     public constructor() {
         super();
         this.skinName = "WorkItemSkin";
@@ -58,6 +62,23 @@ class WorkItem extends game.BaseItem{
 
     private onEnd(e) {
         egret.clearInterval(this.timer);
+    }
+
+    public onUITimer(){
+        if(this.addValue && this.nowValue != this.maxValue)
+        {
+            var WM = WorkManager.getInstance();
+            if(this.addValue < 0)
+            {
+                var cd = Math.ceil(this.nowValue/-this.addValue)*30 -(TM.now() - WM.lastTime)
+                this.timeText.text= DateUtil.getStringBySecond(cd) + ' 后资源耗尽'
+            }
+            else
+            {
+                var cd = Math.ceil((this.maxValue - this.nowValue)/this.addValue)*30 -(TM.now() - WM.lastTime)
+                this.timeText.text= DateUtil.getStringBySecond(cd) + ' 后资源满仓'
+            }
+        }
     }
 
     public dataChanged():void {
@@ -106,8 +127,17 @@ class WorkItem extends game.BaseItem{
         if(addValue > 0)
             str +=  '\n产量：+' + addValue;
         else if(addValue < 0)
-            str +=  '\n产量：' + this.createHtml(addValue,0xFF0000);
+            str +=  '\n产量：' + this.createHtml(addValue,0xFF3333);
+        this.addValue = addValue;
+        this.nowValue = nowValue;
+        this.maxValue = maxValue;
         this.setHtml(this.desText, str)
+        this.timeText.text= '';
+        if(addValue > 0)
+            this.timeText.textColor = 0xFFFFFF
+        else
+            this.timeText.textColor = 0xFF3333
+        this.onUITimer();
     }
 
 

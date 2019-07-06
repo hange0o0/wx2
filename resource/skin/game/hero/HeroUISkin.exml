@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="HeroUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
 	<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0"/>
+	<e:Image x="0" y="0" source="bg4_jpg"/>
 	<e:Group horizontalCenter="0" y="100">
 		<ns1:ResourceItem id="woodItem" x="-459" y="-240" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
 		<ns1:ResourceItem id="diamondItem" x="-439" y="-220" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="diamond"/>
@@ -20,7 +21,7 @@
 			</e:List>
 		</e:Group>
 	</e:Scroller>
-	<e:Label id="desText" text="Label" horizontalCenter="0" size="24" y="180"/>
+	<e:Label id="desText" text="Label" horizontalCenter="0" size="24" y="180" stroke="3"/>
 	<e:Group horizontalCenter="0" bottom="30" scaleX="0.9" scaleY="0.9">
 		<e:Button id="upBtn" label="升级蛊巢" x="0" y="0" skinName="Btn2Skin" width="220"/>
 		<e:Button id="rebornBtn" label="一键复活" x="200" y="4.8" skinName="Btn3Skin" width="220"/>

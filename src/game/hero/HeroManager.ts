@@ -105,7 +105,8 @@ class HeroManager {
     }
 
     public getSkillBG(skill){
-        return 'border1_png'
+        skill = skill || 0;
+        return 'border'+skill+'_png'
     }
 
     public getDieArr(){
@@ -157,10 +158,21 @@ class HeroManager {
     }
 
     public split(data){
+        if(this.isDef(data.key))
+        {
+            MyWindow.ShowTips('不能炼化防守中的蛊虫')
+            return false;
+        }
+        if(this.isAtk(data.key))
+        {
+            MyWindow.ShowTips('不能炼化进攻中的蛊虫')
+            return false;
+        }
         UM.addBlood(this.getSplitAward(data))
         this.removeItem(data);
         UM.needUpUser = true;
         EM.dispatch(GameEvent.client.HERO_NUM_CHANGE);
+        return true;
     }
 
     public getSplitAward(data){

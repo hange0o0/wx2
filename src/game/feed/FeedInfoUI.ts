@@ -100,17 +100,19 @@ class FeedInfoUI extends game.BaseWindow {
         var FM = FeedManager.getInstance();
         //var data = FM.data[this.index];
         var num = this.needNum = FM.getNumByIndex(this.index);
-        this.setHtml(this.desText, '可投入数量：' + this.createHtml(this.chooseList.length + '/' + this.needNum,this.chooseList.length >= this.needNum?0x00FF00:0xFFFF00) +
+        this.setHtml(this.desText, '需投入数量：' + this.createHtml(this.chooseList.length + '/' + this.needNum,this.chooseList.length >= this.needNum?0x00FF00:0xFFFF00) +
             '，成蛊时间：' + this.createHtml(DateUtil.getStringBySecond(FM.getTimeByIndex(this.index)),0xFFFF00));
 
         this.list.dataProvider = new eui.ArrayCollection(this.chooseList)
         if(this.chooseList.length >= num)
         {
             this.startBtn.label = '开始制蛊'
+            this.startBtn.skinName = 'Btn3Skin'
         }
         else
         {
             this.startBtn.label = '投入虫蛊'
+            this.startBtn.skinName = 'Btn2Skin'
         }
         this.emptyGroup.visible = this.chooseList.length == 0;
     }

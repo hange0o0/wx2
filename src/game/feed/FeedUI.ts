@@ -49,11 +49,24 @@ class FeedUI extends game.BaseUI {
 
     private renewList(){
         MyTool.renewList(this.list)
+        this.renewWorm();
     }
 
     private renewCoin(){
         this.woodItem.renew()
-        this.wormItem.renew()
         this.coinItem.renew()
+    }
+
+    private renewWorm(){
+        var HM = HeroManager.getInstance();
+        var list = HM.list;
+        var count = 0;
+        for(var i=0;i<list.length;i++)
+        {
+             var oo = list[i];
+            if(!oo.isDie && !HM.isAtk(oo.key) && !HM.isDef(oo.key))
+                count ++;
+        }
+        this.wormItem.setText(count + ' + ' + CollectManager.getInstance().list.length)
     }
 }

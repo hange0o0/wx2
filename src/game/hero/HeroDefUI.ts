@@ -11,6 +11,7 @@ class HeroDefUI extends game.BaseUI {
         this.skinName = "HeroDefUISkin";
     }
 
+    private bg: eui.Image;
     private closeBtn: eui.Image;
     private titleText: eui.Label;
     private scrollerUp: eui.Scroller;
@@ -22,6 +23,7 @@ class HeroDefUI extends game.BaseUI {
     private pkBtn: eui.Button;
     private autoBtn: eui.Button;
     private desText: eui.Label;
+
 
 
 
@@ -93,7 +95,36 @@ class HeroDefUI extends game.BaseUI {
         this.renew();
         this.renewDes();
         this.testHaveReborn();
+
         this.addPanelOpenEvent(GameEvent.client.HERO_CHANGE,this.renewList)
+        this.addPanelOpenEvent(GameEvent.client.HERO_NUM_CHANGE,this.onMonsterNumChanged)
+    }
+
+    //炼化了一只
+    private onMonsterNumChanged(){
+        var HM = HeroManager.getInstance();
+        var find = false
+        for(var i=0;i<this.monsterList.length;i++)
+        {
+            if(HM.list.indexOf(this.monsterList[i]) == -1)
+            {
+                this.monsterList.splice(i,1);
+                find = true;
+                break;
+            }
+        }
+        if(!find)
+        {
+            for(var i=0;i<this.chooseList.length;i++)
+            {
+                if(HM.list.indexOf(this.chooseList[i]) == -1)
+                {
+                    this.chooseList.splice(i,1);
+                    break;
+                }
+            }
+        }
+        this.onSelectedChange();
     }
 
     private renewList(){
@@ -192,6 +223,7 @@ class HeroDefUI extends game.BaseUI {
 class DefUpItem extends HeroItem{
     public constructor() {
         super();
+        this.skinName = "HeroDefItemSkin";
     }
 
     public childrenCreated() {
@@ -210,6 +242,7 @@ class DefUpItem extends HeroItem{
 class DefDownItem extends HeroItem{
     public constructor() {
         super();
+        this.skinName = "HeroDefItemSkin";
     }
 
     public childrenCreated() {

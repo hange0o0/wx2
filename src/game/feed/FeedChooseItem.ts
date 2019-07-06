@@ -1,8 +1,10 @@
 class FeedChooseItem extends game.BaseItem{
 
+    private skillBG: eui.Image;
     private mc: eui.Image;
     private lvText: eui.Label;
     private heroMC: eui.Image;
+
 
 
     public constructor() {
@@ -21,6 +23,7 @@ class FeedChooseItem extends game.BaseItem{
 
     public dataChanged():void {
         this.heroMC.visible = this.data.skill
+        this.skillBG.source = HeroManager.getInstance().getSkillBG(this.data.skill);
         var vo = MonsterVO.getObject(this.data.id)
         if(this.data.exp)
             this.lvText.text = 'LV.' +  HeroManager.getInstance().getLevelByExp(this.data.exp)

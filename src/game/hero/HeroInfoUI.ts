@@ -51,8 +51,8 @@ class HeroInfoUI extends game.BaseWindow {
             MyWindow.Confirm('确定要炼化该蛊虫吗？',(b)=>{
                 if(b==1)
                 {
-                    HeroManager.getInstance().split(this.data)
-                    this.hide();
+                    if(HeroManager.getInstance().split(this.data))
+                        this.hide();
                 }
             },['取消','炼化']);
 

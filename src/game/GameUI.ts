@@ -117,10 +117,10 @@ class GameUI extends game.BaseUI {
         //var maxLevel = arr[arr.length - 1]
         //var min = arr[0]
 
-        for(var i=0;i<arr.length;i++)
-        {
-            arr[i].
-        }
+        //for(var i=0;i<arr.length;i++)
+        //{
+        //    arr[i].
+        //}
     }
 
     public renewSoundBtn(){

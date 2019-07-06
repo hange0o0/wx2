@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="ShopUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
 	<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0"/>
+	<e:Image source="bg7_jpg" x="0" y="0"/>
 	<e:Image id="closeBtn" source="close_btn2_png" y="10" x="15"/>
 	<e:Label text="商店" y="35" bold="true" size="40" stroke="4" strokeColor="0x686868" x="130"/>
 	<e:Scroller id="scroller" width="640" x="0" top="225" bottom="0" bounces="false" anchorOffsetY="0">

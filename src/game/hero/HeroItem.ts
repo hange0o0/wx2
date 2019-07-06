@@ -27,7 +27,8 @@ class HeroItem extends game.BaseItem{
         this.lvText.text = 'LV.' + lv;
         var vo = MonsterVO.getObject(this.data.id);
         this.mc.source = vo.getThumb();
-        this.txt.text = vo.name;
+        if(this.txt)
+            this.txt.text = vo.name;
         this.icon.visible = false;
         if(this.data.isDie)
             this.setIcon('icon_die_png')

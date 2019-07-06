@@ -26,6 +26,7 @@ class WorkUI extends game.BaseUI {
 
 
 
+
     public childrenCreated() {
         super.childrenCreated();
         this.scroller.viewport = this.list
@@ -53,7 +54,10 @@ class WorkUI extends game.BaseUI {
     }
 
     private onTimer(){
-
+        MyTool.runListFun(this.list,'onUITimer')
+        var cd = (TM.now() - WorkManager.getInstance().lastTime)
+        this.cdText.text = DateUtil.getStringBySecond(30 - cd).substr(-5)
+        this.maskMC.width = 200*cd/30
     }
 
     private renewList(){
@@ -65,6 +69,7 @@ class WorkUI extends game.BaseUI {
         var num = WM.maxNum - WM.foodNum - WM.woodNum - WM.diamondNum - WM.grassNum
         this.peopleItem.setText('空闲：' + num)
         this.renewList();
+        this.onTimer();
     }
 
 }

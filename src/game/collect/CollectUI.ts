@@ -35,7 +35,7 @@ class CollectUI extends game.BaseUI {
         this.list.itemRenderer = CollectItem;
 
         this.addBtnEvent(this.upBtn,()=>{
-            UseResourceUI.getInstance().show('升级虫洞','升级虫洞，吸引虫蛊的数量和质量会得到提高','升级',
+            UseResourceUI.getInstance().show('升级虫洞','升级虫洞，吸引昆虫的数量和质量会得到提高','升级',
                 CollectManager.getInstance().getUpCost(),
                 ()=>{
                     CollectManager.getInstance().levelUp()
@@ -103,6 +103,7 @@ class CollectUI extends game.BaseUI {
         var CLM = CollectManager.getInstance();
         CLM.onTimer();
         this.renewInfo();
+        ArrayUtil.sortByField(CLM.list,['level','id'],[1,0]);
         this.list.dataProvider = new eui.ArrayCollection(CLM.list);
         this.onCoinChange();
     }

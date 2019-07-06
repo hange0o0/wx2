@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="CollectUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
 	<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0"/>
+	<e:Image source="bg5_jpg" x="0" y="0"/>
 	<e:Group horizontalCenter="0" y="100">
 		<ns1:ResourceItem id="woodItem" x="-459" y="-240" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
 		<ns1:ResourceItem id="grassItem" x="-429" y="-210" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="grass"/>
@@ -27,5 +28,5 @@
 			<e:HorizontalLayout gap="80"/>
 		</e:layout>
 	</e:Group>
-	<e:Label id="desText" text="Label" horizontalCenter="0" size="24" y="180"/>
+	<e:Label id="desText" text="Label" horizontalCenter="0" size="24" y="180" stroke="3"/>
 </e:Skin>

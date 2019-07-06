@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="WorkIconSkin" width="100" height="100" xmlns:e="http://ns.egret.com/eui" states="food,wood,diamond,grass" >
-	<e:Image source="border1_png" x="0" y="0" width="100" height="100"/>
+	<e:Image x="0" y="0" width="100" height="100" source="border11_png"/>
 	<e:Image source="food_mc_png" horizontalCenter="0" verticalCenter="0" x="25" y="25" scaleX.food="1.3" scaleY.food="1.3" source.wood="wood_mc_png" scaleX.wood="1.2" scaleY.wood="1.2" source.diamond="diamond_mc_png" scaleX.diamond="0.7" scaleY.diamond="0.7" horizontalCenter.diamond="2.5" verticalCenter.diamond="-0.5" source.grass="glass_mc_png" scaleX.grass="0.8" scaleY.grass="0.8"/>
 </e:Skin>
