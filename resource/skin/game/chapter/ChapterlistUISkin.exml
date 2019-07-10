@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="ChapterlistUISkin" width="600" height="800" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:Scroller id="scroller" width="600" x="0" top="75" bottom="20" bounces="false">
+		<e:Group>
+		<e:List id="list" width="200" height="200" x="236" y="144">
+			<e:layout>
+			<e:TileLayout requestedColumnCount="4" horizontalGap="24" verticalGap="24" paddingLeft="24" paddingBottom="24" paddingTop="0"/>
+			</e:layout>
+		</e:List>
+		</e:Group>
+	</e:Scroller>
+</e:Skin>

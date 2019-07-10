@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="ChapterUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0"/>
+	<e:Image x="0" y="0" source="bg6_jpg"/>
+	<e:Group id="pkGroup" horizontalCenter="0" verticalCenter="-120" width="480" height="640">
+		<e:Image source="window_bg_png" scale9Grid="47,52,16,10" left="0" right="0" top="0" bottom="0"/>
+		<e:Image left="20" right="20" top="70" height="200" source="pk_btn_png" scale9Grid="18,18,14,13" alpha="0.6"/>
+		<e:Label id="titleText" y="25" text="领取补助" stroke="2" bold="true" size="30" horizontalCenter="0.5" textColor="0xFFFFFF"/>
+		<e:Label id="desText" text="Label" y="90" size="24" left="50" right="50"/>
+		<e:Button id="infoBtn" label="点击查看出战蛊虫" skinName="Btn5Skin" bottom="-60" horizontalCenter="0"/>
+		<e:Group id="btnGroup" x="30" y="290">
+			<e:Button id="btn0" label="Button" y="0" skinName="Btn4Skin" height="70" width="420" x="0"/>
+			<e:Button label="Button" y="0" skinName="Btn4Skin" height="70" width="420" id="btn1" x="0"/>
+			<e:Button label="Button" y="0" skinName="Btn4Skin" height="70" width="420" id="btn2" x="0"/>
+			<e:Button label="Button" y="0" skinName="Btn4Skin" height="70" width="420" id="btn3" x="0"/>
+			<e:layout>
+				<e:VerticalLayout gap="10"/>
+			</e:layout>
+		</e:Group>
+	</e:Group>
+	<e:Label id="rateText" text="Label" x="20" y="20" size="24" stroke="3"/>
+	<e:Image id="closeBtn" source="close_btn2_png" x="15" y="10"/>
+</e:Skin>

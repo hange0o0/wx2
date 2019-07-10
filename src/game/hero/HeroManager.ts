@@ -18,16 +18,16 @@ class HeroManager {
     private adValue
 
     public skillBase = {
-        1:{name:'攻击强化',des:'提高蛊虫的基础攻击力'},
-        2:{name:'攻击成长',des:'在单次战斗中，蛊虫攻击后的攻击力都会得到提升'},
-        3:{name:'生命强化',des:'提高蛊虫的基础血量值'},
-        4:{name:'吸食生命',des:'攻击后会回复自身一定的生命值'},
-        5:{name:'治疗',des:'攻击后会回复所有友方蛊虫一定的生命值'},
-        6:{name:'领军光环',des:'提升所有友方蛊虫一定的攻击力'},
-        7:{name:'强力毒素',des:'攻击后降低被攻击方一定的攻击力'},
-        8:{name:'尖刺外壳',des:'使攻击其的敌人受到一定的伤害'},
-        9:{name:'复活',des:'攻击后随机复活一名友方单位'},
-        10:{name:'自爆',des:'阵亡后对所有敌人造成一定伤害'}
+        1:{name:'攻击强化',des:'提高蛊虫的基础攻击力',hp:1,atk:2},
+        2:{name:'攻击成长',des:'在单次战斗中，蛊虫攻击后的攻击力都会得到提升',hp:1,atk:0.9},
+        3:{name:'生命强化',des:'提高蛊虫的基础血量值',hp:2,atk:1},
+        4:{name:'吸食生命',des:'攻击后会回复自身一定的生命值',hp:0.8,atk:1},
+        5:{name:'治疗',des:'攻击后会回复所有友方蛊虫一定的生命值',hp:1.2,atk:0.5},
+        6:{name:'领军光环',des:'提升所有友方蛊虫一定的攻击力',hp:1,atk:0.8},
+        7:{name:'强力毒素',des:'攻击后降低被攻击方一定的攻击力',hp:1,atk:1},
+        8:{name:'尖刺外壳',des:'使攻击其的敌人受到一定的伤害',hp:1.5,atk:1},
+        9:{name:'复活',des:'死亡后有50%的机率满血复活',hp:0.8,atk:1},
+        10:{name:'自爆',des:'阵亡后对所有敌人造成一定伤害',hp:1,atk:1}
     }
 
     public constructor() {
@@ -49,11 +49,11 @@ class HeroManager {
             var temp = this.list[i].split('|')
 
 
-            if(keyObj[temp[3]])//查错
-            {
-                throw new Error('1111')
-            }
-            keyObj[temp[3]] = true
+            //if(keyObj[temp[3]])//查错
+            //{
+            //    throw new Error('1111')
+            //}
+            //keyObj[temp[3]] = true
 
 
             this.list[i] = {
@@ -76,6 +76,7 @@ class HeroManager {
                 this.defList = data?data.split(','):[]
                 HeroDefUI.getInstance().hide();
                 UM.needUpUser = true;
+                EM.dispatch(GameEvent.client.HERO_CHANGE);
             }
         })
     }
@@ -88,7 +89,22 @@ class HeroManager {
                   return this.list[i];
               }
          }
-        return;
+        return null;
+    }
+
+    public getPKMonster(key){
+        var monster = this.getMonster(key);
+        var level = this.getLevelByExp(monster.exp)
+        var skillBase = this.skillBase[monster.skill];
+        var rate = Math.pow(level,1.5)
+        var oo = {
+            skill:monster.skill,
+            key:key,
+            id:monster.id,
+            hp:Math.round(100*rate*skillBase.hp),
+            atk:Math.round(20*rate*skillBase.atk),
+        }
+        return new PKMonsterData(oo);
     }
 
     public resetLevel(){
@@ -101,7 +117,7 @@ class HeroManager {
     }
 
     public isAtk(key){
-          return false
+        return false
     }
 
     public getSkillBG(skill){
@@ -154,6 +170,7 @@ class HeroManager {
             this.list[i].isDie = false;
         }
         this.resetAD();
+        UM.needUpUser = true;
         EM.dispatch(GameEvent.client.HERO_CHANGE);
     }
 
@@ -197,6 +214,8 @@ class HeroManager {
         UM.addDiamond(-oo.diamond)
         this.level ++;
         this.resetLevel();
+        UM.needUpUser = true;
+        EM.dispatch(GameEvent.client.HERO_CHANGE);
     }
 
     //复活的花费
@@ -209,6 +228,7 @@ class HeroManager {
         var level = this.getLevelByExp(data.exp)
         UM.addBlood(-this.getRebornCost(level));
         data.isDif = false;
+        UM.needUpUser = true;
         EM.dispatch(GameEvent.client.HERO_CHANGE);
     }
 
@@ -241,6 +261,7 @@ class HeroManager {
     public feed(data,value){
         UM.addBlood(-value);
         data.exp += value;
+        UM.needUpUser = true;
         EM.dispatch(GameEvent.client.HERO_CHANGE);
     }
 

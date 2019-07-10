@@ -118,7 +118,7 @@ class FeedManager {
             exp += list[i].exp;
             maxExp = Math.max(list[i].exp,maxExp);
 
-            if(list[i].isHero)
+            if(list[i].data.skill)
             {
                 HeroManager.getInstance().removeItem(list[i].data)
             }

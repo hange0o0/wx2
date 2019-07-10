@@ -14,5 +14,5 @@
 			<e:HorizontalLayout gap="20" verticalAlign="bottom"/>
 		</e:layout>
 	</e:Group>
-	<e:Label text="可点击土堆进行加速" y="331.39" size="22" horizontalCenter="0"/>
+	<e:Label text="可点击土堆进行加速" y="290" size="22" horizontalCenter="0" textColor="0xc1c1c1"/>
 </e:Skin>

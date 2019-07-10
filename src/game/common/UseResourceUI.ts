@@ -11,10 +11,12 @@ class UseResourceUI extends game.BaseWindow {
         this.skinName = "UseResourceUISkin";
     }
 
+    private resourceGroup: eui.Group;
     private r0: ResourceItem;
     private r1: ResourceItem;
     private okBtn: eui.Button;
     private desText: eui.Label;
+
 
 
 
@@ -72,15 +74,12 @@ class UseResourceUI extends game.BaseWindow {
         this.setTitle(this.title)
         this.desText.text = this.des
         this.okBtn.label = this.btnLabel
+        this.resourceGroup.removeChildren();
 
-        for(var i=0;i<this.itemArr.length;i++)
-        {
-            this.itemArr[i].visible = false;
-        }
         var index = 0;
         for(var s in this.resourceData)
         {
-            this.itemArr[index].visible = true;
+            this.resourceGroup.addChild(this.itemArr[index])
             this.itemArr[index].currentState = s;
             index ++;
         }

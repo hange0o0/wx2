@@ -111,7 +111,17 @@ class FeedChooseUI extends game.BaseWindow {
         this.emptyText.text = ''
         if(this.type == 1)
         {
-            baseList = HeroManager.getInstance().list
+            var HM = HeroManager.getInstance();
+            baseList =HM.list.concat();
+            for(var i=0;i<baseList.length;i++)
+            {
+                var oo = baseList[i]
+                if(oo.isDie || HM.isAtk(oo.key) || HM.isDef(oo.key))
+                {
+                    baseList.splice(i,1);
+                    i--;
+                }
+            }
             if(baseList.length == 0)
                 this.emptyText.text = '暂无闲置的蛊虫'
         }

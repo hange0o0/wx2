@@ -10,7 +10,16 @@ class MonsterVO {
 
     public id
     public level
-    public name
+
+    private  _name
+    public get name(){
+        if(this.id > 200)
+            return MonsterVO.getObject(this.id%200 || 200).name;
+        return this._name
+    }
+    public set name(v){
+        this._name = v;
+    }
 
 
     public constructor() {
@@ -23,7 +32,8 @@ class MonsterVO {
     }
 
     public getThumb(){
-        return Config.localResRoot2 + 'thumb/' + this.id + '.png'
+        var id = (this.id %200 || 200)
+        return Config.localResRoot2 + 'thumb/' + id + '.png'
     }
 
 

@@ -426,6 +426,11 @@
 			"name":"border11_png",
 			"type":"image",
 			"url":"game_assets/border11.png"
+		},
+		{
+			"name":"pk_btn_png",
+			"type":"image",
+			"url":"game_assets/pk_btn.png"
 		}
 	]
 }

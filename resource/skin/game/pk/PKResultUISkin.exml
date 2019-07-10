@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="PKResultUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
+	<e:Image source="black_bg_alpha_png" left="0" right="0" top="0" bottom="0"/>
+	<e:Group bottom="310" horizontalCenter="0">
+		<ns1:ResourceItem id="r0" x="0" y="0" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
+		<ns1:ResourceItem id="r1" x="10" y="10" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
+		<ns1:ResourceItem id="r2" x="20" y="20" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
+		<ns1:ResourceItem id="r3" x="30" y="30" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
+		<ns1:ResourceItem id="r4" x="40" y="40" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
+		<ns1:ResourceItem id="r5" x="50" y="50" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
+		<e:layout>
+			<e:TileLayout verticalGap="10" horizontalGap="10" requestedColumnCount="3"/>
+		</e:layout>
+	</e:Group>
+	<e:Label id="titleText" text="Label" y="100" horizontalCenter="0.5" size="50" bold="true"/>
+	<e:Scroller id="scroller" width="640" x="6" top="180" bottom="500">
+		<e:Group>
+			<e:List id="list" width="200" height="200" x="97" y="114"/>
+		</e:Group>
+	</e:Scroller>
+	<e:Label text="你已获得：" horizontalCenter="0" size="24" bottom="450"/>
+	<e:Label text="点击空白位置关闭" size="24" horizontalCenter="0" bottom="260" textColor="0x9e9e9e"/>
+</e:Skin>
