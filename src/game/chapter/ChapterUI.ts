@@ -54,12 +54,33 @@ class ChapterUI extends game.BaseUI {
     }
 
     private onBtnClick(index){
-       this.btnArr[index].clickFun();
+        var CM = ChapterManager.getInstance();
+       var clickObj = this.btnArr[index].clickObj;
+        switch(clickObj.type)
+        {
+            case 'choose':
+                CM.onPKBefore(clickObj.value);
+                break;
+            case 'pk':
+                CM.onPK()
+                break;
+            case 'resourc':
+                CM.onResource()
+                break;
+            case 'rest':
+                CM.onRest()
+                break;
+            case 'back':
+                CM.onBack()
+                break;
+            case 'runAway':
+                CM.onRunAway()
+                break;
+        }
     }
 
     public onShow(){
         this.onIn();
-
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.onCoinChange)
     }
 
@@ -83,20 +104,92 @@ class ChapterUI extends game.BaseUI {
             var btn = this['btn' + index];
             this.btnGroup.addChild(btn);
             btn.label = i*10 + '米';
-            btn.clickFun = this.createFun((a,b,c)=>{
-                CM.onPKBefore(a)
-            },i)
+            btn.clickObj = {
+                type:'choose',
+                value:i,
+            }
+            //    this.createFun((a,b,c)=>{
+            //    CM.onPKBefore(a)
+            //},i)
         }
+        this.infoBtn.visible = false;
     }
 
     public onStart(){
-        var CM = ChapterManager.getInstance();
+         this.renewChapter();
     }
 
-    private createFun(fun,a?,b?,c?){
-        return function(){
-            fun(a,b,c);
+    public renewChapter(){
+        var CM = ChapterManager.getInstance();
+        var chapter = CM.chapterData;
+
+        var btns = [];
+
+        if(chapter.type == 'pk')
+        {
+            this.titleText.text = '遭遇敌人'
+            this.desText.text = CM.pkWord[chapter.word]
+            btns.push({
+                label:'开始战斗',
+                type:'pk'
+            })
+            btns.push({
+                label:'立马逃跑',
+                type:'runAway'
+            })
         }
+        else
+        {
+            if(chapter.type == 'food')
+            {
+                this.titleText.text = '发现食物'
+                this.desText.text = CM.foodWord[chapter.word]
+            }
+            else if(chapter.type == 'wood')
+            {
+                this.titleText.text = '发现木材'
+                this.desText.text = CM.woodWord[chapter.word]
+            }
+            else if(chapter.type == 'diamond')
+            {
+                this.titleText.text = '发现晶石'
+                this.desText.text = CM.diamondWord[chapter.word]
+            }
+            else if(chapter.type == 'grass')
+            {
+                this.titleText.text = '发现灵草'
+                this.desText.text = CM.grassWord[chapter.word]
+            }
+            btns.push({
+                label:'开始采集',
+                type:'pk'
+            })
+            btns.push({
+                label:'休息一下',
+                type:'rest'
+            })
+            btns.push({
+                label:'返回家园',
+                type:'back'
+            })
+        }
+
+        this.btnGroup.removeChildren();
+        for(var i=0;i<btns.length;i++)
+        {
+            var btn = this['btn' + i];
+            this.btnGroup.addChild(btn);
+            btn.label = btns[i].label;
+            btn.clickObj = btns[i]
+        }
+        this.infoBtn.visible = true;
+        this.closeBtn.visible = false;
     }
+
+    //private createFun(fun,a?,b?,c?){
+    //    return function(){
+    //        fun(a,b,c);
+    //    }
+    //}
 
 }

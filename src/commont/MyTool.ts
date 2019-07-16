@@ -97,6 +97,14 @@ class MyTool {
         return Math.pow(Math.pow(a.x-b.x,2) + Math.pow(a.y-b.y,2),0.5)
     }
 
+    public static resetAngle(angle){
+        while(angle < 0)
+            angle += 360
+        while(angle >= 360)
+            angle -= 360
+        return angle
+    }
+
     public static getMiddleXY(a,b){
         return {
             x:a.x + (b.x - a.x)/2,

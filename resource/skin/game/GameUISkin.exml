@@ -2,8 +2,15 @@
 <e:Skin class="GameUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0" locked="true"/>
 	<e:Image source="bg1_jpg" x="0" y="0"/>
-	<e:Image id="soundBtn" source="sound_btn1_png" x="20" y="25"/>
-	<e:Image id="rankBtn" source="rank_btn_png" x="90" y="17"/>
+	<e:Group y="15" x="10">
+		<ns1:ResourceItem id="foodItem" x="-149" y="-150" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="food"/>
+		<ns1:ResourceItem id="woodItem" x="-139" y="-140" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
+		<ns1:ResourceItem id="diamondItem" x="-119" y="-120" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="diamond"/>
+		<ns1:ResourceItem id="grassItem" x="-109" y="-110" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="grass"/>
+		<e:layout>
+		<e:TileLayout requestedColumnCount="2" columnAlign="left" rowAlign="top"/>
+		</e:layout>
+	</e:Group>
 	<e:Group horizontalCenter="0" bottom="20">
 		<e:Group id="feedBtn" x="0" y="0" width="110" height="140">
 			<e:Image source="main_icon1_png" y="0" horizontalCenter="0"/>
@@ -21,37 +28,14 @@
 			<e:Image y="0" horizontalCenter="0" source="main_icon5_png"/>
 			<e:Label text="虫洞" size="24" horizontalCenter="0" bottom="0" bold="true"/>
 		</e:Group>
-		<e:Group id="buildBtn" x="40" y="40" width="110" height="140">
-			<e:Image y="0" horizontalCenter="0" source="main_icon6_png"/>
-			<e:Label text="建设" size="24" horizontalCenter="0" bottom="0" bold="true"/>
-		</e:Group>
-		<e:Group id="chapterBtn" x="50" y="50" width="110" height="140">
-			<e:Image y="5" horizontalCenter="0" source="main_icon3_png"/>
-			<e:Label text="探索" size="24" horizontalCenter="0" bottom="0" bold="true"/>
-		</e:Group>
-		<e:Group id="fightBtn" x="60" y="60" width="110" height="140">
-			<e:Image y="5" horizontalCenter="0" source="main_icon8_png"/>
-			<e:Label text="掠夺" size="24" horizontalCenter="0" bottom="0" bold="true"/>
-		</e:Group>
-		<e:Group id="shopBtn" x="10" y="10" width="110" height="140">
-			<e:Image y="0" horizontalCenter="0" source="main_icon7_png"/>
-			<e:Label text="商城" size="24" horizontalCenter="0" bottom="0" bold="true"/>
-		</e:Group>
 		<e:layout>
-			<e:TileLayout requestedColumnCount="4" verticalGap="20" horizontalGap="40"/>
+			<e:HorizontalLayout gap="40" verticalAlign="middle"/>
 		</e:layout>
 	</e:Group>
-	<e:Group horizontalCenter="0" bottom="340">
-		<ns1:ResourceItem id="foodItem" x="-149" y="-150" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="food"/>
-		<ns1:ResourceItem id="woodItem" x="-139" y="-140" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="wood"/>
-		<ns1:ResourceItem id="coinItem" x="-129" y="-130" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="coin"/>
-		<ns1:ResourceItem id="diamondItem" x="-119" y="-120" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="diamond"/>
-		<ns1:ResourceItem id="grassItem" x="-109" y="-110" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="grass"/>
-		<ns1:ResourceItem id="bloodItem" x="-99" y="-100" scaleX="1" scaleY="1" skinName="ResourceItemSkin" currentState="blood"/>
-		<e:layout>
-			<e:TileLayout requestedColumnCount="3"/>
-		</e:layout>
+	<e:Button id="defBtn" label="配置防守蛊虫" skinName="Btn1Skin" horizontalCenter="0" bottom="180" width="220"/>
+	<e:Group x="20" y="135">
+		<e:Image id="rankBtn" source="rank_btn_png" x="70" y="0"/>
+		<e:Image id="soundBtn" source="sound_btn1_png" x="0" y="10"/>
 	</e:Group>
-	<e:Button id="defBtn" label="配置防守蛊虫" skinName="Btn1Skin" horizontalCenter="0" bottom="480" width="220"/>
 	
 </e:Skin>

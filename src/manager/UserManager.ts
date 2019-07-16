@@ -78,6 +78,7 @@ class UserManager {
         WorkManager.getInstance().initData(data.work);
         FeedManager.getInstance().initData(data.feed);
         HeroManager.getInstance().initData(data.hero);
+        ChapterManager.getInstance().initData(data.chapter);
 
         this.initDataTime = TM.now();
 
@@ -328,6 +329,8 @@ class UserManager {
             work:WorkManager.getInstance().getSave(),
             feed:FeedManager.getInstance().getSave(),
             hero:HeroManager.getInstance().getSave(),
+            chapter:ChapterManager.getInstance().getSave(),
+
             saveTime:TM.now(),
         };
     }

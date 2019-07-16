@@ -13,6 +13,7 @@ class CacheManager{
 
     public constructor() {
         this.register(MonsterVO);
+        this.register(LevelVO);
 
     }
 

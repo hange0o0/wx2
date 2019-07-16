@@ -17,17 +17,12 @@ class GameUI extends game.BaseUI {
     private workBtn: eui.Group;
     private heroBtn: eui.Group;
     private collectBtn: eui.Group;
-    private buildBtn: eui.Group;
-    private chapterBtn: eui.Group;
-    private fightBtn: eui.Group;
-    private shopBtn: eui.Group;
     private foodItem: ResourceItem;
     private woodItem: ResourceItem;
-    private coinItem: ResourceItem;
     private diamondItem: ResourceItem;
     private grassItem: ResourceItem;
-    private bloodItem: ResourceItem;
     private defBtn: eui.Button;
+
 
 
 
@@ -62,18 +57,18 @@ class GameUI extends game.BaseUI {
         this.addBtnEvent(this.collectBtn,()=>{
             CollectUI.getInstance().show();
         })
-        this.addBtnEvent(this.buildBtn,()=>{
-            //BuildUI.getInstance().show()
-        })
-        this.addBtnEvent(this.chapterBtn,()=>{
-            ChapterUI.getInstance().show();
-        })
-        this.addBtnEvent(this.fightBtn,()=>{
-
-        })
-        this.addBtnEvent(this.shopBtn,()=>{
-            //ShopUI.getInstance().show();
-        })
+        //this.addBtnEvent(this.buildBtn,()=>{
+        //    //BuildUI.getInstance().show()
+        //})
+        //this.addBtnEvent(this.chapterBtn,()=>{
+        //    ChapterUI.getInstance().show();
+        //})
+        //this.addBtnEvent(this.fightBtn,()=>{
+        //
+        //})
+        //this.addBtnEvent(this.shopBtn,()=>{
+        //    //ShopUI.getInstance().show();
+        //})
 
         MyTool.addLongTouch(this.soundBtn,()=>{
             if(DEBUG)
@@ -122,8 +117,6 @@ class GameUI extends game.BaseUI {
         this.woodItem.renew()
         this.diamondItem.renew()
         this.grassItem.renew()
-        this.coinItem.renew()
-        this.bloodItem.renew()
     }
 
     public renewDef(){

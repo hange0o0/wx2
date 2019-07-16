@@ -7,7 +7,7 @@ class GameManager {
     }
 
     private timeID: egret.Timer;
-    private timeE = new MyTimer(1000/60);
+    private timeE = new MyTimer(1000/30);
     private lastTime: number;
     public lastTouchTime: number;
     public lastTouchMC;

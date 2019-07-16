@@ -22,4 +22,9 @@ class PKCode {
     public addVideo(data){
 
     }
+
+    //team1,team2,seed
+    public initPK(data){
+
+    }
 }

@@ -165,6 +165,7 @@ class Main extends eui.UILayer {
      */
     protected startCreateScene(): void {
         CM.initData(RES.getRes("monster_txt"),'monster_base');
+        CM.initData(RES.getRes("level_txt"),'level_base');
         GameManager.stage = this.stage;
         GameManager.container = this;
         if(App.isIOS){
