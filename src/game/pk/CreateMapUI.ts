@@ -50,6 +50,60 @@ class CreateMapUI extends game.BaseUI {
             if(evt.keyCode==17){
                 this.isCtrlDown = true;
             }
+            if(this.editGroup.visible)
+            {
+                var b = false
+                if(evt.keyCode==37){
+                    this.chooseItem.x --;
+                    b = true;
+                }
+                else if(evt.keyCode==38){
+                    this.chooseItem.y --;
+                    b = true;
+                }
+                else if(evt.keyCode==39){
+                    this.chooseItem.x ++;
+                    b = true;
+                }
+                else if(evt.keyCode==40){
+                    this.chooseItem.y ++;
+                    b = true;
+                }
+
+                if(b)
+                {
+                    this.xText.text =  this.chooseItem.x
+                    this.yText.text =  this.chooseItem.y
+                }
+
+                return;
+            }
+
+            var arr = [];
+            for(var i=0;i<this.itemArr.length;i++)
+            {
+                var item = this.itemArr[i];
+                if(item.isChoose)
+                {
+                    arr.push(item)
+                }
+            }
+
+            if(arr.length)
+            {
+                if(evt.keyCode==37){
+                    this.setListXY(arr,-1,0)
+                }
+                else if(evt.keyCode==38){
+                    this.setListXY(arr,0,-1)
+                }
+                else if(evt.keyCode==39){
+                    this.setListXY(arr,1,0)
+                }
+                else if(evt.keyCode==40){
+                    this.setListXY(arr,0,1)
+                }
+            }
         })
 
         document.addEventListener("keyup",(evt:any)=>{
@@ -169,6 +223,15 @@ class CreateMapUI extends game.BaseUI {
             this.isChange = true;
         },this);
 
+    }
+
+    private setListXY(arr,x=0,y=0){
+        for(var i=0;i<arr.length;i++)
+        {
+            var item = arr[i];
+            item.x += x
+            item.y += y
+        }
     }
 
     private reset(){
