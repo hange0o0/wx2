@@ -2,11 +2,14 @@
 <e:Skin class="CreateMapUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0"/>
 	<e:Image source="white_bg_png" x="0" y="640" height="5" width="640"/>
+	<e:Button id="copyBtn" label="copy" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" width="180" right="20" bottom="100"/>
+	<e:Button id="testBtn" label="test" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" width="180" right="176" bottom="100"/>
+	<e:Button id="resetBtn" label="reset" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" width="180" right="320" bottom="100"/>
 	<e:Group horizontalCenter="0" bottom="20">
-		<e:Button id="addBtn" label="add" x="0" y="0" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8"/>
-		<e:Button id="deleteBtn" label="delete" x="198" y="0" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8"/>
-		<e:Button id="getSaveBtn" label="save" x="394" y="0" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8"/>
-		<e:Button id="closeBtn" label="close" x="404" y="10" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8"/>
+		<e:Button id="closeBtn" label="close" x="404" y="10" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" width="180"/>
+		<e:Button id="deleteBtn" label="delete" x="198" y="0" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" width="180"/>
+		<e:Button id="addBtn" label="add" x="0" y="0" scaleX="0.8" scaleY="0.8" width="180" skinName="Btn3Skin"/>
+		<e:Button id="getSaveBtn" label="save" x="394" y="0" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" width="180"/>
 		<e:layout>
 			<e:HorizontalLayout/>
 		</e:layout>
@@ -32,4 +35,11 @@
 			</e:layout>
 		</e:Group>
 	</e:Group>
+	<e:Label id="titleText" text="Label" y="10" horizontalCenter="0"/>
+	<e:Group x="0" bottom="102" width="180">
+		<e:Label text="难度" horizontalCenter="0" y="0"/>
+		<e:Label id="hardText" text="Label" y="30" horizontalCenter="0"/>
+	</e:Group>
+	<e:Image id="leftBtn" source="arrow_btn_png" y="660" left="20" scaleX="-1"/>
+	<e:Image id="rightBtn" source="arrow_btn_png" y="660" right="20"/>
 </e:Skin>

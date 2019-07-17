@@ -7,12 +7,16 @@ class LevelVO {
     public static get data(){
         return CM.table[this.dataKey]
     }
+    private static _list
     public static get list(){
-        return ObjectUtil.objToArray(this.data);
+        if(!this._list)
+            this._list = ObjectUtil.objToArray(this.data);
+        return this._list;
     }
 
     public id
     public data
+    public hard
 
     public constructor() {
 

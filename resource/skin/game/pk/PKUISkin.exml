@@ -2,9 +2,17 @@
 <e:Skin class="PKUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0"/>
 	<e:Image id="bg" x="0" y="0" source="bg3_jpg"/>
-	<e:Image id="ctrlMC" source="window_bg_png" scale9Grid="35,30,42,36" left="-20" right="-20" bottom="0" height="200"/>
 	<e:Group id="arrowMC" x="142" y="900" height="600" anchorOffsetX="28" anchorOffsetY="600" scaleX="0.5" scaleY="0.5" touchChildren="false" touchEnabled="false">
 		<e:Image source="arrow_mc2_png" x="0" fillMode="repeat" top="55" bottom="0"/>
 		<e:Image source="arrow_mc1_png" x="0" y="0"/>
+	</e:Group>
+	<e:Button id="exitBtn" label="exit" x="20" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" width="120" y="20"/>
+	<e:Group id="ctrlMC" left="-20" right="-20" bottom="0">
+		<e:Image source="window_bg_png" scale9Grid="35,30,42,36" height="200" y="0" left="0" right="0"/>
+		<e:Image source="black_bg_png" anchorOffsetX="0" width="180" height="30" x="250" y="0"/>
+		<e:Group right="30" top="-50" width="100">
+			<e:Image source="worm_icon_png" x="0" y="0"/>
+			<e:Label id="numText" text="x 20" x="50" verticalCenter="0" size="24"/>
+		</e:Group>
 	</e:Group>
 </e:Skin>

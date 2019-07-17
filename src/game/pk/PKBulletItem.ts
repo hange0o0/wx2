@@ -35,16 +35,18 @@ class PKBulletItem extends game.BaseItem{
         super.childrenCreated();
         this.anchorOffsetX = 60/2
         this.anchorOffsetY = 60/2
+        this.touchChildren = this.touchEnabled = false;
     }
 
     public dataChanged(){
-
+        var vo = MonsterVO.getObject(this.data.id);
+        this.mc.source = vo.getThumb()
     }
 
     public move(){
-        var speed = 30
+        var speed = 30;
         this.x += speed*Math.cos(this.data.rota)
-        this.y += speed*Math.sin(this.data.rota)
+        this.y += speed*Math.sin(this.data.rota)// + 1;
     }
 
     public testHit(arr){
@@ -64,9 +66,32 @@ class PKBulletItem extends game.BaseItem{
             this.data.rota = -this.data.rota
             this.y = r
         }
+
+        for(var i=0;i<arr.length;i++)
+        {
+            var item = arr[i];
+            if(item.isDie)
+                continue;
+            var len = item.r + r;
+            if(MyTool.getDis(item,this) <= len)//碰到
+            {
+                var myAngel = this.data.rota
+                var angle = Math.atan2(item.y-this.y,item.x-this.x)///Math.PI*180
+                var rota = angle - myAngel;
+                this.data.rota = myAngel - Math.PI + 2*rota
+
+                this.x = item.x - Math.cos(angle)*len
+                this.y = item.y - Math.sin(angle)*len
+
+                item.addHp(-1);
+
+                break;
+            }
+        }
     }
 
     public remove(){
         MyTool.removeMC(this);
+        egret.Tween.removeTweens(this)
     }
 }

@@ -11,9 +11,10 @@ class CreateListUI extends game.BaseUI {
         this.skinName = "CreateListUISkin";
     }
 
-    private saveBtn: eui.Button;
     private closeBtn: eui.Button;
+    private getSaveBtn: eui.Button;
     private newBtn: eui.Button;
+    private renewBtn: eui.Button;
     private scroller: eui.Scroller;
     private list: eui.List;
 
@@ -29,8 +30,11 @@ class CreateListUI extends game.BaseUI {
         this.addBtnEvent(this.closeBtn,()=>{
             this.hide();
         })
-        this.addBtnEvent(this.saveBtn,()=>{
-
+        this.addBtnEvent(this.getSaveBtn,()=>{
+           MyTool.save();
+        })
+        this.addBtnEvent(this.renewBtn,()=>{
+             this.onShow();
         })
         this.addBtnEvent(this.newBtn,()=>{
              CreateMapUI.getInstance().show();

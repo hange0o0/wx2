@@ -34,7 +34,8 @@ class GameUI extends game.BaseUI {
     public childrenCreated() {
         super.childrenCreated();
         this.addBtnEvent(this.defBtn,()=>{
-            HeroManager.getInstance().editDef();
+            CreateListUI.getInstance().show();
+            //HeroManager.getInstance().editDef();
         })
 
         this.addBtnEvent(this.rankBtn,()=>{
@@ -120,44 +121,44 @@ class GameUI extends game.BaseUI {
     }
 
     public renewDef(){
-        while(this.defItem.length)
-        {
-            PKItem.freeItem(this.defItem.pop());
-        }
-
-
-        var HM = HeroManager.getInstance();
-        var def = HM.defList;
-        var arr = []
-        var minLevel = 9999
-        var maxLevel = 0
-        for(var i=0;i<def.length;i++)
-        {
-            var oo = HM.getMonster(def[i]);
-            oo.level = HM.getLevelByExp(oo.exp)
-            minLevel = Math.min(oo.level,minLevel)
-            maxLevel = Math.max(oo.level,maxLevel)
-            arr.push(oo)
-        }
-        ArrayUtil.sortByField(arr,['level'],[0])
-
-        //var dis = Math.min(250/arr.length,50);
-        for(var i=0;i<arr.length;i++)
-        {
-            arr[i].maxLevel = maxLevel
-            arr[i].minLevel = minLevel
-
-            var item = PKItem.createItem();
-            item.x = 80 + (640 - 80*2)*Math.random();
-            item.y = 150 + this.defHeight*Math.random()
-            item.ox = item.x
-            item.oy = item.y
-            item.data = arr[i]
-            item.lastMove = 0
-            this.addChild(item);
-            this.defItem.push(item)
-            this.setItemMV(item,true);
-        }
+        //while(this.defItem.length)
+        //{
+        //    PKItem.freeItem(this.defItem.pop());
+        //}
+        //
+        //
+        //var HM = HeroManager.getInstance();
+        //var def = HM.defList;
+        //var arr = []
+        //var minLevel = 9999
+        //var maxLevel = 0
+        //for(var i=0;i<def.length;i++)
+        //{
+        //    var oo = HM.getMonster(def[i]);
+        //    oo.level = HM.getLevelByExp(oo.exp)
+        //    minLevel = Math.min(oo.level,minLevel)
+        //    maxLevel = Math.max(oo.level,maxLevel)
+        //    arr.push(oo)
+        //}
+        //ArrayUtil.sortByField(arr,['level'],[0])
+        //
+        ////var dis = Math.min(250/arr.length,50);
+        //for(var i=0;i<arr.length;i++)
+        //{
+        //    arr[i].maxLevel = maxLevel
+        //    arr[i].minLevel = minLevel
+        //
+        //    var item = PKItem.createItem();
+        //    item.x = 80 + (640 - 80*2)*Math.random();
+        //    item.y = 150 + this.defHeight*Math.random()
+        //    item.ox = item.x
+        //    item.oy = item.y
+        //    item.data = arr[i]
+        //    item.lastMove = 0
+        //    this.addChild(item);
+        //    this.defItem.push(item)
+        //    this.setItemMV(item,true);
+        //}
     }
 
     private setItemMV(item,noMV?){

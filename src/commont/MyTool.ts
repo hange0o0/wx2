@@ -5,61 +5,41 @@ class MyTool {
 
          */
     }
-    public static getRes(name,isPacket2=true){
-         if(isPacket2)
-            return "stage2/images/" + name;
-        return name;
+
+    public static save(){
+        var arr = [DateUtil.formatDate('MM-dd hh:mm:ss',new Date()),'id\tdata\thard'];
+        for(var i=0;i<LevelVO.list.length;i++)
+        {
+            var vo = LevelVO.list[i]
+            arr.push(vo.id + '\t' + vo.data + '\t' + vo.hard)
+        }
+        egret.localStorage.setItem('levelData', arr.join('\n'));
+        MyWindow.ShowTips('保存成功')
     }
 
-    //public static getPropCoin(){
-    //    return Config.localResRoot + 'prop/prop_coin.png'
-    //}
-    //public static getPropEnergy(){
-    //    return Config.localResRoot + 'prop/prop_energy.png'
-    //}
-    //public static getPropBox(id){
-    //    var type = Math.ceil(id/4)
-    //    return Config.localResRoot + 'prop/box_r'+type+'.png'
-    //}
-    //public static getSkillBox(id){
-    //    return Config.localResRoot + 'prop/box_s'+id+'.png'
-    //}
-    //public static getHeroBox(id){
-    //    return Config.localResRoot + 'prop/box_h'+id+'.png'
-    //}
-    //public static getPropLevel(){
-    //    return Config.localResRoot + 'prop/prop_level.png'
-    //}
-    //public static getPropHang(){
-    //    return 'icon_atk3_png'
-    //}
-    //public static getPropDiamond(){
-    //    return Config.localResRoot + 'prop/prop_diamond.png'
-    //}
-    //public static getPropFight(){
-    //    return Config.localResRoot + 'prop/prop_fight.png'
-    //}
-    //
-    //public static getAwardArr(dataIn){
-    //    var arr = [];
-    //    if(dataIn.offline_value)
-    //        arr.push({name:'竞技场积分','num':(dataIn.offline_value>0?'+':'') + dataIn.offline_value})
-    //    if(dataIn.coin)
-    //        arr.push({img:MyTool.getPropCoin(),name:'金币','num':'×' + NumberUtil.addNumSeparator(dataIn.coin),num2:dataIn.coin})
-    //    if(dataIn.diamond)
-    //        arr.push({img:MyTool.getPropDiamond(),name:'钻石','num':'×' + NumberUtil.addNumSeparator(dataIn.diamond)})
-    //    if(dataIn.fightvalue)
-    //        arr.push({img:MyTool.getPropFight(),name:'远征秘石','num':'×' + NumberUtil.addNumSeparator(dataIn.fightvalue)})
-    //    if(dataIn.energy)
-    //        arr.push({img:MyTool.getPropEnergy(),name:' 体力','num':'×' + NumberUtil.addNumSeparator(dataIn.energy)})
-    //
-    //    return arr;
-    //}
-    //
-    //
-    //public static setTypeImg(mc,type){
-    //    mc.source =  'icon_type' + type + '_png'
-    //}
+    public static copyStr(str:any, showTips:boolean=true){
+        //if(window["wx"]){
+        //    str += "";//保证是string
+        //    window["wx"].setClipboardData({
+        //        data: str,
+        //        success: function(res) {
+        //            // MyAlert.showTip("复制成功"); //微信自带有提示
+        //        }
+        //    })
+        //    return;
+        //}
+        var input = document.createElement("input");
+        input.value = str;
+        document.body.appendChild(input);
+        input.select();
+        input.setSelectionRange(0, input.value.length);
+        document.execCommand('Copy');
+        document.body.removeChild(input);
+
+        if(showTips){
+            MyWindow.ShowTips("复制成功");
+        }
+    }
 
     public static clearList(list){
         list.dataProvider = null;

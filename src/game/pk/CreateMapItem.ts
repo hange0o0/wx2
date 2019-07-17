@@ -22,6 +22,7 @@ class CreateMapItem extends game.BaseItem{
     private mc: eui.Image;
 
 
+    public isChoose = false
     public constructor() {
         super();
         this.skinName = "CreateMapItemSkin";
@@ -37,14 +38,25 @@ class CreateMapItem extends game.BaseItem{
         MyTool.addDoubleTouch(this,()=>{
             CreateMapUI.getInstance().showTips(this)
         })
+
+
+        this.addBtnEvent(this,(e)=>{
+             CreateMapUI.getInstance().setChoose(this)
+        })
     }
 
     public dataChanged():void {
         this.scaleX = this.scaleY = this.data.scale;
+        this.setChoose(false)
     }
 
     public remove(){
         MyTool.removeMC(this);
+    }
+
+    public setChoose(b){
+        this.isChoose = b;
+        this.mc.source = b?'border2_png':'border1_png'
     }
 
 

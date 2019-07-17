@@ -9,9 +9,12 @@ class CreateListItem extends game.BaseItem{
 
     public childrenCreated() {
         super.childrenCreated();
+        this.addBtnEvent(this,()=>{
+            CreateMapUI.getInstance().show(this.data);
+        })
     }
 
     public dataChanged():void {
-        this.txt.text = this.data.id;
+        this.txt.text = this.data.id +'-'+ this.data.hard;
     }
 }
