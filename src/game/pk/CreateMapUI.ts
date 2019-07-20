@@ -23,10 +23,16 @@ class CreateMapUI extends game.BaseUI {
     private scaleText: eui.EditableText;
     private xText: eui.EditableText;
     private yText: eui.EditableText;
+    private widthText: eui.EditableText;
+    private heightText: eui.EditableText;
+    private typeText: eui.EditableText;
     private titleText: eui.Label;
     private hardText: eui.Label;
     private leftBtn: eui.Image;
     private rightBtn: eui.Image;
+    private hardAdd: eui.EditableText;
+
+
 
 
 
@@ -118,6 +124,8 @@ class CreateMapUI extends game.BaseUI {
                 this.chooseItem.scaleY = this.chooseItem.scaleX = Number(this.scaleText.text)
                 this.chooseItem.x =  Number(this.xText.text)
                 this.chooseItem.y =  Number(this.yText.text)
+                this.chooseItem.resetWH(Number(this.widthText.text),Number(this.heightText.text))
+                this.chooseItem.setType(Number(this.typeText.text))
                 this.isChange = true;
             }
             this.chooseItem = null;
@@ -159,6 +167,7 @@ class CreateMapUI extends game.BaseUI {
             this.addChild(item);
             item.x = 320
             item.y = GameManager.uiHeight - 300;
+            item.setType(1)
             this.isChange = true;
             this.renewHard();
         })
@@ -296,6 +305,9 @@ class CreateMapUI extends game.BaseUI {
         this.xText.text =  item.x
         this.yText.text =  item.y
         this.scaleText.text =  item.scaleX
+        this.widthText.text =  item.width
+        this.heightText.text =  item.height
+        this.typeText.text =  item.type
     }
 
     public show(data?){
@@ -326,17 +338,32 @@ class CreateMapUI extends game.BaseUI {
                 var item = CreateMapItem.createItem();
                 this.itemArr.push(item)
                 this.addChild(item);
-                item.x = parseInt(temp[0])
-                item.y = parseInt(temp[1])
-                item.scaleX = item.scaleY = Number(temp[2])
+                var type = parseInt(temp[0])
+
+                item.x = parseInt(temp[1])
+                item.y = parseInt(temp[2])
+                item.setType(type)
+                if(type == 2)
+                {
+                    item.scaleX = item.scaleY = 1;
+                    item.resetWH(Number(temp[3]),Number(temp[4]))
+                }
+                else
+                {
+                    item.scaleX = item.scaleY = Number(temp[3])
+                }
+
             }
 
             var index = LevelVO.list.indexOf(this.data);
             this.leftBtn.visible = index > 0
             this.rightBtn.visible = index < LevelVO.list.length - 1;
+
+            this.hardAdd.text = '' + (this.data.hard - this.getHard())
         }
         else
         {
+            this.hardAdd.text = '0'
             this.titleText.text = '新建地图' + (LevelVO.list.length + 1)
 
             this.leftBtn.visible = LevelVO.list.length > 0
@@ -352,7 +379,10 @@ class CreateMapUI extends game.BaseUI {
         for(var i=0;i<this.itemArr.length;i++)
         {
             var item = this.itemArr[i];
-            arr.push(Math.floor(item.x) + ',' + Math.floor(item.y) + ',' + MyTool.toFixed(item.scaleX,2))
+            if(item.type == 2)
+                arr.push(item.type + ',' + Math.floor(item.x) + ',' + Math.floor(item.y) + ',' + Math.floor(item.width) + ',' + Math.floor(item.height) )
+            else
+                arr.push(item.type + ',' + Math.floor(item.x) + ',' + Math.floor(item.y) + ',' + MyTool.toFixed(item.scaleX,2))
         }
         return arr.join('#')
     }
@@ -381,13 +411,23 @@ class CreateMapUI extends game.BaseUI {
     }
 
     private renewHard(){
+
+        this.hardText.text = this.getHard() + ''
+    }
+
+    private getHard(){
         var hard = 0;
         for(var i=0;i<this.itemArr.length;i++)
         {
             var item = this.itemArr[i];
-            hard += Math.pow(item.scaleX,6)
+            if(item.type == 1)
+                hard += Math.pow(item.scaleX,6)
+            //else if(item.type == 2)
+            //    hard += item.width*item.height/2000
+            //else if(item.type == 3)
+            //    hard += Math.pow(item.scaleX,6)
         }
-        this.hardText.text = Math.round(hard) + ''
+        return Math.round(hard);
     }
 
     public setChoose(item){

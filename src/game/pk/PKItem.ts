@@ -24,6 +24,7 @@ class PKItem extends game.BaseItem{
     public hp = 10
     public maxHp = 10
     public isDie = 0
+    public type = 0
 
     private shape = new egret.Shape()
 
@@ -39,21 +40,37 @@ class PKItem extends game.BaseItem{
     }
 
     public dataChanged():void {
-        var vo = MonsterVO.getObject(this.data.id);
-        //this.scaleX = this.scaleY = 0.8 + (this.data.level-this.data.minLevel)/(this.data.maxLevel-this.data.minLevel + 1)*0.5
-        //this.skillBG.source = HeroManager.getInstance().getSkillBG(this.data.skill)
-        this.mc.source = vo.getThumb()
-        this.width = this.height = 120*this.data.rate
-        this.anchorOffsetX = this.anchorOffsetY = this.width/2
+        this.type = this.data.type;
+        if(this.type == 1)
+        {
+            this.skillBG.source = 'border1_png'
+            var vo = MonsterVO.getObject(this.data.id);
+            this.mc.source = vo.getThumb()
+            this.hp = this.maxHp = Math.round(this.data.level*Math.pow(this.data.rate,6));
+            this.isDie = 0;
+            this.renewHp();
+            this.r = this.width/2;
+            this.shape.x = this.r
+            this.shape.y = this.r
+            this.width = this.height = 120*this.data.rate
+        }
+        else if(this.type == 2)
+        {
+            this.skillBG.source = 'white_bg_png'
+            this.mc.source = ''
+            this.width = this.data.width
+            this.height = this.data.height
+        }
+        else if(this.type == 3)
+        {
+            this.skillBG.source = 'border3_png'
+            this.width = this.height = 120*this.data.rate
+            this.mc.source = ''
+            this.r = this.width/2;
+        }
 
-        this.r = this.width/2;
-
-        this.hp = this.maxHp = Math.round(this.data.level*Math.pow(this.data.rate,6));
-        this.isDie = 0;
-        this.renewHp();
-
-        this.shape.x = this.r
-        this.shape.y = this.r
+        this.anchorOffsetX = this.width/2
+        this.anchorOffsetY = this.height/2
     }
 
     public remove(){

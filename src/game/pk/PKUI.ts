@@ -32,13 +32,14 @@ class PKUI extends game.BaseUI {
     public shootBullet
 
     private data;
+    private bulletX = 320;
     private isStop = false
     private level = 1
     public childrenCreated() {
         super.childrenCreated();
         //this.addBtnEvent(this.closeBtn,this.hide)
         this.ctrlMC.touchEnabled = true;
-        this.ctrlMC.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin,this);
+        this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin,this);
         this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove,this);
         this.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchEnd,this);
         this.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd,this);
@@ -63,15 +64,59 @@ class PKUI extends game.BaseUI {
                     x:e.stageX,
                     y:e.stageY,
                 }
-
             }
-            this.arrowMC.x = this.touchID.start.x
-            this.arrowMC.y = this.touchID.start.y
-            this.arrowMC.visible = false;
-            this.addChild(this.arrowMC);
 
-            this.shootBullet.x = this.arrowMC.x
-            this.shootBullet.y = this.arrowMC.y
+            this.touchID.end = {
+                x:e.stageX,
+                y:e.stageY,
+            }
+
+            if(e.stageY > GameManager.uiHeight - 200)
+            {
+                this.bulletX = e.stageX;
+                //this.touchID.start.x = this.shootBullet.x
+            }
+
+
+
+            this.setStartPos();
+            this.testShowLine();
+        }
+    }
+
+    private setStartPos(){
+        //this.bulletX = this.touchID.start.x
+        this.arrowMC.x = this.bulletX
+        this.arrowMC.y = GameManager.uiHeight - 100
+        this.shootBullet.x = this.arrowMC.x
+        this.shootBullet.y = this.arrowMC.y
+    }
+
+    private testShowLine(){
+        this.arrowMC.visible =  this.touchID.end.y < GameManager.uiHeight - 200;
+        if(this.arrowMC.visible)
+        {
+            this.addChild(this.arrowMC);
+            var angle = Math.atan2(this.touchID.end.y-this.shootBullet.y,this.touchID.end.x-this.shootBullet.x)/Math.PI*180 + 90
+            this.arrowMC.rotation = angle;
+            this.shootBullet.scaleX = this.shootBullet.scaleY = 1;
+
+            var ang2 = 90- angle
+            if(ang2 <= 90)
+            {
+                var l1 = this.shootBullet.y / Math.sin(ang2/180*Math.PI)
+                var l2 = (640-this.shootBullet.x) / Math.cos(ang2/180*Math.PI)
+            }
+            else
+            {
+                ang2 = 180-ang2
+                var l1 = this.shootBullet.y / Math.sin(ang2/180*Math.PI)
+                var l2 = this.shootBullet.x / Math.cos(ang2/180*Math.PI)
+            }
+
+            var len = Math.min(l1,l2)*2
+            this.arrowMC.height = len;
+            this.arrowMC.anchorOffsetY = len;
         }
     }
 
@@ -82,23 +127,53 @@ class PKUI extends game.BaseUI {
                 x:e.stageX,
                 y:e.stageY,
             }
+            this.testShowLine();
+            //var angle = Math.atan2(e.stageY-this.shootBullet.y,e.stageX-this.shootBullet.x)/Math.PI*180 + 90
+            //this.arrowMC.rotation = angle;
+            //
+            //
+            //this.arrowMC.visible = e.stageY < GameManager.uiHeight - 200;
+            //if(this.arrowMC.visible)
+            //{
+            //    this.shootBullet.scaleX = this.shootBullet.scaleY = 1;
+            //
+            //    var ang2 = 90- angle
+            //    if(ang2 <= 90)
+            //    {
+            //        var l1 = this.touchID.start.y / Math.sin(ang2/180*Math.PI)
+            //        var l2 = (640-this.touchID.start.x) / Math.cos(ang2/180*Math.PI)
+            //    }
+            //    else
+            //    {
+            //        ang2 = 180-ang2
+            //        var l1 = this.touchID.start.y / Math.sin(ang2/180*Math.PI)
+            //        var l2 = this.touchID.start.x / Math.cos(ang2/180*Math.PI)
+            //    }
+            //
+            //    var len = Math.min(l1,l2)*2
+            //    this.arrowMC.height = len;
+            //    this.arrowMC.anchorOffsetY = len;
+            //}
 
-            var len = MyTool.getDis(this.touchID.start,this.touchID.end)*2
-            this.arrowMC.height = len;
-            this.arrowMC.anchorOffsetY = len;
 
-            this.arrowMC.visible = e.stageY < GameManager.uiHeight - 200;
-            if(this.arrowMC.visible)
-            {
-                this.shootBullet.scaleX = this.shootBullet.scaleY = 1;
-            }
-            else
+            //if(!this.arrowMC.visible)
+            //{
+            //    this.shootBullet.scaleX = this.shootBullet.scaleY = 2;
+            //    this.touchID.start = {
+            //        x:e.stageX,
+            //        y:GameManager.uiHeight - 100,
+            //    }
+            //    this.setStartPos()
+            //}
+
+            if(e.stageY > GameManager.uiHeight - 200 && this.touchID.start.y > GameManager.uiHeight - 200)
             {
                 this.shootBullet.scaleX = this.shootBullet.scaleY = 2;
+                this.bulletX = e.stageX;
+                this.setStartPos()
             }
 
-            var angle = Math.atan2(e.stageY-this.touchID.start.y,e.stageX-this.touchID.start.x)/Math.PI*180 + 90
-            this.arrowMC.rotation = angle;
+
         }
     }
 
@@ -127,11 +202,13 @@ class PKUI extends game.BaseUI {
     }
 
     public onShow(){
+        this.bulletX = 320
         this.addChild(this.ctrlMC)
         this.renewMonster();
         this.addBullet();
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
         this.addChild(this.exitBtn);
+
     }
 
     private addBullet(){
@@ -163,7 +240,7 @@ class PKUI extends game.BaseUI {
     private reInitBulletXY(){
         if(!this.shootBullet)
             return;
-        this.shootBullet.x = 320
+        this.shootBullet.x = this.bulletX
         this.shootBullet.y = GameManager.uiHeight - 100;
         this.shootBullet.scaleX = this.shootBullet.scaleY = 2;
     }
@@ -186,12 +263,15 @@ class PKUI extends game.BaseUI {
             var item = PKItem.createItem();
             this.monsterArr.push(item)
             this.addChild(item);
-            item.x = parseInt(temp[0])
-            item.y = parseInt(temp[1])
+            item.x = parseInt(temp[1])
+            item.y = parseInt(temp[2])
             item.data = {
                 id:1,
                 level:this.level,
-                rate:Number(temp[2]),
+                rate:Number(temp[3]),
+                type:parseInt(temp[0]),
+                width:parseInt(temp[3]),
+                height:parseInt(temp[4]),
             }
         }
     }

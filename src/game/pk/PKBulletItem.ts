@@ -73,7 +73,26 @@ class PKBulletItem extends game.BaseItem{
             if(item.isDie)
                 continue;
             var len = item.r + r;
-            if(MyTool.getDis(item,this) <= len)//碰到
+            if(item.type == 2)
+            {
+                //if()
+                //if(this.x < r)
+                //{
+                //    this.data.rota = Math.PI-this.data.rota
+                //    this.x = r;
+                //}
+                //else if(this.x > 640-r)
+                //{
+                //    this.data.rota = Math.PI-this.data.rota
+                //    this.x = 640-r
+                //}
+                //else if(this.y < r)
+                //{
+                //    this.data.rota = -this.data.rota
+                //    this.y = r
+                //}
+            }
+            else if(MyTool.getDis(item,this) <= len)//碰到
             {
                 var myAngel = this.data.rota
                 var angle = Math.atan2(item.y-this.y,item.x-this.x)///Math.PI*180
@@ -83,7 +102,12 @@ class PKBulletItem extends game.BaseItem{
                 this.x = item.x - Math.cos(angle)*len
                 this.y = item.y - Math.sin(angle)*len
 
-                item.addHp(-1);
+                if(item.type == 1)
+                    item.addHp(-1);
+                else
+                {
+
+                }
 
                 break;
             }

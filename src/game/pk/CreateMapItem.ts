@@ -7,6 +7,9 @@ class CreateMapItem extends game.BaseItem{
             item = new CreateMapItem();
         }
         item.scaleX = item.scaleY = 1;
+        item.width = item.height = 120;
+        item.anchorOffsetX = 60
+        item.anchorOffsetY = 60
         return item;
     }
     public static freeItem(item){
@@ -22,6 +25,7 @@ class CreateMapItem extends game.BaseItem{
     private mc: eui.Image;
 
 
+    public type
     public isChoose = false
     public constructor() {
         super();
@@ -57,6 +61,27 @@ class CreateMapItem extends game.BaseItem{
     public setChoose(b){
         this.isChoose = b;
         this.mc.source = b?'border2_png':'border1_png'
+    }
+
+    public setType(type){
+         this.type = type;
+        if(this.type == 1)
+            this.skillBG.source = 'border1_png'
+        else if(this.type == 2)
+        {
+            this.skillBG.source = 'white_bg_png'
+            this.scaleX = this.scaleY = 1
+
+        }
+        else if(this.type == 3)
+            this.skillBG.source = 'border3_png'
+    }
+
+    public resetWH(w,h){
+        this.width = w
+        this.height = h
+        this.anchorOffsetX = w/2
+        this.anchorOffsetY = h/2
     }
 
 
